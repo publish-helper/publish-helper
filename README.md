@@ -11,7 +11,7 @@ Publish helper for Movie v1.1.3
 static/abbreviation.json
 
     "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
-    "Dolby Digital Plus with Dolby Atmos": "DDP",
+    "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
     "Dolby Digital Plus": "DDP",
     "DTS-HD Master Audio": "DTS-HD MA",
     "没有正确识别所产生的信息": "你想要的缩略信息",
