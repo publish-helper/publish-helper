@@ -1,0 +1,16 @@
+{
+    "screenshotPath": "temp/pic",
+    "torrentPath": "temp/torrent",
+    "ptGenPath": "https://api.iyuu.cn/App.Movie.Ptgen",
+    "figureBedPath": "https://freeimage.host/api/1/upload",
+    "figureBedToken": "",
+    "screenshotNumber": "3",
+    "screenshotThreshold": "0.02",
+    "screenshotStart": "0.08",
+    "screenshotEnd": "0.92",
+    "autoUploadScreenshot": "True",
+    "pasteScreenshotUrl": "True",
+    "deleteScreenshot": "True",
+    "makeDir": "True",
+    "renameFile": "True"
+}
