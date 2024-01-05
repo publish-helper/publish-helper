@@ -21,4 +21,9 @@ static/abbreviation.json
 static/source.json
 static/team.json
 
+软件获取地址：
+
+链接：https://pan.baidu.com/s/1v6C-6R0ZZbMxUKHEQDTq4A?pwd=24hm 
+提取码：24hm
+
 Created by bjd
