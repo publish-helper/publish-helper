@@ -1,4 +1,4 @@
-Publish helper for Movie v1.1.2
+Publish helper for Movie v1.1.3
 
 使用前务必请先看设置！！！
 
@@ -10,15 +10,19 @@ Publish helper for Movie v1.1.2
 
 static/abbreviation.json
 
-    "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
-    "Dolby Digital Plus with Dolby Atmos": "DDP",
-    "Dolby Digital Plus": "DDP",
-    "DTS-HD Master Audio": "DTS-HD MA",
-    "没有正确识别所产生的信息": "你想要的缩略信息",
-
+"Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
+"Dolby Digital Plus with Dolby Atmos": "DDP",
+"Dolby Digital Plus": "DDP",
+"DTS-HD Master Audio": "DTS-HD MA",
+"没有正确识别所产生的信息": "你想要的缩略信息",
 如需修改来源名称或小组名称，请访问：
 
-static/source.json
-static/team.json
+static/source.json static/team.json
+
+软件获取地址：
+
+链接：https://pan.baidu.com/s/1v6C-6R0ZZbMxUKHEQDTq4A?pwd=24hm 提取码：24hm
+
+Python 3.10
 
 Created by bjd
