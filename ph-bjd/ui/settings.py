@@ -13,19 +13,18 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
         Settings.resize(641, 735)
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(Settings)
-        self.verticalLayout_2.setSizeConstraint(QtWidgets.QLayout.SizeConstraint.SetDefaultConstraint)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.verticalLayout = QtWidgets.QVBoxLayout()
+        self.widget = QtWidgets.QWidget(parent=Settings)
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
         self.verticalLayout.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout.setObjectName("verticalLayout")
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
-        self.label_8 = QtWidgets.QLabel(parent=Settings)
+        self.label_8 = QtWidgets.QLabel(parent=self.widget)
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_6.addWidget(self.label_8)
-        self.ptGenPath = QtWidgets.QLineEdit(parent=Settings)
+        self.ptGenPath = QtWidgets.QLineEdit(parent=self.widget)
         self.ptGenPath.setText("")
         self.ptGenPath.setClearButtonEnabled(True)
         self.ptGenPath.setObjectName("ptGenPath")
@@ -34,10 +33,10 @@ class Ui_Settings(object):
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
-        self.label_6 = QtWidgets.QLabel(parent=Settings)
+        self.label_6 = QtWidgets.QLabel(parent=self.widget)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_4.addWidget(self.label_6)
-        self.figureBedPath = QtWidgets.QLineEdit(parent=Settings)
+        self.figureBedPath = QtWidgets.QLineEdit(parent=self.widget)
         self.figureBedPath.setText("")
         self.figureBedPath.setClearButtonEnabled(True)
         self.figureBedPath.setObjectName("figureBedPath")
@@ -46,10 +45,10 @@ class Ui_Settings(object):
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
-        self.label_7 = QtWidgets.QLabel(parent=Settings)
+        self.label_7 = QtWidgets.QLabel(parent=self.widget)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7)
-        self.figureBedToken = QtWidgets.QLineEdit(parent=Settings)
+        self.figureBedToken = QtWidgets.QLineEdit(parent=self.widget)
         self.figureBedToken.setText("")
         self.figureBedToken.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.figureBedToken.setClearButtonEnabled(True)
@@ -59,15 +58,15 @@ class Ui_Settings(object):
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
-        self.label_3 = QtWidgets.QLabel(parent=Settings)
+        self.label_3 = QtWidgets.QLabel(parent=self.widget)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
-        self.screenshotPath = QtWidgets.QLineEdit(parent=Settings)
+        self.screenshotPath = QtWidgets.QLineEdit(parent=self.widget)
         self.screenshotPath.setText("")
         self.screenshotPath.setClearButtonEnabled(True)
         self.screenshotPath.setObjectName("screenshotPath")
         self.horizontalLayout_2.addWidget(self.screenshotPath)
-        self.selectScreenshotPathButton = QtWidgets.QPushButton(parent=Settings)
+        self.selectScreenshotPathButton = QtWidgets.QPushButton(parent=self.widget)
         self.selectScreenshotPathButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
@@ -106,15 +105,15 @@ class Ui_Settings(object):
         self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_3.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
-        self.label_12 = QtWidgets.QLabel(parent=Settings)
+        self.label_12 = QtWidgets.QLabel(parent=self.widget)
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_3.addWidget(self.label_12)
-        self.torrentPath = QtWidgets.QLineEdit(parent=Settings)
+        self.torrentPath = QtWidgets.QLineEdit(parent=self.widget)
         self.torrentPath.setText("")
         self.torrentPath.setClearButtonEnabled(True)
         self.torrentPath.setObjectName("torrentPath")
         self.horizontalLayout_3.addWidget(self.torrentPath)
-        self.selectTorrentPathButton = QtWidgets.QPushButton(parent=Settings)
+        self.selectTorrentPathButton = QtWidgets.QPushButton(parent=self.widget)
         self.selectTorrentPathButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
@@ -153,18 +152,18 @@ class Ui_Settings(object):
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_7.setObjectName("horizontalLayout_7")
-        self.label = QtWidgets.QLabel(parent=Settings)
+        self.label = QtWidgets.QLabel(parent=self.widget)
         self.label.setObjectName("label")
         self.horizontalLayout_7.addWidget(self.label)
-        self.screenshotNumber = QtWidgets.QSpinBox(parent=Settings)
+        self.screenshotNumber = QtWidgets.QSpinBox(parent=self.widget)
         self.screenshotNumber.setMaximum(5)
         self.screenshotNumber.setProperty("value", 1)
         self.screenshotNumber.setObjectName("screenshotNumber")
         self.horizontalLayout_7.addWidget(self.screenshotNumber)
-        self.label_2 = QtWidgets.QLabel(parent=Settings)
+        self.label_2 = QtWidgets.QLabel(parent=self.widget)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_7.addWidget(self.label_2)
-        self.screenshotThreshold = QtWidgets.QDoubleSpinBox(parent=Settings)
+        self.screenshotThreshold = QtWidgets.QDoubleSpinBox(parent=self.widget)
         self.screenshotThreshold.setDecimals(2)
         self.screenshotThreshold.setMaximum(5.0)
         self.screenshotThreshold.setSingleStep(0.01)
@@ -175,20 +174,20 @@ class Ui_Settings(object):
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        self.label_4 = QtWidgets.QLabel(parent=Settings)
+        self.label_4 = QtWidgets.QLabel(parent=self.widget)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_8.addWidget(self.label_4)
-        self.screenshotStart = QtWidgets.QDoubleSpinBox(parent=Settings)
+        self.screenshotStart = QtWidgets.QDoubleSpinBox(parent=self.widget)
         self.screenshotStart.setDecimals(2)
         self.screenshotStart.setMaximum(1.0)
         self.screenshotStart.setSingleStep(0.01)
         self.screenshotStart.setProperty("value", 0.1)
         self.screenshotStart.setObjectName("screenshotStart")
         self.horizontalLayout_8.addWidget(self.screenshotStart)
-        self.label_5 = QtWidgets.QLabel(parent=Settings)
+        self.label_5 = QtWidgets.QLabel(parent=self.widget)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_8.addWidget(self.label_5)
-        self.screenshotEnd = QtWidgets.QDoubleSpinBox(parent=Settings)
+        self.screenshotEnd = QtWidgets.QDoubleSpinBox(parent=self.widget)
         self.screenshotEnd.setDecimals(2)
         self.screenshotEnd.setMaximum(1.0)
         self.screenshotEnd.setSingleStep(0.01)
@@ -199,35 +198,60 @@ class Ui_Settings(object):
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.autoUploadScreenshot = QtWidgets.QCheckBox(parent=Settings)
+        self.autoUploadScreenshot = QtWidgets.QCheckBox(parent=self.widget)
         self.autoUploadScreenshot.setChecked(True)
         self.autoUploadScreenshot.setObjectName("autoUploadScreenshot")
         self.horizontalLayout_9.addWidget(self.autoUploadScreenshot)
-        self.pasteScreenshotUrl = QtWidgets.QCheckBox(parent=Settings)
+        self.pasteScreenshotUrl = QtWidgets.QCheckBox(parent=self.widget)
         self.pasteScreenshotUrl.setChecked(True)
         self.pasteScreenshotUrl.setObjectName("pasteScreenshotUrl")
         self.horizontalLayout_9.addWidget(self.pasteScreenshotUrl)
-        self.deleteScreenshot = QtWidgets.QCheckBox(parent=Settings)
+        self.deleteScreenshot = QtWidgets.QCheckBox(parent=self.widget)
         self.deleteScreenshot.setChecked(True)
         self.deleteScreenshot.setObjectName("deleteScreenshot")
         self.horizontalLayout_9.addWidget(self.deleteScreenshot)
         self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_11.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_11.setObjectName("horizontalLayout_11")
+        self.getThumbnails = QtWidgets.QCheckBox(parent=self.widget)
+        self.getThumbnails.setObjectName("getThumbnails")
+        self.horizontalLayout_11.addWidget(self.getThumbnails)
+        self.label_13 = QtWidgets.QLabel(parent=self.widget)
+        self.label_13.setObjectName("label_13")
+        self.horizontalLayout_11.addWidget(self.label_13)
+        self.rows = QtWidgets.QSpinBox(parent=self.widget)
+        self.rows.setMinimum(1)
+        self.rows.setMaximum(9)
+        self.rows.setProperty("value", 4)
+        self.rows.setObjectName("rows")
+        self.horizontalLayout_11.addWidget(self.rows)
+        self.label_14 = QtWidgets.QLabel(parent=self.widget)
+        self.label_14.setObjectName("label_14")
+        self.horizontalLayout_11.addWidget(self.label_14)
+        self.cols = QtWidgets.QSpinBox(parent=self.widget)
+        self.cols.setMinimum(1)
+        self.cols.setMaximum(9)
+        self.cols.setProperty("value", 4)
+        self.cols.setObjectName("cols")
+        self.horizontalLayout_11.addWidget(self.cols)
+        self.verticalLayout.addLayout(self.horizontalLayout_11)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_10.setObjectName("horizontalLayout_10")
-        self.label_10 = QtWidgets.QLabel(parent=Settings)
+        self.label_10 = QtWidgets.QLabel(parent=self.widget)
         self.label_10.setObjectName("label_10")
         self.horizontalLayout_10.addWidget(self.label_10)
-        self.renameFile = QtWidgets.QCheckBox(parent=Settings)
+        self.renameFile = QtWidgets.QCheckBox(parent=self.widget)
         self.renameFile.setChecked(False)
         self.renameFile.setObjectName("renameFile")
         self.horizontalLayout_10.addWidget(self.renameFile)
-        self.makeDir = QtWidgets.QCheckBox(parent=Settings)
+        self.makeDir = QtWidgets.QCheckBox(parent=self.widget)
         self.makeDir.setChecked(False)
         self.makeDir.setObjectName("makeDir")
         self.horizontalLayout_10.addWidget(self.makeDir)
         self.verticalLayout.addLayout(self.horizontalLayout_10)
-        self.label_9 = QtWidgets.QLabel(parent=Settings)
+        self.label_9 = QtWidgets.QLabel(parent=self.widget)
         self.label_9.setMaximumSize(QtCore.QSize(16777215, 20))
         font = QtGui.QFont()
         font.setPointSize(12)
@@ -235,14 +259,14 @@ class Ui_Settings(object):
         self.label_9.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_9.setObjectName("label_9")
         self.verticalLayout.addWidget(self.label_9)
-        self.label_11 = QtWidgets.QLabel(parent=Settings)
+        self.label_11 = QtWidgets.QLabel(parent=self.widget)
         self.label_11.setMaximumSize(QtCore.QSize(16777215, 220))
         self.label_11.setObjectName("label_11")
         self.verticalLayout.addWidget(self.label_11)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(30, -1, 30, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.saveButton = QtWidgets.QPushButton(parent=Settings)
+        self.saveButton = QtWidgets.QPushButton(parent=self.widget)
         self.saveButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
@@ -277,7 +301,7 @@ class Ui_Settings(object):
 "")
         self.saveButton.setObjectName("saveButton")
         self.horizontalLayout.addWidget(self.saveButton)
-        self.cancelButton = QtWidgets.QPushButton(parent=Settings)
+        self.cancelButton = QtWidgets.QPushButton(parent=self.widget)
         self.cancelButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
@@ -313,7 +337,6 @@ class Ui_Settings(object):
         self.cancelButton.setObjectName("cancelButton")
         self.horizontalLayout.addWidget(self.cancelButton)
         self.verticalLayout.addLayout(self.horizontalLayout)
-        self.verticalLayout_2.addLayout(self.verticalLayout)
 
         self.retranslateUi(Settings)
         QtCore.QMetaObject.connectSlotsByName(Settings)
@@ -818,6 +841,101 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.deleteScreenshot.setText(_translate("Settings", "上传后删除本地图片"))
+        self.getThumbnails.setText(_translate("Settings", "生成缩略图"))
+        self.label_13.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_13.setText(_translate("Settings", "横向数量："))
+        self.rows.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_14.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_14.setText(_translate("Settings", "纵向数量："))
+        self.cols.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
         self.label_10.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"

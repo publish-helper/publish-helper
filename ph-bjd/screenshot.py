@@ -78,6 +78,86 @@ def extract_complex_keyframes(video_path, output_path, num_images, some_threshol
         return True, extracted_images
 
 
+def get_thumbnails(video_path, output_path, cols, rows, start_pct, end_pct):
+    try:
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)
+            print("已创建输出路径")
+    except PermissionError:
+        print("权限不足，无法创建目录。")
+        return False, ["权限不足，无法创建目录。"]
+    except FileExistsError:
+        print("路径已存在，且不是目录。")
+        return False, ["路径已存在，且不是目录。"]
+    except Exception as e:
+        print(f"创建目录时出错：{e}")
+        return False, [f"创建目录时出错：{e}"]
+
+    try:
+        video_capture = cv2.VideoCapture(video_path)
+
+        if not video_capture.isOpened():
+            raise Exception("Error: 无法打开视频文件")
+
+        total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
+
+        # 计算开始和结束帧
+        start_frame = int(total_frames * start_pct)
+        end_frame = int(total_frames * end_pct)
+
+        # 计算每张截取图像的时间间隔
+        interval = (end_frame - start_frame) // (rows * cols)
+
+        images = []
+
+        for i in range((rows * cols)):
+            frame_number = start_frame + i * interval
+            if frame_number >= end_frame:
+                break
+
+            video_capture.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+            ret, frame = video_capture.read()
+
+            if not ret:
+                raise Exception(f"Error: 无法读取第 {i + 1} 张图像")
+
+            images.append(frame)
+
+        # 处理图像数量小于预期的情况
+        if len(images) < (rows * cols):
+            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {rows * cols} 张")
+
+        resized_images = [cv2.resize(image, (0, 0), fx=1.0/cols, fy=1.0/cols) for image in images]
+
+        border_size = 5
+        concatenated_image = np.ones((rows * (resized_images[0].shape[0] + 2 * border_size),
+                                      cols * (resized_images[0].shape[1] + 2 * border_size), 3), dtype=np.uint8) * 255
+
+        for i in range(rows):
+            for j in range(cols):
+                index = i * cols + j
+                if index >= len(resized_images):
+                    break
+                y_offset = i * (resized_images[0].shape[0] + 2 * border_size) + border_size
+                x_offset = j * (resized_images[0].shape[1] + 2 * border_size) + border_size
+
+                concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
+                                   x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
+
+        sv_path = generate_image_filename(output_path)
+        cv2.imwrite(sv_path, concatenated_image)
+
+    except Exception as e:
+        print(f"发生异常: {e}")
+        return False, str(e)
+
+    finally:
+        video_capture.release()
+
+    print(f"拼接后的图像已保存到{sv_path}")
+    return True, sv_path
+
+
 # 此处仅提供一个简单的示例，具体实现起来方案有很多，可按需开发
 def upload_screenshot(api_url, api_token, frame_path):
     print("开始上传图床")

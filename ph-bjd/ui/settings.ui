@@ -13,42 +13,38 @@
   <property name="windowTitle">
    <string>设置</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <property name="sizeConstraint">
-    <enum>QLayout::SetDefaultConstraint</enum>
-   </property>
-   <item>
-    <layout class="QVBoxLayout" name="verticalLayout">
-     <property name="leftMargin">
-      <number>5</number>
-     </property>
-     <property name="topMargin">
-      <number>5</number>
-     </property>
-     <property name="rightMargin">
-      <number>5</number>
-     </property>
-     <property name="bottomMargin">
-      <number>5</number>
-     </property>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_6">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_8">
-         <property name="styleSheet">
-          <string>QPushButton {
+  <widget class="QWidget" name="">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_8">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -71,16 +67,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>PT Gen地址：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="ptGenPath">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>PT Gen地址：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="ptGenPath">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -103,35 +99,35 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_4">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_6">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -154,16 +150,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>图床api地址：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="figureBedPath">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>图床api地址：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="figureBedPath">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -186,35 +182,35 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_5">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_7">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_7">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -237,16 +233,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>图床api密钥：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="figureBedToken">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>图床api密钥：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="figureBedToken">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -269,38 +265,38 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="echoMode">
-          <enum>QLineEdit::Password</enum>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_3">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -323,16 +319,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>截图储存地址：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="screenshotPath">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>截图储存地址：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="screenshotPath">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -355,19 +351,19 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="selectScreenshotPathButton">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="selectScreenshotPathButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
     display: inline-block;
     padding: 3px 6px;
     font-size: 14px;
@@ -399,32 +395,32 @@ QPushButton:pressed {
                                       stop:1 #0e925c);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>浏览</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_12">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>浏览</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_12">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -447,16 +443,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>种子储存地址：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="torrentPath">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>种子储存地址：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="torrentPath">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -479,19 +475,19 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="clearButtonEnabled">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="selectTorrentPathButton">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="selectTorrentPathButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
     display: inline-block;
     padding: 3px 6px;
     font-size: 14px;
@@ -523,32 +519,32 @@ QPushButton:pressed {
                                       stop:1 #0e925c);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>浏览</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_7">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>浏览</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_7">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -571,16 +567,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>截图数量：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QSpinBox" name="screenshotNumber">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>截图数量：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="screenshotNumber">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -603,19 +599,19 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="maximum">
-          <number>5</number>
-         </property>
-         <property name="value">
-          <number>1</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_2">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="maximum">
+         <number>5</number>
+        </property>
+        <property name="value">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -638,16 +634,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>关键帧复杂度：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="screenshotThreshold">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>关键帧复杂度：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="screenshotThreshold">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -670,41 +666,41 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="decimals">
-          <number>2</number>
-         </property>
-         <property name="maximum">
-          <double>5.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.100000000000000</double>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_8">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="decimals">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <double>5.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_8">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -727,16 +723,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>截图起始点（百分比）：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="screenshotStart">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>截图起始点（百分比）：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="screenshotStart">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -759,25 +755,25 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="decimals">
-          <number>2</number>
-         </property>
-         <property name="maximum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.100000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="label_5">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="decimals">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.100000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -800,16 +796,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>截图终止点（百分比）：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QDoubleSpinBox" name="screenshotEnd">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>截图终止点（百分比）：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QDoubleSpinBox" name="screenshotEnd">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -832,41 +828,41 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="decimals">
-          <number>2</number>
-         </property>
-         <property name="maximum">
-          <double>1.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.900000000000000</double>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_9">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QCheckBox" name="autoUploadScreenshot">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="decimals">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <double>1.000000000000000</double>
+        </property>
+        <property name="singleStep">
+         <double>0.010000000000000</double>
+        </property>
+        <property name="value">
+         <double>0.900000000000000</double>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_9">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="autoUploadScreenshot">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -889,19 +885,19 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>自动上传图床</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="pasteScreenshotUrl">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>自动上传图床</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="pasteScreenshotUrl">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -924,19 +920,19 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>将链接粘贴到简介后</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="deleteScreenshot">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>将链接粘贴到简介后</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="deleteScreenshot">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -959,35 +955,42 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>上传后删除本地图片</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_10">
-       <property name="leftMargin">
-        <number>5</number>
-       </property>
-       <property name="topMargin">
-        <number>5</number>
-       </property>
-       <property name="rightMargin">
-        <number>5</number>
-       </property>
-       <property name="bottomMargin">
-        <number>5</number>
-       </property>
-       <item>
-        <widget class="QLabel" name="label_10">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>上传后删除本地图片</string>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_11">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QCheckBox" name="getThumbnails">
+        <property name="text">
+         <string>生成缩略图</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_13">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -1010,16 +1013,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>获取标准命名时：</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="renameFile">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>横向数量：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="rows">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -1042,19 +1045,22 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>自动将文件（文件夹）重命名</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="makeDir">
-         <property name="styleSheet">
-          <string>QPushButton {
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>9</number>
+        </property>
+        <property name="value">
+         <number>4</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_14">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -1077,48 +1083,16 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-         </property>
-         <property name="text">
-          <string>将文件放入同名文件夹</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_9">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>20</height>
-        </size>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>说明</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_11">
-       <property name="maximumSize">
-        <size>
-         <width>16777215</width>
-         <height>220</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string>QPushButton {
+        </property>
+        <property name="text">
+         <string>纵向数量：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="cols">
+        <property name="styleSheet">
+         <string>QPushButton {
     display: inline-block;
     padding: 5px 5px;
     font-size: 16px;
@@ -1141,9 +1115,194 @@ QPushButton:pressed {
     background-color: #3c6f1b;
 }
 </string>
-       </property>
-       <property name="text">
-        <string>截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。
+        </property>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>9</number>
+        </property>
+        <property name="value">
+         <number>4</number>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_10">
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_10">
+        <property name="styleSheet">
+         <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>获取标准命名时：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="renameFile">
+        <property name="styleSheet">
+         <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>自动将文件（文件夹）重命名</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="makeDir">
+        <property name="styleSheet">
+         <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+        </property>
+        <property name="text">
+         <string>将文件放入同名文件夹</string>
+        </property>
+        <property name="checked">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_9">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>20</height>
+       </size>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>说明</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_11">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>220</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+      </property>
+      <property name="text">
+       <string>截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。
 关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，过大会导致截图数量不足。
 截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。
 截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。
@@ -1156,21 +1315,21 @@ QPushButton:pressed {
 https://img.agsvpt.com/
 https://freeimage.host/
 图床的api地址和密钥请到图床主页获取。</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <property name="leftMargin">
-        <number>30</number>
-       </property>
-       <property name="rightMargin">
-        <number>30</number>
-       </property>
-       <item>
-        <widget class="QPushButton" name="saveButton">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>30</number>
+      </property>
+      <property name="rightMargin">
+       <number>30</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="saveButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
     display: inline-block;
     padding: 6px 6px;
     font-size: 14px;
@@ -1202,16 +1361,16 @@ QPushButton:pressed {
                                       stop:1 #0e925c);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>保存</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="cancelButton">
-         <property name="styleSheet">
-          <string notr="true">QPushButton {
+        </property>
+        <property name="text">
+         <string>保存</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="cancelButton">
+        <property name="styleSheet">
+         <string notr="true">QPushButton {
     display: inline-block;
     padding: 6px 6px;
     font-size: 14px;
@@ -1243,17 +1402,16 @@ QPushButton:pressed {
                                       stop:1 #0e925c);
 }
 </string>
-         </property>
-         <property name="text">
-          <string>取消</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-    </layout>
-   </item>
-  </layout>
+        </property>
+        <property name="text">
+         <string>取消</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
  </widget>
  <resources/>
  <connections/>

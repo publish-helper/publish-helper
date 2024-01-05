@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog
 from mediainfo import get_media_info
 from ptgen import fetch_and_format_ptgen_data
 from rename import extract_details_from_ptgen, get_video_info
-from screenshot import extract_complex_keyframes, upload_screenshot, upload_free_screenshot
+from screenshot import extract_complex_keyframes, upload_screenshot, upload_free_screenshot, get_thumbnails
 from tool import update_settings, get_settings, get_file_path, rename_file_with_same_extension, move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names
 from ui.mainwindow import Ui_Mainwindow
@@ -37,11 +37,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.upload_picture_thread2 = None
         self.upload_picture_thread3 = None
         self.upload_picture_thread4 = None
+        self.upload_picture_thread5 = None
         self.upload_free_picture_thread0 = None
         self.upload_free_picture_thread1 = None
         self.upload_free_picture_thread2 = None
         self.upload_free_picture_thread3 = None
         self.upload_free_picture_thread4 = None
+        self.upload_free_picture_thread5 = None
         self.make_torrent_thread = None
 
         # 初始化
@@ -137,6 +139,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             screenshotThreshold = float(get_settings("screenshotThreshold"))
             screenshotStart = float(get_settings("screenshotStart"))
             screenshotEnd = float(get_settings("screenshotEnd"))
+            getThumbnails = bool(get_settings("getThumbnails"))
+            rows = int(get_settings("rows"))
+            cols = int(get_settings("cols"))
             autoUploadScreenshot = bool(get_settings("autoUploadScreenshot"))
             self.debugBrowser.append("参数获取成功，开始执行截图函数")
 
@@ -145,9 +150,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshotEnd, min_interval_pct=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowser.append("成功获取截图函数的返回值")
+            if getThumbnails:
+                get_thumbnails_success, sv_path =get_thumbnails(videoPath, screenshotPath, rows, cols, screenshotStart, screenshotEnd)
+                if get_thumbnails_success:
+                    res.append(sv_path)
+            self.debugBrowser.append("成功获取截图：" + str(res))
             if screenshot_success:
                 # 判断是否需要上传图床
-                self.debugBrowser.append("成功获取截图：" + str(res))
                 if autoUploadScreenshot:
                     self.debugBrowser.append("开始自动上传截图到图床" + figureBedPath)
                     self.pictureUrlBrowser.setText("")
@@ -172,6 +181,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread4 = UploadPictureThread(figureBedPath, figureBedToken, res[4])
                             self.upload_picture_thread4.result_signal.connect(self.handleUploadPictureResult)  # 连接信号
                             self.upload_picture_thread4.start()  # 启动线程
+                        if len(res) > 5:
+                            self.upload_picture_thread5 = UploadPictureThread(figureBedPath, figureBedToken, res[5],
+                                                                              False)
+                            self.upload_picture_thread5.result_signal.connect(self.handleUploadPictureResult)  # 连接信号
+                            self.upload_picture_thread5.start()  # 启动线程
                         print("上传图床线程启动")
                         self.debugBrowser.append("上传图床线程启动")
                     else:
@@ -205,6 +219,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_free_picture_thread4.result_signal.connect(
                                 self.handleUploadFreePictureResult)  # 连接信号
                             self.upload_free_picture_thread4.start()  # 启动线程
+                        if len(res) > 5:
+                            self.upload_free_picture_thread5 = UploadFreePictureThread(figureBedPath, figureBedToken,
+                                                                                       res[5], False)
+                            self.upload_free_picture_thread5.result_signal.connect(
+                                self.handleUploadFreePictureResult)  # 连接信号
+                            self.upload_free_picture_thread5.start()  # 启动线程
                         print("上传图床线程启动")
                         self.debugBrowser.append("上传图床线程启动")
                 else:
@@ -497,6 +517,9 @@ class settings(QDialog, Ui_Settings):
         self.screenshotThreshold.setValue(float(get_settings("screenshotThreshold")))
         self.screenshotStart.setValue(float(get_settings("screenshotStart")))
         self.screenshotEnd.setValue(float(get_settings("screenshotEnd")))
+        self.getThumbnails.setChecked(bool(get_settings("getThumbnails")))
+        self.rows.setValue(int(get_settings("rows")))
+        self.cols.setValue(int(get_settings("cols")))
         self.autoUploadScreenshot.setChecked(bool(get_settings("autoUploadScreenshot")))
         self.pasteScreenshotUrl.setChecked(bool(get_settings("pasteScreenshotUrl")))
         self.deleteScreenshot.setChecked(bool(get_settings("deleteScreenshot")))
@@ -513,6 +536,12 @@ class settings(QDialog, Ui_Settings):
         update_settings("screenshotThreshold", str(self.screenshotThreshold.text()))
         update_settings("screenshotStart", str(self.screenshotStart.text()))
         update_settings("screenshotEnd", str(self.screenshotEnd.text()))
+        if self.getThumbnails.isChecked():
+            update_settings("getThumbnails", "True")
+        else:
+            update_settings("getThumbnails", "")
+        update_settings("rows", str(self.rows.text()))
+        update_settings("cols", str(self.cols.text()))
         if self.autoUploadScreenshot.isChecked():
             update_settings("autoUploadScreenshot", "True")
         else:
