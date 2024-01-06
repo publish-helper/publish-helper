@@ -24,7 +24,7 @@ def extract_details_from_ptgen(data):
     print("获取的名称" + str(separated_names))
 
     english_name = ""
-    english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\<\>\`\~\d\u2160-\u2188]+$"
+    english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$"
     for name in separated_names:
         if re.match(english_pattern, name):
             english_name = name
@@ -32,7 +32,7 @@ def extract_details_from_ptgen(data):
             break
 
     chinese_name = ""
-    chinese_pattern = r"[\u4e00-\u9fff\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{\}\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+"
+    chinese_pattern = r"[\u4e00-\u9fff\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+"
     for name in separated_names:
         if re.search(chinese_pattern, name) and not re.match(english_pattern, name):
             chinese_name = name
@@ -50,7 +50,7 @@ def extract_details_from_ptgen(data):
     # Find the index where actor information starts
     actor_idx = -1
     for i, line in enumerate(lines):
-        if line.startswith('◎演　　员'):
+        if line.startswith('◎演　　员' or '◎主　　演'):
             actor_idx = i
             break
 
