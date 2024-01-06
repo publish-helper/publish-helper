@@ -127,7 +127,7 @@ def get_thumbnails(video_path, output_path, cols, rows, start_pct, end_pct):
         if len(images) < (rows * cols):
             print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {rows * cols} 张")
 
-        resized_images = [cv2.resize(image, (0, 0), fx=1.0/cols, fy=1.0/cols) for image in images]
+        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / cols, fy=1.0 / cols) for image in images]
 
         border_size = 5
         concatenated_image = np.ones((rows * (resized_images[0].shape[0] + 2 * border_size),
@@ -142,7 +142,7 @@ def get_thumbnails(video_path, output_path, cols, rows, start_pct, end_pct):
                 x_offset = j * (resized_images[0].shape[1] + 2 * border_size) + border_size
 
                 concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
-                                   x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
+                x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
 
         sv_path = generate_image_filename(output_path)
         cv2.imwrite(sv_path, concatenated_image)

@@ -151,7 +151,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowser.append("成功获取截图函数的返回值")
             if getThumbnails:
-                get_thumbnails_success, sv_path =get_thumbnails(videoPath, screenshotPath, rows, cols, screenshotStart, screenshotEnd)
+                get_thumbnails_success, sv_path = get_thumbnails(videoPath, screenshotPath, rows, cols, screenshotStart,
+                                                                 screenshotEnd)
                 if get_thumbnails_success:
                     res.append(sv_path)
             self.debugBrowser.append("成功获取截图：" + str(res))
@@ -470,7 +471,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowser.append("制作种子线程启动成功")
         else:
-            self.debugBrowser.append("制作种子失败："+videoPath)
+            self.debugBrowser.append("制作种子失败：" + videoPath)
 
     def handleMakeTorrentResult(self, get_success, response):
         if get_success:

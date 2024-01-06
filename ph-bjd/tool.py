@@ -198,7 +198,6 @@ def check_path_and_find_video(path):
     if path.startswith('file:///'):
         path = path.replace('file:///', '', 1)
 
-
     # 检查路径是否是一个文件
     if os.path.isfile(path):
         if any(path.endswith(ext) for ext in video_extensions):

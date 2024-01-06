@@ -45,8 +45,6 @@ def extract_details_from_ptgen(data):
     # 类别
     category = category_match.group(1).strip() if category_match else None
 
-    lines = data.split('\n')
-
     # 正则表达式匹配“◎主　　演”行和接下来的四行
     actor_pattern = r'◎主　　演\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n' or r'◎演　　员\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n'
     actor_match = re.search(actor_pattern, data, re.DOTALL)

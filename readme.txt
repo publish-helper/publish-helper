@@ -23,9 +23,7 @@ static/team.json
 
 软件获取地址：
 
-度盘链接：https://pan.baidu.com/s/1v6C-6R0ZZbMxUKHEQDTq4A?pwd=24hm 提取码：24hm
-
-夸克链接：https://pan.quark.cn/s/08e28c8ec14c 提取码：kfTK
+https://gitee.com/bjdbjd/ph-bjd-movie/releases
 
 Python 3.10
 
