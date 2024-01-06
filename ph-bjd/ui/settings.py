@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
-        Settings.resize(641, 735)
+        Settings.resize(646, 735)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(Settings)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -1039,7 +1039,7 @@ class Ui_Settings(object):
 "截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。\n"
 "对文件夹处理时仅获取其中第一个视频的参数信息，并仅对文件夹重命名。\n"
 "制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。\n"
-"一键启动功能为避免线程冲突增加了等待时间，执行完需要5-10秒，请耐心等待，切勿反复点击。\n"
+"一键启动为避免冲突增加了等待时间，执行完需要5-10秒，耐心等待勿反复点击，Pt-Gen连接性不好的不建议使用。\n"
 "文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。\n"
 "\n"
 "目前支持的图床：\n"

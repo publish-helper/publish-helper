@@ -47,28 +47,19 @@ def extract_details_from_ptgen(data):
 
     lines = data.split('\n')
 
-    # Find the index where actor information starts
-    actor_idx = -1
-    for i, line in enumerate(lines):
-        if line.startswith('◎演　　员' or '◎主　　演'):
-            actor_idx = i
-            break
+    # 正则表达式匹配“◎主　　演”行和接下来的四行
+    actor_pattern = r'◎主　　演\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n' or r'◎演　　员\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n'
+    actor_match = re.search(actor_pattern, data, re.DOTALL)
 
-    # Extract the first five actors' names
     actors = []
-    if actor_idx != -1:
-        # Extract the first actor's name from the line with "◎演　　员"
-        first_actor = lines[actor_idx].split('　')[-1].split()[0]
-        actors.append(first_actor)
-
-        # Extract the next four actors' names
-        for line in lines[actor_idx + 1:]:
-            # Check if we have already collected five actors or the line is not an actor line
-            if len(actors) >= 5 or not line.startswith('　　　　　'):
-                break
-            # Extract the actor's Chinese name
-            chinese_actor_name = line.split()[0]
-            actors.append(chinese_actor_name)
+    if actor_match:
+        for i in range(1, 6):
+            # 提取并清洗演员名称，只保留中文部分
+            cleaned_actor = re.search(r"[\u4e00-\u9fff\·]+", actor_match.group(i))
+            if cleaned_actor:
+                actors.append(cleaned_actor.group())
+                if len(actors) == 5:  # 提取前五个演员后停止
+                    break
 
     print("中文名称:", chinese_name)
     print("英文名称:", english_name)
