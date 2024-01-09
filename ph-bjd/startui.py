@@ -19,7 +19,7 @@ from ui.settings import Ui_Settings
 def starui():
     app = QApplication(sys.argv)
     myMainwindow = mainwindow()
-    myico = QIcon("static/apr-bjd.ico")
+    myico = QIcon("static/ph-bjd.ico")
     myMainwindow.setWindowIcon(myico)
     myMainwindow.show()
     sys.exit(app.exec())
@@ -94,7 +94,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def settingsClicked(self):  # click对应的槽函数
         self.mySettings = settings()
         self.mySettings.getSettings()
-        myico = QIcon("static/apr-bjd.ico")
+        myico = QIcon("static/ph-bjd.ico")
         self.mySettings.setWindowIcon(myico)
         self.mySettings.show()  # 加上self避免页面一闪而过
 
