@@ -47,11 +47,10 @@ def get_media_info(file_path):
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
                         output += f"{label:36}: {value}\n"
-                output += "\n"
 
             elif track["track_type"] == "Video":
                 # 处理 Video 类型的 track
-                output += "Video\n"
+                output += "\nVideo\n"
                 for key, label in [
                     ("track_id", "ID"),
                     ("other_format", "Format"),
@@ -93,7 +92,6 @@ def get_media_info(file_path):
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
                         output += f"{label:36}: {value}\n"
-                output += "\n"
 
             elif track["track_type"] == "Audio":
                 # 处理 Audio 类型的 track
@@ -128,7 +126,6 @@ def get_media_info(file_path):
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
                         output += f"{label:36}: {value}\n"
-                output += "\n"
 
             elif track["track_type"] == "Text":
                 # 处理 Text 类型的 track
