@@ -150,8 +150,8 @@ def get_media_info(file_path):
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
                         output += f"{label:36}: {value}\n"
-                output += "\n"
-        output += "Created by ph-bjd"
+
+        output += "\nCreated by ph-bjd"
 
         return True, output
 
