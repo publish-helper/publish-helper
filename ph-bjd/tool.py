@@ -3,8 +3,9 @@ import json
 import os
 import random
 import shutil
-from tkinter import filedialog, Tk
 from datetime import datetime
+from tkinter import filedialog, Tk
+
 from torf import Torrent
 
 
