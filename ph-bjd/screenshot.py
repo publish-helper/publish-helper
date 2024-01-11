@@ -48,7 +48,6 @@ def extract_complex_keyframes(video_path, output_path, num_images, some_threshol
 
         # 初始化变量
         extracted_images = []
-        bbsurls = ""
         last_keyframe_time = -min_interval
 
         # 生成随机时间戳

@@ -3,7 +3,6 @@ import json
 import os
 import random
 import shutil
-from datetime import datetime
 from tkinter import filedialog, Tk
 
 from torf import Torrent
@@ -244,7 +243,7 @@ def create_torrent(folder_path, torrent_path):
             os.remove(torrent_file_path)
 
         # 获取当前时间
-        current_time = datetime.now()
+        current_time = datetime.datetime.now()
 
         # 创建 Torrent 对象，添加当前时间作为创建时间
         t = Torrent(path=folder_path, trackers=['http://tracker.example.com/announce'], created_by='ph-bjd',
