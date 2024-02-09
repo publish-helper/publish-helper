@@ -122,6 +122,7 @@ def move_file_to_folder(file_name, folder_name):
     # 获取文件的目录和文件名
     print("开始移动文件", file_name, folder_name)
     file_dir, file_base = os.path.split(file_name)
+    print(file_base, file_dir)
 
     # 检查文件是否已在目标文件夹中
     if os.path.basename(file_dir) == folder_name:
