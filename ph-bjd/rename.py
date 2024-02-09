@@ -58,6 +58,10 @@ def extract_details_from_ptgen(data):
                 actors.append(cleaned_actor.group())
                 if len(actors) == 5:  # 提取前五个演员后停止
                     break
+    special_characters = r'\/:*?"<>|'
+    for char in special_characters:
+        chinese_name = chinese_name.replace(char, '_')
+        english_name = english_name.replace(char, "_")
 
     print("中文名称:", chinese_name)
     print("英文名称:", english_name)

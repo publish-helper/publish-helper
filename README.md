@@ -1,4 +1,4 @@
-Publish Helper for Movie v1.1.7
+Publish Helper for Movie v1.1.8
 
 使用前务必请先看设置！！！
 
