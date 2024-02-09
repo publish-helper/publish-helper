@@ -24,6 +24,7 @@ def fetch_and_format_ptgen_data(api_url, resource_url):
         # 返回处理后的format字段
         # print(format_data)
         format_data += '\n'
+        format_data = format_data.replace('img1', 'img2')
         return True, format_data
 
     except requests.Timeout:
