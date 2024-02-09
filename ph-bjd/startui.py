@@ -409,6 +409,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 # print(channel_layout)
                 # print(team)
                 mainTitle = first_english_name + ' ' + year + ' ' + width + ' ' + source + ' ' + format + ' ' + hdr_format + ' ' + commercial_name + ' ' + channel_layout + '-' + team
+                mainTitle = mainTitle.replace('_', ' ')
+                mainTitle = mainTitle.replace('  ', ' ')
                 mainTitle = mainTitle.replace('  ', ' ')
                 print("MainTitle" + mainTitle)
                 secondTitle = (first_chinese_name + other_names + ' | 类型：' + category + ' | 主演：' + actors)
