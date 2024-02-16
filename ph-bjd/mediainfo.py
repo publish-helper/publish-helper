@@ -24,6 +24,7 @@ def get_media_info(file_path):
         audio_count, text_count = 1, 1
 
         # 遍历所有 track
+        # print(data)
         for track in data["tracks"]:
             if track["track_type"] == "General":
                 # 处理 General 类型的 track
@@ -39,10 +40,14 @@ def get_media_info(file_path):
                     ("other_overall_bit_rate", "Overall bit rate"),
                     ("other_frame_rate", "Frame rate"),
                     ("movie_name", "Movie name"),
+                    ("album", "Album"),
+                    ("description", "Description"),
                     ("encoded_date", "Encoded date"),
                     ("writing_application", "Writing application"),
                     ("writing_library", "Writing library"),
-                    ("comment", "Comment")
+                    ("comment", "Comment"),
+                    ("cover", "Cover"),
+                    ("attachments", "Attachments")
                 ]:
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
@@ -52,7 +57,8 @@ def get_media_info(file_path):
                 # 处理 Video 类型的 track
                 output += "\nVideo\n"
                 for key, label in [
-                    ("track_id", "ID"),
+                    ("other_track_id", "ID"),
+                    ("other_id_in_the_original_source_medium", "ID in the original source medium"),
                     ("other_format", "Format"),
                     ("format_info", "Format/Info"),
                     ("format_profile", "Format profile"),
@@ -74,6 +80,7 @@ def get_media_info(file_path):
                     ("scan_type", "Scan type"),
                     ("bits__pixel_frame", "Bits/(Pixel*Frame)"),
                     ("other_stream_size", "Stream size"),
+                    ("other_language", "Language"),
                     ("other_writing_library", "Writing library"),
                     ("encoding_settings", "Encoding settings"),
                     ("default", "Default"),
@@ -88,6 +95,9 @@ def get_media_info(file_path):
                     ("maxcll_original", "MaxCLL Original"),
                     ("maximum_frameaverage_light_level", "Maximum Frame-Average Light Level"),
                     ("maxfall_original", "MaxFALL Original"),
+                    ("original_source_medium", "Original source medium"),
+                    ("sei_rbsp_stop_one_bit", "SEI_rbsp_stop_one_bit"),
+                    ("codec_configuration_box", "Codec configuration box"),
                 ]:
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
@@ -98,7 +108,8 @@ def get_media_info(file_path):
                 output += f"\nAudio #{audio_count}\n"
                 audio_count += 1
                 for key, label in [
-                    ("track_id", "ID"),
+                    ("other_track_id", "ID"),
+                    ("other_id_in_the_original_source_medium", "ID in the original source medium"),
                     ("other_format", "Format"),
                     ("format_info", "Format/Info"),
                     ("other_commercial_name", "Commercial name"),
@@ -111,20 +122,25 @@ def get_media_info(file_path):
                     ("channel_layout", "Channel layout"),
                     ("other_sampling_rate", "Sampling rate"),
                     ("other_frame_rate", "Frame rate"),
+                    ("other_bit_depth", "Bit depth"),
                     ("other_compression_mode", "Compression mode"),
                     ("other_delay_relative_to_video", "Delay relative to video"),
                     ("other_stream_size", "Stream size"),
                     ("title", "Title"),
                     ("other_language", "Language"),
                     ("default", "Default"),
-                    ("forced", "Forced"),
+                    ("other_forced", "Forced"),
+                    ("original_source_medium", "Original source medium"),
                     ("complexity_index", "Complexity index"),
                     ("number_of_dynamic_objects", "Number of dynamic objects"),
                     ("other_bed_channel_count", "Bed channel count"),
                     ("bed_channel_configuration", "Bed channel configuration"),
+                    ("alternate_group", "Alternate group"),
                 ]:
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
+                        if label == "Delay relative to video" and value == "00:00:00.000":
+                            continue
                         output += f"{label:36}: {value}\n"
 
             elif track["track_type"] == "Text":
@@ -133,6 +149,7 @@ def get_media_info(file_path):
                 text_count += 1
                 for key, label in [
                     ("other_track_id", "ID"),
+                    ("other_id_in_the_original_source_medium", "ID in the original source medium"),
                     ("other_format", "Format"),
                     ("muxing_mode", "Muxing mode"),
                     ("codec_id", "Codec ID"),
@@ -146,10 +163,20 @@ def get_media_info(file_path):
                     ("other_language", "Language"),
                     ("default", "Default"),
                     ("forced", "Forced"),
+                    ("original_source_medium", "Original source medium"),
                 ]:
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
                         output += f"{label:36}: {value}\n"
+
+            # elif track["track_type"] == "Menu":
+            #     chapter_regex = re.compile(r'(\d{2}):(\d{2}):(\d{2}\.\d{3})\s+\:\s+en:(Chapter \d+)')
+            #     chapters = {chapter_regex.search(value).group(4): f"{match.group(1)}:{match.group(2)}:{match.group(3)}"
+            #                 for value, match in [(value, chapter_regex.search(value)) for value in data.values() if
+            #                                      chapter_regex.search(value)]}
+            #     for chapter, timestamp in chapters.items():
+            #         print(f"{timestamp} - {chapter}")
+            #         output += f"{timestamp:36}: {chapter}\n"
 
         output += "\nCreated by ph-bjd"
 
