@@ -133,6 +133,7 @@ def get_media_info(file_path):
                     ("other_stream_size", "Stream size"),
                     ("title", "Title"),
                     ("other_language", "Language"),
+                    ("other_service_kind", "Service kind"),
                     ("default", "Default"),
                     ("other_forced", "Forced"),
                     ("original_source_medium", "Original source medium"),
