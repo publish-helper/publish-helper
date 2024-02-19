@@ -25,6 +25,8 @@ static/team.json
 
 https://gitee.com/bjdbjd/publish-helper/releases
 
+更新时只需要保留static文件夹即可将配置完美迁移
+
 Python 3.10
 
 Created by bjd
