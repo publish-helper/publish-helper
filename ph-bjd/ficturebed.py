@@ -4,14 +4,12 @@ import json
 import requests
 
 
-
 def upload_screenshot(api_url, api_token, frame_path):
     if api_url == 'https://img.agsvpt.com/api/upload/':
         return agsv_ficture_bed(api_url, api_token, frame_path)
     if api_url == 'https://freeimage.host/api/1/upload':
         return freeimage_ficture_bed(api_url, api_token, frame_path)
     return False, '图床暂不支持'
-
 
 
 def agsv_ficture_bed(api_url, api_token, frame_path):

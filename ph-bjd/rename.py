@@ -32,7 +32,8 @@ def extract_details_from_ptgen(data):
             break
 
     chinese_name = ""
-    chinese_pattern = r"[\u4e00-\u9fff\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+"
+    chinese_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
+                       r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
     for name in separated_names:
         if re.search(chinese_pattern, name) and not re.match(english_pattern, name):
             chinese_name = name
@@ -53,7 +54,7 @@ def extract_details_from_ptgen(data):
     if actor_match:
         for i in range(1, 6):
             # 提取并清洗演员名称，只保留中文部分
-            cleaned_actor = re.search(r"[\u4e00-\u9fff\·]+", actor_match.group(i))
+            cleaned_actor = re.search(r"[\u4e00-\u9fa5·]+", actor_match.group(i))
             if cleaned_actor:
                 actors.append(cleaned_actor.group())
                 if len(actors) == 5:  # 提取前五个演员后停止
@@ -73,7 +74,7 @@ def extract_details_from_ptgen(data):
     return chinese_name, english_name, year_match.group(1) if year_match else None, other_names, category, actors
 
 
-def get_video_info(file_path):
+def get_video_info(file_path, is_landscape):
     if not os.path.exists(file_path):
         print("文件路径不存在")
         return False, ["视频文件路径不存在"]
@@ -91,8 +92,10 @@ def get_video_info(file_path):
                 pass
                 # ... 添加其他General信息
             elif track.track_type == "Video":
-                if track.other_width:
+                if is_landscape:
                     width = track.other_width[0]
+                else:
+                    width = track.other_height[0]
                 if track.other_format:
                     format = track.other_format[0]
                 if track.other_hdr_format:

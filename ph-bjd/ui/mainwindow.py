@@ -20,8 +20,8 @@ class Ui_Mainwindow(object):
         Mainwindow.setStyleSheet("")
         self.centralwidget = QtWidgets.QWidget(parent=Mainwindow)
         self.centralwidget.setObjectName("centralwidget")
-        self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.centralwidget)
-        self.verticalLayout_11.setObjectName("verticalLayout_11")
+        self.verticalLayout_43 = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.verticalLayout_43.setObjectName("verticalLayout_43")
         self.label_7 = QtWidgets.QLabel(parent=self.centralwidget)
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
@@ -29,9 +29,9 @@ class Ui_Mainwindow(object):
         self.label_7.setFont(font)
         self.label_7.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_7.setObjectName("label_7")
-        self.verticalLayout_11.addWidget(self.label_7)
-        self.TabWiget = QtWidgets.QTabWidget(parent=self.centralwidget)
-        self.TabWiget.setObjectName("TabWiget")
+        self.verticalLayout_43.addWidget(self.label_7)
+        self.tabWiget = QtWidgets.QTabWidget(parent=self.centralwidget)
+        self.tabWiget.setObjectName("tabWiget")
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(self.tab)
@@ -535,17 +535,497 @@ class Ui_Mainwindow(object):
         self.horizontalLayout_9.addWidget(self.startButtonMovie)
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
         self.verticalLayout_12.addLayout(self.verticalLayout_6)
-        self.TabWiget.addTab(self.tab, "")
+        self.tabWiget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
-        self.label_32 = QtWidgets.QLabel(parent=self.tab_2)
-        self.label_32.setGeometry(QtCore.QRect(410, 240, 381, 161))
+        self.verticalLayout_41 = QtWidgets.QVBoxLayout(self.tab_2)
+        self.verticalLayout_41.setObjectName("verticalLayout_41")
+        self.verticalLayout_31 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_31.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_31.setObjectName("verticalLayout_31")
+        self.horizontalLayout_30 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_30.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_30.setObjectName("horizontalLayout_30")
+        self.verticalLayout_32 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_32.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_32.setObjectName("verticalLayout_32")
+        self.verticalLayout_33 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_33.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_33.setObjectName("verticalLayout_33")
+        self.label_45 = QtWidgets.QLabel(parent=self.tab_2)
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
-        font.setPointSize(26)
-        self.label_32.setFont(font)
-        self.label_32.setObjectName("label_32")
-        self.TabWiget.addTab(self.tab_2, "")
+        font.setPointSize(16)
+        self.label_45.setFont(font)
+        self.label_45.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_45.setObjectName("label_45")
+        self.verticalLayout_33.addWidget(self.label_45)
+        self.horizontalLayout_31 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_31.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_31.setObjectName("horizontalLayout_31")
+        self.verticalLayout_34 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_34.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_34.setObjectName("verticalLayout_34")
+        self.label_46 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.label_46.setFont(font)
+        self.label_46.setObjectName("label_46")
+        self.verticalLayout_34.addWidget(self.label_46)
+        self.ptGenUrlTV = QtWidgets.QLineEdit(parent=self.tab_2)
+        self.ptGenUrlTV.setText("")
+        self.ptGenUrlTV.setClearButtonEnabled(True)
+        self.ptGenUrlTV.setObjectName("ptGenUrlTV")
+        self.verticalLayout_34.addWidget(self.ptGenUrlTV)
+        self.horizontalLayout_31.addLayout(self.verticalLayout_34)
+        self.verticalLayout_42 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_42.setContentsMargins(2, 2, 2, 2)
+        self.verticalLayout_42.setObjectName("verticalLayout_42")
+        self.horizontalLayout_39 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_39.setObjectName("horizontalLayout_39")
+        self.label_58 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(9)
+        self.label_58.setFont(font)
+        self.label_58.setObjectName("label_58")
+        self.horizontalLayout_39.addWidget(self.label_58)
+        self.verticalLayout_42.addLayout(self.horizontalLayout_39)
+        self.horizontalLayout_40 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_40.setObjectName("horizontalLayout_40")
+        self.seasonBoxTV = QtWidgets.QSpinBox(parent=self.tab_2)
+        self.seasonBoxTV.setMinimum(1)
+        self.seasonBoxTV.setObjectName("seasonBoxTV")
+        self.horizontalLayout_40.addWidget(self.seasonBoxTV)
+        self.verticalLayout_42.addLayout(self.horizontalLayout_40)
+        self.horizontalLayout_31.addLayout(self.verticalLayout_42)
+        self.verticalLayout_35 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_35.setContentsMargins(2, 2, 2, 2)
+        self.verticalLayout_35.setObjectName("verticalLayout_35")
+        self.horizontalLayout_32 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_32.setObjectName("horizontalLayout_32")
+        self.label_47 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(9)
+        self.label_47.setFont(font)
+        self.label_47.setObjectName("label_47")
+        self.horizontalLayout_32.addWidget(self.label_47)
+        self.sourceTV = QtWidgets.QComboBox(parent=self.tab_2)
+        self.sourceTV.setEditable(True)
+        self.sourceTV.setObjectName("sourceTV")
+        self.horizontalLayout_32.addWidget(self.sourceTV)
+        self.verticalLayout_35.addLayout(self.horizontalLayout_32)
+        self.horizontalLayout_33 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_33.setObjectName("horizontalLayout_33")
+        self.label_48 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(9)
+        self.label_48.setFont(font)
+        self.label_48.setObjectName("label_48")
+        self.horizontalLayout_33.addWidget(self.label_48)
+        self.teamTV = QtWidgets.QComboBox(parent=self.tab_2)
+        self.teamTV.setEditable(True)
+        self.teamTV.setObjectName("teamTV")
+        self.horizontalLayout_33.addWidget(self.teamTV)
+        self.verticalLayout_35.addLayout(self.horizontalLayout_33)
+        self.horizontalLayout_31.addLayout(self.verticalLayout_35)
+        self.verticalLayout_33.addLayout(self.horizontalLayout_31)
+        self.horizontalLayout_34 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_34.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_34.setObjectName("horizontalLayout_34")
+        self.label_49 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.label_49.setFont(font)
+        self.label_49.setObjectName("label_49")
+        self.horizontalLayout_34.addWidget(self.label_49)
+        self.videoPathTV = QtWidgets.QLineEdit(parent=self.tab_2)
+        self.videoPathTV.setText("")
+        self.videoPathTV.setDragEnabled(True)
+        self.videoPathTV.setClearButtonEnabled(True)
+        self.videoPathTV.setObjectName("videoPathTV")
+        self.horizontalLayout_34.addWidget(self.videoPathTV)
+        self.selectVideoFolderButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.selectVideoFolderButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 3px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.selectVideoFolderButtonTV.setObjectName("selectVideoFolderButtonTV")
+        self.horizontalLayout_34.addWidget(self.selectVideoFolderButtonTV)
+        self.makeTorrentButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.makeTorrentButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 3px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.makeTorrentButtonTV.setObjectName("makeTorrentButtonTV")
+        self.horizontalLayout_34.addWidget(self.makeTorrentButtonTV)
+        self.verticalLayout_33.addLayout(self.horizontalLayout_34)
+        self.verticalLayout_32.addLayout(self.verticalLayout_33)
+        self.verticalLayout_36 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_36.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_36.setObjectName("verticalLayout_36")
+        self.label_50 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(16)
+        self.label_50.setFont(font)
+        self.label_50.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_50.setObjectName("label_50")
+        self.verticalLayout_36.addWidget(self.label_50)
+        self.ptGenBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.ptGenBrowserTV.setObjectName("ptGenBrowserTV")
+        self.verticalLayout_36.addWidget(self.ptGenBrowserTV)
+        self.getPtGenButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.getPtGenButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 6px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.getPtGenButtonTV.setObjectName("getPtGenButtonTV")
+        self.verticalLayout_36.addWidget(self.getPtGenButtonTV)
+        self.verticalLayout_32.addLayout(self.verticalLayout_36)
+        self.verticalLayout_37 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_37.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_37.setObjectName("verticalLayout_37")
+        self.label_51 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(16)
+        self.label_51.setFont(font)
+        self.label_51.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_51.setObjectName("label_51")
+        self.verticalLayout_37.addWidget(self.label_51)
+        self.pictureUrlBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.pictureUrlBrowserTV.setObjectName("pictureUrlBrowserTV")
+        self.verticalLayout_37.addWidget(self.pictureUrlBrowserTV)
+        self.getPictureButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.getPictureButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 6px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.getPictureButtonTV.setObjectName("getPictureButtonTV")
+        self.verticalLayout_37.addWidget(self.getPictureButtonTV)
+        self.verticalLayout_32.addLayout(self.verticalLayout_37)
+        self.horizontalLayout_30.addLayout(self.verticalLayout_32)
+        self.verticalLayout_38 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_38.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_38.setObjectName("verticalLayout_38")
+        self.verticalLayout_39 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_39.setContentsMargins(3, 3, 3, 3)
+        self.verticalLayout_39.setObjectName("verticalLayout_39")
+        self.label_52 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(16)
+        self.label_52.setFont(font)
+        self.label_52.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_52.setObjectName("label_52")
+        self.verticalLayout_39.addWidget(self.label_52)
+        self.debugBrowserTV = QtWidgets.QTextBrowser(parent=self.tab_2)
+        self.debugBrowserTV.setObjectName("debugBrowserTV")
+        self.verticalLayout_39.addWidget(self.debugBrowserTV)
+        self.verticalLayout_38.addLayout(self.verticalLayout_39)
+        self.label_53 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(16)
+        self.label_53.setFont(font)
+        self.label_53.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_53.setObjectName("label_53")
+        self.verticalLayout_38.addWidget(self.label_53)
+        self.horizontalLayout_35 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_35.setContentsMargins(0, 3, 0, 3)
+        self.horizontalLayout_35.setObjectName("horizontalLayout_35")
+        self.label_54 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.label_54.setFont(font)
+        self.label_54.setObjectName("label_54")
+        self.horizontalLayout_35.addWidget(self.label_54)
+        self.mainTitleBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.mainTitleBrowserTV.setObjectName("mainTitleBrowserTV")
+        self.horizontalLayout_35.addWidget(self.mainTitleBrowserTV)
+        self.verticalLayout_38.addLayout(self.horizontalLayout_35)
+        self.horizontalLayout_36 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_36.setContentsMargins(0, 3, 0, 3)
+        self.horizontalLayout_36.setObjectName("horizontalLayout_36")
+        self.label_55 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.label_55.setFont(font)
+        self.label_55.setObjectName("label_55")
+        self.horizontalLayout_36.addWidget(self.label_55)
+        self.secondTitleBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.secondTitleBrowserTV.setObjectName("secondTitleBrowserTV")
+        self.horizontalLayout_36.addWidget(self.secondTitleBrowserTV)
+        self.verticalLayout_38.addLayout(self.horizontalLayout_36)
+        self.horizontalLayout_37 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_37.setContentsMargins(0, 3, 0, 3)
+        self.horizontalLayout_37.setObjectName("horizontalLayout_37")
+        self.label_56 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.label_56.setFont(font)
+        self.label_56.setObjectName("label_56")
+        self.horizontalLayout_37.addWidget(self.label_56)
+        self.fileNameBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.fileNameBrowserTV.setObjectName("fileNameBrowserTV")
+        self.horizontalLayout_37.addWidget(self.fileNameBrowserTV)
+        self.verticalLayout_38.addLayout(self.horizontalLayout_37)
+        self.getNameButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.getNameButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 6px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.getNameButtonTV.setObjectName("getNameButtonTV")
+        self.verticalLayout_38.addWidget(self.getNameButtonTV)
+        self.verticalLayout_40 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_40.setContentsMargins(5, 5, 5, 5)
+        self.verticalLayout_40.setObjectName("verticalLayout_40")
+        self.label_57 = QtWidgets.QLabel(parent=self.tab_2)
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(16)
+        self.label_57.setFont(font)
+        self.label_57.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
+        self.label_57.setObjectName("label_57")
+        self.verticalLayout_40.addWidget(self.label_57)
+        self.mediainfoBrowserTV = QtWidgets.QTextBrowser(parent=self.tab_2)
+        self.mediainfoBrowserTV.setObjectName("mediainfoBrowserTV")
+        self.verticalLayout_40.addWidget(self.mediainfoBrowserTV)
+        self.getMediaInfoButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.getMediaInfoButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 6px 6px;\n"
+"    font-size: 14px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 8px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.getMediaInfoButtonTV.setObjectName("getMediaInfoButtonTV")
+        self.verticalLayout_40.addWidget(self.getMediaInfoButtonTV)
+        self.verticalLayout_38.addLayout(self.verticalLayout_40)
+        self.horizontalLayout_30.addLayout(self.verticalLayout_38)
+        self.verticalLayout_31.addLayout(self.horizontalLayout_30)
+        self.horizontalLayout_38 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_38.setContentsMargins(50, 5, 50, 5)
+        self.horizontalLayout_38.setObjectName("horizontalLayout_38")
+        self.startButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.startButtonTV.setMinimumSize(QtCore.QSize(0, 80))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        self.startButtonTV.setFont(font)
+        self.startButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 15px 25px;\n"
+"    font-size: 24px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 20px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.startButtonTV.setObjectName("startButtonTV")
+        self.horizontalLayout_38.addWidget(self.startButtonTV)
+        self.verticalLayout_31.addLayout(self.horizontalLayout_38)
+        self.verticalLayout_41.addLayout(self.verticalLayout_31)
+        self.tabWiget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.tab_3)
@@ -583,6 +1063,7 @@ class Ui_Mainwindow(object):
         self.label_9.setObjectName("label_9")
         self.horizontalLayout_11.addWidget(self.label_9)
         self.yearEditPlaylet = QtWidgets.QLineEdit(parent=self.tab_3)
+        self.yearEditPlaylet.setMaxLength(10)
         self.yearEditPlaylet.setObjectName("yearEditPlaylet")
         self.horizontalLayout_11.addWidget(self.yearEditPlaylet)
         self.verticalLayout_15.addLayout(self.horizontalLayout_11)
@@ -596,10 +1077,10 @@ class Ui_Mainwindow(object):
         self.label_18.setFont(font)
         self.label_18.setObjectName("label_18")
         self.horizontalLayout_12.addWidget(self.label_18)
-        self.seasonBox_Playlet = QtWidgets.QSpinBox(parent=self.tab_3)
-        self.seasonBox_Playlet.setMinimum(1)
-        self.seasonBox_Playlet.setObjectName("seasonBox_Playlet")
-        self.horizontalLayout_12.addWidget(self.seasonBox_Playlet)
+        self.seasonBoxPlaylet = QtWidgets.QSpinBox(parent=self.tab_3)
+        self.seasonBoxPlaylet.setMinimum(1)
+        self.seasonBoxPlaylet.setObjectName("seasonBoxPlaylet")
+        self.horizontalLayout_12.addWidget(self.seasonBoxPlaylet)
         self.label_19 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_19.setObjectName("label_19")
         self.horizontalLayout_12.addWidget(self.label_19)
@@ -1076,9 +1557,56 @@ class Ui_Mainwindow(object):
         self.verticalLayout_18.addLayout(self.verticalLayout_20)
         self.horizontalLayout_10.addLayout(self.verticalLayout_18)
         self.verticalLayout_13.addLayout(self.horizontalLayout_10)
+        self.horizontalLayout_20 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_20.setContentsMargins(50, 5, 50, 5)
+        self.horizontalLayout_20.setObjectName("horizontalLayout_20")
+        self.startButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.startButtonPlaylet.setMinimumSize(QtCore.QSize(0, 80))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        self.startButtonPlaylet.setFont(font)
+        self.startButtonPlaylet.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 15px 25px;\n"
+"    font-size: 24px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 20px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.startButtonPlaylet.setObjectName("startButtonPlaylet")
+        self.horizontalLayout_20.addWidget(self.startButtonPlaylet)
+        self.verticalLayout_13.addLayout(self.horizontalLayout_20)
         self.verticalLayout_21.addLayout(self.verticalLayout_13)
-        self.TabWiget.addTab(self.tab_3, "")
-        self.verticalLayout_11.addWidget(self.TabWiget)
+        self.tabWiget.addTab(self.tab_3, "")
+        self.verticalLayout_43.addWidget(self.tabWiget)
         Mainwindow.setCentralWidget(self.centralwidget)
         self.statusbar = QtWidgets.QStatusBar(parent=Mainwindow)
         self.statusbar.setObjectName("statusbar")
@@ -1095,7 +1623,7 @@ class Ui_Mainwindow(object):
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(Mainwindow)
-        self.TabWiget.setCurrentIndex(0)
+        self.tabWiget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Mainwindow)
 
     def retranslateUi(self, Mainwindow):
@@ -1123,9 +1651,29 @@ class Ui_Mainwindow(object):
         self.label_10.setText(_translate("Mainwindow", "MediaInfo"))
         self.getMediaInfoButtonMovie.setText(_translate("Mainwindow", "获取"))
         self.startButtonMovie.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab), _translate("Mainwindow", "电影"))
-        self.label_32.setText(_translate("Mainwindow", "敬请期待！"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_2), _translate("Mainwindow", "电视剧"))
+        self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab), _translate("Mainwindow", "电影"))
+        self.label_45.setText(_translate("Mainwindow", "输入"))
+        self.label_46.setText(_translate("Mainwindow", "输入豆瓣、IMDb等资源链接"))
+        self.label_58.setText(_translate("Mainwindow", "季数："))
+        self.label_47.setText(_translate("Mainwindow", "来源："))
+        self.label_48.setText(_translate("Mainwindow", "小组："))
+        self.label_49.setText(_translate("Mainwindow", "资源路径："))
+        self.selectVideoFolderButtonTV.setText(_translate("Mainwindow", "文件夹"))
+        self.makeTorrentButtonTV.setText(_translate("Mainwindow", "制作种子"))
+        self.label_50.setText(_translate("Mainwindow", "简介"))
+        self.getPtGenButtonTV.setText(_translate("Mainwindow", "获取"))
+        self.label_51.setText(_translate("Mainwindow", "截图"))
+        self.getPictureButtonTV.setText(_translate("Mainwindow", "获取"))
+        self.label_52.setText(_translate("Mainwindow", "Debug窗口"))
+        self.label_53.setText(_translate("Mainwindow", "命名"))
+        self.label_54.setText(_translate("Mainwindow", "主标题："))
+        self.label_55.setText(_translate("Mainwindow", "副标题："))
+        self.label_56.setText(_translate("Mainwindow", "文件名："))
+        self.getNameButtonTV.setText(_translate("Mainwindow", "获取标准命名"))
+        self.label_57.setText(_translate("Mainwindow", "MediaInfo"))
+        self.getMediaInfoButtonTV.setText(_translate("Mainwindow", "获取"))
+        self.startButtonTV.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab_2), _translate("Mainwindow", "剧集"))
         self.label_17.setText(_translate("Mainwindow", "输入"))
         self.label_8.setText(_translate("Mainwindow", "中文名称："))
         self.label_9.setText(_translate("Mainwindow", "发布年份："))
@@ -1164,6 +1712,7 @@ class Ui_Mainwindow(object):
         self.getNameButtonPlaylet.setText(_translate("Mainwindow", "获取标准命名"))
         self.label_31.setText(_translate("Mainwindow", "MediaInfo"))
         self.getMediaInfoButtonPlaylet.setText(_translate("Mainwindow", "获取"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_3), _translate("Mainwindow", "短剧"))
+        self.startButtonPlaylet.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab_3), _translate("Mainwindow", "短剧"))
         self.menu.setTitle(_translate("Mainwindow", "工具"))
         self.actionsettings.setText(_translate("Mainwindow", "设置"))

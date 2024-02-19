@@ -1,10 +1,8 @@
-import json
 import os
 import random
 
 import cv2
 import numpy as np
-import requests
 
 from tool import generate_image_filename
 

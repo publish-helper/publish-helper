@@ -1,4 +1,4 @@
-Publish Helper for Movie v1.1.9
+Publish Helper for Movie v1.2.0
 
 使用前务必请先看设置！！！
 
@@ -23,7 +23,7 @@ static/team.json
 
 软件获取地址：
 
-https://gitee.com/bjdbjd/publish-helper-movie/releases
+https://gitee.com/bjdbjd/publish-helper/releases
 
 Python 3.10
 

@@ -1,4 +1,5 @@
 import datetime
+import glob
 import json
 import os
 import random
@@ -6,6 +7,7 @@ import shutil
 from tkinter import filedialog, Tk
 
 from torf import Torrent
+from xpinyin import Pinyin
 
 
 # 更新settings
@@ -160,7 +162,19 @@ def generate_image_filename(base_path):
     return path
 
 
-def get_file_path():
+def get_picture_file_path():
+    # 设置文件类型过滤器
+    file_types = [('Picture files', '*.gif;*.png;*.jpg;*.jpeg;*.webp;*.avif;*.bmp;*.apng)'),
+                  ('All files', '*.*')]
+
+    # 打开文件选择对话框
+    file_path = filedialog.askopenfilename(title="Select a file", filetypes=file_types)
+
+    # 返回选择的文件路径
+    return file_path
+
+
+def get_video_file_path():
     # 设置文件类型过滤器
     file_types = [('Video files', '*.mp4;*.m4v;*.avi;*.flv;*.mkv;*.mpeg;*.mpg;*.rm;*.rmvb;*.ts;*.m2ts'),
                   ('All files', '*.*')]
@@ -272,3 +286,43 @@ def load_names(file_path, name):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
         return data[name]
+
+
+def chinese_name_to_pinyin(chinese_name):
+    p = Pinyin()
+    result = ''
+    py = p.get_pinyin(chinese_name)
+    s = py.split('-')
+    for c in s:
+        result += c.capitalize()
+        result += ' '
+    return result
+
+
+def get_video_files(folder_path):
+    try:
+        # 要查找的视频文件扩展名列表
+        video_extensions = [".mp4", ".m4v", ".avi", ".flv", ".mkv", ".mpeg", ".mpg", ".rm", ".rmvb", ".ts", ".m2ts"]
+
+        # 检查文件夹路径是否有效和可访问
+        if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
+            raise ValueError(f"提供的路径 '{folder_path}' 不是一个有效的目录。")
+
+        # 初始化一个空列表来存储文件路径
+        video_files = []
+
+        # 遍历每个扩展名，并将匹配的文件添加到列表中
+        for extension in video_extensions:
+            # Glob模式匹配文件
+            pattern = os.path.join(folder_path, '*' + extension)
+            # 查找匹配的文件并扩展列表
+            video_files.extend(glob.glob(pattern))
+
+        # 对文件列表进行排序
+        video_files.sort()
+
+        return True, video_files
+
+    except Exception as e:
+        # 返回错误信息
+        return False, [f"错误：{e}"]
