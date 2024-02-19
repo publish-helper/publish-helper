@@ -33,7 +33,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Publish Helper for Movie</string>
+       <string>Publish Helper</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -41,35 +41,17 @@
      </widget>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <property name="leftMargin">
-       <number>5</number>
+     <widget class="QTabWidget" name="TabWiget">
+      <property name="currentIndex">
+       <number>0</number>
       </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>5</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_9">
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="topMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <property name="bottomMargin">
-         <number>5</number>
-        </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Movie</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_12">
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,0,0">
+         <layout class="QVBoxLayout" name="verticalLayout_6">
           <property name="leftMargin">
            <number>5</number>
           </property>
@@ -83,23 +65,7 @@
            <number>5</number>
           </property>
           <item>
-           <widget class="QLabel" name="label_16">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>输入</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_4">
             <property name="leftMargin">
              <number>5</number>
             </property>
@@ -113,101 +79,762 @@
              <number>5</number>
             </property>
             <item>
-             <layout class="QVBoxLayout" name="verticalLayout_7">
+             <layout class="QVBoxLayout" name="verticalLayout_9">
               <property name="leftMargin">
-               <number>0</number>
+               <number>5</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>5</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>5</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
+               <number>5</number>
               </property>
               <item>
-               <widget class="QLabel" name="label">
+               <layout class="QVBoxLayout" name="verticalLayout_8" stretch="0,0,0">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_16">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>输入</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_2">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                    <property name="leftMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>0</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>0</number>
+                    </property>
+                    <item>
+                     <widget class="QLabel" name="label">
+                      <property name="font">
+                       <font>
+                        <family>微软雅黑</family>
+                        <pointsize>10</pointsize>
+                       </font>
+                      </property>
+                      <property name="text">
+                       <string>输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接</string>
+                      </property>
+                     </widget>
+                    </item>
+                    <item>
+                     <widget class="QLineEdit" name="ptGenUrl">
+                      <property name="text">
+                       <string/>
+                      </property>
+                      <property name="clearButtonEnabled">
+                       <bool>true</bool>
+                      </property>
+                     </widget>
+                    </item>
+                   </layout>
+                  </item>
+                  <item>
+                   <layout class="QVBoxLayout" name="verticalLayout_10">
+                    <property name="leftMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="topMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="rightMargin">
+                     <number>2</number>
+                    </property>
+                    <property name="bottomMargin">
+                     <number>2</number>
+                    </property>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_5">
+                      <item>
+                       <widget class="QLabel" name="label_3">
+                        <property name="font">
+                         <font>
+                          <family>微软雅黑</family>
+                          <pointsize>9</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>来源：</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="source">
+                        <property name="editable">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                    <item>
+                     <layout class="QHBoxLayout" name="horizontalLayout_6">
+                      <item>
+                       <widget class="QLabel" name="label_6">
+                        <property name="font">
+                         <font>
+                          <family>微软雅黑</family>
+                          <pointsize>9</pointsize>
+                         </font>
+                        </property>
+                        <property name="text">
+                         <string>小组：</string>
+                        </property>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QComboBox" name="team">
+                        <property name="editable">
+                         <bool>true</bool>
+                        </property>
+                       </widget>
+                      </item>
+                     </layout>
+                    </item>
+                   </layout>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_2">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>资源路径：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="videoPath">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="dragEnabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="selectVideoButton">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>文件</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="selectVideoFolderButton">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>文件夹</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="makeTorrentButton">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>制作种子</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_11">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>简介</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="ptGenBrowser"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getPtGenButton">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_5">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>截图</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="pictureUrlBrowser"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getPictureButton">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_3">
+                <property name="leftMargin">
+                 <number>3</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>3</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_4">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>debug窗口</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="debugBrowser"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_12">
                 <property name="font">
                  <font>
                   <family>微软雅黑</family>
-                  <pointsize>10</pointsize>
+                  <pointsize>16</pointsize>
                  </font>
                 </property>
                 <property name="text">
-                 <string>输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接</string>
+                 <string>命名</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="ptGenUrl">
-                <property name="text">
-                 <string/>
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <property name="leftMargin">
+                 <number>0</number>
                 </property>
-                <property name="clearButtonEnabled">
-                 <bool>true</bool>
+                <property name="topMargin">
+                 <number>3</number>
                 </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item>
-             <layout class="QVBoxLayout" name="verticalLayout_10">
-              <property name="leftMargin">
-               <number>2</number>
-              </property>
-              <property name="topMargin">
-               <number>2</number>
-              </property>
-              <property name="rightMargin">
-               <number>2</number>
-              </property>
-              <property name="bottomMargin">
-               <number>2</number>
-              </property>
-              <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
                 <item>
-                 <widget class="QLabel" name="label_3">
+                 <widget class="QLabel" name="label_13">
                   <property name="font">
                    <font>
                     <family>微软雅黑</family>
-                    <pointsize>9</pointsize>
+                    <pointsize>10</pointsize>
                    </font>
                   </property>
                   <property name="text">
-                   <string>来源：</string>
+                   <string>主标题：</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="source">
-                  <property name="editable">
-                   <bool>true</bool>
-                  </property>
-                 </widget>
+                 <widget class="QTextBrowser" name="mainTitleBrowser"/>
                 </item>
                </layout>
               </item>
               <item>
-               <layout class="QHBoxLayout" name="horizontalLayout_6">
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
                 <item>
-                 <widget class="QLabel" name="label_6">
+                 <widget class="QLabel" name="label_14">
                   <property name="font">
                    <font>
                     <family>微软雅黑</family>
-                    <pointsize>9</pointsize>
+                    <pointsize>10</pointsize>
                    </font>
                   </property>
                   <property name="text">
-                   <string>小组：</string>
+                   <string>副标题：</string>
                   </property>
                  </widget>
                 </item>
                 <item>
-                 <widget class="QComboBox" name="team">
-                  <property name="editable">
-                   <bool>true</bool>
+                 <widget class="QTextBrowser" name="secondTitleBrowser"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>文件名：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="fileNameBrowser"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="getNameButton">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                </property>
+                <property name="text">
+                 <string>获取标准命名</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_4">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_10">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>MediaInfo</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="mediainfoBrowser"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getMediaInfoButton">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
                   </property>
                  </widget>
                 </item>
@@ -218,641 +845,38 @@
            </layout>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout">
+           <layout class="QHBoxLayout" name="horizontalLayout_9">
             <property name="leftMargin">
-             <number>5</number>
+             <number>50</number>
             </property>
             <property name="topMargin">
              <number>5</number>
             </property>
             <property name="rightMargin">
-             <number>5</number>
+             <number>50</number>
             </property>
             <property name="bottomMargin">
              <number>5</number>
             </property>
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QPushButton" name="startButton">
+              <property name="minimumSize">
+               <size>
+                <width>0</width>
+                <height>80</height>
+               </size>
+              </property>
               <property name="font">
                <font>
                 <family>微软雅黑</family>
-                <pointsize>10</pointsize>
+                <pointsize>-1</pointsize>
+                <bold>true</bold>
+                <underline>false</underline>
+                <strikeout>false</strikeout>
                </font>
               </property>
-              <property name="text">
-               <string>资源路径：</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="videoPath">
-              <property name="text">
-               <string/>
-              </property>
-              <property name="dragEnabled">
-               <bool>true</bool>
-              </property>
-              <property name="clearButtonEnabled">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="selectVideoButton">
               <property name="styleSheet">
                <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 3px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-              </property>
-              <property name="text">
-               <string>文件</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="selectVideoFolderButton">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 3px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-              </property>
-              <property name="text">
-               <string>文件夹</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QPushButton" name="makeTorrentButton">
-              <property name="styleSheet">
-               <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 3px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-              </property>
-              <property name="text">
-               <string>制作种子</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
-          <property name="leftMargin">
-           <number>5</number>
-          </property>
-          <property name="topMargin">
-           <number>5</number>
-          </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>5</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_11">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>简介</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="ptGenBrowser"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="getPtGenButton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-            </property>
-            <property name="text">
-             <string>获取</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
-          <property name="leftMargin">
-           <number>5</number>
-          </property>
-          <property name="topMargin">
-           <number>5</number>
-          </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>5</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>截图</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="pictureUrlBrowser"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="getPictureButton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-            </property>
-            <property name="text">
-             <string>获取</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-      <item>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <property name="leftMargin">
-         <number>5</number>
-        </property>
-        <property name="topMargin">
-         <number>5</number>
-        </property>
-        <property name="rightMargin">
-         <number>5</number>
-        </property>
-        <property name="bottomMargin">
-         <number>5</number>
-        </property>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_3">
-          <property name="leftMargin">
-           <number>3</number>
-          </property>
-          <property name="topMargin">
-           <number>3</number>
-          </property>
-          <property name="rightMargin">
-           <number>3</number>
-          </property>
-          <property name="bottomMargin">
-           <number>3</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_4">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>debug窗口</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="debugBrowser"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="label_12">
-          <property name="font">
-           <font>
-            <family>微软雅黑</family>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>命名</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>3</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>3</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_13">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>主标题：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="mainTitleBrowser"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_7">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>3</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>3</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_14">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>副标题：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="secondTitleBrowser"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>3</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>3</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_15">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>10</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>文件名：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="fileNameBrowser"/>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QPushButton" name="getNameButton">
-          <property name="styleSheet">
-           <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-          </property>
-          <property name="text">
-           <string>获取标准命名</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <property name="leftMargin">
-           <number>5</number>
-          </property>
-          <property name="topMargin">
-           <number>5</number>
-          </property>
-          <property name="rightMargin">
-           <number>5</number>
-          </property>
-          <property name="bottomMargin">
-           <number>5</number>
-          </property>
-          <item>
-           <widget class="QLabel" name="label_10">
-            <property name="font">
-             <font>
-              <family>微软雅黑</family>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>MediaInfo</string>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextBrowser" name="mediainfoBrowser"/>
-          </item>
-          <item>
-           <widget class="QPushButton" name="getMediaInfoButton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
-    display: inline-block;
-    padding: 6px 6px;
-    font-size: 14px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #16bf9d,
-                                      stop:1 #10a266);
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #11b998,
-                                      stop:1 #08965e);
-}
-
-QPushButton:pressed {
-    background-color: 
-				qlineargradient(x1:0, y1:0, x2:0, y2:1,
-                                      stop:0 #0e9278,
-                                      stop:1 #0e925c);
-}
-</string>
-            </property>
-            <property name="text">
-             <string>获取</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-       </layout>
-      </item>
-     </layout>
-    </item>
-    <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_9">
-      <property name="leftMargin">
-       <number>50</number>
-      </property>
-      <property name="topMargin">
-       <number>5</number>
-      </property>
-      <property name="rightMargin">
-       <number>50</number>
-      </property>
-      <property name="bottomMargin">
-       <number>5</number>
-      </property>
-      <item>
-       <widget class="QPushButton" name="startButton">
-        <property name="minimumSize">
-         <size>
-          <width>0</width>
-          <height>80</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>微软雅黑</family>
-          <pointsize>-1</pointsize>
-          <bold>true</bold>
-          <underline>false</underline>
-          <strikeout>false</strikeout>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">QPushButton {
     display: inline-block;
     padding: 15px 25px;
     font-size: 24px;
@@ -884,13 +908,1006 @@ QPushButton:pressed {
                                       stop:1 #0e925c);
 }
 </string>
-        </property>
-        <property name="text">
-         <string>万事俱备，一键启动！</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+              </property>
+              <property name="text">
+               <string>万事俱备，一键启动！</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>TV</string>
+       </attribute>
+      </widget>
+      <widget class="QWidget" name="tab_3">
+       <attribute name="title">
+        <string>Playlet</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_21">
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_13">
+          <property name="leftMargin">
+           <number>5</number>
+          </property>
+          <property name="topMargin">
+           <number>5</number>
+          </property>
+          <property name="rightMargin">
+           <number>5</number>
+          </property>
+          <property name="bottomMargin">
+           <number>5</number>
+          </property>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <property name="leftMargin">
+             <number>5</number>
+            </property>
+            <property name="topMargin">
+             <number>5</number>
+            </property>
+            <property name="rightMargin">
+             <number>5</number>
+            </property>
+            <property name="bottomMargin">
+             <number>5</number>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_14">
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_15" stretch="0,0,0,0,0,0,0">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_17">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>输入</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_8">
+                    <property name="text">
+                     <string>中文名称：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="chineseNameEdit_Playlet"/>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_9">
+                    <property name="text">
+                     <string>发布年份：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="yearEdit_Playlet"/>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_18">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>季数：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="seasonBox_Playlet">
+                    <property name="minimum">
+                     <number>1</number>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_19">
+                    <property name="text">
+                     <string>类型：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="type_Playlet">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_20">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>来源：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="source_Playlet">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_21">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>9</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>小组：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="team_Playlet">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_22">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>资源路径：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="videoPath_Playlet">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="dragEnabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="selectVideoFolderButton_Playlet">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>文件夹</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="makeTorrentButton_Playlet">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>制作种子</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_23">
+                    <property name="font">
+                     <font>
+                      <family>微软雅黑</family>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="text">
+                     <string>封面路径：</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLineEdit" name="coverPath_Playlet">
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="dragEnabled">
+                     <bool>true</bool>
+                    </property>
+                    <property name="clearButtonEnabled">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="selectCoverFolderButton_Playlet">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>浏览</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QPushButton" name="uploadCoverButton_Playlet">
+                    <property name="styleSheet">
+                     <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                    </property>
+                    <property name="text">
+                     <string>上传</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_0">
+                    <property name="text">
+                     <string>剧情</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_1">
+                    <property name="text">
+                     <string>爱情</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_2">
+                    <property name="text">
+                     <string>喜剧</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_3">
+                    <property name="text">
+                     <string>甜虐</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_4">
+                    <property name="text">
+                     <string>甜宠</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_5">
+                    <property name="text">
+                     <string>恐怖</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_6">
+                    <property name="text">
+                     <string>动作</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_16">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_7">
+                    <property name="text">
+                     <string>穿越</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_8">
+                    <property name="text">
+                     <string>重生</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_9">
+                    <property name="text">
+                     <string>逆袭</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_10">
+                    <property name="text">
+                     <string>科幻</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_11">
+                    <property name="text">
+                     <string>武侠</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_12">
+                    <property name="text">
+                     <string>都市</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_13">
+                    <property name="text">
+                     <string>古装</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_16">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_24">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>简介</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="introBrowser_Playlet"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_17">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_25">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>截图</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="pictureUrlBrowser_Playlet"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getPictureButton_Playlet">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_18">
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_19">
+                <property name="leftMargin">
+                 <number>3</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>3</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_26">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>debug窗口</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="debugBrowser_Playlet"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_27">
+                <property name="font">
+                 <font>
+                  <family>微软雅黑</family>
+                  <pointsize>16</pointsize>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>命名</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_17">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_28">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>主标题：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="mainTitleBrowser_Playlet"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_18">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_29">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>副标题：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="secondTitleBrowser_Playlet"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_19">
+                <property name="leftMargin">
+                 <number>0</number>
+                </property>
+                <property name="topMargin">
+                 <number>3</number>
+                </property>
+                <property name="rightMargin">
+                 <number>0</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>3</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_30">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>10</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>文件名：</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextEdit" name="fileNameBrowser_Playlet"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <widget class="QPushButton" name="getNameButton_Playlet">
+                <property name="styleSheet">
+                 <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                </property>
+                <property name="text">
+                 <string>获取标准命名</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_20">
+                <property name="leftMargin">
+                 <number>5</number>
+                </property>
+                <property name="topMargin">
+                 <number>5</number>
+                </property>
+                <property name="rightMargin">
+                 <number>5</number>
+                </property>
+                <property name="bottomMargin">
+                 <number>5</number>
+                </property>
+                <item>
+                 <widget class="QLabel" name="label_31">
+                  <property name="font">
+                   <font>
+                    <family>微软雅黑</family>
+                    <pointsize>16</pointsize>
+                   </font>
+                  </property>
+                  <property name="text">
+                   <string>MediaInfo</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="mediainfoBrowser_Playlet"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getMediaInfoButton_Playlet">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </widget>
+     </widget>
     </item>
    </layout>
   </widget>
