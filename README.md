@@ -24,9 +24,11 @@ static/team.json
 软件获取地址：
 
 https://github.com/bjdbjd/publish-helper/releases/
+
 https://gitee.com/bjdbjd/publish-helper/releases/
 
 更新时只需要保留static文件夹即可将配置完美迁移。
+
 如果出现错误，可能是配置文件结构有变化，请使用最新的static文件。
 
 Python 3.10
