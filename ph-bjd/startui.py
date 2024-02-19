@@ -140,10 +140,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
             return
         print("尝试启动pt_gen_thread")
+        self.debugBrowserMovie.append("尝试启动pt_gen_thread")
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_movie_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
         print("启动pt_gen_thread成功")
+        self.debugBrowserMovie.append("启动pt_gen_thread成功")
 
     def handle_get_pt_gen_movie_result(self, get_success, response):
         if get_success:
@@ -488,10 +490,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
             return
         print("尝试启动pt_gen_thread")
+        self.debugBrowserTV.append("尝试启动pt_gen_thread")
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_tv_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
         print("启动pt_gen_thread成功")
+        self.debugBrowserTV.append("启动pt_gen_thread成功")
 
     def handle_get_pt_gen_tv_result(self, get_success, response):
         if get_success:
