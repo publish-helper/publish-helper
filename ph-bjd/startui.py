@@ -1067,6 +1067,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserPlaylet.append('类型为：' + category)
                 main_title = first_english_name + ' S' + season + ' ' + year + ' ' + width + ' ' + source + ' ' + format + ' ' + hdr_format + ' ' + commercial_name + ' ' + channel_layout + '-' + team
                 main_title = main_title.replace('  ', ' ')
+                main_title = main_title.replace('  ', ' ')
                 print(main_title)
                 second_title = (first_chinese_name + ' | 全' + str(
                     len(video_files)) + '集 | ' + year + '年 | ' + type + ' | 类型：' + category)
@@ -1079,6 +1080,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 file_name = file_name.replace(' - ', '.')
                 file_name = file_name.replace(': ', '.')
                 file_name = file_name.replace(' ', '.')
+                file_name = file_name.replace('..', '.')
                 file_name = file_name.replace('..', '.')
                 print("FileName" + file_name)
                 self.mainTitleBrowserPlaylet.setText(main_title)
