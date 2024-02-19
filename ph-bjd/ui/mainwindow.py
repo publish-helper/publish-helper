@@ -69,11 +69,11 @@ class Ui_Mainwindow(object):
         self.label.setFont(font)
         self.label.setObjectName("label")
         self.verticalLayout_7.addWidget(self.label)
-        self.ptGenUrl = QtWidgets.QLineEdit(parent=self.tab)
-        self.ptGenUrl.setText("")
-        self.ptGenUrl.setClearButtonEnabled(True)
-        self.ptGenUrl.setObjectName("ptGenUrl")
-        self.verticalLayout_7.addWidget(self.ptGenUrl)
+        self.ptGenUrlMovie = QtWidgets.QLineEdit(parent=self.tab)
+        self.ptGenUrlMovie.setText("")
+        self.ptGenUrlMovie.setClearButtonEnabled(True)
+        self.ptGenUrlMovie.setObjectName("ptGenUrlMovie")
+        self.verticalLayout_7.addWidget(self.ptGenUrlMovie)
         self.horizontalLayout_2.addLayout(self.verticalLayout_7)
         self.verticalLayout_10 = QtWidgets.QVBoxLayout()
         self.verticalLayout_10.setContentsMargins(2, 2, 2, 2)
@@ -87,10 +87,10 @@ class Ui_Mainwindow(object):
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_5.addWidget(self.label_3)
-        self.source = QtWidgets.QComboBox(parent=self.tab)
-        self.source.setEditable(True)
-        self.source.setObjectName("source")
-        self.horizontalLayout_5.addWidget(self.source)
+        self.sourceMovie = QtWidgets.QComboBox(parent=self.tab)
+        self.sourceMovie.setEditable(True)
+        self.sourceMovie.setObjectName("sourceMovie")
+        self.horizontalLayout_5.addWidget(self.sourceMovie)
         self.verticalLayout_10.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_6 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
@@ -101,10 +101,10 @@ class Ui_Mainwindow(object):
         self.label_6.setFont(font)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_6.addWidget(self.label_6)
-        self.team = QtWidgets.QComboBox(parent=self.tab)
-        self.team.setEditable(True)
-        self.team.setObjectName("team")
-        self.horizontalLayout_6.addWidget(self.team)
+        self.teamMovie = QtWidgets.QComboBox(parent=self.tab)
+        self.teamMovie.setEditable(True)
+        self.teamMovie.setObjectName("teamMovie")
+        self.horizontalLayout_6.addWidget(self.teamMovie)
         self.verticalLayout_10.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_2.addLayout(self.verticalLayout_10)
         self.verticalLayout_8.addLayout(self.horizontalLayout_2)
@@ -118,14 +118,14 @@ class Ui_Mainwindow(object):
         self.label_2.setFont(font)
         self.label_2.setObjectName("label_2")
         self.horizontalLayout.addWidget(self.label_2)
-        self.videoPath = QtWidgets.QLineEdit(parent=self.tab)
-        self.videoPath.setText("")
-        self.videoPath.setDragEnabled(True)
-        self.videoPath.setClearButtonEnabled(True)
-        self.videoPath.setObjectName("videoPath")
-        self.horizontalLayout.addWidget(self.videoPath)
-        self.selectVideoButton = QtWidgets.QPushButton(parent=self.tab)
-        self.selectVideoButton.setStyleSheet("QPushButton {\n"
+        self.videoPathMovie = QtWidgets.QLineEdit(parent=self.tab)
+        self.videoPathMovie.setText("")
+        self.videoPathMovie.setDragEnabled(True)
+        self.videoPathMovie.setClearButtonEnabled(True)
+        self.videoPathMovie.setObjectName("videoPathMovie")
+        self.horizontalLayout.addWidget(self.videoPathMovie)
+        self.selectVideoButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.selectVideoButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -157,10 +157,10 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.selectVideoButton.setObjectName("selectVideoButton")
-        self.horizontalLayout.addWidget(self.selectVideoButton)
-        self.selectVideoFolderButton = QtWidgets.QPushButton(parent=self.tab)
-        self.selectVideoFolderButton.setStyleSheet("QPushButton {\n"
+        self.selectVideoButtonMovie.setObjectName("selectVideoButtonMovie")
+        self.horizontalLayout.addWidget(self.selectVideoButtonMovie)
+        self.selectVideoFolderButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.selectVideoFolderButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -192,10 +192,10 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.selectVideoFolderButton.setObjectName("selectVideoFolderButton")
-        self.horizontalLayout.addWidget(self.selectVideoFolderButton)
-        self.makeTorrentButton = QtWidgets.QPushButton(parent=self.tab)
-        self.makeTorrentButton.setStyleSheet("QPushButton {\n"
+        self.selectVideoFolderButtonMovie.setObjectName("selectVideoFolderButtonMovie")
+        self.horizontalLayout.addWidget(self.selectVideoFolderButtonMovie)
+        self.makeTorrentButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.makeTorrentButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -227,8 +227,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.makeTorrentButton.setObjectName("makeTorrentButton")
-        self.horizontalLayout.addWidget(self.makeTorrentButton)
+        self.makeTorrentButtonMovie.setObjectName("makeTorrentButtonMovie")
+        self.horizontalLayout.addWidget(self.makeTorrentButtonMovie)
         self.verticalLayout_8.addLayout(self.horizontalLayout)
         self.verticalLayout_9.addLayout(self.verticalLayout_8)
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -242,11 +242,11 @@ class Ui_Mainwindow(object):
         self.label_11.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.verticalLayout.addWidget(self.label_11)
-        self.ptGenBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.ptGenBrowser.setObjectName("ptGenBrowser")
-        self.verticalLayout.addWidget(self.ptGenBrowser)
-        self.getPtGenButton = QtWidgets.QPushButton(parent=self.tab)
-        self.getPtGenButton.setStyleSheet("QPushButton {\n"
+        self.ptGenBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.ptGenBrowserMovie.setObjectName("ptGenBrowserMovie")
+        self.verticalLayout.addWidget(self.ptGenBrowserMovie)
+        self.getPtGenButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.getPtGenButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -278,8 +278,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getPtGenButton.setObjectName("getPtGenButton")
-        self.verticalLayout.addWidget(self.getPtGenButton)
+        self.getPtGenButtonMovie.setObjectName("getPtGenButtonMovie")
+        self.verticalLayout.addWidget(self.getPtGenButtonMovie)
         self.verticalLayout_9.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setContentsMargins(5, 5, 5, 5)
@@ -292,11 +292,11 @@ class Ui_Mainwindow(object):
         self.label_5.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.verticalLayout_2.addWidget(self.label_5)
-        self.pictureUrlBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.pictureUrlBrowser.setObjectName("pictureUrlBrowser")
-        self.verticalLayout_2.addWidget(self.pictureUrlBrowser)
-        self.getPictureButton = QtWidgets.QPushButton(parent=self.tab)
-        self.getPictureButton.setStyleSheet("QPushButton {\n"
+        self.pictureUrlBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.pictureUrlBrowserMovie.setObjectName("pictureUrlBrowserMovie")
+        self.verticalLayout_2.addWidget(self.pictureUrlBrowserMovie)
+        self.getPictureButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.getPictureButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -328,8 +328,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getPictureButton.setObjectName("getPictureButton")
-        self.verticalLayout_2.addWidget(self.getPictureButton)
+        self.getPictureButtonMovie.setObjectName("getPictureButtonMovie")
+        self.verticalLayout_2.addWidget(self.getPictureButtonMovie)
         self.verticalLayout_9.addLayout(self.verticalLayout_2)
         self.horizontalLayout_4.addLayout(self.verticalLayout_9)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
@@ -346,9 +346,9 @@ class Ui_Mainwindow(object):
         self.label_4.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_4.setObjectName("label_4")
         self.verticalLayout_3.addWidget(self.label_4)
-        self.debugBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.debugBrowser.setObjectName("debugBrowser")
-        self.verticalLayout_3.addWidget(self.debugBrowser)
+        self.debugBrowserMovie = QtWidgets.QTextBrowser(parent=self.tab)
+        self.debugBrowserMovie.setObjectName("debugBrowserMovie")
+        self.verticalLayout_3.addWidget(self.debugBrowserMovie)
         self.verticalLayout_5.addLayout(self.verticalLayout_3)
         self.label_12 = QtWidgets.QLabel(parent=self.tab)
         font = QtGui.QFont()
@@ -368,9 +368,9 @@ class Ui_Mainwindow(object):
         self.label_13.setFont(font)
         self.label_13.setObjectName("label_13")
         self.horizontalLayout_3.addWidget(self.label_13)
-        self.mainTitleBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.mainTitleBrowser.setObjectName("mainTitleBrowser")
-        self.horizontalLayout_3.addWidget(self.mainTitleBrowser)
+        self.mainTitleBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.mainTitleBrowserMovie.setObjectName("mainTitleBrowserMovie")
+        self.horizontalLayout_3.addWidget(self.mainTitleBrowserMovie)
         self.verticalLayout_5.addLayout(self.horizontalLayout_3)
         self.horizontalLayout_7 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_7.setContentsMargins(0, 3, 0, 3)
@@ -382,9 +382,9 @@ class Ui_Mainwindow(object):
         self.label_14.setFont(font)
         self.label_14.setObjectName("label_14")
         self.horizontalLayout_7.addWidget(self.label_14)
-        self.secondTitleBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.secondTitleBrowser.setObjectName("secondTitleBrowser")
-        self.horizontalLayout_7.addWidget(self.secondTitleBrowser)
+        self.secondTitleBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.secondTitleBrowserMovie.setObjectName("secondTitleBrowserMovie")
+        self.horizontalLayout_7.addWidget(self.secondTitleBrowserMovie)
         self.verticalLayout_5.addLayout(self.horizontalLayout_7)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setContentsMargins(0, 3, 0, 3)
@@ -396,12 +396,12 @@ class Ui_Mainwindow(object):
         self.label_15.setFont(font)
         self.label_15.setObjectName("label_15")
         self.horizontalLayout_8.addWidget(self.label_15)
-        self.fileNameBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.fileNameBrowser.setObjectName("fileNameBrowser")
-        self.horizontalLayout_8.addWidget(self.fileNameBrowser)
+        self.fileNameBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.fileNameBrowserMovie.setObjectName("fileNameBrowserMovie")
+        self.horizontalLayout_8.addWidget(self.fileNameBrowserMovie)
         self.verticalLayout_5.addLayout(self.horizontalLayout_8)
-        self.getNameButton = QtWidgets.QPushButton(parent=self.tab)
-        self.getNameButton.setStyleSheet("QPushButton {\n"
+        self.getNameButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.getNameButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -433,8 +433,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getNameButton.setObjectName("getNameButton")
-        self.verticalLayout_5.addWidget(self.getNameButton)
+        self.getNameButtonMovie.setObjectName("getNameButtonMovie")
+        self.verticalLayout_5.addWidget(self.getNameButtonMovie)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -446,11 +446,11 @@ class Ui_Mainwindow(object):
         self.label_10.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_10.setObjectName("label_10")
         self.verticalLayout_4.addWidget(self.label_10)
-        self.mediainfoBrowser = QtWidgets.QTextBrowser(parent=self.tab)
-        self.mediainfoBrowser.setObjectName("mediainfoBrowser")
-        self.verticalLayout_4.addWidget(self.mediainfoBrowser)
-        self.getMediaInfoButton = QtWidgets.QPushButton(parent=self.tab)
-        self.getMediaInfoButton.setStyleSheet("QPushButton {\n"
+        self.mediainfoBrowserMovie = QtWidgets.QTextBrowser(parent=self.tab)
+        self.mediainfoBrowserMovie.setObjectName("mediainfoBrowserMovie")
+        self.verticalLayout_4.addWidget(self.mediainfoBrowserMovie)
+        self.getMediaInfoButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.getMediaInfoButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -482,24 +482,24 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getMediaInfoButton.setObjectName("getMediaInfoButton")
-        self.verticalLayout_4.addWidget(self.getMediaInfoButton)
+        self.getMediaInfoButtonMovie.setObjectName("getMediaInfoButtonMovie")
+        self.verticalLayout_4.addWidget(self.getMediaInfoButtonMovie)
         self.verticalLayout_5.addLayout(self.verticalLayout_4)
         self.horizontalLayout_4.addLayout(self.verticalLayout_5)
         self.verticalLayout_6.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setContentsMargins(50, 5, 50, 5)
         self.horizontalLayout_9.setObjectName("horizontalLayout_9")
-        self.startButton = QtWidgets.QPushButton(parent=self.tab)
-        self.startButton.setMinimumSize(QtCore.QSize(0, 80))
+        self.startButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.startButtonMovie.setMinimumSize(QtCore.QSize(0, 80))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
         font.setPointSize(-1)
         font.setBold(True)
         font.setUnderline(False)
         font.setStrikeOut(False)
-        self.startButton.setFont(font)
-        self.startButton.setStyleSheet("QPushButton {\n"
+        self.startButtonMovie.setFont(font)
+        self.startButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 15px 25px;\n"
 "    font-size: 24px;\n"
@@ -531,13 +531,20 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.startButton.setObjectName("startButton")
-        self.horizontalLayout_9.addWidget(self.startButton)
+        self.startButtonMovie.setObjectName("startButtonMovie")
+        self.horizontalLayout_9.addWidget(self.startButtonMovie)
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
         self.verticalLayout_12.addLayout(self.verticalLayout_6)
         self.TabWiget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
+        self.label_32 = QtWidgets.QLabel(parent=self.tab_2)
+        self.label_32.setGeometry(QtCore.QRect(410, 240, 381, 161))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(26)
+        self.label_32.setFont(font)
+        self.label_32.setObjectName("label_32")
         self.TabWiget.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -569,15 +576,15 @@ class Ui_Mainwindow(object):
         self.label_8 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_11.addWidget(self.label_8)
-        self.chineseNameEdit_Playlet = QtWidgets.QLineEdit(parent=self.tab_3)
-        self.chineseNameEdit_Playlet.setObjectName("chineseNameEdit_Playlet")
-        self.horizontalLayout_11.addWidget(self.chineseNameEdit_Playlet)
+        self.chineseNameEditPlaylet = QtWidgets.QLineEdit(parent=self.tab_3)
+        self.chineseNameEditPlaylet.setObjectName("chineseNameEditPlaylet")
+        self.horizontalLayout_11.addWidget(self.chineseNameEditPlaylet)
         self.label_9 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_9.setObjectName("label_9")
         self.horizontalLayout_11.addWidget(self.label_9)
-        self.yearEdit_Playlet = QtWidgets.QLineEdit(parent=self.tab_3)
-        self.yearEdit_Playlet.setObjectName("yearEdit_Playlet")
-        self.horizontalLayout_11.addWidget(self.yearEdit_Playlet)
+        self.yearEditPlaylet = QtWidgets.QLineEdit(parent=self.tab_3)
+        self.yearEditPlaylet.setObjectName("yearEditPlaylet")
+        self.horizontalLayout_11.addWidget(self.yearEditPlaylet)
         self.verticalLayout_15.addLayout(self.horizontalLayout_11)
         self.horizontalLayout_12 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_12.setContentsMargins(5, 5, 5, 5)
@@ -596,10 +603,10 @@ class Ui_Mainwindow(object):
         self.label_19 = QtWidgets.QLabel(parent=self.tab_3)
         self.label_19.setObjectName("label_19")
         self.horizontalLayout_12.addWidget(self.label_19)
-        self.type_Playlet = QtWidgets.QComboBox(parent=self.tab_3)
-        self.type_Playlet.setEditable(True)
-        self.type_Playlet.setObjectName("type_Playlet")
-        self.horizontalLayout_12.addWidget(self.type_Playlet)
+        self.typePlaylet = QtWidgets.QComboBox(parent=self.tab_3)
+        self.typePlaylet.setEditable(True)
+        self.typePlaylet.setObjectName("typePlaylet")
+        self.horizontalLayout_12.addWidget(self.typePlaylet)
         self.label_20 = QtWidgets.QLabel(parent=self.tab_3)
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
@@ -607,10 +614,10 @@ class Ui_Mainwindow(object):
         self.label_20.setFont(font)
         self.label_20.setObjectName("label_20")
         self.horizontalLayout_12.addWidget(self.label_20)
-        self.source_Playlet = QtWidgets.QComboBox(parent=self.tab_3)
-        self.source_Playlet.setEditable(True)
-        self.source_Playlet.setObjectName("source_Playlet")
-        self.horizontalLayout_12.addWidget(self.source_Playlet)
+        self.sourcePlaylet = QtWidgets.QComboBox(parent=self.tab_3)
+        self.sourcePlaylet.setEditable(True)
+        self.sourcePlaylet.setObjectName("sourcePlaylet")
+        self.horizontalLayout_12.addWidget(self.sourcePlaylet)
         self.label_21 = QtWidgets.QLabel(parent=self.tab_3)
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
@@ -618,10 +625,10 @@ class Ui_Mainwindow(object):
         self.label_21.setFont(font)
         self.label_21.setObjectName("label_21")
         self.horizontalLayout_12.addWidget(self.label_21)
-        self.team_Playlet = QtWidgets.QComboBox(parent=self.tab_3)
-        self.team_Playlet.setEditable(True)
-        self.team_Playlet.setObjectName("team_Playlet")
-        self.horizontalLayout_12.addWidget(self.team_Playlet)
+        self.teamPlaylet = QtWidgets.QComboBox(parent=self.tab_3)
+        self.teamPlaylet.setEditable(True)
+        self.teamPlaylet.setObjectName("teamPlaylet")
+        self.horizontalLayout_12.addWidget(self.teamPlaylet)
         self.verticalLayout_15.addLayout(self.horizontalLayout_12)
         self.horizontalLayout_13 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_13.setContentsMargins(5, 5, 5, 5)
@@ -633,14 +640,14 @@ class Ui_Mainwindow(object):
         self.label_22.setFont(font)
         self.label_22.setObjectName("label_22")
         self.horizontalLayout_13.addWidget(self.label_22)
-        self.videoPath_Playlet = QtWidgets.QLineEdit(parent=self.tab_3)
-        self.videoPath_Playlet.setText("")
-        self.videoPath_Playlet.setDragEnabled(True)
-        self.videoPath_Playlet.setClearButtonEnabled(True)
-        self.videoPath_Playlet.setObjectName("videoPath_Playlet")
-        self.horizontalLayout_13.addWidget(self.videoPath_Playlet)
-        self.selectVideoFolderButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.selectVideoFolderButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.videoPathPlaylet = QtWidgets.QLineEdit(parent=self.tab_3)
+        self.videoPathPlaylet.setText("")
+        self.videoPathPlaylet.setDragEnabled(True)
+        self.videoPathPlaylet.setClearButtonEnabled(True)
+        self.videoPathPlaylet.setObjectName("videoPathPlaylet")
+        self.horizontalLayout_13.addWidget(self.videoPathPlaylet)
+        self.selectVideoFolderButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.selectVideoFolderButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -672,10 +679,10 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.selectVideoFolderButton_Playlet.setObjectName("selectVideoFolderButton_Playlet")
-        self.horizontalLayout_13.addWidget(self.selectVideoFolderButton_Playlet)
-        self.makeTorrentButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.makeTorrentButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.selectVideoFolderButtonPlaylet.setObjectName("selectVideoFolderButtonPlaylet")
+        self.horizontalLayout_13.addWidget(self.selectVideoFolderButtonPlaylet)
+        self.makeTorrentButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.makeTorrentButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -707,8 +714,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.makeTorrentButton_Playlet.setObjectName("makeTorrentButton_Playlet")
-        self.horizontalLayout_13.addWidget(self.makeTorrentButton_Playlet)
+        self.makeTorrentButtonPlaylet.setObjectName("makeTorrentButtonPlaylet")
+        self.horizontalLayout_13.addWidget(self.makeTorrentButtonPlaylet)
         self.verticalLayout_15.addLayout(self.horizontalLayout_13)
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_14.setContentsMargins(5, 5, 5, 5)
@@ -720,14 +727,14 @@ class Ui_Mainwindow(object):
         self.label_23.setFont(font)
         self.label_23.setObjectName("label_23")
         self.horizontalLayout_14.addWidget(self.label_23)
-        self.coverPath_Playlet = QtWidgets.QLineEdit(parent=self.tab_3)
-        self.coverPath_Playlet.setText("")
-        self.coverPath_Playlet.setDragEnabled(True)
-        self.coverPath_Playlet.setClearButtonEnabled(True)
-        self.coverPath_Playlet.setObjectName("coverPath_Playlet")
-        self.horizontalLayout_14.addWidget(self.coverPath_Playlet)
-        self.selectCoverFolderButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.selectCoverFolderButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.coverPathPlaylet = QtWidgets.QLineEdit(parent=self.tab_3)
+        self.coverPathPlaylet.setText("")
+        self.coverPathPlaylet.setDragEnabled(True)
+        self.coverPathPlaylet.setClearButtonEnabled(True)
+        self.coverPathPlaylet.setObjectName("coverPathPlaylet")
+        self.horizontalLayout_14.addWidget(self.coverPathPlaylet)
+        self.selectCoverFolderButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.selectCoverFolderButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -759,10 +766,10 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.selectCoverFolderButton_Playlet.setObjectName("selectCoverFolderButton_Playlet")
-        self.horizontalLayout_14.addWidget(self.selectCoverFolderButton_Playlet)
-        self.uploadCoverButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.uploadCoverButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.selectCoverFolderButtonPlaylet.setObjectName("selectCoverFolderButtonPlaylet")
+        self.horizontalLayout_14.addWidget(self.selectCoverFolderButtonPlaylet)
+        self.uploadCoverButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.uploadCoverButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 3px 6px;\n"
 "    font-size: 14px;\n"
@@ -794,8 +801,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.uploadCoverButton_Playlet.setObjectName("uploadCoverButton_Playlet")
-        self.horizontalLayout_14.addWidget(self.uploadCoverButton_Playlet)
+        self.uploadCoverButtonPlaylet.setObjectName("uploadCoverButtonPlaylet")
+        self.horizontalLayout_14.addWidget(self.uploadCoverButtonPlaylet)
         self.verticalLayout_15.addLayout(self.horizontalLayout_14)
         self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_15.setContentsMargins(5, 5, 5, 5)
@@ -859,9 +866,9 @@ class Ui_Mainwindow(object):
         self.label_24.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_24.setObjectName("label_24")
         self.verticalLayout_16.addWidget(self.label_24)
-        self.introBrowser_Playlet = QtWidgets.QTextEdit(parent=self.tab_3)
-        self.introBrowser_Playlet.setObjectName("introBrowser_Playlet")
-        self.verticalLayout_16.addWidget(self.introBrowser_Playlet)
+        self.introBrowserPlaylet = QtWidgets.QTextEdit(parent=self.tab_3)
+        self.introBrowserPlaylet.setObjectName("introBrowserPlaylet")
+        self.verticalLayout_16.addWidget(self.introBrowserPlaylet)
         self.verticalLayout_14.addLayout(self.verticalLayout_16)
         self.verticalLayout_17 = QtWidgets.QVBoxLayout()
         self.verticalLayout_17.setContentsMargins(5, 5, 5, 5)
@@ -874,11 +881,11 @@ class Ui_Mainwindow(object):
         self.label_25.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_25.setObjectName("label_25")
         self.verticalLayout_17.addWidget(self.label_25)
-        self.pictureUrlBrowser_Playlet = QtWidgets.QTextBrowser(parent=self.tab_3)
-        self.pictureUrlBrowser_Playlet.setObjectName("pictureUrlBrowser_Playlet")
-        self.verticalLayout_17.addWidget(self.pictureUrlBrowser_Playlet)
-        self.getPictureButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.getPictureButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.pictureUrlBrowserPlaylet = QtWidgets.QTextEdit(parent=self.tab_3)
+        self.pictureUrlBrowserPlaylet.setObjectName("pictureUrlBrowserPlaylet")
+        self.verticalLayout_17.addWidget(self.pictureUrlBrowserPlaylet)
+        self.getPictureButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.getPictureButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -910,8 +917,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getPictureButton_Playlet.setObjectName("getPictureButton_Playlet")
-        self.verticalLayout_17.addWidget(self.getPictureButton_Playlet)
+        self.getPictureButtonPlaylet.setObjectName("getPictureButtonPlaylet")
+        self.verticalLayout_17.addWidget(self.getPictureButtonPlaylet)
         self.verticalLayout_14.addLayout(self.verticalLayout_17)
         self.horizontalLayout_10.addLayout(self.verticalLayout_14)
         self.verticalLayout_18 = QtWidgets.QVBoxLayout()
@@ -928,9 +935,9 @@ class Ui_Mainwindow(object):
         self.label_26.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_26.setObjectName("label_26")
         self.verticalLayout_19.addWidget(self.label_26)
-        self.debugBrowser_Playlet = QtWidgets.QTextBrowser(parent=self.tab_3)
-        self.debugBrowser_Playlet.setObjectName("debugBrowser_Playlet")
-        self.verticalLayout_19.addWidget(self.debugBrowser_Playlet)
+        self.debugBrowserPlaylet = QtWidgets.QTextBrowser(parent=self.tab_3)
+        self.debugBrowserPlaylet.setObjectName("debugBrowserPlaylet")
+        self.verticalLayout_19.addWidget(self.debugBrowserPlaylet)
         self.verticalLayout_18.addLayout(self.verticalLayout_19)
         self.label_27 = QtWidgets.QLabel(parent=self.tab_3)
         font = QtGui.QFont()
@@ -950,9 +957,9 @@ class Ui_Mainwindow(object):
         self.label_28.setFont(font)
         self.label_28.setObjectName("label_28")
         self.horizontalLayout_17.addWidget(self.label_28)
-        self.mainTitleBrowser_Playlet = QtWidgets.QTextEdit(parent=self.tab_3)
-        self.mainTitleBrowser_Playlet.setObjectName("mainTitleBrowser_Playlet")
-        self.horizontalLayout_17.addWidget(self.mainTitleBrowser_Playlet)
+        self.mainTitleBrowserPlaylet = QtWidgets.QTextEdit(parent=self.tab_3)
+        self.mainTitleBrowserPlaylet.setObjectName("mainTitleBrowserPlaylet")
+        self.horizontalLayout_17.addWidget(self.mainTitleBrowserPlaylet)
         self.verticalLayout_18.addLayout(self.horizontalLayout_17)
         self.horizontalLayout_18 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_18.setContentsMargins(0, 3, 0, 3)
@@ -964,9 +971,9 @@ class Ui_Mainwindow(object):
         self.label_29.setFont(font)
         self.label_29.setObjectName("label_29")
         self.horizontalLayout_18.addWidget(self.label_29)
-        self.secondTitleBrowser_Playlet = QtWidgets.QTextEdit(parent=self.tab_3)
-        self.secondTitleBrowser_Playlet.setObjectName("secondTitleBrowser_Playlet")
-        self.horizontalLayout_18.addWidget(self.secondTitleBrowser_Playlet)
+        self.secondTitleBrowserPlaylet = QtWidgets.QTextEdit(parent=self.tab_3)
+        self.secondTitleBrowserPlaylet.setObjectName("secondTitleBrowserPlaylet")
+        self.horizontalLayout_18.addWidget(self.secondTitleBrowserPlaylet)
         self.verticalLayout_18.addLayout(self.horizontalLayout_18)
         self.horizontalLayout_19 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_19.setContentsMargins(0, 3, 0, 3)
@@ -978,12 +985,12 @@ class Ui_Mainwindow(object):
         self.label_30.setFont(font)
         self.label_30.setObjectName("label_30")
         self.horizontalLayout_19.addWidget(self.label_30)
-        self.fileNameBrowser_Playlet = QtWidgets.QTextEdit(parent=self.tab_3)
-        self.fileNameBrowser_Playlet.setObjectName("fileNameBrowser_Playlet")
-        self.horizontalLayout_19.addWidget(self.fileNameBrowser_Playlet)
+        self.fileNameBrowserPlaylet = QtWidgets.QTextEdit(parent=self.tab_3)
+        self.fileNameBrowserPlaylet.setObjectName("fileNameBrowserPlaylet")
+        self.horizontalLayout_19.addWidget(self.fileNameBrowserPlaylet)
         self.verticalLayout_18.addLayout(self.horizontalLayout_19)
-        self.getNameButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.getNameButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.getNameButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.getNameButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -1015,8 +1022,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getNameButton_Playlet.setObjectName("getNameButton_Playlet")
-        self.verticalLayout_18.addWidget(self.getNameButton_Playlet)
+        self.getNameButtonPlaylet.setObjectName("getNameButtonPlaylet")
+        self.verticalLayout_18.addWidget(self.getNameButtonPlaylet)
         self.verticalLayout_20 = QtWidgets.QVBoxLayout()
         self.verticalLayout_20.setContentsMargins(5, 5, 5, 5)
         self.verticalLayout_20.setObjectName("verticalLayout_20")
@@ -1028,11 +1035,11 @@ class Ui_Mainwindow(object):
         self.label_31.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_31.setObjectName("label_31")
         self.verticalLayout_20.addWidget(self.label_31)
-        self.mediainfoBrowser_Playlet = QtWidgets.QTextBrowser(parent=self.tab_3)
-        self.mediainfoBrowser_Playlet.setObjectName("mediainfoBrowser_Playlet")
-        self.verticalLayout_20.addWidget(self.mediainfoBrowser_Playlet)
-        self.getMediaInfoButton_Playlet = QtWidgets.QPushButton(parent=self.tab_3)
-        self.getMediaInfoButton_Playlet.setStyleSheet("QPushButton {\n"
+        self.mediainfoBrowserPlaylet = QtWidgets.QTextBrowser(parent=self.tab_3)
+        self.mediainfoBrowserPlaylet.setObjectName("mediainfoBrowserPlaylet")
+        self.verticalLayout_20.addWidget(self.mediainfoBrowserPlaylet)
+        self.getMediaInfoButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.getMediaInfoButtonPlaylet.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 6px 6px;\n"
 "    font-size: 14px;\n"
@@ -1064,8 +1071,8 @@ class Ui_Mainwindow(object):
 "                                      stop:1 #0e925c);\n"
 "}\n"
 "")
-        self.getMediaInfoButton_Playlet.setObjectName("getMediaInfoButton_Playlet")
-        self.verticalLayout_20.addWidget(self.getMediaInfoButton_Playlet)
+        self.getMediaInfoButtonPlaylet.setObjectName("getMediaInfoButtonPlaylet")
+        self.verticalLayout_20.addWidget(self.getMediaInfoButtonPlaylet)
         self.verticalLayout_18.addLayout(self.verticalLayout_20)
         self.horizontalLayout_10.addLayout(self.verticalLayout_18)
         self.verticalLayout_13.addLayout(self.horizontalLayout_10)
@@ -1088,7 +1095,7 @@ class Ui_Mainwindow(object):
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(Mainwindow)
-        self.TabWiget.setCurrentIndex(2)
+        self.TabWiget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Mainwindow)
 
     def retranslateUi(self, Mainwindow):
@@ -1096,28 +1103,29 @@ class Ui_Mainwindow(object):
         Mainwindow.setWindowTitle(_translate("Mainwindow", "ph-bjd"))
         self.label_7.setText(_translate("Mainwindow", "Publish Helper"))
         self.label_16.setText(_translate("Mainwindow", "输入"))
-        self.label.setText(_translate("Mainwindow", "输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接"))
+        self.label.setText(_translate("Mainwindow", "输入豆瓣、IMDb等资源链接"))
         self.label_3.setText(_translate("Mainwindow", "来源："))
         self.label_6.setText(_translate("Mainwindow", "小组："))
         self.label_2.setText(_translate("Mainwindow", "资源路径："))
-        self.selectVideoButton.setText(_translate("Mainwindow", "文件"))
-        self.selectVideoFolderButton.setText(_translate("Mainwindow", "文件夹"))
-        self.makeTorrentButton.setText(_translate("Mainwindow", "制作种子"))
+        self.selectVideoButtonMovie.setText(_translate("Mainwindow", "文件"))
+        self.selectVideoFolderButtonMovie.setText(_translate("Mainwindow", "文件夹"))
+        self.makeTorrentButtonMovie.setText(_translate("Mainwindow", "制作种子"))
         self.label_11.setText(_translate("Mainwindow", "简介"))
-        self.getPtGenButton.setText(_translate("Mainwindow", "获取"))
+        self.getPtGenButtonMovie.setText(_translate("Mainwindow", "获取"))
         self.label_5.setText(_translate("Mainwindow", "截图"))
-        self.getPictureButton.setText(_translate("Mainwindow", "获取"))
-        self.label_4.setText(_translate("Mainwindow", "debug窗口"))
+        self.getPictureButtonMovie.setText(_translate("Mainwindow", "获取"))
+        self.label_4.setText(_translate("Mainwindow", "Debug窗口"))
         self.label_12.setText(_translate("Mainwindow", "命名"))
         self.label_13.setText(_translate("Mainwindow", "主标题："))
         self.label_14.setText(_translate("Mainwindow", "副标题："))
         self.label_15.setText(_translate("Mainwindow", "文件名："))
-        self.getNameButton.setText(_translate("Mainwindow", "获取标准命名"))
+        self.getNameButtonMovie.setText(_translate("Mainwindow", "获取标准命名"))
         self.label_10.setText(_translate("Mainwindow", "MediaInfo"))
-        self.getMediaInfoButton.setText(_translate("Mainwindow", "获取"))
-        self.startButton.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab), _translate("Mainwindow", "Movie"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_2), _translate("Mainwindow", "TV"))
+        self.getMediaInfoButtonMovie.setText(_translate("Mainwindow", "获取"))
+        self.startButtonMovie.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab), _translate("Mainwindow", "电影"))
+        self.label_32.setText(_translate("Mainwindow", "敬请期待！"))
+        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_2), _translate("Mainwindow", "电视剧"))
         self.label_17.setText(_translate("Mainwindow", "输入"))
         self.label_8.setText(_translate("Mainwindow", "中文名称："))
         self.label_9.setText(_translate("Mainwindow", "发布年份："))
@@ -1126,11 +1134,11 @@ class Ui_Mainwindow(object):
         self.label_20.setText(_translate("Mainwindow", "来源："))
         self.label_21.setText(_translate("Mainwindow", "小组："))
         self.label_22.setText(_translate("Mainwindow", "资源路径："))
-        self.selectVideoFolderButton_Playlet.setText(_translate("Mainwindow", "文件夹"))
-        self.makeTorrentButton_Playlet.setText(_translate("Mainwindow", "制作种子"))
+        self.selectVideoFolderButtonPlaylet.setText(_translate("Mainwindow", "文件夹"))
+        self.makeTorrentButtonPlaylet.setText(_translate("Mainwindow", "制作种子"))
         self.label_23.setText(_translate("Mainwindow", "封面路径："))
-        self.selectCoverFolderButton_Playlet.setText(_translate("Mainwindow", "浏览"))
-        self.uploadCoverButton_Playlet.setText(_translate("Mainwindow", "上传"))
+        self.selectCoverFolderButtonPlaylet.setText(_translate("Mainwindow", "浏览"))
+        self.uploadCoverButtonPlaylet.setText(_translate("Mainwindow", "上传"))
         self.checkBox_0.setText(_translate("Mainwindow", "剧情"))
         self.checkBox_1.setText(_translate("Mainwindow", "爱情"))
         self.checkBox_2.setText(_translate("Mainwindow", "喜剧"))
@@ -1147,15 +1155,15 @@ class Ui_Mainwindow(object):
         self.checkBox_13.setText(_translate("Mainwindow", "古装"))
         self.label_24.setText(_translate("Mainwindow", "简介"))
         self.label_25.setText(_translate("Mainwindow", "截图"))
-        self.getPictureButton_Playlet.setText(_translate("Mainwindow", "获取"))
-        self.label_26.setText(_translate("Mainwindow", "debug窗口"))
+        self.getPictureButtonPlaylet.setText(_translate("Mainwindow", "获取"))
+        self.label_26.setText(_translate("Mainwindow", "Debug窗口"))
         self.label_27.setText(_translate("Mainwindow", "命名"))
         self.label_28.setText(_translate("Mainwindow", "主标题："))
         self.label_29.setText(_translate("Mainwindow", "副标题："))
         self.label_30.setText(_translate("Mainwindow", "文件名："))
-        self.getNameButton_Playlet.setText(_translate("Mainwindow", "获取标准命名"))
+        self.getNameButtonPlaylet.setText(_translate("Mainwindow", "获取标准命名"))
         self.label_31.setText(_translate("Mainwindow", "MediaInfo"))
-        self.getMediaInfoButton_Playlet.setText(_translate("Mainwindow", "获取"))
-        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_3), _translate("Mainwindow", "Playlet"))
+        self.getMediaInfoButtonPlaylet.setText(_translate("Mainwindow", "获取"))
+        self.TabWiget.setTabText(self.TabWiget.indexOf(self.tab_3), _translate("Mainwindow", "短剧"))
         self.menu.setTitle(_translate("Mainwindow", "工具"))
         self.actionsettings.setText(_translate("Mainwindow", "设置"))

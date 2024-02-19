@@ -269,6 +269,6 @@ def create_torrent(folder_path, torrent_path):
 
 
 def load_names(file_path, name):
-    with open(file_path, 'r') as file:
+    with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
         return data[name]

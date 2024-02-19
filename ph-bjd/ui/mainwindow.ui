@@ -47,7 +47,7 @@
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="title">
-        <string>Movie</string>
+        <string>电影</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_12">
         <item>
@@ -159,12 +159,12 @@
                        </font>
                       </property>
                       <property name="text">
-                       <string>输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接</string>
+                       <string>输入豆瓣、IMDb等资源链接</string>
                       </property>
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="ptGenUrl">
+                     <widget class="QLineEdit" name="ptGenUrlMovie">
                       <property name="text">
                        <string/>
                       </property>
@@ -205,7 +205,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="source">
+                       <widget class="QComboBox" name="sourceMovie">
                         <property name="editable">
                          <bool>true</bool>
                         </property>
@@ -229,7 +229,7 @@
                        </widget>
                       </item>
                       <item>
-                       <widget class="QComboBox" name="team">
+                       <widget class="QComboBox" name="teamMovie">
                         <property name="editable">
                          <bool>true</bool>
                         </property>
@@ -269,7 +269,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="videoPath">
+                   <widget class="QLineEdit" name="videoPathMovie">
                     <property name="text">
                      <string/>
                     </property>
@@ -282,7 +282,7 @@
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="selectVideoButton">
+                   <widget class="QPushButton" name="selectVideoButtonMovie">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -323,7 +323,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="selectVideoFolderButton">
+                   <widget class="QPushButton" name="selectVideoFolderButtonMovie">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -364,7 +364,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="makeTorrentButton">
+                   <widget class="QPushButton" name="makeTorrentButtonMovie">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -439,10 +439,10 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="ptGenBrowser"/>
+                 <widget class="QTextEdit" name="ptGenBrowserMovie"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="getPtGenButton">
+                 <widget class="QPushButton" name="getPtGenButtonMovie">
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
     display: inline-block;
@@ -515,10 +515,10 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="pictureUrlBrowser"/>
+                 <widget class="QTextEdit" name="pictureUrlBrowserMovie"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="getPictureButton">
+                 <widget class="QPushButton" name="getPictureButtonMovie">
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
     display: inline-block;
@@ -599,7 +599,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>debug窗口</string>
+                   <string>Debug窗口</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -607,7 +607,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="debugBrowser"/>
+                 <widget class="QTextBrowser" name="debugBrowserMovie"/>
                 </item>
                </layout>
               </item>
@@ -655,7 +655,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="mainTitleBrowser"/>
+                 <widget class="QTextEdit" name="mainTitleBrowserMovie"/>
                 </item>
                </layout>
               </item>
@@ -687,7 +687,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="secondTitleBrowser"/>
+                 <widget class="QTextEdit" name="secondTitleBrowserMovie"/>
                 </item>
                </layout>
               </item>
@@ -719,12 +719,12 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="fileNameBrowser"/>
+                 <widget class="QTextEdit" name="fileNameBrowserMovie"/>
                 </item>
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="getNameButton">
+               <widget class="QPushButton" name="getNameButtonMovie">
                 <property name="styleSheet">
                  <string notr="true">QPushButton {
     display: inline-block;
@@ -795,10 +795,10 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="mediainfoBrowser"/>
+                 <widget class="QTextBrowser" name="mediainfoBrowserMovie"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="getMediaInfoButton">
+                 <widget class="QPushButton" name="getMediaInfoButtonMovie">
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
     display: inline-block;
@@ -859,7 +859,7 @@ QPushButton:pressed {
              <number>5</number>
             </property>
             <item>
-             <widget class="QPushButton" name="startButton">
+             <widget class="QPushButton" name="startButtonMovie">
               <property name="minimumSize">
                <size>
                 <width>0</width>
@@ -922,12 +922,31 @@ QPushButton:pressed {
       </widget>
       <widget class="QWidget" name="tab_2">
        <attribute name="title">
-        <string>TV</string>
+        <string>电视剧</string>
        </attribute>
+       <widget class="QLabel" name="label_32">
+        <property name="geometry">
+         <rect>
+          <x>410</x>
+          <y>240</y>
+          <width>381</width>
+          <height>161</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+          <pointsize>26</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>敬请期待！</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_3">
        <attribute name="title">
-        <string>Playlet</string>
+        <string>短剧</string>
        </attribute>
        <layout class="QVBoxLayout" name="verticalLayout_21">
         <item>
@@ -1024,7 +1043,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="chineseNameEdit_Playlet"/>
+                   <widget class="QLineEdit" name="chineseNameEditPlaylet"/>
                   </item>
                   <item>
                    <widget class="QLabel" name="label_9">
@@ -1034,7 +1053,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="yearEdit_Playlet"/>
+                   <widget class="QLineEdit" name="yearEditPlaylet"/>
                   </item>
                  </layout>
                 </item>
@@ -1080,7 +1099,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="type_Playlet">
+                   <widget class="QComboBox" name="typePlaylet">
                     <property name="editable">
                      <bool>true</bool>
                     </property>
@@ -1100,7 +1119,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="source_Playlet">
+                   <widget class="QComboBox" name="sourcePlaylet">
                     <property name="editable">
                      <bool>true</bool>
                     </property>
@@ -1120,7 +1139,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QComboBox" name="team_Playlet">
+                   <widget class="QComboBox" name="teamPlaylet">
                     <property name="editable">
                      <bool>true</bool>
                     </property>
@@ -1156,7 +1175,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="videoPath_Playlet">
+                   <widget class="QLineEdit" name="videoPathPlaylet">
                     <property name="text">
                      <string/>
                     </property>
@@ -1169,7 +1188,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="selectVideoFolderButton_Playlet">
+                   <widget class="QPushButton" name="selectVideoFolderButtonPlaylet">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -1210,7 +1229,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="makeTorrentButton_Playlet">
+                   <widget class="QPushButton" name="makeTorrentButtonPlaylet">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -1280,7 +1299,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="coverPath_Playlet">
+                   <widget class="QLineEdit" name="coverPathPlaylet">
                     <property name="text">
                      <string/>
                     </property>
@@ -1293,7 +1312,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="selectCoverFolderButton_Playlet">
+                   <widget class="QPushButton" name="selectCoverFolderButtonPlaylet">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -1334,7 +1353,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QPushButton" name="uploadCoverButton_Playlet">
+                   <widget class="QPushButton" name="uploadCoverButtonPlaylet">
                     <property name="styleSheet">
                      <string notr="true">QPushButton {
     display: inline-block;
@@ -1539,7 +1558,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="introBrowser_Playlet"/>
+                 <widget class="QTextEdit" name="introBrowserPlaylet"/>
                 </item>
                </layout>
               </item>
@@ -1574,10 +1593,10 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="pictureUrlBrowser_Playlet"/>
+                 <widget class="QTextEdit" name="pictureUrlBrowserPlaylet"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="getPictureButton_Playlet">
+                 <widget class="QPushButton" name="getPictureButtonPlaylet">
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
     display: inline-block;
@@ -1658,7 +1677,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>debug窗口</string>
+                   <string>Debug窗口</string>
                   </property>
                   <property name="alignment">
                    <set>Qt::AlignCenter</set>
@@ -1666,7 +1685,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="debugBrowser_Playlet"/>
+                 <widget class="QTextBrowser" name="debugBrowserPlaylet"/>
                 </item>
                </layout>
               </item>
@@ -1714,7 +1733,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="mainTitleBrowser_Playlet"/>
+                 <widget class="QTextEdit" name="mainTitleBrowserPlaylet"/>
                 </item>
                </layout>
               </item>
@@ -1746,7 +1765,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="secondTitleBrowser_Playlet"/>
+                 <widget class="QTextEdit" name="secondTitleBrowserPlaylet"/>
                 </item>
                </layout>
               </item>
@@ -1778,12 +1797,12 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="fileNameBrowser_Playlet"/>
+                 <widget class="QTextEdit" name="fileNameBrowserPlaylet"/>
                 </item>
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="getNameButton_Playlet">
+               <widget class="QPushButton" name="getNameButtonPlaylet">
                 <property name="styleSheet">
                  <string notr="true">QPushButton {
     display: inline-block;
@@ -1854,10 +1873,10 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextBrowser" name="mediainfoBrowser_Playlet"/>
+                 <widget class="QTextBrowser" name="mediainfoBrowserPlaylet"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="getMediaInfoButton_Playlet">
+                 <widget class="QPushButton" name="getMediaInfoButtonPlaylet">
                   <property name="styleSheet">
                    <string notr="true">QPushButton {
     display: inline-block;

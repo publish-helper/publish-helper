@@ -29,55 +29,59 @@ def extract_complex_keyframes(video_path, output_path, num_images, some_threshol
         print(f"创建目录时出错：{e}")
         return False, [f"创建目录时出错：{e}"]
 
-    # 加载视频
-    cap = cv2.VideoCapture(video_path)
-    if not cap.isOpened():
-        print("无法加载视频。")
-        return False, ["无法加载视频。"]
-    else:
-        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        duration = total_frames / fps
-        print("加载视频成功")
+    try:
+        # 加载视频
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            print("无法加载视频。")
+            return False, ["无法加载视频。"]
+        else:
+            total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+            fps = cap.get(cv2.CAP_PROP_FPS)
+            duration = total_frames / fps
+            print("加载视频成功")
 
-        # 计算起止时间帧编号
-        start_frame = int(total_frames * start_pct)
-        end_frame = int(total_frames * end_pct)
-        min_interval = duration * min_interval_pct
-        print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(min_interval))
+            # 计算起止时间帧编号
+            start_frame = int(total_frames * start_pct)
+            end_frame = int(total_frames * end_pct)
+            min_interval = duration * min_interval_pct
+            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(min_interval))
 
-        # 初始化变量
-        extracted_images = []
-        last_keyframe_time = -min_interval
+            # 初始化变量
+            extracted_images = []
+            last_keyframe_time = -min_interval
 
-        # 生成随机时间戳
-        timestamps = sorted(random.sample(range(start_frame, end_frame), num_images))
+            # 生成随机时间戳
+            timestamps = sorted(random.sample(range(start_frame, end_frame), num_images))
 
-        for timestamp in timestamps:
-            # 跳转到特定帧
-            cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
-            ret, frame = cap.read()
-            if not ret:
-                continue
+            for timestamp in timestamps:
+                # 跳转到特定帧
+                cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
+                ret, frame = cap.read()
+                if not ret:
+                    continue
 
-            current_time = timestamp / fps
-            if current_time >= last_keyframe_time + min_interval:
-                std_dev = np.std(frame)
-                print(f"Frame ID: {timestamp}, Timestamp: {current_time}, Std Dev: {std_dev}")  # 调试信息
+                current_time = timestamp / fps
+                if current_time >= last_keyframe_time + min_interval:
+                    std_dev = np.std(frame)
+                    print(f"Frame ID: {timestamp}, Timestamp: {current_time}, Std Dev: {std_dev}")  # 调试信息
 
-                if std_dev > some_threshold:
-                    frame_path = generate_image_filename(output_path)
-                    cv2.imwrite(frame_path, frame)
-                    extracted_images.append(frame_path)
-                    last_keyframe_time = current_time
+                    if std_dev > some_threshold:
+                        frame_path = generate_image_filename(output_path)
+                        cv2.imwrite(frame_path, frame)
+                        extracted_images.append(frame_path)
+                        last_keyframe_time = current_time
 
-        cap.release()
+            cap.release()
 
-        print(extracted_images)
-        return True, extracted_images
+            print(extracted_images)
+            return True, extracted_images
+    except Exception as e:
+        print(f"截图出错：{e}")
+        return False, [f"截图出错：{e}"]
 
 
-def get_thumbnails(video_path, output_path, cols, rows, start_pct, end_pct):
+def get_thumbnail(video_path, output_path, cols, rows, start_pct, end_pct):
     try:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
