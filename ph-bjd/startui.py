@@ -307,8 +307,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.get_pt_gen_for_name_thread = GetPtGenThread(ptGenPath, ptGenUrl)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
-            print("启动pt_gen_thread成功")
-            self.debugBrowserMovie.append("启动pt_gen_thread成功")
+            print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
+            self.debugBrowserMovie.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
         except Exception as e:
             print(f"启动PtGen线程出错：{e}")
             return False, [f"启动PtGen线程出错：{e}"]
@@ -653,8 +653,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.get_pt_gen_for_name_thread = GetPtGenThread(ptGenPath, ptGenUrl)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
-            print("启动pt_gen_thread成功")
-            self.debugBrowserTV.append("启动pt_gen_thread成功")
+            print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
+            self.debugBrowserTV.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
         except Exception as e:
             print(f"启动PtGen线程出错：{e}")
             return False, [f"启动PtGen线程出错：{e}"]
