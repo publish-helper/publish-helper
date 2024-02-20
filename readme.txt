@@ -2,6 +2,8 @@ Publish Helper v1.2.0
 
 使用前务必请先看设置！！！
 
+软件功能和界面请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
+
 目前支持的免费公共图床：https://freeimage.host/
 
 图床的api地址和密钥请去图床主页左上角获取
