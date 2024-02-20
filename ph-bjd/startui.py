@@ -107,11 +107,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.typePlaylet.addItem(name)
 
     def settings_clicked(self):  # click对应的槽函数
-        self.mySettings = settings()
-        self.mySettings.getSettings()
-        myico = QIcon("static/ph-bjd.ico")
-        self.mySettings.setWindowIcon(myico)
-        self.mySettings.show()  # 加上self避免页面一闪而过
+        self.my_settings = settings()
+        self.my_settings.getSettings()
+        my_ico = QIcon("static/ph-bjd.ico")
+        self.my_settings.setWindowIcon(my_ico)
+        self.my_settings.show()  # 加上self避免页面一闪而过
 
     # 以下是Movie页面的代码
 
@@ -144,8 +144,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_movie_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
-        print("启动pt_gen_thread成功")
-        self.debugBrowserMovie.append("启动pt_gen_thread成功")
+        print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
+        self.debugBrowserMovie.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
 
     def handle_get_pt_gen_movie_result(self, get_success, response):
         if get_success:
@@ -175,7 +175,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             rows = int(get_settings("rows"))
             cols = int(get_settings("cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
-            self.debugBrowserMovie.append("参数获取成功，开始执行截图函数")
+            self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + figure_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
                                                                 screenshot_threshold, screenshot_start,
@@ -230,7 +230,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
                     print("上传图床线程启动")
-                    self.debugBrowserMovie.append("上传图床线程启动")
+                    self.debugBrowserMovie.append("上传图床线程启动，请耐心等待图床Api的响应...")
 
                 else:
                     self.debugBrowserMovie.append("未选择自动上传图床功能，图片已储存在本地")
@@ -494,8 +494,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_tv_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
-        print("启动pt_gen_thread成功")
-        self.debugBrowserTV.append("启动pt_gen_thread成功")
+        print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
+        self.debugBrowserTV.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
 
     def handle_get_pt_gen_tv_result(self, get_success, response):
         if get_success:
@@ -525,7 +525,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             rows = int(get_settings("rows"))
             cols = int(get_settings("cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
-            self.debugBrowserTV.append("参数获取成功，开始执行截图函数")
+            self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + figure_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
                                                                 screenshot_threshold, screenshot_start,
@@ -580,7 +580,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
                     print("上传图床线程启动")
-                    self.debugBrowserTV.append("上传图床线程启动")
+                    self.debugBrowserTV.append("上传图床线程启动，请耐心等待图床Api的响应...")
 
                 else:
                     self.debugBrowserTV.append("未选择自动上传图床功能，图片已储存在本地")
@@ -842,20 +842,19 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def upload_cover_button_playlet_clicked(self):
         cover_path = self.coverPathPlaylet.text()
-        if cover_path:
+        if cover_path and cover_path != '':
             self.debugBrowserPlaylet.append("上传封面" + cover_path)
             figure_bed_path = get_settings("figure_bed_path")  # 图床地址
             figure_bed_token = get_settings("figure_bed_token")  # 图床Token
-            self.debugBrowserPlaylet.append("参数获取成功，开始执行截图函数")
+            self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + figure_bed_path)
 
             self.upload_cover_thread = UploadPictureThread(figure_bed_path, figure_bed_token, cover_path, True)
             self.upload_cover_thread.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
             self.upload_cover_thread.start()  # 启动线程
             print("上传图床线程启动")
-            self.debugBrowserPlaylet.append("上传图床线程启动")
-
-            print("上传图床线程启动")
-            self.debugBrowserPlaylet.append("上传图床线程启动")
+            self.debugBrowserPlaylet.append("上传图床线程启动，请耐心等待图床Api的响应...")
+        else:
+            self.debugBrowserPlaylet.append("封面路径为空")
 
     def get_picture_button_playlet_clicked(self):
         self.pictureUrlBrowserPlaylet.setText("")
@@ -874,7 +873,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             rows = int(get_settings("rows"))
             cols = int(get_settings("cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
-            self.debugBrowserPlaylet.append("参数获取成功，开始执行截图函数")
+            self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + figure_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
                                                                 screenshot_threshold, screenshot_start,
@@ -929,7 +928,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
                     print("上传图床线程启动")
-                    self.debugBrowserPlaylet.append("上传图床线程启动")
+                    self.debugBrowserPlaylet.append("上传图床线程启动，请耐心等待图床Api的响应...")
 
                 else:
                     self.debugBrowserPlaylet.append("未选择自动上传图床功能，图片已储存在本地")

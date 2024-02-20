@@ -1,4 +1,4 @@
-Publish Helper v1.2.0
+Publish Helper v1.2.1
 
 使用前务必请先看设置！！！
 

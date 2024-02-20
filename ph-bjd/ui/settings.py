@@ -1041,10 +1041,10 @@ class Ui_Settings(object):
 "制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。\n"
 "一键启动为避免冲突增加了等待时间，执行完需要5-10秒，耐心等待勿反复点击，Pt-Gen连接性不好的不建议使用。\n"
 "文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。\n"
-"\n"
 "目前支持的图床：\n"
 "https://img.agsvpt.com/\n"
 "https://freeimage.host/\n"
+"https://imgbb.com/\n"
 "图床的api地址和密钥请到图床主页获取。"))
         self.saveButton.setText(_translate("Settings", "保存"))
         self.cancelButton.setText(_translate("Settings", "取消"))

@@ -9,6 +9,8 @@ def upload_screenshot(api_url, api_token, frame_path):
         return agsv_ficture_bed(api_url, api_token, frame_path)
     if api_url == 'https://freeimage.host/api/1/upload':
         return freeimage_ficture_bed(api_url, api_token, frame_path)
+    if api_url == 'https://api.imgbb.com/1/upload':
+        return imgbb_ficture_bed(api_url, api_token, frame_path)
     return False, '图床暂不支持'
 
 
@@ -49,11 +51,10 @@ def agsv_ficture_bed(api_url, api_token, frame_path):
 
 
 def freeimage_ficture_bed(api_url, api_token, frame_path):
-    print('接受到上传其他图床请求')
+    print('接受到上传freeimage图床请求')
     url = api_url
     files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
     data = {'key': api_token,
-            # 'action': 'upload',
             'format': 'txt'
             }
     print('值已经获取')
@@ -73,3 +74,34 @@ def freeimage_ficture_bed(api_url, api_token, frame_path):
         return True, bbs_url
     else:
         return False, res.text
+
+
+def imgbb_ficture_bed(api_url, api_token, frame_path):
+    print('接受到上传imgbb图床请求')
+    url = api_url
+    files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
+    data = {'expiration': '600',
+            'key': api_token,
+            }
+    print('值已经获取')
+    try:
+        # 发送POST请求
+        print("开始发送上传图床的请求")
+        res = requests.post(url, data=data, files=files)
+        print("已成功发送上传图床的请求")
+    except requests.RequestException as e:
+        print("请求过程中出现错误:", e)
+        return False, "请求过程中出现错误:" + str(e)
+
+    try:
+        data = json.loads(res.text)
+        # 提取所需的URL
+        image_url = data["data"]["url"]
+        print(image_url)
+        return True, '[img]'+image_url+'[/img]'
+    except KeyError:
+        print(False, "您输入的Api密钥有问题")
+        return False, "您输入的Api密钥有问题" + str(res)
+    except json.JSONDecodeError as e:
+        print(False, "处理返回的JSON过程中出现错误:" + str(e))
+        return False, "处理返回的JSON过程中出现错误:" + str(e) + str(res)
