@@ -1,4 +1,5 @@
 import os
+import re
 import sys
 import time
 
@@ -672,6 +673,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 first_english_name = ""
                 year = ""
                 season = self.seasonBoxTV.text()
+                s = ' season' + season  # 用于后期替换多余的Season名称
+                fir = ' ' + season + ' '  # 用于后期替换主标题多余的数字季名称
+                fi = '.' + season + '.'  # 用于后期替换文件名多余的数字季名称
+                print('需要替换的内容：', s, fir, fi)
                 if len(season) < 2:
                     season = '0' + season
                 width = ""
@@ -699,6 +704,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             response)
                         if first_english_name == '':
                             first_english_name = chinese_name_to_pinyin(first_chinese_name)
+                            english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$"
+                            if not re.match(english_pattern, first_english_name):
+                                print("first_english_name does not match the english_pattern.")
+                                first_english_name = ''
                         print(first_chinese_name, first_english_name, year, other_names_sorted, category,
                               actors_list)
                         print("获取ptgen关键信息成功")
@@ -741,17 +750,21 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     get_video_files_success, video_files = get_video_files(
                         self.videoPathTV.text().replace('file:///', ''))
                     print('检测到以下文件：', video_files)
-                    print("获取到关键参数：" + str(output))
                     main_title = first_english_name + ' S' + season + ' ' + year + ' ' + width + ' ' + source + ' ' + format + ' ' + hdr_format + ' ' + commercial_name + ' ' + channel_layout + '-' + team
+                    main_title = main_title.replace(s, '')
                     main_title = main_title.replace('_', ' ')
                     main_title = main_title.replace('  ', ' ')
                     main_title = main_title.replace('  ', ' ')
-                    print("MainTitle" + main_title)
-                    second_title = (first_chinese_name + other_names + ' | 全' + str(len(video_files)) + '集' + ' | 类型：' + category + ' | 主演：' + actors)
-                    print("SecondTitle" + second_title)
+                    main_title = main_title.replace(fir, ' ')
+
+                    print("MainTitle:" + main_title)
+                    second_title = (first_chinese_name + other_names + ' | 全' + str(
+                        len(video_files)) + '集' + ' | 类型：' + category + ' | 主演：' + actors)
+                    print("SecondTitle:" + second_title)
                     file_name = (
                             first_chinese_name + '.' + first_english_name + '.' + ' S' + season + 'E??' + '.' + year + '.' + width + '.' + source + '.' +
                             format + '.' + hdr_format + '.' + commercial_name + '.' + channel_layout + '-' + team)
+                    file_name = file_name.replace(s, '')
                     file_name = file_name.replace(' – ', '.')
                     file_name = file_name.replace(' - ', '.')
                     file_name = file_name.replace('_', '.')
@@ -759,6 +772,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(' ', '.')
                     file_name = file_name.replace('..', '.')
                     file_name = file_name.replace('..', '.')
+                    file_name = file_name.replace(fi, '.')
                     print("FileName" + file_name)
                     self.mainTitleBrowserTV.setText(main_title)
                     self.secondTitleBrowserTV.setText(second_title)
@@ -1019,7 +1033,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             get_video_info_success, output = get_video_info(video_path, False)
             print(get_video_info_success, output)
             if is_video_path == 2:
-                get_video_files_success, video_files = get_video_files(self.videoPathPlaylet.text().replace('file:///', ''))
+                get_video_files_success, video_files = get_video_files(
+                    self.videoPathPlaylet.text().replace('file:///', ''))
                 print('检测到以下文件：', video_files)
                 print("获取到关键参数：" + str(output))
                 self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))

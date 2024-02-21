@@ -154,10 +154,10 @@ def move_file_to_folder(file_name, folder_name):
 # 此方法用于自动生成一个不易重复的图片文件名称
 def generate_image_filename(base_path):
     now = datetime.datetime.now()
-    date_time = now.strftime("%Y%m%d_%H%M%S")
-    letters = random.sample('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', 6)
+    date_time = now.strftime("%Y%m%d-%H%M%S")
+    letters = random.sample('0123456789', 6)
     random_str = ''.join(letters)
-    filename = f"{date_time}_{random_str}.png"
+    filename = f"{date_time}-{random_str}.png"
     path = base_path + '/' + filename
     return path
 

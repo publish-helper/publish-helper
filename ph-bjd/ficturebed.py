@@ -15,7 +15,7 @@ def upload_screenshot(api_url, api_token, frame_path):
 
 
 def agsv_ficture_bed(api_url, api_token, frame_path):
-    print("开始上传图床")
+    print("开始上传官方图床")
     url = api_url
     files = {'uploadedFile': (frame_path, open(frame_path, 'rb'), "image/png")}
     data = {'api_token': api_token, 'image_compress': 0, 'image_compress_level': 80}
@@ -96,12 +96,12 @@ def imgbb_ficture_bed(api_url, api_token, frame_path):
     try:
         data = json.loads(res.text)
         # 提取所需的URL
-        image_url = data["data"]["url"]
+        image_url = data["data"]["image"]["url"]
         print(image_url)
         return True, '[img]'+image_url+'[/img]'
-    except KeyError:
-        print(False, "您输入的Api密钥有问题")
-        return False, "您输入的Api密钥有问题" + str(res)
+    except KeyError as e:
+        print(False, "您输入的Api密钥有问题" + str(e))
+        return False, "您输入的Api密钥有问题" + str(e) + str(res)
     except json.JSONDecodeError as e:
         print(False, "处理返回的JSON过程中出现错误:" + str(e))
         return False, "处理返回的JSON过程中出现错误:" + str(e) + str(res)
