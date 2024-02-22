@@ -41,22 +41,80 @@ def update_settings(parameter_name, value):
 def get_settings(parameter_name):
     """
     从 static/settings.json 文件中获取特定参数的值。
-    如果参数不存在，则返回 None。
+    如果参数不存在，则创建一个并赋值为标准值。
 
     参数:
     parameter_name (str): 参数名称
 
     返回:
-    参数的值或 None
+    参数的值
     """
     settings_file = 'static/settings.json'
+
     if not os.path.exists(settings_file):
-        return None
+        # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
+        with open(settings_file, 'w') as file:
+            default_settings = {
+                "screenshot_path": "temp/pic",
+                "torrent_path": "temp/torrent",
+                "pt_gen_path": "https://ptgen.agsvpt.work/",
+                "figure_bed_path": "https://freeimage.host/api/1/upload",
+                "figure_bed_token": "6d207e02198a847aa98d0a2a901485a5",
+                "figure_bed_index_path": "",
+                "figure_bed_username": "",
+                "figure_bed_password": "",
+                "screenshot_number": "3",
+                "screenshot_threshold": "0.01",
+                "screenshot_start": "0.10",
+                "screenshot_end": "0.90",
+                "get_thumbnails": "True",
+                "rows": "3",
+                "cols": "3",
+                "auto_upload_screenshot": "True",
+                "paste_screenshot_url": "True",
+                "delete_screenshot": "True",
+                "make_dir": "True",
+                "rename_file": "True"
+            }
+            json.dump(default_settings, file)
 
     with open(settings_file, 'r') as file:
         settings = json.load(file)
-    print(str(parameter_name) + ":" + str(settings.get(parameter_name)))
-    return str(settings.get(parameter_name))
+
+    # 设置参数的标准值
+    standard_values = {
+        "screenshot_path": "temp/pic",
+        "torrent_path": "temp/torrent",
+        "pt_gen_path": "https://ptgen.agsvpt.work/",
+        "figure_bed_path": "https://freeimage.host/api/1/upload",
+        "figure_bed_token": "6d207e02198a847aa98d0a2a901485a5",
+        "figure_bed_index_path": "",
+        "figure_bed_username": "",
+        "figure_bed_password": "",
+        "screenshot_number": "3",
+        "screenshot_threshold": "0.01",
+        "screenshot_start": "0.10",
+        "screenshot_end": "0.90",
+        "get_thumbnails": "True",
+        "rows": "3",
+        "cols": "3",
+        "auto_upload_screenshot": "True",
+        "paste_screenshot_url": "True",
+        "delete_screenshot": "True",
+        "make_dir": "True",
+        "rename_file": "True"
+    }
+
+    # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
+    if parameter_name in standard_values and parameter_name not in settings:
+        settings[parameter_name] = standard_values[parameter_name]
+        with open(settings_file, 'w') as file:
+            json.dump(settings, file)
+
+    parameter_value = settings.get(parameter_name, "")
+    print(f"{parameter_name}: {parameter_value}")
+
+    return parameter_value
 
 
 def rename_file_with_same_extension(old_name, new_name_without_extension):
@@ -74,10 +132,10 @@ def rename_file_with_same_extension(old_name, new_name_without_extension):
         return True, new_name
     except FileNotFoundError:
         print(f"未找到文件: '{old_name}'")
-        return False, (f"未找到文件: '{old_name}'")
+        return False, f"未找到文件: '{old_name}'"
     except OSError as e:
         print(f"重命名文件时出错: {e}")
-        return False, (f"重命名文件时出错: {e}")
+        return False, f"重命名文件时出错: {e}"
 
 
 def rename_directory(current_dir, new_name):
@@ -326,3 +384,45 @@ def get_video_files(folder_path):
     except Exception as e:
         # 返回错误信息
         return False, [f"错误：{e}"]
+
+
+def int_to_roman(num):
+    val = [
+        1000, 900, 500, 400,
+        100, 90, 50, 40,
+        10, 9, 5, 4,
+        1
+    ]
+    syms = [
+        "M", "CM", "D", "CD",
+        "C", "XC", "L", "XL",
+        "X", "IX", "V", "IV",
+        "I"
+    ]
+    roman_num = ''
+    i = 0
+    while num > 0:
+        for _ in range(num // val[i]):
+            roman_num += syms[i]
+            num -= val[i]
+        i += 1
+    return roman_num
+
+
+def int_to_special_roman(num):
+    special_roman_dict = {
+        1: 'Ⅰ',
+        2: 'Ⅱ',
+        3: 'Ⅲ',
+        4: 'Ⅳ',
+        5: 'Ⅴ',
+        6: 'Ⅵ',
+        7: 'Ⅶ',
+        8: 'Ⅷ',
+        9: 'Ⅸ',
+        10: 'Ⅹ',
+    }
+    if num in special_roman_dict:
+        return special_roman_dict[num]
+    else:
+        return str(num)

@@ -5,7 +5,7 @@ import time
 
 from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog
+from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget
 
 from ficturebed import upload_screenshot
 from mediainfo import get_media_info
@@ -15,7 +15,7 @@ from screenshot import extract_complex_keyframes, get_thumbnail
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path
+    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
@@ -625,9 +625,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_media_info_button_tv_clicked(self):
         self.mediainfoBrowserTV.setText("")
-        isVideoPath, videoPath = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
-        if isVideoPath == 1 or isVideoPath == 2:
-            get_media_info_success, mediainfo = get_media_info(videoPath)
+        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
+        if is_video_path == 1 or is_video_path == 2:
+            get_media_info_success, mediainfo = get_media_info(video_path)
             if get_media_info_success:
                 self.mediainfoBrowserTV.setText(mediainfo)
                 self.mediainfoBrowserTV.append('\n')
@@ -640,18 +640,18 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def get_name_button_tv_clicked(self):
         try:
             self.ptGenBrowserTV.setText("")
-            ptGenPath = get_settings("pt_gen_path")
-            ptGenUrl = self.ptGenUrlTV.text()
+            pt_gen_path = get_settings("pt_gen_path")
+            pt_gen_url = self.ptGenUrlTV.text()
 
-            if ptGenUrl == "":
+            if pt_gen_url == "":
                 self.debugBrowserTV.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
                 return
-            if ptGenPath == "":
+            if pt_gen_path == "":
                 self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
             self.debugBrowserTV.append("尝试启动pt_gen_thread")
-            self.get_pt_gen_for_name_thread = GetPtGenThread(ptGenPath, ptGenUrl)
+            self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
             print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
@@ -673,10 +673,28 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 first_english_name = ""
                 year = ""
                 season = self.seasonBoxTV.text()
-                s = ' season' + season  # 用于后期替换多余的Season名称
-                fir = ' ' + season + ' '  # 用于后期替换主标题多余的数字季名称
-                fi = '.' + season + '.'  # 用于后期替换文件名多余的数字季名称
-                print('需要替换的内容：', s, fir, fi)
+                lowercase_season_info_without_spaces = ' season' + season  # 用于后期替换多余的season名称
+                uppercase_season_info_without_spaces = ' Season' + season  # 用于后期替换多余的Season名称
+                lowercase_season_info_with_spaces = ' season ' + season  # 用于后期替换多余的season名称
+                uppercase_season_info_with_spaces = ' Season ' + season  # 用于后期替换多余的Season名称
+                main_title_number_season_name = ' ' + season + ' '  # 用于后期替换主标题多余的数字季名称
+                file_number_season_name = '.' + season + '.'  # 用于后期替换文件名多余的数字季名称
+                main_title_roman_season_name = ' ' + int_to_roman(int(season)) + ' '  # 用于后期替换主标题多余的罗马季名称
+                main_title_special_roman_season_name = ' ' + int_to_special_roman(
+                    int(season)) + ' '  # 用于后期替换主标题多余的特殊罗马季名称
+                file_roman_season_name = '.' + int_to_roman(int(season)) + '.'  # 用于后期替换文件名多余的罗马季名称
+                file_special_roman_season_name = '.' + int_to_special_roman(int(season)) + '.'  # 用于后期替换文件名多余的特殊罗马季名称
+                print('需要替换的内容：',
+                      lowercase_season_info_without_spaces,
+                      uppercase_season_info_without_spaces,
+                      lowercase_season_info_with_spaces,
+                      uppercase_season_info_with_spaces,
+                      main_title_number_season_name,
+                      file_number_season_name,
+                      main_title_roman_season_name,
+                      main_title_special_roman_season_name,
+                      file_roman_season_name,
+                      file_special_roman_season_name)
                 if len(season) < 2:
                     season = '0' + season
                 width = ""
@@ -687,10 +705,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 other_names = ""
                 category = ""
                 actors = ""
-                make_dir = get_settings("makeDir")
                 rename_file = get_settings("renameFile")
                 is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())
-                get_video_info_success, output = get_video_info(video_path, True)
                 if is_video_path == 1 or is_video_path == 2:
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
@@ -703,11 +719,38 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         first_chinese_name, first_english_name, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
                         if first_english_name == '':
-                            first_english_name = chinese_name_to_pinyin(first_chinese_name)
-                            english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$"
+                            ok = QMessageBox.information(self, '资源的英文名称',
+                                                         '资源的名称是：' + first_chinese_name + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
+                                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                            print('你的选择是', ok)
+                            if ok == QMessageBox.StandardButton.Yes:
+                                first_english_name = chinese_name_to_pinyin(first_chinese_name)
+                            english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                             if not re.match(english_pattern, first_english_name):
+                                widget = QWidget(self)
                                 print("first_english_name does not match the english_pattern.")
-                                first_english_name = ''
+                                if ok == QMessageBox.StandardButton.Yes:
+                                    QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
+                                text, ok = QInputDialog.getText(self, '输入资源的英文名称',
+                                                                'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                if ok:
+                                    print(f'您输入的数据为: {text}')
+                                    self.debugBrowserTV.append(f'您输入的数据为: {text}')
+                                    first_english_name = text
+                                    invalid_characters = ''
+                                    for char in first_english_name:
+                                        if not re.match(english_pattern, char):
+                                            invalid_characters += char
+                                    print("不匹配的字符：", invalid_characters)
+                                    if invalid_characters != '':
+                                        QMessageBox.warning(widget, '警告', '您输入的英文名称包含非英文字符或符号\n有以下这些：'
+                                                            + '|'.join(invalid_characters) + '\n请重新核对后再生成标准命名')
+                                        return
+
+                                else:
+                                    print('未输入任何数据')
+                                    self.debugBrowserTV.append('未输入任何数据')
+                                    first_english_name = ''
                         print(first_chinese_name, first_english_name, year, other_names_sorted, category,
                               actors_list)
                         print("获取ptgen关键信息成功")
@@ -751,12 +794,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.videoPathTV.text().replace('file:///', ''))
                     print('检测到以下文件：', video_files)
                     main_title = first_english_name + ' S' + season + ' ' + year + ' ' + width + ' ' + source + ' ' + format + ' ' + hdr_format + ' ' + commercial_name + ' ' + channel_layout + '-' + team
-                    main_title = main_title.replace(s, '')
+                    main_title = main_title.replace(lowercase_season_info_without_spaces, '')
+                    main_title = main_title.replace(uppercase_season_info_without_spaces, '')
+                    main_title = main_title.replace(lowercase_season_info_with_spaces, '')
+                    main_title = main_title.replace(uppercase_season_info_with_spaces, '')
                     main_title = main_title.replace('_', ' ')
                     main_title = main_title.replace('  ', ' ')
                     main_title = main_title.replace('  ', ' ')
-                    main_title = main_title.replace(fir, ' ')
-
+                    main_title = main_title.replace(main_title_number_season_name, ' ')
+                    main_title = main_title.replace(main_title_roman_season_name, ' ')
+                    main_title = main_title.replace(main_title_special_roman_season_name, ' ')
                     print("MainTitle:" + main_title)
                     second_title = (first_chinese_name + other_names + ' | 全' + str(
                         len(video_files)) + '集' + ' | 类型：' + category + ' | 主演：' + actors)
@@ -764,7 +811,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = (
                             first_chinese_name + '.' + first_english_name + '.' + ' S' + season + 'E??' + '.' + year + '.' + width + '.' + source + '.' +
                             format + '.' + hdr_format + '.' + commercial_name + '.' + channel_layout + '-' + team)
-                    file_name = file_name.replace(s, '')
+                    file_name = file_name.replace(lowercase_season_info_without_spaces, '')
+                    file_name = file_name.replace(uppercase_season_info_without_spaces, '')
+                    file_name = file_name.replace(lowercase_season_info_with_spaces, '')
+                    file_name = file_name.replace(uppercase_season_info_with_spaces, '')
                     file_name = file_name.replace(' – ', '.')
                     file_name = file_name.replace(' - ', '.')
                     file_name = file_name.replace('_', '.')
@@ -772,7 +822,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(' ', '.')
                     file_name = file_name.replace('..', '.')
                     file_name = file_name.replace('..', '.')
-                    file_name = file_name.replace(fi, '.')
+                    file_name = file_name.replace(file_number_season_name, '.')
+                    file_name = file_name.replace(file_roman_season_name, '.')
+                    file_name = file_name.replace(file_special_roman_season_name, '.')
                     print("FileName" + file_name)
                     self.mainTitleBrowserTV.setText(main_title)
                     self.secondTitleBrowserTV.setText(second_title)
