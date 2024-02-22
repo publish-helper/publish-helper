@@ -362,7 +362,40 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         for data in other_names_sorted:  # 把别名转化为str
                             other_names += ' / '
                             other_names += data
+                    english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
+                    widget = QWidget(self)
+                    if first_english_name == '':
+                        ok = QMessageBox.information(self, '资源的英文名称',
+                                                     '资源的名称是：' + first_chinese_name + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
+                                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                        print('你的选择是', ok)
+                        if ok == QMessageBox.StandardButton.Yes:
+                            first_english_name = chinese_name_to_pinyin(first_chinese_name)
+                        if not re.match(english_pattern, first_english_name):
+                            print("first_english_name does not match the english_pattern.")
+                            if ok == QMessageBox.StandardButton.Yes:
+                                QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
+                            text, ok = QInputDialog.getText(self, '输入资源的英文名称',
+                                                            'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                            if ok:
+                                print(f'您输入的数据为: {text}')
+                                self.debugBrowserMovie.append(f'您输入的数据为: {text}')
+                                first_english_name = text
+                                invalid_characters = ''
+                                for char in first_english_name:
+                                    if not re.match(english_pattern, char):
+                                        invalid_characters += char
+                                print("不匹配的字符：", invalid_characters)
+                                if invalid_characters != '':
+                                    QMessageBox.warning(widget, '警告', '您输入的英文名称包含非英文字符或符号\n有以下这些：'
+                                                        + '|'.join(
+                                        invalid_characters) + '\n请重新核对后再生成标准命名')
+                                    return
 
+                            else:
+                                print('未输入任何数据')
+                                self.debugBrowserMovie.append('未输入任何数据')
+                                first_english_name = ''
                     get_video_info_success, output = get_video_info(video_path, True)
                     print("获取到关键参数：" + str(output))
                     self.debugBrowserMovie.append("获取到关键参数：" + str(output))
