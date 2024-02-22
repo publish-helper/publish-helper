@@ -15,5 +15,6 @@
     "paste_screenshot_url": "True",
     "delete_screenshot": "True",
     "make_dir": "True",
-    "rename_file": "True"
+    "rename_file": "True",
+    "second_confirm_file_name": "True"
 }

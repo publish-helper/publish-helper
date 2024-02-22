@@ -250,6 +250,10 @@ class Ui_Settings(object):
         self.makeDir.setChecked(False)
         self.makeDir.setObjectName("makeDir")
         self.horizontalLayout_10.addWidget(self.makeDir)
+        self.secondConfirmFileName = QtWidgets.QCheckBox(parent=Settings)
+        self.secondConfirmFileName.setChecked(False)
+        self.secondConfirmFileName.setObjectName("secondConfirmFileName")
+        self.horizontalLayout_10.addWidget(self.secondConfirmFileName)
         self.verticalLayout.addLayout(self.horizontalLayout_10)
         self.label_9 = QtWidgets.QLabel(parent=Settings)
         self.label_9.setMaximumSize(QtCore.QSize(16777215, 20))
@@ -1008,7 +1012,31 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.makeDir.setText(_translate("Settings", "将文件放入同名文件夹"))
+        self.makeDir.setText(_translate("Settings", "将电影文件放入同名文件夹"))
+        self.secondConfirmFileName.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.secondConfirmFileName.setText(_translate("Settings", "二次确认文件名"))
         self.label_9.setText(_translate("Settings", "说明"))
         self.label_11.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
@@ -1039,7 +1067,7 @@ class Ui_Settings(object):
 "截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。\n"
 "对文件夹处理时仅获取其中第一个视频的参数信息，并仅对文件夹重命名。\n"
 "制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。\n"
-"一键启动为避免冲突增加了等待时间，执行完需要5-10秒，耐心等待勿反复点击，Pt-Gen连接性不好的不建议使用。\n"
+"一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。\n"
 "文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。\n"
 "目前支持的图床：\n"
 "https://img.agsvpt.com/\n"

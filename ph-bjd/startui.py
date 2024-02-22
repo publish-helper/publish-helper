@@ -5,7 +5,7 @@ import time
 
 from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
-from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget
+from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget, QLineEdit
 
 from ficturebed import upload_screenshot
 from mediainfo import get_media_info
@@ -162,7 +162,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def get_picture_button_movie_clicked(self):
         self.pictureUrlBrowserMovie.setText("")
         is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
-
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserMovie.append("获取视频" + video_path + "的截图")
             screenshot_path = get_settings("screenshot_path")  # 截图储存路径
@@ -294,18 +293,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def get_name_button_movie_clicked(self):
         try:
             self.ptGenBrowserMovie.setText("")
-            ptGenPath = get_settings("pt_gen_path")
-            ptGenUrl = self.ptGenUrlMovie.text()
-
-            if ptGenUrl == "":
+            pt_gen_path = get_settings("pt_gen_path")
+            pt_gen_url = self.ptGenUrlMovie.text()
+            if pt_gen_url == "":
                 self.debugBrowserMovie.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
                 return
-            if ptGenPath == "":
+            if pt_gen_path == "":
                 self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
             self.debugBrowserMovie.append("尝试启动pt_gen_thread")
-            self.get_pt_gen_for_name_thread = GetPtGenThread(ptGenPath, ptGenUrl)
+            self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
             print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
@@ -334,8 +332,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 other_names = ""
                 category = ""
                 actors = ""
-                make_dir = get_settings("makeDir")
-                rename_file = get_settings("renameFile")
+                make_dir = get_settings("make_dir")
+                rename_file = get_settings("rename_file")
+                second_confirm_file_name = get_settings("second_confirm_file_name")
                 is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())
                 if is_video_path == 1 or is_video_path == 2:
                     print("重命名初始化完成")
@@ -402,6 +401,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(': ', '.')
                     file_name = file_name.replace(' ', '.')
                     file_name = file_name.replace('..', '.')
+                    if second_confirm_file_name:
+                        text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
+                                                        QLineEdit.EchoMode.Normal, file_name)
+                        if ok:
+                            print(f'您确认文件名为: {text}')
+                            self.debugBrowserMovie.append(f'您确认文件名为: {text}')
+                            file_name = text
+                        else:
+                            print('未输入任何数据')
+                            self.debugBrowserMovie.append('未输入任何数据')
                     print("FileName" + file_name)
                     self.mainTitleBrowserMovie.setText(main_title)
                     self.secondTitleBrowserMovie.setText(second_title)
@@ -705,8 +714,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 other_names = ""
                 category = ""
                 actors = ""
-                rename_file = get_settings("renameFile")
+                rename_file = get_settings("rename_file")
+                second_confirm_file_name = get_settings("second_confirm_file_name")
                 is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())
+                english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
+                widget = QWidget(self)
                 if is_video_path == 1 or is_video_path == 2:
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
@@ -725,9 +737,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             print('你的选择是', ok)
                             if ok == QMessageBox.StandardButton.Yes:
                                 first_english_name = chinese_name_to_pinyin(first_chinese_name)
-                            english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                             if not re.match(english_pattern, first_english_name):
-                                widget = QWidget(self)
                                 print("first_english_name does not match the english_pattern.")
                                 if ok == QMessageBox.StandardButton.Yes:
                                     QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
@@ -744,7 +754,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     print("不匹配的字符：", invalid_characters)
                                     if invalid_characters != '':
                                         QMessageBox.warning(widget, '警告', '您输入的英文名称包含非英文字符或符号\n有以下这些：'
-                                                            + '|'.join(invalid_characters) + '\n请重新核对后再生成标准命名')
+                                                            + '|'.join(
+                                            invalid_characters) + '\n请重新核对后再生成标准命名')
                                         return
 
                                 else:
@@ -753,8 +764,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     first_english_name = ''
                         print(first_chinese_name, first_english_name, year, other_names_sorted, category,
                               actors_list)
-                        print("获取ptgen关键信息成功")
-                        self.debugBrowserTV.append("获取ptgen关键信息成功")
+                        print("获取Pt-Gen关键信息成功")
+                        self.debugBrowserTV.append("获取Pt-Gen关键信息成功")
                         is_first = True
                         for data in actors_list:  # 把演员名转化成str
                             if is_first:
@@ -825,6 +836,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(file_number_season_name, '.')
                     file_name = file_name.replace(file_roman_season_name, '.')
                     file_name = file_name.replace(file_special_roman_season_name, '.')
+                    if second_confirm_file_name:
+                        text, ok = QInputDialog.getText(self, '确认',
+                                                        '请确认文件名称，如有问题请修改', QLineEdit.EchoMode.Normal,
+                                                        file_name)
+                        if ok:
+                            print(f'您确认文件名为: {text}')
+                            self.debugBrowserTV.append(f'您确认文件名为: {text}')
+                            file_name = text
+                        else:
+                            print('未输入任何数据')
+                            self.debugBrowserTV.append('未输入任何数据')
                     print("FileName" + file_name)
                     self.mainTitleBrowserTV.setText(main_title)
                     self.secondTitleBrowserTV.setText(second_title)
@@ -841,7 +863,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = '0' + e
                             rename_file_success, output = rename_file_with_same_extension(video_file,
                                                                                           file_name.replace('??', e))
-
                             if rename_file_success:
                                 self.videoPathTV.setText(output)
                                 video_path = output
@@ -859,7 +880,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.debugBrowserTV.append("视频地址成功重新命名为：" + video_path)
                         else:
                             self.debugBrowserTV.append("重命名失败：" + output)
-
                 else:
                     self.debugBrowserTV.append("您的视频文件路径有误")
             else:
@@ -869,17 +889,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_tv_clicked(self):
-        isVideoPath, videoPath = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
-        if isVideoPath == 1 or isVideoPath == 2:
+        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
+        if is_video_path == 1 or is_video_path == 2:
             torrent_path = str(get_settings("torrent_path"))
-            folder_path = os.path.dirname(videoPath)
+            folder_path = os.path.dirname(video_path)
             self.debugBrowserTV.append("开始将" + folder_path + "制作种子，储存在" + torrent_path)
             self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_tv_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserTV.append("制作种子线程启动成功")
         else:
-            self.debugBrowserTV.append("制作种子失败：" + videoPath)
+            self.debugBrowserTV.append("制作种子失败：" + video_path)
 
     def handle_make_torrent_tv_result(self, get_success, response):
         if get_success:
@@ -1081,6 +1101,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             type = ""
             category = ""
             rename_file = get_settings("rename_file")
+            second_confirm_file_name = get_settings("second_confirm_file_name")
             is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())
             get_video_info_success, output = get_video_info(video_path, False)
             print(get_video_info_success, output)
@@ -1148,6 +1169,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 file_name = file_name.replace(' ', '.')
                 file_name = file_name.replace('..', '.')
                 file_name = file_name.replace('..', '.')
+                if second_confirm_file_name:
+                    text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
+                                                    QLineEdit.EchoMode.Normal, file_name)
+                    if ok:
+                        print(f'您确认文件名为: {text}')
+                        self.debugBrowserPlaylet.append(f'您确认文件名为: {text}')
+                        file_name = text
+                    else:
+                        print('未输入任何数据')
+                        self.debugBrowserPlaylet.append('未输入任何数据')
                 print("FileName" + file_name)
                 self.mainTitleBrowserPlaylet.setText(main_title)
                 self.secondTitleBrowserPlaylet.setText(second_title)
@@ -1257,6 +1288,7 @@ class settings(QDialog, Ui_Settings):
         self.deleteScreenshot.setChecked(bool(get_settings("delete_screenshot")))
         self.makeDir.setChecked(bool(get_settings("make_dir")))
         self.renameFile.setChecked(bool(get_settings("rename_file")))
+        self.secondConfirmFileName.setChecked(bool(get_settings("second_confirm_file_name")))
 
     def updateSettings(self):
         update_settings("screenshot_path", self.screenshotPath.text())
@@ -1294,6 +1326,10 @@ class settings(QDialog, Ui_Settings):
             update_settings("rename_file", "True")
         else:
             update_settings("rename_file", "")
+        if self.secondConfirmFileName.isChecked():
+            update_settings("second_confirm_file_name", "True")
+        else:
+            update_settings("second_confirm_file_name", "")
 
     # 以上是Settings页面的代码
     # 以下是多线程的代码

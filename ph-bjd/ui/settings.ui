@@ -1239,7 +1239,42 @@ QPushButton:pressed {
 </string>
          </property>
          <property name="text">
-          <string>将文件放入同名文件夹</string>
+          <string>将电影文件放入同名文件夹</string>
+         </property>
+         <property name="checked">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QCheckBox" name="secondConfirmFileName">
+         <property name="styleSheet">
+          <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+         </property>
+         <property name="text">
+          <string>二次确认文件名</string>
          </property>
          <property name="checked">
           <bool>false</bool>
@@ -1309,7 +1344,7 @@ QPushButton:pressed {
 截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。
 对文件夹处理时仅获取其中第一个视频的参数信息，并仅对文件夹重命名。
 制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。
-一键启动为避免冲突增加了等待时间，执行完需要5-10秒，耐心等待勿反复点击，Pt-Gen连接性不好的不建议使用。
+一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。
 文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。
 目前支持的图床：
 https://img.agsvpt.com/

@@ -74,7 +74,8 @@ def get_settings(parameter_name):
                 "paste_screenshot_url": "True",
                 "delete_screenshot": "True",
                 "make_dir": "True",
-                "rename_file": "True"
+                "rename_file": "True",
+                "second_confirm_file_name": "True"
             }
             json.dump(default_settings, file)
 
@@ -102,7 +103,8 @@ def get_settings(parameter_name):
         "paste_screenshot_url": "True",
         "delete_screenshot": "True",
         "make_dir": "True",
-        "rename_file": "True"
+        "rename_file": "True",
+        "second_confirm_file_name": "True"
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
