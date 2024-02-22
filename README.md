@@ -12,9 +12,11 @@ Publish Helper v1.2.3
 
 static/abbreviation.json
 
+    "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
+    "SMPTE ST 2086, HDR10 compatible": "HDR10",
+
     "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
     "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
-    "Dolby Digital Plus": "DDP",
     "DTS-HD Master Audio": "DTS-HD MA",
 
     "L R C LFE Ls Rs Lb Rb": "7.1",
@@ -24,7 +26,6 @@ static/abbreviation.json
     "1 920 pixels": "1080p",
     "1 280 pixels": "720p",
     "640 pixels": "480p",
-
 
     "HEVC": "HEVC",
     "AVC": "AVC",
