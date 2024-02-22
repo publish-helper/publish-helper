@@ -1,6 +1,6 @@
 Publish Helper v1.2.3
 
-使用前务必请先看设置！！！
+**使用前务必请先看设置！！！**
 
 软件功能和界面请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
 
@@ -10,36 +10,71 @@ Publish Helper v1.2.3
 
 如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改以下文件：
 
-static/abbreviation.json
+**static/abbreviation.json**
 
-    "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
-    "SMPTE ST 2086, HDR10 compatible": "HDR10",
+    {
+        "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
+        "SMPTE ST 2086, HDR10 compatible": "HDR10",
+    
+        "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
+        "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
+        "DTS-HD Master Audio": "DTS-HD MA",
+    
+        "L R C LFE Ls Rs Lb Rb": "7.1",
+        "L R C LFE Ls Rs": "5.1",
+        "L R": "2.0"
+    
+        "1 920 pixels": "1080p",
+        "1 280 pixels": "720p",
+        "640 pixels": "480p",
+    
+        "HEVC": "HEVC",
+        "AVC": "AVC",
+        "AV1": "AV1",
+    
+        "没有正确识别所产生的信息": "你想要的缩略信息",
+        "无需识别的信息": "",（留空）
+    }
 
-    "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
-    "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
-    "DTS-HD Master Audio": "DTS-HD MA",
+如需修改来源名称、小组名称或短剧类型，请访问：
 
-    "L R C LFE Ls Rs Lb Rb": "7.1",
-    "L R C LFE Ls Rs": "5.1",
-    "L R": "2.0"
+**来源名称：static/source.json**
 
-    "1 920 pixels": "1080p",
-    "1 280 pixels": "720p",
-    "640 pixels": "480p",
+    {
+        "source": [
+          "WEB-DL",
+          "Remux",
+          "Blu-ray",
+          "UHD Blu-ray",
+          ""
+        ]
+    }
 
-    "HEVC": "HEVC",
-    "AVC": "AVC",
-    "AV1": "AV1",
+**小组名称：static/team.json**
 
-    "没有正确识别所产生的信息": "你想要的缩略信息",
-    "无需识别的信息": "（留空）",
+    {
+        "team": [
+          "AGSVWEB",
+          "AGSVMUS",
+          "AGSVPT",
+          "GodDramas",
+          "CatEDU",
+          "Pack",
+          ""
+        ]
+    }
 
-如需修改来源名称或小组名称，请访问：
+**短剧类型：static/type.json**
 
-static/source.json
-static/team.json
+    {
+        "type": [
+          "网络收费短剧",
+          "网络免费短剧",
+          ""
+        ]
+    }
 
-软件获取地址：
+**软件获取地址：**
 
 https://github.com/bjdbjd/publish-helper/releases/
 
