@@ -98,7 +98,7 @@ def imgbb_ficture_bed(api_url, api_token, frame_path):
         # 提取所需的URL
         image_url = data["data"]["image"]["url"]
         print(image_url)
-        return True, '[img]'+image_url+'[/img]'
+        return True, '[img]' + image_url + '[/img]'
     except KeyError as e:
         print(False, "您输入的Api密钥有问题" + str(e))
         return False, "您输入的Api密钥有问题" + str(e) + str(res)
