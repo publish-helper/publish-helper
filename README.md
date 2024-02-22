@@ -46,7 +46,7 @@ Publish Helper v1.2.3
           "Remux",
           "Blu-ray",
           "UHD Blu-ray",
-          ""
+          "你想要的来源名称"
         ]
     }
 
@@ -60,7 +60,7 @@ Publish Helper v1.2.3
           "GodDramas",
           "CatEDU",
           "Pack",
-          ""
+          "你想要的小组名称"
         ]
     }
 
@@ -70,7 +70,7 @@ Publish Helper v1.2.3
         "type": [
           "网络收费短剧",
           "网络免费短剧",
-          ""
+          "你想要的短剧类型"
         ]
     }
 
