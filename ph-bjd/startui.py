@@ -821,7 +821,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("SecondTitle:" + second_title)
                     file_name = (
                             first_chinese_name + '.' + first_english_name + '.' + ' S' + season + 'E??' + '.' + year + '.' + width + '.' + source + '.' +
-                            format + '.' + hdr_format + '.' + commercial_name + '.' + channel_layout + '-' + team)
+                            format + '.' + hdr_format + '.' + commercial_name + '.^&*' + channel_layout + '-' + team)
                     file_name = file_name.replace(lowercase_season_info_without_spaces, '')
                     file_name = file_name.replace(uppercase_season_info_without_spaces, '')
                     file_name = file_name.replace(lowercase_season_info_with_spaces, '')
@@ -836,6 +836,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(file_number_season_name, '.')
                     file_name = file_name.replace(file_roman_season_name, '.')
                     file_name = file_name.replace(file_special_roman_season_name, '.')
+                    file_name = file_name.replace('.^&*', '.') # 防止声道数量被误杀
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
                                                         '请确认文件名称，如有问题请修改', QLineEdit.EchoMode.Normal,
