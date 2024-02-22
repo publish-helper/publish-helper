@@ -364,7 +364,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             other_names += data
                     english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                     widget = QWidget(self)
-                    if first_english_name == '':
+                    if first_english_name == '' and first_chinese_name != "":
                         ok = QMessageBox.information(self, '资源的英文名称',
                                                      '资源的名称是：' + first_chinese_name + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                      QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
@@ -763,7 +763,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.debugBrowserTV.append("开始获取ptgen关键信息")
                         first_chinese_name, first_english_name, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
-                        if first_english_name == '':
+                        if first_english_name == '' and first_chinese_name != '':
                             ok = QMessageBox.information(self, '资源的英文名称',
                                                          '资源的名称是：' + first_chinese_name + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
