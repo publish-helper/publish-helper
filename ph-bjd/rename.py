@@ -86,7 +86,6 @@ def get_video_info(file_path, is_landscape):
         hdr_format = ""
         commercial_name = ""
         channel_layout = ""
-
         for track in media_info.tracks:
             if track.track_type == "General":
                 pass
@@ -100,7 +99,14 @@ def get_video_info(file_path, is_landscape):
                     format = track.other_format[0]
                 if track.other_hdr_format:
                     hdr_format = track.other_hdr_format[0]
-                # ... 添加其他Video信息
+                if track.writing_library:  # 判断是否为x26*重编码
+                    if "x264" in track.writing_library:
+                        format = "x264"
+                    if "x265" in track.writing_library:
+                        format = "x265"
+                    if "x266" in track.writing_library:
+                        format = "x266"
+                        # ... 添加其他Video信息
             elif track.track_type == "Audio":
                 commercial_name = track.commercial_name
                 channel_layout = track.channel_layout

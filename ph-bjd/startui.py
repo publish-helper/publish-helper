@@ -33,6 +33,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def __init__(self):
         super().__init__()
 
+        self.my_settings = None
         self.setupUi(self)  # 设置界面
 
         self.get_pt_gen_thread = None
@@ -278,9 +279,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_media_info_button_movie_clicked(self):
         self.mediainfoBrowserMovie.setText("")
-        isVideoPath, videoPath = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
-        if isVideoPath == 1 or isVideoPath == 2:
-            get_media_info_success, mediainfo = get_media_info(videoPath)
+        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
+        if is_video_path == 1 or is_video_path == 2:
+            get_media_info_success, mediainfo = get_media_info(video_path)
             if get_media_info_success:
                 self.mediainfoBrowserMovie.setText(mediainfo)
                 self.mediainfoBrowserMovie.append('\n')
@@ -340,16 +341,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserMovie.append("重命名初始化完成")
                     if response == "":
-                        print("未获取到ptgen")
-                        self.debugBrowserMovie.append("未获取到ptgen")
+                        print("未获取到Pt-Gen")
+                        self.debugBrowserMovie.append("未获取到Pt-Gen")
                     else:
-                        print("开始获取ptgen关键信息")
-                        self.debugBrowserMovie.append("开始获取ptgen关键信息")
+                        print("开始获取Pt-Gen关键信息")
+                        self.debugBrowserMovie.append("开始获取Pt-Gen关键信息")
                         first_chinese_name, first_english_name, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
                         print(first_chinese_name, first_english_name, year, other_names_sorted, category, actors_list)
-                        print("获取ptgen关键信息成功")
-                        self.debugBrowserMovie.append("获取ptgen关键信息成功")
+                        print("获取Pt-Gen关键信息成功")
+                        self.debugBrowserMovie.append("获取Pt-Gen关键信息成功")
                         is_first = True
                         for data in actors_list:  # 把演员名转化成str
                             if is_first:
@@ -387,9 +388,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                         invalid_characters += char
                                 print("不匹配的字符：", invalid_characters)
                                 if invalid_characters != '':
-                                    QMessageBox.warning(widget, '警告', '您输入的英文名称包含非英文字符或符号\n有以下这些：'
-                                                        + '|'.join(
-                                        invalid_characters) + '\n请重新核对后再生成标准命名')
+                                    QMessageBox.warning(widget, '警告',
+                                                        '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
+                                                            invalid_characters) + '\n请重新核对后再生成标准命名')
                                     return
 
                             else:
@@ -488,17 +489,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_movie_clicked(self):
-        isVideoPath, videoPath = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
-        if isVideoPath == 1 or isVideoPath == 2:
+        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
+        if is_video_path == 1 or is_video_path == 2:
             torrent_path = str(get_settings("torrent_path"))
-            folder_path = os.path.dirname(videoPath)
+            folder_path = os.path.dirname(video_path)
             self.debugBrowserMovie.append("开始将" + folder_path + "制作种子，储存在" + torrent_path)
             self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_movie_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserMovie.append("制作种子线程启动成功")
         else:
-            self.debugBrowserMovie.append("制作种子失败：" + videoPath)
+            self.debugBrowserMovie.append("制作种子失败：" + video_path)
 
     def handle_make_torrent_movie_result(self, get_success, response):
         if get_success:
@@ -699,8 +700,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
             self.debugBrowserTV.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
         except Exception as e:
-            print(f"启动PtGen线程出错：{e}")
-            return False, [f"启动PtGen线程出错：{e}"]
+            print(f"启动Pt-Gen线程出错：{e}")
+            return False, [f"启动Pt-Gen线程出错：{e}"]
 
     def handle_get_pt_gen_for_name_tv_result(self, get_success, response):
         try:
@@ -756,11 +757,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
                     if response == "":
-                        print("未获取到ptgen")
-                        self.debugBrowserTV.append("未获取到ptgen")
+                        print("未获取到Pt-Gen")
+                        self.debugBrowserTV.append("未获取到Pt-Gen")
                     else:
-                        print("开始获取ptgen关键信息")
-                        self.debugBrowserTV.append("开始获取ptgen关键信息")
+                        print("开始获取Pt-Gen关键信息")
+                        self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
                         first_chinese_name, first_english_name, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
                         if first_english_name == '' and first_chinese_name != '':
@@ -786,9 +787,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             invalid_characters += char
                                     print("不匹配的字符：", invalid_characters)
                                     if invalid_characters != '':
-                                        QMessageBox.warning(widget, '警告', '您输入的英文名称包含非英文字符或符号\n有以下这些：'
-                                                            + '|'.join(
-                                            invalid_characters) + '\n请重新核对后再生成标准命名')
+                                        QMessageBox.warning(widget, '警告',
+                                                            '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
+                                                                invalid_characters) + '\n请重新核对后再生成标准命名')
                                         return
 
                                 else:
