@@ -7,7 +7,7 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget, QLineEdit
 
-from ficturebed import upload_screenshot
+from picturebed import upload_screenshot
 from mediainfo import get_media_info
 from ptgen import fetch_and_format_ptgen_data
 from rename import extract_details_from_ptgen, get_video_info
