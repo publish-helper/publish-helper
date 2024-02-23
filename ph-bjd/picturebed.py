@@ -6,15 +6,15 @@ import requests
 
 def upload_screenshot(api_url, api_token, frame_path):
     if api_url == 'https://img.agsvpt.com/api/upload/':
-        return agsv_ficture_bed(api_url, api_token, frame_path)
+        return agsv_picture_bed(api_url, api_token, frame_path)
     if api_url == 'https://freeimage.host/api/1/upload':
-        return freeimage_ficture_bed(api_url, api_token, frame_path)
+        return freeimage_picture_bed(api_url, api_token, frame_path)
     if api_url == 'https://api.imgbb.com/1/upload':
-        return imgbb_ficture_bed(api_url, api_token, frame_path)
+        return imgbb_picture_bed(api_url, api_token, frame_path)
     return False, '图床暂不支持'
 
 
-def agsv_ficture_bed(api_url, api_token, frame_path):
+def agsv_picture_bed(api_url, api_token, frame_path):
     print("开始上传官方图床")
     url = api_url
     files = {'uploadedFile': (frame_path, open(frame_path, 'rb'), "image/png")}
@@ -50,7 +50,7 @@ def agsv_ficture_bed(api_url, api_token, frame_path):
             return False, str(api_response)
 
 
-def freeimage_ficture_bed(api_url, api_token, frame_path):
+def freeimage_picture_bed(api_url, api_token, frame_path):
     print('接受到上传freeimage图床请求')
     url = api_url
     files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
@@ -76,7 +76,7 @@ def freeimage_ficture_bed(api_url, api_token, frame_path):
         return False, res.text
 
 
-def imgbb_ficture_bed(api_url, api_token, frame_path):
+def imgbb_picture_bed(api_url, api_token, frame_path):
     print('接受到上传imgbb图床请求')
     url = api_url
     files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
