@@ -443,8 +443,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.debugBrowserMovie.append(f'您确认文件名为: {text}')
                             file_name = text
                         else:
-                            print('未输入任何数据')
-                            self.debugBrowserMovie.append('未输入任何数据')
+                            print('您点了取消确认，重命名已取消')
+                            self.debugBrowserMovie.append('您点了取消确认，重命名已取消')
+                            return
                     print("FileName" + file_name)
                     self.mainTitleBrowserMovie.setText(main_title)
                     self.secondTitleBrowserMovie.setText(second_title)
@@ -880,8 +881,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.debugBrowserTV.append(f'您确认文件名为: {text}')
                             file_name = text
                         else:
-                            print('未输入任何数据')
-                            self.debugBrowserTV.append('未输入任何数据')
+                            print('您点了取消确认，重命名已取消')
+                            self.debugBrowserTV.append('您点了取消确认，重命名已取消')
+                            return
                     print("FileName" + file_name)
                     self.mainTitleBrowserTV.setText(main_title)
                     self.secondTitleBrowserTV.setText(second_title)
@@ -1212,8 +1214,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.debugBrowserPlaylet.append(f'您确认文件名为: {text}')
                         file_name = text
                     else:
-                        print('未输入任何数据')
-                        self.debugBrowserPlaylet.append('未输入任何数据')
+                        print('您点了取消确认，重命名已取消')
+                        self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
+                        return
                 print("FileName" + file_name)
                 self.mainTitleBrowserPlaylet.setText(main_title)
                 self.secondTitleBrowserPlaylet.setText(second_title)
