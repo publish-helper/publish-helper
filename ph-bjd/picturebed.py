@@ -5,11 +5,12 @@ import requests
 
 
 def upload_screenshot(api_url, api_token, frame_path):
-    if api_url == 'https://img.agsvpt.com/api/upload/':
+    print(api_url, api_token, frame_path)
+    if 'https://img.agsvpt.com/api' in api_url:
         return agsv_picture_bed(api_url, api_token, frame_path)
-    if api_url == 'https://freeimage.host/api/1/upload':
+    if 'https://freeimage.host/api' in api_url:
         return freeimage_picture_bed(api_url, api_token, frame_path)
-    if api_url == 'https://api.imgbb.com/1/upload':
+    if 'https://api.imgbb.com/1/upload' in api_url:
         return imgbb_picture_bed(api_url, api_token, frame_path)
     return False, '图床暂不支持'
 

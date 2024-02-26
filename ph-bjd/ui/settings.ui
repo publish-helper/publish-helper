@@ -158,7 +158,7 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="figureBedPath">
+        <widget class="QLineEdit" name="pictureBedPath">
          <property name="styleSheet">
           <string>QPushButton {
     display: inline-block;
@@ -241,7 +241,7 @@ QPushButton:pressed {
         </widget>
        </item>
        <item>
-        <widget class="QLineEdit" name="figureBedToken">
+        <widget class="QLineEdit" name="pictureBedToken">
          <property name="styleSheet">
           <string>QPushButton {
     display: inline-block;

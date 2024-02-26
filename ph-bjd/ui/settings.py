@@ -36,11 +36,11 @@ class Ui_Settings(object):
         self.label_6 = QtWidgets.QLabel(parent=Settings)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_4.addWidget(self.label_6)
-        self.figureBedPath = QtWidgets.QLineEdit(parent=Settings)
-        self.figureBedPath.setText("")
-        self.figureBedPath.setClearButtonEnabled(True)
-        self.figureBedPath.setObjectName("figureBedPath")
-        self.horizontalLayout_4.addWidget(self.figureBedPath)
+        self.pictureBedPath = QtWidgets.QLineEdit(parent=Settings)
+        self.pictureBedPath.setText("")
+        self.pictureBedPath.setClearButtonEnabled(True)
+        self.pictureBedPath.setObjectName("pictureBedPath")
+        self.horizontalLayout_4.addWidget(self.pictureBedPath)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setContentsMargins(5, 5, 5, 5)
@@ -48,12 +48,12 @@ class Ui_Settings(object):
         self.label_7 = QtWidgets.QLabel(parent=Settings)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7)
-        self.figureBedToken = QtWidgets.QLineEdit(parent=Settings)
-        self.figureBedToken.setText("")
-        self.figureBedToken.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
-        self.figureBedToken.setClearButtonEnabled(True)
-        self.figureBedToken.setObjectName("figureBedToken")
-        self.horizontalLayout_5.addWidget(self.figureBedToken)
+        self.pictureBedToken = QtWidgets.QLineEdit(parent=Settings)
+        self.pictureBedToken.setText("")
+        self.pictureBedToken.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.pictureBedToken.setClearButtonEnabled(True)
+        self.pictureBedToken.setObjectName("pictureBedToken")
+        self.horizontalLayout_5.addWidget(self.pictureBedToken)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
@@ -420,7 +420,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_6.setText(_translate("Settings", "图床api地址："))
-        self.figureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.pictureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -467,7 +467,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_7.setText(_translate("Settings", "图床api密钥："))
-        self.figureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.pictureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
