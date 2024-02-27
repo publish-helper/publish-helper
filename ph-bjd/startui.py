@@ -325,13 +325,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if get_success:
                 self.ptGenBrowserMovie.setText(response)
                 if response:
-                    print(response)
-                    self.debugBrowserMovie.append("成功获取Pt-Gen信息")
+                    print("获得的Pt-Gen Api响应：" + response)
+                    if response == "":
+                        self.debugBrowserMovie.append("获取Pt-Gen信息失败")
+                        return
                 else:
                     self.debugBrowserMovie.append("获取Pt-Gen信息失败")
-                original_title = ""
-                en_title = ""
-                year = ""
+                    return
                 video_format = ""
                 video_codec = ""
                 bit_depth = ""
@@ -340,7 +340,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 audio_codec = ""
                 channels = ""
                 other_titles = ""
-                category = ""
                 actors = ""
                 make_dir = get_settings("make_dir")
                 rename_file = get_settings("rename_file")
@@ -742,13 +741,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if get_success:
                 self.ptGenBrowserTV.setText(response)
                 if response:
-                    print(response)
-                    self.debugBrowserTV.append("成功获取Pt-Gen信息")
+                    print("获得的Pt-Gen Api响应：" + response)
+                    if response == "":
+                        self.debugBrowserTV.append("获取Pt-Gen信息失败")
+                        return
                 else:
                     self.debugBrowserTV.append("获取Pt-Gen信息失败")
-                original_title = ""
-                en_title = ""
-                year = ""
+                    return
                 season = self.seasonBoxTV.text()
                 total_episode = ""
                 episode_num = 0
@@ -786,7 +785,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 audio_codec = ""
                 channels = ""
                 other_titles = ""
-                category = ""
                 actors = ""
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
