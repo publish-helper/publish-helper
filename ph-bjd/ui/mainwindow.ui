@@ -55,7 +55,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -1877,7 +1877,7 @@ QPushButton:pressed {
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>短剧</string>
+      <string>竖屏短剧</string>
      </attribute>
      <layout class="QVBoxLayout" name="verticalLayout_21">
       <item>
