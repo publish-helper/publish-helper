@@ -1,6 +1,6 @@
-Publish Helper v1.2.5
+Publish Helper v1.2.6
 
-**使用前务必请先看设置！！！**
+使用前务必请先看设置！！！
 
 软件功能和界面请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
 
@@ -12,7 +12,7 @@ Publish Helper v1.2.5
 
 如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改以下文件：
 
-**static/abbreviation.json**
+static/abbreviation.json
 
     {
         "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
@@ -40,7 +40,7 @@ Publish Helper v1.2.5
 
 如需修改来源名称、小组名称或短剧类型，请访问：
 
-**来源名称：static/source.json**
+来源名称：static/source.json
 
     {
         "source": [
@@ -52,7 +52,7 @@ Publish Helper v1.2.5
         ]
     }
 
-**小组名称：static/team.json**
+小组名称：static/team.json
 
     {
         "team": [
@@ -66,7 +66,7 @@ Publish Helper v1.2.5
         ]
     }
 
-**短剧类型：static/type.json**
+短剧类型：static/type.json
 
     {
         "type": [
@@ -76,7 +76,7 @@ Publish Helper v1.2.5
         ]
     }
 
-**软件获取地址：**
+软件获取地址：
 
 https://github.com/bjdbjd/publish-helper/releases/
 
@@ -86,6 +86,6 @@ https://gitee.com/bjdbjd/publish-helper/releases/
 
 如果出现错误，可能是配置文件结构有变化，请使用最新的static文件。
 
-Python 3.10
+Powered by Python 3.10
 
 Created by bjd

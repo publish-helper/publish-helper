@@ -73,15 +73,15 @@ def get_settings(parameter_name):
                 "make_dir": "True",
                 "rename_file": "True",
                 "second_confirm_file_name": "True",
-                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-                "second_title_movie": "{original_title} / {other_title} | {category} | {actors}",
-                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-                "main_title_tv": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-                "second_title_tv": "{original_title} / {other_title} | {total_episode} | {category} | {actors}",
-                "file_name_tv": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-                "main_title_playlet": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-                "second_title_playlet": "{original_title} | {total_episode} | {year}年 | {type} | {category}",
-                "file_name_playlet": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
+                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}",
+                "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+                "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}",
+                "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+                "second_title_playlet": "{original_title} | \u7b2c{season_number}\u5b63 | {total_episode} | {year}\u5e74 | {type} | \u7c7b\u578b\uff1a{category}",
+                "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}"
             }
             json.dump(default_settings, file)
 
@@ -108,15 +108,15 @@ def get_settings(parameter_name):
         "make_dir": "True",
         "rename_file": "True",
         "second_confirm_file_name": "True",
-        "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-        "second_title_movie": "{original_title} / {other_title} | {category} | {actors}",
-        "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-        "main_title_tv": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-        "second_title_tv": "{original_title} / {other_title} | {total_episode} | {category} | {actors}",
-        "file_name_tv": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-        "main_title_playlet": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-        "second_title_playlet": "{original_title} | {total_episode} | {year}年 | {type} | {category}",
-        "file_name_playlet": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
+        "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+        "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+        "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}",
+        "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+        "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+        "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}",
+        "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
+        "second_title_playlet": "{original_title} | \u7b2c{season_number}\u5b63 | {total_episode} | {year}\u5e74 | {type} | \u7c7b\u578b\uff1a{category}",
+        "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}-{team}"
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
@@ -440,3 +440,11 @@ def int_to_special_roman(num):
         return special_roman_dict[num]
     else:
         return str(num)
+
+
+def is_filename_too_long(filename):
+    max_filename_length = 250  # Windows下文件名最长为255，去除掉后缀名为250
+    if len(filename) > max_filename_length:
+        return True
+    else:
+        return False

@@ -3,6 +3,7 @@ import os
 import re
 
 from pymediainfo import MediaInfo
+
 from tool import get_settings
 
 
@@ -32,16 +33,16 @@ def extract_details_from_ptgen(data):
             print("英文名称是 " + name)
             break
 
-    chinese_name = ""
-    chinese_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
-                       r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
+    original_name = ""
+    original_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
+                        r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
     for name in separated_names:
-        if re.search(chinese_pattern, name) and not re.match(english_pattern, name):
-            chinese_name = name
-            print("中文名称是 " + name)
+        if re.search(original_pattern, name) and not re.match(english_pattern, name):
+            original_name = name
+            print("原始名称是 " + name)
             break
     print("所有名称是 " + str(separated_names))
-    other_names = [name for name in separated_names if name not in [english_name, chinese_name]]
+    other_names = [name for name in separated_names if name not in [english_name, original_name]]
     print("其他名称是 " + str(other_names))
 
     # 类别
@@ -62,20 +63,21 @@ def extract_details_from_ptgen(data):
                     break
     special_characters = r'\/:*?"<>|'
     for char in special_characters:
-        chinese_name = chinese_name.replace(char, '_')
+        original_name = original_name.replace(char, '_')
         english_name = english_name.replace(char, "_")
-
-    print("中文名称:", chinese_name)
+    if '◎语　　言' in category:
+        category = "暂无分类"
+    print("原始名称:", original_name)
     print("英文名称:", english_name)
     print("年份:", year_match.group(1) if year_match else None)
     print("其他名称:", other_names)
     print("类别:", category)
     print("演员:", str(actors))
 
-    return chinese_name, english_name, year_match.group(1) if year_match else None, other_names, category, actors
+    return original_name, english_name, year_match.group(1) if year_match else None, other_names, category, actors
 
 
-def get_video_info(file_path, is_landscape):
+def get_video_info(file_path):
     if not os.path.exists(file_path):
         print("文件路径不存在")
         return False, ["视频文件路径不存在"]
@@ -89,17 +91,18 @@ def get_video_info(file_path, is_landscape):
         frame_rate = ""
         audio_codec = ""
         channels = ""
-
+        width = ""
+        height = ""
         for track in media_info.tracks:
             if track.track_type == "General":
                 if track.other_frame_rate:
                     frame_rate = track.other_frame_rate[0]
                 # ... 添加其他General信息
             elif track.track_type == "Video":
-                if is_landscape:
-                    video_format = track.other_width[0]
-                else:
-                    video_format = track.other_height[0]
+                if track.other_width:
+                    width = track.other_width[0]
+                if track.other_width:
+                    height = track.other_height[0]
                 if track.other_format:
                     video_codec = track.other_format[0]
                 if track.other_hdr_format:
@@ -120,7 +123,10 @@ def get_video_info(file_path, is_landscape):
                 channels = track.channel_layout
                 break
                 # ... 添加其他Audio信息
-
+        if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
+            video_format = width
+        else:
+            video_format = height
         return True, [get_abbreviation(video_format), get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
                       get_abbreviation(channels)]
@@ -132,6 +138,18 @@ def get_video_info(file_path, is_landscape):
         # MediaInfo无法解析文件
         print(f"无法解析文件: {e}")
         return False, [f"无法解析文件: {e}"]
+
+
+# 用于在分辨率中提取数字
+def extract_numbers(string):
+    result = ""
+    for char in string:
+        if char.isdigit():
+            result += char
+    if result:
+        return int(result)
+    else:
+        return None
 
 
 def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
@@ -161,7 +179,8 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
 
 
 def get_name_from_example(en_title, original_title, season, episode, year, video_format, source, video_codec, bit_depth,
-                          hdr_format, frame_rate, audio_codec, channels, team, other_title, total_episode, type,
+                          hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
+                          total_episode, type,
                           category, actors, example):
     name = get_settings(example)
     name = name.replace("{en_title}", en_title)
@@ -178,7 +197,8 @@ def get_name_from_example(en_title, original_title, season, episode, year, video
     name = name.replace("{audio_codec}", audio_codec)
     name = name.replace("{channels}", str(channels))
     name = name.replace("{team}", str(team))
-    name = name.replace("{other_title}", other_title)
+    name = name.replace("{other_titles}", other_titles)
+    name = name.replace("{season_number}", season_number)
     name = name.replace("{total_episode}", total_episode)
     name = name.replace("{type}", type)
     name = name.replace("{category}", category)

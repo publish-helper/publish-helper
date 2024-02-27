@@ -14,6 +14,7 @@
     "x265": "x265",
     "x266": "x266",
 
+    "12 bits": "12bit",
     "10 bits": "10bit",
     "8 bits": "",
 
@@ -23,7 +24,10 @@
     "HDR Vivid, Version 1": "HDR",
 
     "60.000 FPS": "60FPS",
+    "30.000 FPS": "",
+    "29.970 FPS": "",
     "25.000 FPS": "",
+    "24.000 FPS": "",
     "23.976 FPS": "",
 
     "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",

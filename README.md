@@ -1,4 +1,4 @@
-Publish Helper v1.2.5
+Publish Helper v1.2.6
 
 **使用前务必请先看设置！！！**
 
@@ -86,6 +86,6 @@ https://gitee.com/bjdbjd/publish-helper/releases/
 
 如果出现错误，可能是配置文件结构有变化，请使用最新的static文件。
 
-Python 3.10
+Powered by Python 3.10
 
 Created by bjd
