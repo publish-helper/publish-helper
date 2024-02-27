@@ -20,10 +20,10 @@
     "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
     "second_title_movie": "{original_title} / {other_title} | {category} | {actors}",
     "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-    "main_title_tv": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+    "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
     "second_title_tv": "{original_title} / {other_title} | {total_episode} | {category} | {actors}",
-    "file_name_tv": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
-    "main_title_playlet": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
-    "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {type} | {category}",
-    "file_name_playlet": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
+    "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
+    "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+    "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {type} | 类型：{category}",
+    "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
 }

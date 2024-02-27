@@ -14,10 +14,17 @@
     "x265": "x265",
     "x266": "x266",
 
+    "10 bits": "10bit",
+    "8 bits": "",
+
     "Dolby Vision, Version 1.0, dvhe.05.06, BL+RPU": "DV",
     "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
     "SMPTE ST 2086, HDR10 compatible": "HDR10",
     "HDR Vivid, Version 1": "HDR",
+
+    "60.000 FPS": "60FPS",
+    "25.000 FPS": "",
+    "23.976 FPS": "",
 
     "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
     "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",

@@ -170,7 +170,7 @@ class Ui_Settings(object):
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_7.addWidget(self.label_2)
         self.screenshotThreshold = QtWidgets.QDoubleSpinBox(parent=self.tab)
-        self.screenshotThreshold.setDecimals(2)
+        self.screenshotThreshold.setDecimals(3)
         self.screenshotThreshold.setMaximum(5.0)
         self.screenshotThreshold.setSingleStep(0.01)
         self.screenshotThreshold.setProperty("value", 0.1)

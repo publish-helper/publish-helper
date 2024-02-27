@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QM
 from picturebed import upload_screenshot
 from mediainfo import get_media_info
 from ptgen import fetch_and_format_ptgen_data
-from rename import extract_details_from_ptgen, get_video_info
+from rename import extract_details_from_ptgen, get_video_info, get_name_from_example
 from screenshot import extract_complex_keyframes, get_thumbnail
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
@@ -1120,45 +1120,58 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_name_button_playlet_clicked(self):
 
-        first_chinese_name = self.chineseNameEditPlaylet.text()
-        if first_chinese_name:
+        original_title = self.chineseNameEditPlaylet.text()
+        if original_title:
 
-            print('获取中文名成功：' + first_chinese_name)
-            self.debugBrowserPlaylet.append('获取中文名成功：' + first_chinese_name)
-            first_english_name = chinese_name_to_pinyin(first_chinese_name)
+            print('获取中文名成功：' + original_title)
+            self.debugBrowserPlaylet.append('获取中文名成功：' + original_title)
+            en_title = chinese_name_to_pinyin(original_title)
             year = self.yearEditPlaylet.text()
             season = self.seasonBoxPlaylet.text()
+            episode = ""
+            total_episode = ""
+            episode_num = 0
+            episode_start = int(self.episodeStartBoxPlaylet.text())
             if len(season) < 2:
                 season = '0' + season
-            width = ""
-            format = ""
+            video_format = ""
+            video_codec = ""
+            bit_depth = ""
             hdr_format = ""
-            commercial_name = ""
-            channel_layout = ""
+            frame_rate = ""
+            audio_codec = ""
+            channels = ""
             type = ""
             category = ""
             rename_file = get_settings("rename_file")
             second_confirm_file_name = get_settings("second_confirm_file_name")
-            is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())
-            get_video_info_success, output = get_video_info(video_path, False)
+            is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
+            get_video_info_success, output = get_video_info(video_path, False)  # 通过视频获取视频的MI参数
             print(get_video_info_success, output)
-            if is_video_path == 2:
+            if is_video_path == 2:  # 视频路径是文件夹
                 get_video_files_success, video_files = get_video_files(
-                    self.videoPathPlaylet.text().replace('file:///', ''))
-                print('检测到以下文件：', video_files)
-                print("获取到关键参数：" + str(output))
-                self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))
+                    self.videoPathPlaylet.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
+                if get_video_files_success:
+                    print('检测到以下文件：', video_files)
+                    episode_num = len(video_files)  # 获取视频文件的总数
+                    if episode_start == 1:
+                        total_episode = '全' + str(episode_num) + '集'
+                    else:
+                        total_episode = '第' + str(episode_start) + '-' + str(episode_start + episode_num - 1) + '集'
                 if get_video_info_success:
-                    width = output[0]
-                    format = output[1]
-                    hdr_format = output[2]
-                    commercial_name = output[3]
-                    channel_layout = output[4]
+                    self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))
+                    video_format = output[0]
+                    video_codec = output[1]
+                    bit_depth = output[2]
+                    hdr_format = output[3]
+                    frame_rate = output[4]
+                    audio_codec = output[5]
+                    channels = output[6]
                 source = self.sourcePlaylet.currentText()
                 team = self.teamPlaylet.currentText()
-                print("关键参数赋值成功")
-                self.debugBrowserPlaylet.append("关键参数赋值成功")
                 type += self.typePlaylet.currentText()
+                print("收费类型、来源和小组参数获取成功")
+                self.debugBrowserPlaylet.append("收费类型、来源和小组参数获取成功")
                 if self.checkBox_0.isChecked():
                     category += '剧情 '
                 if self.checkBox_1.isChecked():
@@ -1187,23 +1200,30 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     category += '都市 '
                 if self.checkBox_13.isChecked():
                     category += '古装 '
+                if category != "":
+                    category = category[: -1]
+                    category = category.replace(' ', ' / ')
                 print('类型为：' + category)
                 self.debugBrowserPlaylet.append('类型为：' + category)
-                main_title = first_english_name + ' S' + season + ' ' + year + ' ' + width + ' ' + source + ' ' + format + ' ' + hdr_format + ' ' + commercial_name + ' ' + channel_layout + '-' + team
+                main_title = get_name_from_example(en_title, original_title, season, episode, year, video_format,
+                                                   source, video_codec, bit_depth, hdr_format, frame_rate, audio_codec,
+                                                   channels, team, "", total_episode, type, category,
+                                                   "", "main_title_playlet")
                 main_title = main_title.replace('  ', ' ')
                 main_title = main_title.replace('  ', ' ')
                 print(main_title)
-                second_title = (first_chinese_name + ' | 全' + str(
-                    len(video_files)) + '集 | ' + year + '年 | ' + type + ' | 类型：' + category)
+                second_title = get_name_from_example(en_title, original_title, season, episode, year, video_format,
+                                                     source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                     audio_codec, channels, team, "", total_episode, type,
+                                                     category, "", "second_title_playlet")
                 print("SecondTitle" + second_title)
                 # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                file_name = (
-                        first_chinese_name + '.' + first_english_name + '.' + ' S' + season + 'E??' + '.' + year + '.' + width + '.' + source + '.' +
-                        format + '.' + hdr_format + '.' + commercial_name + '.' + channel_layout + '-' + team)
-                file_name = file_name.replace(' – ', '.')
-                file_name = file_name.replace(' - ', '.')
-                file_name = file_name.replace(': ', '.')
+                file_name = get_name_from_example(en_title, original_title, season, '??', year, video_format,
+                                                  source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                  audio_codec, channels, team, "", total_episode, type,
+                                                  category, "", "file_name_playlet")
                 file_name = file_name.replace(' ', '.')
+                file_name = file_name.replace('..', '.')
                 file_name = file_name.replace('..', '.')
                 file_name = file_name.replace('..', '.')
                 if second_confirm_file_name:
@@ -1224,10 +1244,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 if rename_file:
                     print("对文件重新命名")
                     self.debugBrowserPlaylet.append("开始对文件重新命名")
-                    i = 1
+                    i = episode_start
                     for video_file in video_files:
                         e = str(i)
-                        while len(e) < len(str(len(video_files))):
+                        while len(e) < len(str(episode_start + episode_num - 1)):
                             e = '0' + e
                         if len(e) == 1:
                             e = '0' + e
@@ -1244,8 +1264,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
                     print("对文件夹重新命名")
                     self.debugBrowserPlaylet.append("开始对文件夹重新命名")
-                    rename_directory_success, output = rename_directory(os.path.dirname(video_path),
-                                                                        file_name.replace('E??', ''))
+                    rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
+                                                                        replace('E??', '').
+                                                                        replace('??', ''))
                     if rename_directory_success:
                         self.videoPathPlaylet.setText(output)
                         video_path = output

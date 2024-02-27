@@ -82,40 +82,48 @@ def get_video_info(file_path, is_landscape):
     try:
         media_info = MediaInfo.parse(file_path)
         print(media_info.to_json())
-        width = ""
-        format = ""
+        video_format = ""
+        video_codec = ""
+        bit_depth = ""
         hdr_format = ""
-        commercial_name = ""
-        channel_layout = ""
+        frame_rate = ""
+        audio_codec = ""
+        channels = ""
+
         for track in media_info.tracks:
             if track.track_type == "General":
-                pass
+                if track.other_frame_rate:
+                    frame_rate = track.other_frame_rate[0]
                 # ... 添加其他General信息
             elif track.track_type == "Video":
                 if is_landscape:
-                    width = track.other_width[0]
+                    video_format = track.other_width[0]
                 else:
-                    width = track.other_height[0]
+                    video_format = track.other_height[0]
                 if track.other_format:
-                    format = track.other_format[0]
+                    video_codec = track.other_format[0]
                 if track.other_hdr_format:
                     hdr_format = track.other_hdr_format[0]
+                if track.other_bit_depth:
+                    bit_depth = track.other_bit_depth[0]
                 if track.writing_library:  # 判断是否为x26*重编码
                     if "x264" in track.writing_library:
-                        format = "x264"
+                        video_codec = "x264"
                     if "x265" in track.writing_library:
-                        format = "x265"
+                        video_codec = "x265"
                     if "x266" in track.writing_library:
-                        format = "x266"
+                        video_codec = "x266"
+
                         # ... 添加其他Video信息
             elif track.track_type == "Audio":
-                commercial_name = track.commercial_name
-                channel_layout = track.channel_layout
+                audio_codec = track.commercial_name
+                channels = track.channel_layout
                 break
                 # ... 添加其他Audio信息
 
-        return True, [get_abbreviation(width), get_abbreviation(format), get_abbreviation(hdr_format),
-                      get_abbreviation(commercial_name), get_abbreviation(channel_layout)]
+        return True, [get_abbreviation(video_format), get_abbreviation(video_codec), get_abbreviation(bit_depth),
+                      get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
+                      get_abbreviation(channels)]
     except OSError as e:
         # 文件路径相关的错误
         print(f"文件路径错误: {e}")
