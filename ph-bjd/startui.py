@@ -797,7 +797,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             total_episode = '全' + str(episode_num) + '集'
                         else:
                             total_episode = '第' + str(episode_start) + '-' + str(episode_start + episode_num - 1) + '集'
-                        print(episode_start)
+                        print(total_episode)
                     else:
                         print("获取文件失败")
                     print("重命名初始化完成")
@@ -889,8 +889,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print(main_title)
                     second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                         audio_codec, channels, team, other_titles, total_episode,
-                                                         season_number, "",
+                                                         audio_codec, channels, team, other_titles, season_number,
+                                                         total_episode, "",
                                                          category, actors, "second_title_tv")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
