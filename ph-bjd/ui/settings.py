@@ -1234,8 +1234,7 @@ class Ui_Settings(object):
 "制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。\n"
 "一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。\n"
 "文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。\n"
-"目前支持的图床：\n"
-"https://img.agsvpt.com/\n"
+"目前支持的免费图床：\n"
 "https://freeimage.host/\n"
 "https://imgbb.com/\n"
 "图床的api地址和密钥请到图床主页获取。"))
@@ -1269,6 +1268,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{other_titles}：其他译名</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{actors}：主要演员 </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
@@ -1306,6 +1306,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{total_episode}：总集数（格式：全n集/第m-n集，取决于是否开始于第1集）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{actors}：主要演员 </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
@@ -1342,6 +1343,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{total_episode}：总集数（全n集/第m-n集，取决于是否开始于第1集）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{type}：短剧收费类型</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型 </p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))

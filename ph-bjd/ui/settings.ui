@@ -1356,8 +1356,7 @@ QPushButton:pressed {
 制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。
 一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。
 文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。
-目前支持的图床：
-https://img.agsvpt.com/
+目前支持的免费图床：
 https://freeimage.host/
 https://imgbb.com/
 图床的api地址和密钥请到图床主页获取。</string>
@@ -1533,6 +1532,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{other_titles}：其他译名&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{category}：影片类型&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{actors}：主要演员 &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1704,6 +1704,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{total_episode}：总集数（格式：全n集/第m-n集，取决于是否开始于第1集）&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{category}：影片类型&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{actors}：主要演员 &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -1874,6 +1875,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{total_episode}：总集数（全n集/第m-n集，取决于是否开始于第1集）&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;{type}：短剧收费类型&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{category}：影片类型 &lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
