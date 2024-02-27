@@ -1671,7 +1671,10 @@ class Ui_Mainwindow(object):
         Mainwindow.setMenuBar(self.menubar)
         self.actionsettings = QtGui.QAction(parent=Mainwindow)
         self.actionsettings.setObjectName("actionsettings")
+        self.actiongit = QtGui.QAction(parent=Mainwindow)
+        self.actiongit.setObjectName("actiongit")
         self.menu.addAction(self.actionsettings)
+        self.menu.addAction(self.actiongit)
         self.menubar.addAction(self.menu.menuAction())
 
         self.retranslateUi(Mainwindow)
@@ -1772,3 +1775,4 @@ class Ui_Mainwindow(object):
         self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab_3), _translate("Mainwindow", "短剧"))
         self.menu.setTitle(_translate("Mainwindow", "工具"))
         self.actionsettings.setText(_translate("Mainwindow", "设置"))
+        self.actiongit.setText(_translate("Mainwindow", "项目仓库"))

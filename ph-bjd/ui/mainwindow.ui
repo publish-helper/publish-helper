@@ -2973,12 +2973,18 @@ QPushButton:pressed {
      <string>工具</string>
     </property>
     <addaction name="actionsettings"/>
+    <addaction name="actiongit"/>
    </widget>
    <addaction name="menu"/>
   </widget>
   <action name="actionsettings">
    <property name="text">
     <string>设置</string>
+   </property>
+  </action>
+  <action name="actiongit">
+   <property name="text">
+    <string>项目仓库</string>
    </property>
   </action>
  </widget>
