@@ -1327,6 +1327,15 @@ class settings(QDialog, Ui_Settings):
         self.makeDir.setChecked(bool(get_settings("make_dir")))
         self.renameFile.setChecked(bool(get_settings("rename_file")))
         self.secondConfirmFileName.setChecked(bool(get_settings("second_confirm_file_name")))
+        self.mainTitleMovie.setText(str(get_settings("main_title_movie")))
+        self.secondTitleMovie.setText(str(get_settings("second_title_movie")))
+        self.fileNameMovie.setText(str(get_settings("file_name_movie")))
+        self.mainTitleTV.setText(str(get_settings("main_title_tv")))
+        self.secondTitleTV.setText(str(get_settings("second_title_tv")))
+        self.fileNameTV.setText(str(get_settings("file_name_tv")))
+        self.mainTitlePlaylet.setText(str(get_settings("main_title_playlet")))
+        self.secondTitlePlaylet.setText(str(get_settings("second_title_playlet")))
+        self.fileNamePlaylet.setText(str(get_settings("file_name_playlet")))
 
     def updateSettings(self):
         update_settings("screenshot_path", self.screenshotPath.text())
@@ -1368,6 +1377,15 @@ class settings(QDialog, Ui_Settings):
             update_settings("second_confirm_file_name", "True")
         else:
             update_settings("second_confirm_file_name", "")
+        update_settings("main_title_movie", self.mainTitleMovie.text())
+        update_settings("second_title_movie", self.secondTitleMovie.text())
+        update_settings("file_name_movie", self.fileNameMovie.text())
+        update_settings("main_title_tv", self.mainTitleTV.text())
+        update_settings("second_title_tv", self.secondTitleTV.text())
+        update_settings("file_name_tv", self.fileNameTV.text())
+        update_settings("main_title_playlet", self.mainTitlePlaylet.text())
+        update_settings("second_title_playlet", self.secondTitlePlaylet.text())
+        update_settings("file_name_playlet", self.fileNamePlaylet.text())
 
     # 以上是Settings页面的代码
     # 以下是多线程的代码

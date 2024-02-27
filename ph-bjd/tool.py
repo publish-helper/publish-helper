@@ -53,16 +53,13 @@ def get_settings(parameter_name):
 
     if not os.path.exists(settings_file):
         # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
-        with open(settings_file, 'w') as file:
+        with open(settings_file, 'w', encoding='utf-8') as file:
             default_settings = {
                 "screenshot_path": "temp/pic",
                 "torrent_path": "temp/torrent",
                 "pt_gen_path": "https://ptgen.agsvpt.work/",
                 "picture_bed_path": "https://freeimage.host/api/1/upload",
                 "picture_bed_token": "6d207e02198a847aa98d0a2a901485a5",
-                "picture_bed_index_path": "",
-                "picture_bed_username": "",
-                "picture_bed_password": "",
                 "screenshot_number": "3",
                 "screenshot_threshold": "0.01",
                 "screenshot_start": "0.10",
@@ -75,11 +72,20 @@ def get_settings(parameter_name):
                 "delete_screenshot": "True",
                 "make_dir": "True",
                 "rename_file": "True",
-                "second_confirm_file_name": "True"
+                "second_confirm_file_name": "True",
+                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+                "second_title_movie": "{original_title} / {other_title} | {category} | {actors}",
+                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
+                "main_title_tv": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+                "second_title_tv": "{original_title} / {other_title} | {total_episode} | {category} | {actors}",
+                "file_name_tv": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
+                "main_title_playlet": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+                "second_title_playlet": "{original_title} | {total_episode} | {year}年 | {type} | {category}",
+                "file_name_playlet": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
             }
             json.dump(default_settings, file)
 
-    with open(settings_file, 'r') as file:
+    with open(settings_file, 'r', encoding='utf-8') as file:
         settings = json.load(file)
 
     # 设置参数的标准值
@@ -89,9 +95,6 @@ def get_settings(parameter_name):
         "pt_gen_path": "https://ptgen.agsvpt.work/",
         "picture_bed_path": "https://freeimage.host/api/1/upload",
         "picture_bed_token": "6d207e02198a847aa98d0a2a901485a5",
-        "picture_bed_index_path": "",
-        "picture_bed_username": "",
-        "picture_bed_password": "",
         "screenshot_number": "3",
         "screenshot_threshold": "0.01",
         "screenshot_start": "0.10",
@@ -104,7 +107,16 @@ def get_settings(parameter_name):
         "delete_screenshot": "True",
         "make_dir": "True",
         "rename_file": "True",
-        "second_confirm_file_name": "True"
+        "second_confirm_file_name": "True",
+        "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+        "second_title_movie": "{original_title} / {other_title} | {category} | {actors}",
+        "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
+        "main_title_tv": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+        "second_title_tv": "{original_title} / {other_title} | {total_episode} | {category} | {actors}",
+        "file_name_tv": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}",
+        "main_title_playlet": "{en_title} {season} {episode} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}",
+        "second_title_playlet": "{original_title} | {total_episode} | {year}年 | {type} | {category}",
+        "file_name_playlet": "{original_title}.{en_title}.{season}.{episode}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中

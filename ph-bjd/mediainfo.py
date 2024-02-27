@@ -182,7 +182,7 @@ def get_media_info(file_path):
             #                                      chapter_regex.search(value)]}
             #     for chapter, timestamp in chapters.items():
             #         print(f"{timestamp} - {chapter}")
-            #         output += f"{timestamp:36}: {chapter}\n"
+            #         output += f"{timestamp:36}: {chapter}\n"  # 等待完善，影响不大
 
         output += "\nCreated by ph-bjd"
 

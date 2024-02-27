@@ -3,6 +3,7 @@ import os
 import re
 
 from pymediainfo import MediaInfo
+from tool import get_settings
 
 
 def extract_details_from_ptgen(data):
@@ -149,3 +150,29 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
     except json.JSONDecodeError:
         print(f"Error decoding JSON from file: {json_file_path}")
         return original_name
+
+
+def get_name_from_example(en_title, original_title, season, episode, year, video_format, source, video_codec, bit_depth,
+                          hdr_format, frame_rate, audio_codec, channels, team, other_title, total_episode, type,
+                          category, actors, example):
+    name = get_settings(example)
+    name = name.replace("{en_title}", en_title)
+    name = name.replace("{original_title}", original_title)
+    name = name.replace("{season}", season)
+    name = name.replace("{episode}", episode)
+    name = name.replace("{year}", str(year))
+    name = name.replace("{video_format}", video_format)
+    name = name.replace("{source}", source)
+    name = name.replace("{video_codec}", video_codec)
+    name = name.replace("{bit_depth}", bit_depth)
+    name = name.replace("{hdr_format}", hdr_format)
+    name = name.replace("{frame_rate}", frame_rate)
+    name = name.replace("{audio_codec}", audio_codec)
+    name = name.replace("{channels}", str(channels))
+    name = name.replace("{team}", str(team))
+    name = name.replace("{other_title}", other_title)
+    name = name.replace("{total_episode}", total_episode)
+    name = name.replace("{type}", type)
+    name = name.replace("{category}", category)
+    name = name.replace("{actors}", actors)
+    return name

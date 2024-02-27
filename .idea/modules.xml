@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/ph-bjd-movie.iml" filepath="$PROJECT_DIR$/.idea/ph-bjd-movie.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/publish-helper.iml" filepath="$PROJECT_DIR$/.idea/publish-helper.iml" />
     </modules>
   </component>
 </project>
