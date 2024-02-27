@@ -92,8 +92,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.getNameButtonPlaylet.clicked.connect(self.get_name_button_playlet_clicked)
         self.startButtonPlaylet.clicked.connect(self.start_button_playlet_clicked)
         self.makeTorrentButtonPlaylet.clicked.connect(self.make_torrent_button_playlet_clicked)
-
-        self.debugBrowserMovie.append("程序初始化成功，使用前请查看设置中的说明")
+        # 初始化成功
+        self.debugBrowserMovie.append(
+            "程序初始化成功，使用前请查看设置中的说明！\n制作不易，如有帮助请帮忙点亮仓库的Star！\n地址：https://github.com/bjdbjd/publish-helper")
 
     def initialize_team_combobox(self):
         team_names = load_names('static/team.json', 'team')
@@ -351,12 +352,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if response == "":
                         print("未获取到Pt-Gen")
                         self.debugBrowserMovie.append("未获取到Pt-Gen")
+                        return
                     else:
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserMovie.append("开始获取Pt-Gen关键信息")
                         original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
+                        if year == "" or year is None:
+                            print("Pt-Gen分析结果不包含年份，存在错误")
+                            self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
+                            return
                         print("获取Pt-Gen关键信息成功")
                         self.debugBrowserMovie.append("获取Pt-Gen关键信息成功")
                         is_first = True
@@ -805,11 +811,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if response == "":
                         print("未获取到Pt-Gen")
                         self.debugBrowserTV.append("未获取到Pt-Gen")
+                        return
                     else:
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
                         original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
                             response)
+                        if year == "" or year is None:
+                            print("Pt-Gen分析结果不包含年份，存在错误")
+                            self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
+                            return
                         if en_title == '' and original_title != '':
                             ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
                                                          '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',

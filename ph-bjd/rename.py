@@ -73,7 +73,6 @@ def extract_details_from_ptgen(data):
     print("其他名称:", other_names)
     print("类别:", category)
     print("演员:", str(actors))
-
     return original_name, english_name, year_match.group(1) if year_match else None, other_names, category, actors
 
 
