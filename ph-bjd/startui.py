@@ -2,6 +2,7 @@ import os
 import re
 import sys
 import time
+import webbrowser
 
 from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
@@ -27,6 +28,10 @@ def start_ui():
     my_mainwindow.setWindowIcon(my_ico)
     my_mainwindow.show()
     sys.exit(app.exec())
+
+
+def git_clicked():
+    webbrowser.open('https://github.com/bjdbjd/publish-helper')
 
 
 class mainwindow(QMainWindow, Ui_Mainwindow):
@@ -60,6 +65,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         # 绑定点击信号和槽函数
         # Movie
         self.actionsettings.triggered.connect(self.settings_clicked)
+        self.actiongit.triggered.connect(git_clicked)
         self.getPtGenButtonMovie.clicked.connect(self.get_pt_gen_button_movie_clicked)
         self.getPictureButtonMovie.clicked.connect(self.get_picture_button_movie_clicked)
         self.selectVideoButtonMovie.clicked.connect(self.select_video_button_movie_clicked)
