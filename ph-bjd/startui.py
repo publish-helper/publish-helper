@@ -349,19 +349,32 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserMovie.append("重命名初始化完成")
                     if response == "":
-                        print("未获取到Pt-Gen")
-                        self.debugBrowserMovie.append("未获取到Pt-Gen")
+                        print("Pt-Gen的响应为空")
+                        self.debugBrowserMovie.append("Pt-Gen的响应为空")
                         return
                     else:
-                        print("开始获取Pt-Gen关键信息")
-                        self.debugBrowserMovie.append("开始获取Pt-Gen关键信息")
-                        original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
-                            response)
+                        print("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
+                        self.debugBrowserMovie.append("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
+                        try:
+                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
+                                response)
+                        except Exception as e:
+                            self.debugBrowserMovie.append(
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                            print(
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                            return False, [
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
+                        self.debugBrowserMovie.append(
+                            "分析后的结果为：" + original_title, en_title, year, other_names_sorted, category,
+                            actors_list)
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserMovie.append("Pt-Gen分析结果不包含年份，存在错误")
                             return
+                        else:
+                            self.debugBrowserMovie.append('获取到发布年份：' + year)
                         print("获取Pt-Gen关键信息成功")
                         self.debugBrowserMovie.append("获取Pt-Gen关键信息成功")
                         is_first = True
@@ -522,6 +535,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             else:
                 self.debugBrowserMovie.append("未成功获取到任何Pt-Gen信息：" + response)
         except Exception as e:
+            self.debugBrowserMovie.append(f"启动PtGen线程成功，但是重命名出错：{e}")
             print(f"启动PtGen线程成功，但是重命名出错：{e}")
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
@@ -534,7 +548,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_movie_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
-            self.debugBrowserMovie.append("制作种子线程启动成功")
+            self.debugBrowserMovie.append("制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...")
         else:
             self.debugBrowserMovie.append("制作种子失败：" + video_path)
 
@@ -811,14 +825,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
                     if response == "":
-                        print("未获取到Pt-Gen")
-                        self.debugBrowserTV.append("未获取到Pt-Gen")
+                        print("Pt-Gen响应为空")
+                        self.debugBrowserTV.append("Pt-Gen响应为空")
                         return
                     else:
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
-                        original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
-                            response)
+                        try:
+                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
+                                response)
+                        except Exception as e:
+                            self.debugBrowserTV.append(
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                            print(
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                            return False, [
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
+                        print(original_title, en_title, year, other_names_sorted, category, actors_list)
+                        self.debugBrowserTV.append(
+                            "分析后的结果为：" + original_title, en_title, year, other_names_sorted, category,
+                            actors_list)
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
@@ -1011,7 +1037,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_tv_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
-            self.debugBrowserTV.append("制作种子线程启动成功")
+            self.debugBrowserTV.append("制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...")
         else:
             self.debugBrowserTV.append("制作种子失败：" + video_path)
 
