@@ -348,7 +348,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 if is_video_path == 1 or is_video_path == 2:
                     print("重命名初始化完成")
                     self.debugBrowserMovie.append("重命名初始化完成")
-                    if response == "":
+                    if not response:
                         print("Pt-Gen的响应为空")
                         self.debugBrowserMovie.append("Pt-Gen的响应为空")
                         return
@@ -360,15 +360,15 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response)]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
-                            "分析后的结果为：" + original_title + en_title + year + other_names_sorted + category +
-                            actors_list)
+                            "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
+                            str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserMovie.append("Pt-Gen分析结果不包含年份，存在错误")
@@ -824,7 +824,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("获取文件失败")
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
-                    if response == "":
+                    if not response:
                         print("Pt-Gen响应为空")
                         self.debugBrowserTV.append("Pt-Gen响应为空")
                         return
@@ -836,15 +836,15 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response)
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response)]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
-                            "分析后的结果为：" + original_title + en_title + year + other_names_sorted + category +
-                            actors_list)
+                            "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
+                            str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
