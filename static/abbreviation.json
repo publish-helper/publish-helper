@@ -44,6 +44,13 @@
     "SMPTE ST 2086, HDR10 compatible": "HDR10",
     "HDR Vivid, Version 1": "HDR",
 
+    "60.000 FPS": "60FPS",
+    "30.000 FPS": "",
+    "29.970 FPS": "",
+    "25.000 FPS": "",
+    "24.000 FPS": "",
+    "23.976 FPS": "",
+
     "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
     "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
     "DTS-HD Master Audio": "DTS-HD MA",
