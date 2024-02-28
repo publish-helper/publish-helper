@@ -411,6 +411,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 print('未输入任何数据')
                                 self.debugBrowserMovie.append('未输入任何数据')
                                 en_title = ''
+                    else:
+                        self.debugBrowserMovie.append('未获取到任何影片名称信息，Pt-Gen出现问题，请重试')
                     get_video_info_success, output = get_video_info(video_path)
                     if get_video_info_success:
                         print("获取到关键参数：" + str(output))
@@ -851,6 +853,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     print('未输入任何数据')
                                     self.debugBrowserTV.append('未输入任何数据')
                                     en_title = ''
+                        else:
+                            self.debugBrowserTV.append('未获取到任何影片名称信息，Pt-Gen出现问题，请重试')
                         print(original_title, en_title, year, other_names_sorted, category,
                               actors_list)
                         print("获取Pt-Gen关键信息成功")
