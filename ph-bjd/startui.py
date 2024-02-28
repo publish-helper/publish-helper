@@ -360,7 +360,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
-                            self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
+                            self.debugBrowserMovie.append("Pt-Gen分析结果不包含年份，存在错误")
                             return
                         print("获取Pt-Gen关键信息成功")
                         self.debugBrowserMovie.append("获取Pt-Gen关键信息成功")
@@ -467,16 +467,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                         file_name)
                         if ok:
                             print(f'您修改文件名为: {text}')
-                            self.debugBrowserTV.append(f'您修改文件名为: {text}')
+                            self.debugBrowserMovie.append(f'您修改文件名为: {text}')
                             file_name = text
                         else:
                             print('您点了取消确认，重命名已取消')
-                            self.debugBrowserTV.append('您点了取消确认，重命名已取消')
+                            self.debugBrowserMovie.append('您点了取消确认，重命名已取消')
                             return
                         if is_filename_too_long(file_name):
                             QMessageBox.warning(widget, '警告',
                                                 '您输入的文件名过长，请重新核对后再生成标准命名！')
-                            self.debugBrowserTV.append('您输入的文件名过长，请重新核对后再生成标准命名！')
+                            self.debugBrowserMovie.append('您输入的文件名过长，请重新核对后再生成标准命名！')
                             return
                     print("FileName" + file_name)
                     self.mainTitleBrowserMovie.setText(main_title)
@@ -1081,8 +1081,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if screenshot_success:
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
-                    self.debugBrowserMovie.append("开始自动上传截图到图床" + picture_bed_path)
-                    self.pictureUrlBrowserMovie.setText("")
+                    self.debugBrowserPlaylet.append("开始自动上传截图到图床" + picture_bed_path)
+                    self.pictureUrlBrowserPlaylet.setText("")
                     if len(res) > 0:
                         self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
                                                                           False)
@@ -1309,17 +1309,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                     '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal, file_name)
                     if ok:
                         print(f'您修改文件名为: {text}')
-                        self.debugBrowserTV.append(f'您修改文件名为: {text}')
+                        self.debugBrowserPlaylet.append(f'您修改文件名为: {text}')
                         file_name = text
                     else:
                         print('您点了取消确认，重命名已取消')
-                        self.debugBrowserTV.append('您点了取消确认，重命名已取消')
+                        self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
                         return
                     if is_filename_too_long(file_name):
                         widget = QWidget(self)
                         QMessageBox.warning(widget, '警告',
                                             '您输入的文件名过长，请重新核对后再生成标准命名！')
-                        self.debugBrowserTV.append('您输入的文件名过长，请重新核对后再生成标准命名！')
+                        self.debugBrowserPlaylet.append('您输入的文件名过长，请重新核对后再生成标准命名！')
                         return
                 print("FileName" + file_name)
                 self.mainTitleBrowserPlaylet.setText(main_title)
