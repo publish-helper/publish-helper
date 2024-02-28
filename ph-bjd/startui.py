@@ -367,7 +367,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
-                            "分析后的结果为：" + original_title, en_title, year, other_names_sorted, category,
+                            "分析后的结果为：" + original_title + en_title + year + other_names_sorted + category +
                             actors_list)
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
@@ -409,7 +409,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 if ok:
                                     print(f'您输入的数据为: {text}')
                                     self.debugBrowserMovie.append(f'您输入的数据为: {text}')
-                                    en_title = text
+                                    en_title = text.replace('.', ' ')
                                     invalid_characters = ''
                                     for char in en_title:
                                         if not re.match(english_pattern, char):
@@ -843,7 +843,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + response]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
-                            "分析后的结果为：" + original_title, en_title, year, other_names_sorted, category,
+                            "分析后的结果为：" + original_title + en_title + year + other_names_sorted + category +
                             actors_list)
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
@@ -866,7 +866,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     if ok:
                                         print(f'您输入的数据为: {text}')
                                         self.debugBrowserTV.append(f'您输入的数据为: {text}')
-                                        en_title = text
+                                        en_title = text.replace('.', ' ')
                                         invalid_characters = ''
                                         for char in en_title:
                                             if not re.match(english_pattern, char):
