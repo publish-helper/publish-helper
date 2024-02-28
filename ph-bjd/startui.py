@@ -379,40 +379,42 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         other_titles = other_titles[: -3]
                     english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                     widget = QWidget(self)
-                    if en_title == '' and original_title != "":
-                        ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
-                                                     '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
-                                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-                        print('你的选择是', ok)
-                        if ok == QMessageBox.StandardButton.Yes:
-                            en_title = chinese_name_to_pinyin(original_title)
-                        if not re.match(english_pattern, en_title):
-                            print("first_english_name does not match the english_pattern.")
+                    if original_title != '':
+                        if en_title == '':
+                            ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
+                                                         '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
+                                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                            print('你的选择是', ok)
                             if ok == QMessageBox.StandardButton.Yes:
-                                QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
-                            text, ok = QInputDialog.getText(self, '输入资源的英文名称',
-                                                            'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
-                            if ok:
-                                print(f'您输入的数据为: {text}')
-                                self.debugBrowserMovie.append(f'您输入的数据为: {text}')
-                                en_title = text
-                                invalid_characters = ''
-                                for char in en_title:
-                                    if not re.match(english_pattern, char):
-                                        invalid_characters += char
-                                print("不匹配的字符：", invalid_characters)
-                                if invalid_characters != '':
-                                    QMessageBox.warning(widget, '警告',
-                                                        '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
-                                                            invalid_characters) + '\n请重新核对后再生成标准命名')
-                                    return
+                                en_title = chinese_name_to_pinyin(original_title)
+                            if not re.match(english_pattern, en_title):
+                                print("first_english_name does not match the english_pattern.")
+                                if ok == QMessageBox.StandardButton.Yes:
+                                    QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
+                                text, ok = QInputDialog.getText(self, '输入资源的英文名称',
+                                                                'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                if ok:
+                                    print(f'您输入的数据为: {text}')
+                                    self.debugBrowserMovie.append(f'您输入的数据为: {text}')
+                                    en_title = text
+                                    invalid_characters = ''
+                                    for char in en_title:
+                                        if not re.match(english_pattern, char):
+                                            invalid_characters += char
+                                    print("不匹配的字符：", invalid_characters)
+                                    if invalid_characters != '':
+                                        QMessageBox.warning(widget, '警告',
+                                                            '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
+                                                                invalid_characters) + '\n请重新核对后再生成标准命名')
+                                        return
 
-                            else:
-                                print('未输入任何数据')
-                                self.debugBrowserMovie.append('未输入任何数据')
-                                en_title = ''
+                                else:
+                                    print('未输入任何数据')
+                                    self.debugBrowserMovie.append('未输入任何数据')
+                                    en_title = ''
                     else:
                         self.debugBrowserMovie.append('未获取到任何影片名称信息，Pt-Gen出现问题，请重试')
+                        return
                     get_video_info_success, output = get_video_info(video_path)
                     if get_video_info_success:
                         print("获取到关键参数：" + str(output))
@@ -821,40 +823,42 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
                             return
-                        if en_title == '' and original_title != '':
-                            ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
-                                                         '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
-                                                         QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-                            print('你的选择是', ok)
-                            if ok == QMessageBox.StandardButton.Yes:
-                                en_title = chinese_name_to_pinyin(original_title)
-                            if not re.match(english_pattern, en_title):
-                                print("first_english_name does not match the english_pattern.")
+                        if original_title != '':
+                            if en_title == '':
+                                ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
+                                                             '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
+                                                             QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                                print('你的选择是', ok)
                                 if ok == QMessageBox.StandardButton.Yes:
-                                    QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
-                                text, ok = QInputDialog.getText(self, '输入资源的英文名称',
-                                                                'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
-                                if ok:
-                                    print(f'您输入的数据为: {text}')
-                                    self.debugBrowserTV.append(f'您输入的数据为: {text}')
-                                    en_title = text
-                                    invalid_characters = ''
-                                    for char in en_title:
-                                        if not re.match(english_pattern, char):
-                                            invalid_characters += char
-                                    print("不匹配的字符：", invalid_characters)
-                                    if invalid_characters != '':
-                                        QMessageBox.warning(widget, '警告',
-                                                            '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
-                                                                invalid_characters) + '\n请重新核对后再生成标准命名')
-                                        return
+                                    en_title = chinese_name_to_pinyin(original_title)
+                                if not re.match(english_pattern, en_title):
+                                    print("first_english_name does not match the english_pattern.")
+                                    if ok == QMessageBox.StandardButton.Yes:
+                                        QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
+                                    text, ok = QInputDialog.getText(self, '输入资源的英文名称',
+                                                                    'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                    if ok:
+                                        print(f'您输入的数据为: {text}')
+                                        self.debugBrowserTV.append(f'您输入的数据为: {text}')
+                                        en_title = text
+                                        invalid_characters = ''
+                                        for char in en_title:
+                                            if not re.match(english_pattern, char):
+                                                invalid_characters += char
+                                        print("不匹配的字符：", invalid_characters)
+                                        if invalid_characters != '':
+                                            QMessageBox.warning(widget, '警告',
+                                                                '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
+                                                                    invalid_characters) + '\n请重新核对后再生成标准命名')
+                                            return
 
-                                else:
-                                    print('未输入任何数据')
-                                    self.debugBrowserTV.append('未输入任何数据')
-                                    en_title = ''
+                                    else:
+                                        print('未输入任何数据')
+                                        self.debugBrowserTV.append('未输入任何数据')
+                                        en_title = ''
                         else:
                             self.debugBrowserTV.append('未获取到任何影片名称信息，Pt-Gen出现问题，请重试')
+                            return
                         print(original_title, en_title, year, other_names_sorted, category,
                               actors_list)
                         print("获取Pt-Gen关键信息成功")
