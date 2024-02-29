@@ -6,7 +6,7 @@ import requests
 
 def upload_screenshot(api_url, api_token, frame_path):
     print(api_url, api_token, frame_path)
-    if 'https://img.agsvpt.com/api' in api_url:
+    if 'https://img.agsv.top/api/' in api_url:
         return agsv_picture_bed(api_url, api_token, frame_path)
     if 'https://freeimage.host/api' in api_url:
         return freeimage_picture_bed(api_url, api_token, frame_path)
