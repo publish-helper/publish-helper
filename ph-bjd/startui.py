@@ -199,9 +199,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
-                res = res + response
-            self.debugBrowserMovie.append("成功获取截图：" + str(res))
             if screenshot_success:
+                res = res + response
+                self.debugBrowserMovie.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
                     self.debugBrowserMovie.append("开始自动上传截图到图床" + picture_bed_path)
@@ -646,9 +646,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
-                res = res + response
-            self.debugBrowserTV.append("成功获取截图：" + str(res))
             if screenshot_success:
+                res = res + response
+                self.debugBrowserTV.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
                     self.debugBrowserTV.append("开始自动上传截图到图床" + picture_bed_path)
@@ -1136,9 +1136,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
-                res = res + response
-            self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
             if screenshot_success:
+                res = res + response
+                self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
                     self.debugBrowserPlaylet.append("开始自动上传截图到图床" + picture_bed_path)
