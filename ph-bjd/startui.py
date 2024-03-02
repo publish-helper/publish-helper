@@ -125,6 +125,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以下是Movie页面的代码
 
     def start_button_movie_clicked(self):
+        if get_settings("second_confirm_file_name"):
+            self.debugBrowserMovie.append("如需一键启动，请到设置关闭二次确认文件名功能")
+            return
         self.get_name_button_movie_clicked()
         QApplication.processEvents()  # 处理所有挂起的事件，更新页面
         time.sleep(0)  # 等待 0 毫秒
@@ -185,9 +188,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
-            screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                screenshot_threshold, screenshot_start,
-                                                                screenshot_end, min_interval_pct=0.01)
+            res = []
+            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
+                                                                     screenshot_threshold, screenshot_start,
+                                                                     screenshot_end, min_interval_pct=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
             if get_thumbnails:
@@ -195,6 +199,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
+                    res = res + response
             self.debugBrowserMovie.append("成功获取截图：" + str(res))
             if screenshot_success:
                 # 判断是否需要上传图床
@@ -207,6 +212,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.result_signal.connect(
                             self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
+                        if get_thumbnails:
+                            time.sleep(0.8)  # 等待 800 毫秒
                     if len(res) > 1:
                         self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
                                                                           False)
@@ -360,11 +367,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response))
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response))
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response)]
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response)]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
                             "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
@@ -561,6 +571,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以上是Movie页面的代码
     # 以下是TV页面的代码
     def start_button_tv_clicked(self):
+        if get_settings("second_confirm_file_name"):
+            self.debugBrowserMovie.append("如需一键启动，请到设置关闭二次确认文件名功能")
+            return
         self.get_name_button_tv_clicked()
         QApplication.processEvents()  # 处理所有挂起的事件，更新页面
         time.sleep(0)  # 等待 0 毫秒
@@ -622,9 +635,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
-            screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                screenshot_threshold, screenshot_start,
-                                                                screenshot_end, min_interval_pct=0.01)
+            res = []
+            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
+                                                                     screenshot_threshold, screenshot_start,
+                                                                     screenshot_end, min_interval_pct=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
             if get_thumbnails:
@@ -632,6 +646,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
+                    res = res + response
             self.debugBrowserTV.append("成功获取截图：" + str(res))
             if screenshot_success:
                 # 判断是否需要上传图床
@@ -644,6 +659,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.result_signal.connect(
                             self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
+                        if get_thumbnails:
+                            time.sleep(0.8)  # 等待 800 毫秒
                     if len(res) > 1:
                         self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
                                                                           False)
@@ -668,6 +685,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread4.result_signal.connect(
                             self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
+                        time.sleep(0.8)  # 等待 800 毫秒
                     if len(res) > 5:
                         self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token, res[5],
                                                                           False)
@@ -836,11 +854,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response))
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response))
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response))
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(response)]
+                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                    response)]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
                             "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
@@ -1051,6 +1072,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以下是Playlet页面的代码
 
     def start_button_playlet_clicked(self):
+        if get_settings("second_confirm_file_name"):
+            self.debugBrowserMovie.append("如需一键启动，请到设置关闭二次确认文件名功能")
+            return
         self.get_name_button_playlet_clicked()
         QApplication.processEvents()  # 处理所有挂起的事件，更新页面
         time.sleep(0)  # 等待 0 毫秒
@@ -1101,7 +1125,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
-            screenshot_success, res = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
+            res = []
+            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
                                                                 screenshot_threshold, screenshot_start,
                                                                 screenshot_end, min_interval_pct=0.01)
             print("成功获取截图函数的返回值")
@@ -1111,6 +1136,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                 screenshot_start, screenshot_end)
                 if get_thumbnails_success:
                     res.append(sv_path)
+                    res = res + response
             self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
             if screenshot_success:
                 # 判断是否需要上传图床
@@ -1123,6 +1149,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.result_signal.connect(
                             self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
+                        if get_thumbnails:
+                            time.sleep(0.8)  # 等待 800 毫秒
                     if len(res) > 1:
                         self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
                                                                           False)
