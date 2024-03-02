@@ -368,13 +368,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         except Exception as e:
                             self.debugBrowserMovie.append(
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response))
+                                    response) + "\n请重试！")
                             print(
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response))
+                                    response) + "\n请重试！")
                             return False, [
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response)]
+                                    response) + "\n请重试！"]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
                             "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
@@ -855,13 +855,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         except Exception as e:
                             self.debugBrowserTV.append(
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response))
+                                    response) + "\n请重试！")
                             print(
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response))
+                                    response) + "\n请重试！")
                             return False, [
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response)]
+                                    response) + "\n请重试！"]
                         print(original_title, en_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
                             "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
@@ -1127,8 +1127,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("参数获取成功，开始执行截图函数")
             res = []
             screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                screenshot_threshold, screenshot_start,
-                                                                screenshot_end, min_interval_pct=0.01)
+                                                                     screenshot_threshold, screenshot_start,
+                                                                     screenshot_end, min_interval_pct=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
             if get_thumbnails:
