@@ -966,7 +966,7 @@ QPushButton:pressed {
 </string>
               </property>
               <property name="text">
-               <string>将当前信息生成auto_feed链接</string>
+               <string>将当前信息生成auto feed链接</string>
               </property>
              </widget>
             </item>
@@ -1968,7 +1968,7 @@ QPushButton:pressed {
 </string>
               </property>
               <property name="text">
-               <string>将当前信息生成auto_feed链接</string>
+               <string>将当前信息生成auto feed链接</string>
               </property>
              </widget>
             </item>
@@ -3118,7 +3118,7 @@ QPushButton:pressed {
 </string>
               </property>
               <property name="text">
-               <string>将当前信息生成auto_feed链接</string>
+               <string>将当前信息生成auto feed链接</string>
               </property>
              </widget>
             </item>
