@@ -8,7 +8,7 @@ from tool import generate_image_filename
 
 
 # 参数：video_path：源视频路径；output_path：输出图片路径；num_images：截图的总数量；start_pct：截图的起始帧占比，避免截取黑帧；
-# end_pct：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval_pct：最小帧间隔占比，避免连续截图；
+# end_pct：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval_pct：最小帧间隔占比，避免连续截图（暂时无效）；
 # some_threshold：参数，用于判断关键帧的复杂程度，数字越大越复杂，不宜过大，否则可能会导致截图数量不够
 def extract_complex_keyframes(video_path, output_path, num_images, some_threshold, start_pct, end_pct,
                               min_interval_pct=0.01):
@@ -69,6 +69,22 @@ def extract_complex_keyframes(video_path, output_path, num_images, some_threshol
                         cv2.imwrite(frame_path, frame)
                         extracted_images.append(frame_path)
                         last_keyframe_time = current_time
+                    else:
+                        print("当前帧不满足复杂度要求，获取随机帧代替")  # 调试信息
+                        timestamp = random.sample(range(start_frame, end_frame), 1)[0]
+                        cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
+                        ret, frame = cap.read()
+                        frame_path = generate_image_filename(output_path)
+                        cv2.imwrite(frame_path, frame)
+                        extracted_images.append(frame_path)
+                else:
+                    print("当前帧不满足时间间隔要求，获取随机帧代替")  # 调试信息
+                    timestamp = random.sample(range(start_frame, end_frame), 1)[0]
+                    cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
+                    ret, frame = cap.read()
+                    frame_path = generate_image_filename(output_path)
+                    cv2.imwrite(frame_path, frame)
+                    extracted_images.append(frame_path)
 
             cap.release()
 

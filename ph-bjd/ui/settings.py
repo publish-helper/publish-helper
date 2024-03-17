@@ -13,8 +13,8 @@ class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
         Settings.resize(646, 735)
-        self.verticalLayout_10 = QtWidgets.QVBoxLayout(Settings)
-        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.verticalLayout_11 = QtWidgets.QVBoxLayout(Settings)
+        self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.tabWidget = QtWidgets.QTabWidget(parent=Settings)
         self.tabWidget.setObjectName("tabWidget")
         self.tab = QtWidgets.QWidget()
@@ -170,8 +170,8 @@ class Ui_Settings(object):
         self.label_2.setObjectName("label_2")
         self.horizontalLayout_7.addWidget(self.label_2)
         self.screenshotThreshold = QtWidgets.QDoubleSpinBox(parent=self.tab)
-        self.screenshotThreshold.setDecimals(3)
-        self.screenshotThreshold.setMaximum(5.0)
+        self.screenshotThreshold.setDecimals(2)
+        self.screenshotThreshold.setMaximum(50.0)
         self.screenshotThreshold.setSingleStep(0.01)
         self.screenshotThreshold.setProperty("value", 0.1)
         self.screenshotThreshold.setObjectName("screenshotThreshold")
@@ -216,6 +216,10 @@ class Ui_Settings(object):
         self.deleteScreenshot.setChecked(True)
         self.deleteScreenshot.setObjectName("deleteScreenshot")
         self.horizontalLayout_9.addWidget(self.deleteScreenshot)
+        self.mediaInfoSuffix = QtWidgets.QCheckBox(parent=self.tab)
+        self.mediaInfoSuffix.setChecked(True)
+        self.mediaInfoSuffix.setObjectName("mediaInfoSuffix")
+        self.horizontalLayout_9.addWidget(self.mediaInfoSuffix)
         self.verticalLayout.addLayout(self.horizontalLayout_9)
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_11.setContentsMargins(5, 5, 5, 5)
@@ -430,7 +434,48 @@ class Ui_Settings(object):
         self.nameTabWidget.addTab(self.tab_5, "")
         self.verticalLayout_9.addWidget(self.nameTabWidget)
         self.tabWidget.addTab(self.tab_2, "")
-        self.verticalLayout_10.addWidget(self.tabWidget)
+        self.tab_6 = QtWidgets.QWidget()
+        self.tab_6.setObjectName("tab_6")
+        self.verticalLayout_10 = QtWidgets.QVBoxLayout(self.tab_6)
+        self.verticalLayout_10.setObjectName("verticalLayout_10")
+        self.horizontalLayout_25 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_25.setContentsMargins(5, 2, 5, 2)
+        self.horizontalLayout_25.setObjectName("horizontalLayout_25")
+        self.label_28 = QtWidgets.QLabel(parent=self.tab_6)
+        self.label_28.setObjectName("label_28")
+        self.horizontalLayout_25.addWidget(self.label_28)
+        self.autoFeedLink = QtWidgets.QTextEdit(parent=self.tab_6)
+        self.autoFeedLink.setObjectName("autoFeedLink")
+        self.horizontalLayout_25.addWidget(self.autoFeedLink)
+        self.verticalLayout_10.addLayout(self.horizontalLayout_25)
+        self.horizontalLayout_24 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_24.setContentsMargins(5, 2, 5, 2)
+        self.horizontalLayout_24.setObjectName("horizontalLayout_24")
+        self.label_27 = QtWidgets.QLabel(parent=self.tab_6)
+        self.label_27.setObjectName("label_27")
+        self.horizontalLayout_24.addWidget(self.label_27)
+        self.autoFeedIllustrate = QtWidgets.QTextBrowser(parent=self.tab_6)
+        self.autoFeedIllustrate.setObjectName("autoFeedIllustrate")
+        self.horizontalLayout_24.addWidget(self.autoFeedIllustrate)
+        self.verticalLayout_10.addLayout(self.horizontalLayout_24)
+        self.horizontalLayout_26 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_26.setContentsMargins(2, -1, 2, -1)
+        self.horizontalLayout_26.setObjectName("horizontalLayout_26")
+        self.label_29 = QtWidgets.QLabel(parent=self.tab_6)
+        self.label_29.setText("")
+        self.label_29.setObjectName("label_29")
+        self.horizontalLayout_26.addWidget(self.label_29)
+        self.openAutoFeedLink = QtWidgets.QCheckBox(parent=self.tab_6)
+        self.openAutoFeedLink.setChecked(True)
+        self.openAutoFeedLink.setObjectName("openAutoFeedLink")
+        self.horizontalLayout_26.addWidget(self.openAutoFeedLink)
+        self.label_30 = QtWidgets.QLabel(parent=self.tab_6)
+        self.label_30.setText("")
+        self.label_30.setObjectName("label_30")
+        self.horizontalLayout_26.addWidget(self.label_30)
+        self.verticalLayout_10.addLayout(self.horizontalLayout_26)
+        self.tabWidget.addTab(self.tab_6, "")
+        self.verticalLayout_11.addWidget(self.tabWidget)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setContentsMargins(30, -1, 30, -1)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -504,7 +549,7 @@ class Ui_Settings(object):
 "")
         self.cancelButton.setObjectName("cancelButton")
         self.horizontalLayout.addWidget(self.cancelButton)
-        self.verticalLayout_10.addLayout(self.horizontalLayout)
+        self.verticalLayout_11.addLayout(self.horizontalLayout)
 
         self.retranslateUi(Settings)
         self.tabWidget.setCurrentIndex(0)
@@ -1011,6 +1056,30 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.deleteScreenshot.setText(_translate("Settings", "上传后删除本地图片"))
+        self.mediaInfoSuffix.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.mediaInfoSuffix.setText(_translate("Settings", "MediaInfo工具后缀"))
         self.getThumbnails.setText(_translate("Settings", "生成缩略图"))
         self.label_13.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
@@ -1349,5 +1418,50 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
         self.nameTabWidget.setTabText(self.nameTabWidget.indexOf(self.tab_5), _translate("Settings", "短剧"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Settings", "命名"))
+        self.label_28.setText(_translate("Settings", "链接："))
+        self.autoFeedLink.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr##linkstr#torrent_url#linkstr##linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr##linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#100</p></body></html>"))
+        self.label_27.setText(_translate("Settings", "说明："))
+        self.autoFeedIllustrate.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">使用前请安装最新版本auto_feed：<span style=\" font-weight:700; color:#0000ff;\">https://greasyfork.org/zh-CN/scripts/424132-auto-feed</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">将上方链接最前方域名：<span style=\" font-weight:700; color:#0000ff;\">“example.com”</span>替换为想要发布的站点域名，注意保留<span style=\" font-weight:700; color:#ff0000;\">“upload.php”</span>！！！目前仅支持部分NexusPHP架构并且适配了auto_feed的站点！！！</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">如果不确定怎么用请<span style=\" color:#ff0000;\">不要对除了域名外任何地方做任何修改</span>！！！</p></body></html>"))
+        self.openAutoFeedLink.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.openAutoFeedLink.setText(_translate("Settings", "获取auto feed链接后自动打开链接（默认浏览器需安装auto feed脚本）"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), _translate("Settings", "上传"))
         self.saveButton.setText(_translate("Settings", "保存"))
         self.cancelButton.setText(_translate("Settings", "取消"))

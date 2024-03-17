@@ -533,6 +533,49 @@ class Ui_Mainwindow(object):
 "")
         self.startButtonMovie.setObjectName("startButtonMovie")
         self.horizontalLayout_9.addWidget(self.startButtonMovie)
+        self.autoFeedButtonMovie = QtWidgets.QPushButton(parent=self.tab)
+        self.autoFeedButtonMovie.setMinimumSize(QtCore.QSize(0, 80))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        self.autoFeedButtonMovie.setFont(font)
+        self.autoFeedButtonMovie.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 15px 25px;\n"
+"    font-size: 24px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 20px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.autoFeedButtonMovie.setObjectName("autoFeedButtonMovie")
+        self.horizontalLayout_9.addWidget(self.autoFeedButtonMovie)
         self.verticalLayout_6.addLayout(self.horizontalLayout_9)
         self.verticalLayout_12.addLayout(self.verticalLayout_6)
         self.tabWiget.addTab(self.tab, "")
@@ -1058,6 +1101,49 @@ class Ui_Mainwindow(object):
 "")
         self.startButtonTV.setObjectName("startButtonTV")
         self.horizontalLayout_38.addWidget(self.startButtonTV)
+        self.autoFeedButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
+        self.autoFeedButtonTV.setMinimumSize(QtCore.QSize(0, 80))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        self.autoFeedButtonTV.setFont(font)
+        self.autoFeedButtonTV.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 15px 25px;\n"
+"    font-size: 24px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 20px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.autoFeedButtonTV.setObjectName("autoFeedButtonTV")
+        self.horizontalLayout_38.addWidget(self.autoFeedButtonTV)
         self.verticalLayout_31.addLayout(self.horizontalLayout_38)
         self.verticalLayout_41.addLayout(self.verticalLayout_31)
         self.tabWiget.addTab(self.tab_2, "")
@@ -1657,6 +1743,49 @@ class Ui_Mainwindow(object):
 "")
         self.startButtonPlaylet.setObjectName("startButtonPlaylet")
         self.horizontalLayout_20.addWidget(self.startButtonPlaylet)
+        self.autoFeedButtonPlaylet = QtWidgets.QPushButton(parent=self.tab_3)
+        self.autoFeedButtonPlaylet.setMinimumSize(QtCore.QSize(0, 80))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(-1)
+        font.setBold(True)
+        font.setUnderline(False)
+        font.setStrikeOut(False)
+        self.autoFeedButtonPlaylet.setFont(font)
+        self.autoFeedButtonPlaylet.setStyleSheet("QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 15px 25px;\n"
+"    font-size: 24px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #16bf9d,\n"
+"                                      stop:1 #10a266);\n"
+"    border: none;\n"
+"    border-radius: 20px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #11b998,\n"
+"                                      stop:1 #08965e);\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: \n"
+"                qlineargradient(x1:0, y1:0, x2:0, y2:1,\n"
+"                                      stop:0 #0e9278,\n"
+"                                      stop:1 #0e925c);\n"
+"}\n"
+"")
+        self.autoFeedButtonPlaylet.setObjectName("autoFeedButtonPlaylet")
+        self.horizontalLayout_20.addWidget(self.autoFeedButtonPlaylet)
         self.verticalLayout_13.addLayout(self.horizontalLayout_20)
         self.verticalLayout_21.addLayout(self.verticalLayout_13)
         self.tabWiget.addTab(self.tab_3, "")
@@ -1708,6 +1837,7 @@ class Ui_Mainwindow(object):
         self.label_10.setText(_translate("Mainwindow", "MediaInfo"))
         self.getMediaInfoButtonMovie.setText(_translate("Mainwindow", "获取"))
         self.startButtonMovie.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.autoFeedButtonMovie.setText(_translate("Mainwindow", "将当前信息生成auto_feed链接"))
         self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab), _translate("Mainwindow", "电影"))
         self.label_45.setText(_translate("Mainwindow", "输入"))
         self.label_46.setText(_translate("Mainwindow", "输入豆瓣、IMDb等资源链接"))
@@ -1732,6 +1862,7 @@ class Ui_Mainwindow(object):
         self.label_57.setText(_translate("Mainwindow", "MediaInfo"))
         self.getMediaInfoButtonTV.setText(_translate("Mainwindow", "获取"))
         self.startButtonTV.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.autoFeedButtonTV.setText(_translate("Mainwindow", "将当前信息生成auto_feed链接"))
         self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab_2), _translate("Mainwindow", "剧集"))
         self.label_17.setText(_translate("Mainwindow", "输入"))
         self.label_8.setText(_translate("Mainwindow", "中文名称："))
@@ -1774,6 +1905,7 @@ class Ui_Mainwindow(object):
         self.label_31.setText(_translate("Mainwindow", "MediaInfo"))
         self.getMediaInfoButtonPlaylet.setText(_translate("Mainwindow", "获取"))
         self.startButtonPlaylet.setText(_translate("Mainwindow", "万事俱备，一键启动！"))
+        self.autoFeedButtonPlaylet.setText(_translate("Mainwindow", "将当前信息生成auto_feed链接"))
         self.tabWiget.setTabText(self.tabWiget.indexOf(self.tab_3), _translate("Mainwindow", "短剧"))
         self.menu.setTitle(_translate("Mainwindow", "工具"))
         self.actionsettings.setText(_translate("Mainwindow", "设置"))

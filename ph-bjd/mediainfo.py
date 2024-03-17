@@ -1,7 +1,10 @@
 import json
 import os
+import re
 
 from pymediainfo import MediaInfo
+
+from tool import get_settings
 
 
 def get_media_info(file_path):
@@ -24,7 +27,7 @@ def get_media_info(file_path):
         audio_count, text_count = 1, 1
 
         # 遍历所有 track
-        # print(data)
+        print(data)
         for track in data["tracks"]:
             if track["track_type"] == "General":
                 # 处理 General 类型的 track
@@ -175,16 +178,22 @@ def get_media_info(file_path):
                     if value is not None:
                         output += f"{label:36}: {value}\n"
 
-            # elif track["track_type"] == "Menu":
-            #     chapter_regex = re.compile(r'(\d{2}):(\d{2}):(\d{2}\.\d{3})\s+\:\s+en:(Chapter \d+)')
-            #     chapters = {chapter_regex.search(value).group(4): f"{match.group(1)}:{match.group(2)}:{match.group(3)}"
-            #                 for value, match in [(value, chapter_regex.search(value)) for value in data.values() if
-            #                                      chapter_regex.search(value)]}
-            #     for chapter, timestamp in chapters.items():
-            #         print(f"{timestamp} - {chapter}")
-            #         output += f"{timestamp:36}: {chapter}\n"  # 等待完善，影响不大
+            elif track["track_type"] == "Menu":
+                output += f"\nMenu\n"
+                # 遍历所有章节条目
+                for key, value in track.items():
+                    # 使用正则表达式匹配时间戳和章节标题的格式
+                    match = re.match(r"(\d{2})_(\d{2})_(\d{5})", key)
+                    if match:
+                        # 格式化时间戳
+                        hours, minutes, seconds_millis = match.groups()
+                        seconds, millis = divmod(int(seconds_millis), 1000)
+                        timestamp = f"{hours}:{minutes}:{seconds:02}.{millis:03}"
+                        # 添加到输出字符串
+                        output += f"{timestamp:36} : {value}\n"
 
-        output += "\nCreated by ph-bjd"
+        if get_settings("media_info_suffix"):
+            output += "\nCreated by ph-bjd"
 
         return True, output
 

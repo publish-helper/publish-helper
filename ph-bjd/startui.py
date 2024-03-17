@@ -4,10 +4,12 @@ import sys
 import time
 import webbrowser
 
+import pyperclip
 from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget, QLineEdit
 
+from autofeed import get_auto_feed_link
 from mediainfo import get_media_info
 from picturebed import upload_screenshot
 from ptgen import fetch_and_format_ptgen_data
@@ -72,8 +74,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.selectVideoFolderButtonMovie.clicked.connect(self.select_video_folder_button_movie_clicked)
         self.getMediaInfoButtonMovie.clicked.connect(self.get_media_info_button_movie_clicked)
         self.getNameButtonMovie.clicked.connect(self.get_name_button_movie_clicked)
-        self.startButtonMovie.clicked.connect(self.start_button_movie_clicked)
         self.makeTorrentButtonMovie.clicked.connect(self.make_torrent_button_movie_clicked)
+        self.startButtonMovie.clicked.connect(self.start_button_movie_clicked)
+        self.autoFeedButtonMovie.clicked.connect(self.auto_feed_button_movie_clicked)
+
         # TV
         self.actionsettings.triggered.connect(self.settings_clicked)
         self.getPtGenButtonTV.clicked.connect(self.get_pt_gen_button_tv_clicked)
@@ -81,8 +85,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.selectVideoFolderButtonTV.clicked.connect(self.select_video_folder_button_tv_clicked)
         self.getMediaInfoButtonTV.clicked.connect(self.get_media_info_button_tv_clicked)
         self.getNameButtonTV.clicked.connect(self.get_name_button_tv_clicked)
-        self.startButtonTV.clicked.connect(self.start_button_tv_clicked)
         self.makeTorrentButtonTV.clicked.connect(self.make_torrent_button_tv_clicked)
+        self.startButtonTV.clicked.connect(self.start_button_tv_clicked)
+        self.autoFeedButtonTV.clicked.connect(self.auto_feed_button_tv_clicked)
+
         # Playlet
         self.getPictureButtonPlaylet.clicked.connect(self.get_picture_button_playlet_clicked)
         self.uploadCoverButtonPlaylet.clicked.connect(self.upload_cover_button_playlet_clicked)
@@ -90,8 +96,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.selectCoverFolderButtonPlaylet.clicked.connect(self.select_cover_folder_button_playlet_clicked)
         self.getMediaInfoButtonPlaylet.clicked.connect(self.get_media_info_button_playlet_clicked)
         self.getNameButtonPlaylet.clicked.connect(self.get_name_button_playlet_clicked)
-        self.startButtonPlaylet.clicked.connect(self.start_button_playlet_clicked)
         self.makeTorrentButtonPlaylet.clicked.connect(self.make_torrent_button_playlet_clicked)
+        self.startButtonPlaylet.clicked.connect(self.start_button_playlet_clicked)
+        self.autoFeedButtonPlaylet.clicked.connect(self.auto_feed_button_playlet_clicked)
+
         # 初始化成功
         self.debugBrowserMovie.append(
             "程序初始化成功，使用前请查看设置中的说明！\n制作不易，如有帮助请帮忙点亮仓库的Star！\n地址：https://github.com/bjdbjd/publish-helper")
@@ -139,6 +147,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         time.sleep(2)  # 等待 2000 毫秒
         self.make_torrent_button_movie_clicked()
         QApplication.processEvents()  # 处理事件
+
+    def auto_feed_button_movie_clicked(self):
+        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
+        mian_title = self.mainTitleBrowserMovie.toPlainText()
+        second_title = self.secondTitleBrowserMovie.toPlainText()
+        description = self.ptGenBrowserMovie.toPlainText()
+        media_info = self.mediainfoBrowserMovie.toPlainText()
+        file_name = self.fileNameBrowserMovie.toPlainText()
+        type = "电影"
+        team = self.teamMovie.currentText()
+        source = self.sourceMovie.currentText()
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+                                            source)
+        self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
+        pyperclip.copy(auto_feed_link)
+        self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板")
+        if get_settings("open_auto_feed_link"):
+            webbrowser.open(auto_feed_link)
 
     def get_pt_gen_button_movie_clicked(self):
         self.ptGenBrowserMovie.setText("")
@@ -590,6 +616,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         time.sleep(2)  # 等待 2000 毫秒
         self.make_torrent_button_tv_clicked()
         QApplication.processEvents()  # 处理事件
+
+    def auto_feed_button_tv_clicked(self):
+        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
+        mian_title = self.mainTitleBrowserTV.toPlainText()
+        second_title = self.secondTitleBrowserTV.toPlainText()
+        description = self.ptGenBrowserTV.toPlainText()
+        media_info = self.mediainfoBrowserTV.toPlainText()
+        file_name = self.fileNameBrowserTV.toPlainText()
+        type = "剧集"
+        team = self.teamTV.currentText()
+        source = self.sourceTV.currentText()
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+                                            source)
+        self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
+        pyperclip.copy(auto_feed_link)
+        self.debugBrowserTV.append("auto_feed链接已经复制到剪切板")
+        if get_settings("open_auto_feed_link"):
+            webbrowser.open(auto_feed_link)
 
     def get_pt_gen_button_tv_clicked(self):
         self.ptGenBrowserTV.setText("")
@@ -1099,6 +1143,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.make_torrent_button_playlet_clicked()
         QApplication.processEvents()  # 处理事件
 
+    def auto_feed_button_playlet_clicked(self):
+        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
+        mian_title = self.mainTitleBrowserPlaylet.toPlainText()
+        second_title = self.secondTitleBrowserPlaylet.toPlainText()
+        description = self.introBrowserPlaylet.toPlainText()
+        media_info = self.mediainfoBrowserPlaylet.toPlainText()
+        file_name = self.fileNameBrowserPlaylet.toPlainText()
+        type = "短剧"
+        team = self.teamPlaylet.currentText()
+        source = self.sourcePlaylet.currentText()
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+                                            source)
+        self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
+        pyperclip.copy(auto_feed_link)
+        self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板")
+        if get_settings("open_auto_feed_link"):
+            webbrowser.open(auto_feed_link)
+
     def upload_cover_button_playlet_clicked(self):
         cover_path = self.coverPathPlaylet.text()
         if cover_path and cover_path != '':
@@ -1500,6 +1562,7 @@ class settings(QDialog, Ui_Settings):
         self.autoUploadScreenshot.setChecked(bool(get_settings("auto_upload_screenshot")))
         self.pasteScreenshotUrl.setChecked(bool(get_settings("paste_screenshot_url")))
         self.deleteScreenshot.setChecked(bool(get_settings("delete_screenshot")))
+        self.mediaInfoSuffix.setChecked(bool(get_settings("media_info_suffix")))
         self.makeDir.setChecked(bool(get_settings("make_dir")))
         self.renameFile.setChecked(bool(get_settings("rename_file")))
         self.secondConfirmFileName.setChecked(bool(get_settings("second_confirm_file_name")))
@@ -1512,6 +1575,8 @@ class settings(QDialog, Ui_Settings):
         self.mainTitlePlaylet.setText(str(get_settings("main_title_playlet")))
         self.secondTitlePlaylet.setText(str(get_settings("second_title_playlet")))
         self.fileNamePlaylet.setText(str(get_settings("file_name_playlet")))
+        self.autoFeedLink.setText(str(get_settings("auto_feed_link")))
+        self.openAutoFeedLink.setChecked(bool(get_settings("open_auto_feed_link")))
 
     def updateSettings(self):
         update_settings("screenshot_path", self.screenshotPath.text())
@@ -1541,6 +1606,10 @@ class settings(QDialog, Ui_Settings):
             update_settings("delete_screenshot", "True")
         else:
             update_settings("delete_screenshot", "")
+        if self.mediaInfoSuffix.isChecked():
+            update_settings("media_info_suffix", "True")
+        else:
+            update_settings("media_info_suffix", "")
         if self.makeDir.isChecked():
             update_settings("make_dir", "True")
         else:
@@ -1562,6 +1631,11 @@ class settings(QDialog, Ui_Settings):
         update_settings("main_title_playlet", self.mainTitlePlaylet.text())
         update_settings("second_title_playlet", self.secondTitlePlaylet.text())
         update_settings("file_name_playlet", self.fileNamePlaylet.text())
+        update_settings("auto_feed_link", self.autoFeedLink.toPlainText())
+        if self.openAutoFeedLink.isChecked():
+            update_settings("open_auto_feed_link", "True")
+        else:
+            update_settings("open_auto_feed_link", "")
 
     # 以上是Settings页面的代码
     # 以下是多线程的代码
