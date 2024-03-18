@@ -27,7 +27,7 @@ def get_media_info(file_path):
         audio_count, text_count = 1, 1
 
         # 遍历所有 track
-        print(data)
+        # print(data)
         for track in data["tracks"]:
             if track["track_type"] == "General":
                 # 处理 General 类型的 track

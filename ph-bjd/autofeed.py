@@ -134,8 +134,9 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     if source == "Blu-ray" or "Blu-ray" in mian_title or source == "Blu-Ray" or "Blu-Ray" in mian_title or source == "BluRay" or "BluRay" in mian_title or source == "UHD Blu-ray" or source == "UHD Blu-Ray" or source == "UHD BluRay":
         if "X26" in codec_sel:
             medium_sel = "Encode"
-        if "Remux" in mian_title or "REMUX" in mian_title or "remux" in mian_title or "mkv" in media_info:
-            medium_sel = "Remux"
+        else:
+            if "Remux" in mian_title or "REMUX" in mian_title or "remux" in mian_title or "mkv" in media_info:
+                medium_sel = "Remux"
     if source == "HDTV" or "HDTV" in mian_title:
         medium_sel = "HDTV"
     if source == "DVD" or "DVD" in mian_title:

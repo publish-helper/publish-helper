@@ -8,7 +8,7 @@ from tool import generate_image_filename
 
 
 # 参数：video_path：源视频路径；output_path：输出图片路径；num_images：截图的总数量；start_pct：截图的起始帧占比，避免截取黑帧；
-# end_pct：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval_pct：最小帧间隔占比，避免连续截图（暂时无效）；
+# end_pct：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval_pct：最小帧间隔占比，避免连续截图；
 # some_threshold：参数，用于判断关键帧的复杂程度，数字越大越复杂，不宜过大，否则可能会导致截图数量不够
 def extract_complex_keyframes(video_path, output_path, num_images, some_threshold, start_pct, end_pct,
                               min_interval_pct=0.01):
