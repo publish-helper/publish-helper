@@ -2,7 +2,22 @@ Publish Helper v1.3.0
 
 **使用前务必请先看设置！！！**
 
-软件功能和界面请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
+目前的一些简单的功能有：
+
+1. 自动获取Pt-Gen简介信息（需要Pt-Gen Api）
+2. 自动获取MediaInfo信息
+3. 自动截图
+4. 自动获取缩略图
+5. 并上传图床（需要自行获取图床的Api）
+6. 根据简介信息和MediaInfo信息自动分析生成主副标题和文件名
+7. 自动将资源塞入文件夹并重命名
+8. 自动将资源制作种子
+9. 剧集、短剧资源自动批量重命名（新）
+10. 支持剧集短剧分集命名（新）
+11. 自定义重命名规则（新）
+12. 结合auto_feed脚本实现一键上传内容（新）
+
+具体的软件功能、界面和使用方法请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
 
 目前支持的免费公共图床：https://freeimage.host/ https://imgbb.com/
 
