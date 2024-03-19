@@ -16,6 +16,7 @@ Publish Helper v1.3.2
 10. 支持剧集短剧分集命名（新）
 11. 自定义重命名规则（新）
 12. 结合auto_feed脚本实现一键上传内容（新）
+13. 短剧一键生成简介（新）
 
 具体的软件功能、界面和使用方法请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
 
