@@ -449,6 +449,32 @@ def int_to_special_roman(num):
         return str(num)
 
 
+def num_to_chinese(num):
+    if num < 0 or num > 9999:
+        return "数字超出范围"
+
+    digits = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
+    units = ["", "十", "百", "千"]
+    parts = []
+
+    if num == 0:
+        return digits[0]
+
+    # 处理千位到个位
+    unit_index = 0
+    while num > 0:
+        digit = num % 10
+        if digit > 0:
+            parts.append(digits[digit] + units[unit_index])
+        elif len(parts) > 0 and parts[-1] != digits[0]:
+            parts.append(digits[0])
+        num //= 10
+        unit_index += 1
+
+    # 处理完毕后，parts 数组是倒序的，需要反转回来
+    return ''.join(parts[::-1])
+
+
 def is_filename_too_long(filename):
     max_filename_length = 250  # Windows下文件名最长为255，去除掉后缀名为250
     if len(filename) > max_filename_length:

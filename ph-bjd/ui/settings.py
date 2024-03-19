@@ -552,7 +552,7 @@ class Ui_Settings(object):
 
         self.retranslateUi(Settings)
         self.tabWidget.setCurrentIndex(0)
-        self.nameTabWidget.setCurrentIndex(0)
+        self.nameTabWidget.setCurrentIndex(2)
         QtCore.QMetaObject.connectSlotsByName(Settings)
 
     def retranslateUi(self, Settings):
@@ -581,7 +581,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_8.setText(_translate("Settings", "PT Gen地址："))
+        self.label_8.setText(_translate("Settings", "PT Gen地址:"))
         self.ptGenPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -628,7 +628,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_6.setText(_translate("Settings", "图床Api地址："))
+        self.label_6.setText(_translate("Settings", "图床Api地址:"))
         self.pictureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -675,7 +675,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_7.setText(_translate("Settings", "图床Api密钥："))
+        self.label_7.setText(_translate("Settings", "图床Api密钥:"))
         self.pictureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -722,7 +722,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_3.setText(_translate("Settings", "截图储存地址："))
+        self.label_3.setText(_translate("Settings", "截图储存地址:"))
         self.screenshotPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -770,7 +770,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_12.setText(_translate("Settings", "种子储存地址："))
+        self.label_12.setText(_translate("Settings", "种子储存地址:"))
         self.torrentPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -818,7 +818,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label.setText(_translate("Settings", "截图数量："))
+        self.label.setText(_translate("Settings", "截图数量:"))
         self.screenshotNumber.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -865,7 +865,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_2.setText(_translate("Settings", "关键帧复杂度："))
+        self.label_2.setText(_translate("Settings", "关键帧复杂度:"))
         self.screenshotThreshold.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -912,7 +912,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_4.setText(_translate("Settings", "截图起始点（百分比）："))
+        self.label_4.setText(_translate("Settings", "截图起始点（百分比）:"))
         self.screenshotStart.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -959,7 +959,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_5.setText(_translate("Settings", "截图终止点（百分比）："))
+        self.label_5.setText(_translate("Settings", "截图终止点（百分比）:"))
         self.screenshotEnd.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1103,7 +1103,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_13.setText(_translate("Settings", "横向数量："))
+        self.label_13.setText(_translate("Settings", "横向数量:"))
         self.rows.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1150,7 +1150,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_14.setText(_translate("Settings", "纵向数量："))
+        self.label_14.setText(_translate("Settings", "纵向数量:"))
         self.cols.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1197,7 +1197,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_10.setText(_translate("Settings", "获取标准命名时："))
+        self.label_10.setText(_translate("Settings", "获取标准命名时:"))
         self.renameFile.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1290,13 +1290,13 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">目前支持的免费图床： <span style=\" color:#0000ff;\">https://freeimage.host/ https://imgbb.com/</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">图床的Api地址和密钥请到图床主页获取。</p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Settings", "常规"))
-        self.label_15.setText(_translate("Settings", "主标题："))
+        self.label_15.setText(_translate("Settings", "主标题:"))
         self.mainTitleMovie.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
-        self.label_17.setText(_translate("Settings", "副标题："))
+        self.label_17.setText(_translate("Settings", "副标题:"))
         self.secondTitleMovie.setText(_translate("Settings", "{original_title} / {other_title} | {category} | {actors}"))
-        self.label_16.setText(_translate("Settings", "文件名："))
+        self.label_16.setText(_translate("Settings", "文件名:"))
         self.fileNameMovie.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
-        self.label_18.setText(_translate("Settings", "占位符："))
+        self.label_18.setText(_translate("Settings", "占位符:"))
         self.nameExampleMovie.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1324,13 +1324,13 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
         self.nameTabWidget.setTabText(self.nameTabWidget.indexOf(self.tab_3), _translate("Settings", "电影"))
-        self.label_23.setText(_translate("Settings", "主标题："))
+        self.label_23.setText(_translate("Settings", "主标题:"))
         self.mainTitleTV.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
-        self.label_24.setText(_translate("Settings", "副标题："))
+        self.label_24.setText(_translate("Settings", "副标题:"))
         self.secondTitleTV.setText(_translate("Settings", "{original_title} / {other_title} | {category} | {actors}"))
-        self.label_25.setText(_translate("Settings", "文件名："))
+        self.label_25.setText(_translate("Settings", "文件名:"))
         self.fileNameTV.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
-        self.label_26.setText(_translate("Settings", "占位符："))
+        self.label_26.setText(_translate("Settings", "占位符:"))
         self.nameExampleTV.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1362,13 +1362,13 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
         self.nameTabWidget.setTabText(self.nameTabWidget.indexOf(self.tab_4), _translate("Settings", "剧集"))
-        self.label_19.setText(_translate("Settings", "主标题："))
+        self.label_19.setText(_translate("Settings", "主标题:"))
         self.mainTitlePlaylet.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
-        self.label_20.setText(_translate("Settings", "副标题："))
+        self.label_20.setText(_translate("Settings", "副标题:"))
         self.secondTitlePlaylet.setText(_translate("Settings", "{original_title} | 第{season} | {total_episode} | {year}年 | {type} | 类型：{category}"))
-        self.label_21.setText(_translate("Settings", "文件名："))
+        self.label_21.setText(_translate("Settings", "文件名:"))
         self.fileNamePlaylet.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
-        self.label_22.setText(_translate("Settings", "占位符："))
+        self.label_22.setText(_translate("Settings", "占位符:"))
         self.nameExamplePlaylet.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1400,7 +1400,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
         self.nameTabWidget.setTabText(self.nameTabWidget.indexOf(self.tab_5), _translate("Settings", "短剧"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Settings", "命名"))
-        self.label_28.setText(_translate("Settings", "链接："))
+        self.label_28.setText(_translate("Settings", "链接:"))
         self.autoFeedLink.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"
@@ -1409,7 +1409,7 @@ class Ui_Settings(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr##linkstr#torrent_url#linkstr##linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr##linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#100</p></body></html>"))
-        self.label_27.setText(_translate("Settings", "说明："))
+        self.label_27.setText(_translate("Settings", "说明:"))
         self.autoFeedIllustrate.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
 "p, li { white-space: pre-wrap; }\n"

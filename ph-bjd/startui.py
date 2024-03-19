@@ -18,7 +18,7 @@ from screenshot import extract_complex_keyframes, get_thumbnail
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long
+    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
@@ -90,6 +90,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.autoFeedButtonTV.clicked.connect(self.auto_feed_button_tv_clicked)
 
         # Playlet
+        self.getDescriptionButtonPlaylet.clicked.connect(self.get_description_playlet_clicked)
         self.getPictureButtonPlaylet.clicked.connect(self.get_picture_button_playlet_clicked)
         self.uploadCoverButtonPlaylet.clicked.connect(self.upload_cover_button_playlet_clicked)
         self.selectVideoFolderButtonPlaylet.clicked.connect(self.select_video_folder_button_playlet_clicked)
@@ -892,7 +893,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         if episode_start == 1:
                             total_episode = '全' + str(episode_num) + '集'
                         else:
-                            total_episode = '第' + str(episode_start) + '-' + str(episode_start + episode_num - 1) + '集'
+                            if str(episode_start) == str(episode_start + episode_num - 1):
+                                total_episode = '第' + str(episode_start) + '集'
+                            else:
+                                total_episode = '第' + str(episode_start) + '-' + str(
+                                    episode_start + episode_num - 1) + '集'
                         print(total_episode)
                     else:
                         print("获取文件失败")
@@ -1147,7 +1152,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
         mian_title = self.mainTitleBrowserPlaylet.toPlainText()
         second_title = self.secondTitleBrowserPlaylet.toPlainText()
-        description = self.introBrowserPlaylet.toPlainText()
+        description = self.descriptionBrowserPlaylet.toPlainText()
         media_info = self.mediainfoBrowserPlaylet.toPlainText()
         file_name = self.fileNameBrowserPlaylet.toPlainText()
         type = "短剧"
@@ -1160,6 +1165,31 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         if get_settings("open_auto_feed_link"):
             webbrowser.open(auto_feed_link)
+
+    def get_description_playlet_clicked(self):
+        try:
+            self.descriptionBrowserPlaylet.setText('')
+            original_title = self.originalNameEditPlaylet.text()
+            if original_title:
+                year, area, type, language = '', '', '', ''
+                year += self.yearEditPlaylet.text()
+                area += self.areaPlaylet.currentText()
+                category = self.get_category()
+                language += self.languagePlaylet.currentText()
+                season = self.seasonBoxPlaylet.text()
+                if season != '1':
+                    original_title += ' 第' + num_to_chinese(int(season)) + '季'
+                self.descriptionBrowserPlaylet.append('◎片　　名　' + original_title)
+                self.descriptionBrowserPlaylet.append('◎年　　代　' + year)
+                self.descriptionBrowserPlaylet.append('◎产　　地　' + area)
+                self.descriptionBrowserPlaylet.append('◎类　　别　' + category)
+                self.descriptionBrowserPlaylet.append('◎语　　言　' + language)
+                self.descriptionBrowserPlaylet.append('◎简　　介　')
+            else:
+                self.debugBrowserPlaylet.append('您没有填写资源名称！')
+        except Exception as e:
+            print(f"获取简介出错：{e}")
+            return False, [f"获取简介出错：{e}"]
 
     def upload_cover_button_playlet_clicked(self):
         cover_path = self.coverPathPlaylet.text()
@@ -1279,12 +1309,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             delete_screenshot = bool(get_settings("delete_screenshot"))
             if paste_screenshot_url:
                 if is_cover:
-                    temp = self.introBrowserPlaylet.toPlainText()
+                    temp = self.descriptionBrowserPlaylet.toPlainText()
                     temp = api_response + '\n' + temp
-                    self.introBrowserPlaylet.setText(temp)
+                    self.descriptionBrowserPlaylet.setText(temp)
                     self.debugBrowserPlaylet.append("成功将封面链接粘贴到简介前")
                 else:
-                    self.introBrowserPlaylet.append(api_response)
+                    self.descriptionBrowserPlaylet.append(api_response)
                     self.debugBrowserPlaylet.append("成功将图片链接粘贴到简介后")
             if delete_screenshot:
                 if os.path.exists(screenshot_path):
@@ -1321,179 +1351,189 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserPlaylet.append("您的视频文件路径有误")
 
     def get_name_button_playlet_clicked(self):
-
-        original_title = self.chineseNameEditPlaylet.text()
-        if original_title:
-
-            print('获取中文名成功：' + original_title)
-            self.debugBrowserPlaylet.append('获取中文名成功：' + original_title)
-            en_title = chinese_name_to_pinyin(original_title)
-            year = self.yearEditPlaylet.text()
-            season = self.seasonBoxPlaylet.text()
-            total_episode = ""
-            episode_num = 0
-            episode_start = int(self.episodeStartBoxPlaylet.text())
-            season_number = season
-            if len(season) < 2:
-                season = '0' + season
-            video_format = ""
-            video_codec = ""
-            bit_depth = ""
-            hdr_format = ""
-            frame_rate = ""
-            audio_codec = ""
-            channels = ""
-            type = ""
-            category = ""
-            rename_file = get_settings("rename_file")
-            second_confirm_file_name = get_settings("second_confirm_file_name")
-            is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
-            get_video_info_success, output = get_video_info(video_path)  # 通过视频获取视频的MI参数
-            print(get_video_info_success, output)
-            if is_video_path == 2:  # 视频路径是文件夹
-                get_video_files_success, video_files = get_video_files(
-                    self.videoPathPlaylet.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
-                if get_video_files_success:
-                    print('检测到以下文件：', video_files)
-                    episode_num = len(video_files)  # 获取视频文件的总数
-                    if episode_start == 1:
-                        total_episode = '全' + str(episode_num) + '集'
-                    else:
-                        total_episode = '第' + str(episode_start) + '-' + str(episode_start + episode_num - 1) + '集'
-                if get_video_info_success:
-                    self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))
-                    video_format = output[0]
-                    video_codec = output[1]
-                    bit_depth = output[2]
-                    hdr_format = output[3]
-                    frame_rate = output[4]
-                    audio_codec = output[5]
-                    channels = output[6]
-                source = self.sourcePlaylet.currentText()
-                team = self.teamPlaylet.currentText()
-                type += self.typePlaylet.currentText()
-                print("收费类型、来源和小组参数获取成功")
-                self.debugBrowserPlaylet.append("收费类型、来源和小组参数获取成功")
-                if self.checkBox_0.isChecked():
-                    category += '剧情 '
-                if self.checkBox_1.isChecked():
-                    category += '爱情 '
-                if self.checkBox_2.isChecked():
-                    category += '喜剧 '
-                if self.checkBox_3.isChecked():
-                    category += '甜虐 '
-                if self.checkBox_4.isChecked():
-                    category += '甜宠 '
-                if self.checkBox_5.isChecked():
-                    category += '恐怖 '
-                if self.checkBox_6.isChecked():
-                    category += '动作 '
-                if self.checkBox_7.isChecked():
-                    category += '穿越 '
-                if self.checkBox_8.isChecked():
-                    category += '重生 '
-                if self.checkBox_9.isChecked():
-                    category += '逆袭 '
-                if self.checkBox_10.isChecked():
-                    category += '科幻 '
-                if self.checkBox_11.isChecked():
-                    category += '武侠 '
-                if self.checkBox_12.isChecked():
-                    category += '都市 '
-                if self.checkBox_13.isChecked():
-                    category += '古装 '
-                if category != "":
-                    category = category[: -1]
-                    category = category.replace(' ', ' / ')
-                print('类型为：' + category)
-                self.debugBrowserPlaylet.append('类型为：' + category)
-                main_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
-                                                   source, video_codec, bit_depth, hdr_format, frame_rate, audio_codec,
-                                                   channels, team, "", season_number, total_episode, type, category,
-                                                   "", "main_title_playlet")
-                main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
-                print(main_title)
-                second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
-                                                     source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                     audio_codec, channels, team, "", season_number, total_episode,
-                                                     type,
-                                                     category, "", "second_title_playlet")
-                print("SecondTitle" + second_title)
-                # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                file_name = get_name_from_example(en_title, original_title, season, '??', year, video_format,
-                                                  source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                  audio_codec, channels, team, "", season_number, total_episode, type,
-                                                  category, "", "file_name_playlet")
-                file_name = file_name.replace(' ', '.')
-                file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
-                if second_confirm_file_name:
-                    text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
-                                                    QLineEdit.EchoMode.Normal, file_name)
-                    if ok:
-                        print(f'您确认文件名为: {text}')
-                        self.debugBrowserPlaylet.append(f'您确认文件名为: {text}')
-                        file_name = text
-                    else:
-                        print('您点了取消确认，重命名已取消')
-                        self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
-                        return
-                if is_filename_too_long(file_name):
-                    text, ok = QInputDialog.getText(self, '警告',
-                                                    '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal, file_name)
-                    if ok:
-                        print(f'您修改文件名为: {text}')
-                        self.debugBrowserPlaylet.append(f'您修改文件名为: {text}')
-                        file_name = text
-                    else:
-                        print('您点了取消确认，重命名已取消')
-                        self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
-                        return
+        try:
+            self.get_description_playlet_clicked()
+            original_title = self.originalNameEditPlaylet.text()
+            en_title = ''
+            english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
+            widget = QWidget(self)
+            if original_title != '':
+                if not re.match(english_pattern, original_title):
+                    ok = QMessageBox.information(self, '资源名称不是英文',
+                                                 '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
+                                                 QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+                    print('你的选择是', ok)
+                    if ok == QMessageBox.StandardButton.Yes:
+                        en_title = chinese_name_to_pinyin(original_title)
+                    if not re.match(english_pattern, en_title):
+                        print("first_english_name does not match the english_pattern.")
+                        if ok == QMessageBox.StandardButton.Yes:
+                            QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
+                        text, ok = QInputDialog.getText(self, '输入资源的英文名称',
+                                                        'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                        if ok:
+                            print(f'您输入的数据为: {text}')
+                            self.debugBrowserTV.append(f'您输入的数据为: {text}')
+                            en_title = text.replace('.', ' ')
+                            invalid_characters = ''
+                            for char in en_title:
+                                if not re.match(english_pattern, char):
+                                    invalid_characters += char
+                            print("不匹配的字符：", invalid_characters)
+                            if invalid_characters != '':
+                                QMessageBox.warning(widget, '警告',
+                                                    '您输入的英文名称包含非英文字符或符号\n有以下这些：' + '|'.join(
+                                                        invalid_characters) + '\n请重新核对后再生成标准命名')
+                                return
+                        else:
+                            print('未输入任何数据')
+                            self.debugBrowserTV.append('未输入任何数据')
+                            en_title = ''
+                year = self.yearEditPlaylet.text()
+                season = self.seasonBoxPlaylet.text()
+                total_episode = ""
+                episode_num = 0
+                episode_start = int(self.episodeStartBoxPlaylet.text())
+                season_number = season
+                if len(season) < 2:
+                    season = '0' + season
+                video_format = ""
+                video_codec = ""
+                bit_depth = ""
+                hdr_format = ""
+                frame_rate = ""
+                audio_codec = ""
+                channels = ""
+                type = ""
+                rename_file = get_settings("rename_file")
+                second_confirm_file_name = get_settings("second_confirm_file_name")
+                is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
+                get_video_info_success, output = get_video_info(video_path)  # 通过视频获取视频的MI参数
+                print(get_video_info_success, output)
+                if is_video_path == 2:  # 视频路径是文件夹
+                    get_video_files_success, video_files = get_video_files(
+                        self.videoPathPlaylet.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
+                    if get_video_files_success:
+                        print('检测到以下文件：', video_files)
+                        episode_num = len(video_files)  # 获取视频文件的总数
+                        if episode_start == 1:
+                            total_episode = '全' + str(episode_num) + '集'
+                        else:
+                            if str(episode_start) == str(episode_start + episode_num - 1):
+                                total_episode = '第' + str(episode_start) + '集'
+                            else:
+                                total_episode = '第' + str(episode_start) + '-' + str(
+                                    episode_start + episode_num - 1) + '集'
+                    if get_video_info_success:
+                        self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))
+                        video_format = output[0]
+                        video_codec = output[1]
+                        bit_depth = output[2]
+                        hdr_format = output[3]
+                        frame_rate = output[4]
+                        audio_codec = output[5]
+                        channels = output[6]
+                    source = self.sourcePlaylet.currentText()
+                    team = self.teamPlaylet.currentText()
+                    type += self.typePlaylet.currentText()
+                    print("收费类型、来源和小组参数获取成功")
+                    self.debugBrowserPlaylet.append("收费类型、来源和小组参数获取成功")
+                    category = self.get_category()
+                    print('类型为：' + category)
+                    self.debugBrowserPlaylet.append('类型为：' + category)
+                    main_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                       audio_codec,
+                                                       channels, team, "", season_number, total_episode, type, category,
+                                                       "", "main_title_playlet")
+                    main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
+                    print(main_title)
+                    second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                         audio_codec, channels, team, "", season_number, total_episode,
+                                                         type,
+                                                         category, "", "second_title_playlet")
+                    print("SecondTitle" + second_title)
+                    # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
+                    file_name = get_name_from_example(en_title, original_title, season, '??', year, video_format,
+                                                      source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                      audio_codec, channels, team, "", season_number, total_episode,
+                                                      type,
+                                                      category, "", "file_name_playlet")
+                    file_name = file_name.replace(' ', '.')
+                    file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
+                    if second_confirm_file_name:
+                        text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
+                                                        QLineEdit.EchoMode.Normal, file_name)
+                        if ok:
+                            print(f'您确认文件名为: {text}')
+                            self.debugBrowserPlaylet.append(f'您确认文件名为: {text}')
+                            file_name = text
+                        else:
+                            print('您点了取消确认，重命名已取消')
+                            self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
+                            return
                     if is_filename_too_long(file_name):
-                        widget = QWidget(self)
-                        QMessageBox.warning(widget, '警告',
-                                            '您输入的文件名过长，请重新核对后再生成标准命名！')
-                        self.debugBrowserPlaylet.append('您输入的文件名过长，请重新核对后再生成标准命名！')
-                        return
-                print("FileName" + file_name)
-                self.mainTitleBrowserPlaylet.setText(main_title)
-                self.secondTitleBrowserPlaylet.setText(second_title)
-                self.fileNameBrowserPlaylet.setText(file_name)
-                if rename_file:
-                    print("对文件重新命名")
-                    self.debugBrowserPlaylet.append("开始对文件重新命名")
-                    i = episode_start
-                    for video_file in video_files:
-                        e = str(i)
-                        while len(e) < len(str(episode_start + episode_num - 1)):
-                            e = '0' + e
-                        if len(e) == 1:
-                            e = '0' + e
-                        rename_file_success, output = rename_file_with_same_extension(video_file,
-                                                                                      file_name.replace('??', e))
+                        text, ok = QInputDialog.getText(self, '警告',
+                                                        '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal,
+                                                        file_name)
+                        if ok:
+                            print(f'您修改文件名为: {text}')
+                            self.debugBrowserPlaylet.append(f'您修改文件名为: {text}')
+                            file_name = text
+                        else:
+                            print('您点了取消确认，重命名已取消')
+                            self.debugBrowserPlaylet.append('您点了取消确认，重命名已取消')
+                            return
+                        if is_filename_too_long(file_name):
+                            widget = QWidget(self)
+                            QMessageBox.warning(widget, '警告',
+                                                '您输入的文件名过长，请重新核对后再生成标准命名！')
+                            self.debugBrowserPlaylet.append('您输入的文件名过长，请重新核对后再生成标准命名！')
+                            return
+                    print("FileName" + file_name)
+                    self.mainTitleBrowserPlaylet.setText(main_title)
+                    self.secondTitleBrowserPlaylet.setText(second_title)
+                    self.fileNameBrowserPlaylet.setText(file_name)
+                    if rename_file:
+                        print("对文件重新命名")
+                        self.debugBrowserPlaylet.append("开始对文件重新命名")
+                        i = episode_start
+                        for video_file in video_files:
+                            e = str(i)
+                            while len(e) < len(str(episode_start + episode_num - 1)):
+                                e = '0' + e
+                            if len(e) == 1:
+                                e = '0' + e
+                            rename_file_success, output = rename_file_with_same_extension(video_file,
+                                                                                          file_name.replace('??', e))
 
-                        if rename_file_success:
+                            if rename_file_success:
+                                self.videoPathPlaylet.setText(output)
+                                video_path = output
+                                self.debugBrowserPlaylet.append("视频成功重新命名为：" + video_path)
+                            else:
+                                self.debugBrowserPlaylet.append("重命名失败：" + output)
+                            i += 1
+
+                        print("对文件夹重新命名")
+                        self.debugBrowserPlaylet.append("开始对文件夹重新命名")
+                        rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
+                                                                            replace('E??', '').
+                                                                            replace('??', ''))
+                        if rename_directory_success:
                             self.videoPathPlaylet.setText(output)
                             video_path = output
-                            self.debugBrowserPlaylet.append("视频成功重新命名为：" + video_path)
+                            self.debugBrowserPlaylet.append("视频地址成功重新命名为：" + video_path)
                         else:
                             self.debugBrowserPlaylet.append("重命名失败：" + output)
-                        i += 1
-
-                    print("对文件夹重新命名")
-                    self.debugBrowserPlaylet.append("开始对文件夹重新命名")
-                    rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
-                                                                        replace('E??', '').
-                                                                        replace('??', ''))
-                    if rename_directory_success:
-                        self.videoPathPlaylet.setText(output)
-                        video_path = output
-                        self.debugBrowserPlaylet.append("视频地址成功重新命名为：" + video_path)
-                    else:
-                        self.debugBrowserPlaylet.append("重命名失败：" + output)
+                else:
+                    self.debugBrowserPlaylet.append("您的视频文件路径有误")
             else:
-                self.debugBrowserPlaylet.append("您的视频文件路径有误")
-        else:
-            self.debugBrowserPlaylet.append('获取中文名失败')
+                self.debugBrowserPlaylet.append('获取中文名失败')
+        except Exception as e:
+            print(f"获取命名出错：{e}")
+            return False, [f"获取命名出错：{e}"]
 
     def make_torrent_button_playlet_clicked(self):
         is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 视频资源的路径
@@ -1513,6 +1553,45 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserPlaylet.append("成功制作种子：" + response)
         else:
             self.debugBrowserPlaylet.append("制作种子失败：" + response)
+
+    def get_category(self):
+        category = ''
+        if self.checkBox_0.isChecked():
+            category += '剧情 '
+        if self.checkBox_1.isChecked():
+            category += '爱情 '
+        if self.checkBox_2.isChecked():
+            category += '喜剧 '
+        if self.checkBox_3.isChecked():
+            category += '甜虐 '
+        if self.checkBox_4.isChecked():
+            category += '甜宠 '
+        if self.checkBox_5.isChecked():
+            category += '恐怖 '
+        if self.checkBox_6.isChecked():
+            category += '动作 '
+        if self.checkBox_7.isChecked():
+            category += '穿越 '
+        if self.checkBox_8.isChecked():
+            category += '重生 '
+        if self.checkBox_9.isChecked():
+            category += '逆袭 '
+        if self.checkBox_10.isChecked():
+            category += '科幻 '
+        if self.checkBox_11.isChecked():
+            category += '武侠 '
+        if self.checkBox_12.isChecked():
+            category += '都市 '
+        if self.checkBox_13.isChecked():
+            category += '古装 '
+        if self.checkBox_14.isChecked():
+            category += '神豪 '
+        if self.checkBox_15.isChecked():
+            category += '霸总 '
+        if category != "":
+            category = category[: -1]
+            category = category.replace(' ', ' / ')
+        return category
 
     # 以上是Playlet页面的代码
     # 以下是Settings页面的代码

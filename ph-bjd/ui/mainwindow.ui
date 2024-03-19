@@ -159,7 +159,7 @@
                        </font>
                       </property>
                       <property name="text">
-                       <string>输入豆瓣、IMDb等资源链接</string>
+                       <string>输入豆瓣、IMDb等资源链接:</string>
                       </property>
                      </widget>
                     </item>
@@ -200,7 +200,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>来源：</string>
+                         <string>来源:</string>
                         </property>
                        </widget>
                       </item>
@@ -224,7 +224,7 @@
                          </font>
                         </property>
                         <property name="text">
-                         <string>小组：</string>
+                         <string>小组:</string>
                         </property>
                        </widget>
                       </item>
@@ -264,7 +264,7 @@
                      </font>
                     </property>
                     <property name="text">
-                     <string>资源路径：</string>
+                     <string>资源路径:</string>
                     </property>
                    </widget>
                   </item>
@@ -650,7 +650,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>主标题：</string>
+                   <string>主标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -682,7 +682,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>副标题：</string>
+                   <string>副标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -714,7 +714,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>文件名：</string>
+                   <string>文件名:</string>
                   </property>
                  </widget>
                 </item>
@@ -1094,7 +1094,7 @@ QPushButton:pressed {
                            </font>
                           </property>
                           <property name="text">
-                           <string>输入豆瓣、IMDb等资源链接</string>
+                           <string>输入豆瓣、IMDb等资源链接:</string>
                           </property>
                          </widget>
                         </item>
@@ -1139,7 +1139,7 @@ QPushButton:pressed {
                          </font>
                         </property>
                         <property name="text">
-                         <string>季数：</string>
+                         <string>季数:</string>
                         </property>
                        </widget>
                       </item>
@@ -1183,7 +1183,7 @@ QPushButton:pressed {
                          </font>
                         </property>
                         <property name="text">
-                         <string>开始于：</string>
+                         <string>开始于:</string>
                         </property>
                        </widget>
                       </item>
@@ -1243,7 +1243,7 @@ QPushButton:pressed {
                          </font>
                         </property>
                         <property name="text">
-                         <string>来源：</string>
+                         <string>来源:</string>
                         </property>
                        </widget>
                       </item>
@@ -1267,7 +1267,7 @@ QPushButton:pressed {
                          </font>
                         </property>
                         <property name="text">
-                         <string>小组：</string>
+                         <string>小组:</string>
                         </property>
                        </widget>
                       </item>
@@ -1307,7 +1307,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>资源路径：</string>
+                     <string>资源路径:</string>
                     </property>
                    </widget>
                   </item>
@@ -1652,7 +1652,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>主标题：</string>
+                   <string>主标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -1684,7 +1684,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>副标题：</string>
+                   <string>副标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -1716,7 +1716,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>文件名：</string>
+                   <string>文件名:</string>
                   </property>
                  </widget>
                 </item>
@@ -2072,17 +2072,17 @@ QPushButton:pressed {
                   <item>
                    <widget class="QLabel" name="label_8">
                     <property name="text">
-                     <string>中文名称：</string>
+                     <string>资源名称:</string>
                     </property>
                    </widget>
                   </item>
                   <item>
-                   <widget class="QLineEdit" name="chineseNameEditPlaylet"/>
+                   <widget class="QLineEdit" name="originalNameEditPlaylet"/>
                   </item>
                   <item>
                    <widget class="QLabel" name="label_9">
                     <property name="text">
-                     <string>发布年份：</string>
+                     <string>发布年份:</string>
                     </property>
                    </widget>
                   </item>
@@ -2093,22 +2093,6 @@ QPushButton:pressed {
                     </property>
                    </widget>
                   </item>
-                 </layout>
-                </item>
-                <item>
-                 <layout class="QHBoxLayout" name="horizontalLayout_12">
-                  <property name="leftMargin">
-                   <number>5</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>5</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>5</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>5</number>
-                  </property>
                   <item>
                    <widget class="QLabel" name="label_18">
                     <property name="font">
@@ -2118,7 +2102,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>季数：</string>
+                     <string>季数:</string>
                     </property>
                    </widget>
                   </item>
@@ -2138,7 +2122,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>开始于：</string>
+                     <string>开始于:</string>
                     </property>
                    </widget>
                   </item>
@@ -2165,10 +2149,26 @@ QPushButton:pressed {
                     </property>
                    </widget>
                   </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
                   <item>
                    <widget class="QLabel" name="label_19">
                     <property name="text">
-                     <string>类型：</string>
+                     <string>类型:</string>
                     </property>
                    </widget>
                   </item>
@@ -2180,6 +2180,109 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QLabel" name="label_33">
+                    <property name="text">
+                     <string>产地:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="areaPlaylet">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>大陆</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>港台</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>欧美</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>日本</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>韩国</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>印度</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_32">
+                    <property name="text">
+                     <string>语言:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="languagePlaylet">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                    <item>
+                     <property name="text">
+                      <string>国语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>粤语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>英语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>法语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>德语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>韩语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string>日语</string>
+                     </property>
+                    </item>
+                    <item>
+                     <property name="text">
+                      <string/>
+                     </property>
+                    </item>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QLabel" name="label_20">
                     <property name="font">
                      <font>
@@ -2188,7 +2291,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>来源：</string>
+                     <string>来源:</string>
                     </property>
                    </widget>
                   </item>
@@ -2208,7 +2311,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>小组：</string>
+                     <string>小组:</string>
                     </property>
                    </widget>
                   </item>
@@ -2244,7 +2347,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>资源路径：</string>
+                     <string>资源路径:</string>
                     </property>
                    </widget>
                   </item>
@@ -2368,7 +2471,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>封面路径：</string>
+                     <string>封面路径:</string>
                     </property>
                    </widget>
                   </item>
@@ -2532,6 +2635,13 @@ QPushButton:pressed {
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_7">
+                    <property name="text">
+                     <string>穿越</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </item>
                 <item>
@@ -2548,13 +2658,6 @@ QPushButton:pressed {
                   <property name="bottomMargin">
                    <number>5</number>
                   </property>
-                  <item>
-                   <widget class="QCheckBox" name="checkBox_7">
-                    <property name="text">
-                     <string>穿越</string>
-                    </property>
-                   </widget>
-                  </item>
                   <item>
                    <widget class="QCheckBox" name="checkBox_8">
                     <property name="text">
@@ -2597,6 +2700,20 @@ QPushButton:pressed {
                     </property>
                    </widget>
                   </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_14">
+                    <property name="text">
+                     <string>神豪</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_15">
+                    <property name="text">
+                     <string>霸总</string>
+                    </property>
+                   </widget>
+                  </item>
                  </layout>
                 </item>
                </layout>
@@ -2632,7 +2749,48 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="introBrowserPlaylet"/>
+                 <widget class="QTextEdit" name="descriptionBrowserPlaylet"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="getDescriptionButtonPlaylet">
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton {
+    display: inline-block;
+    padding: 6px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #16bf9d,
+                                      stop:1 #10a266);
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #11b998,
+                                      stop:1 #08965e);
+}
+
+QPushButton:pressed {
+    background-color: 
+				qlineargradient(x1:0, y1:0, x2:0, y2:1,
+                                      stop:0 #0e9278,
+                                      stop:1 #0e925c);
+}
+</string>
+                  </property>
+                  <property name="text">
+                   <string>获取</string>
+                  </property>
+                 </widget>
                 </item>
                </layout>
               </item>
@@ -2802,7 +2960,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>主标题：</string>
+                   <string>主标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -2834,7 +2992,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>副标题：</string>
+                   <string>副标题:</string>
                   </property>
                  </widget>
                 </item>
@@ -2866,7 +3024,7 @@ QPushButton:pressed {
                    </font>
                   </property>
                   <property name="text">
-                   <string>文件名：</string>
+                   <string>文件名:</string>
                   </property>
                  </widget>
                 </item>
