@@ -2267,12 +2267,12 @@ QPushButton:pressed {
                     </item>
                     <item>
                      <property name="text">
-                      <string>韩语</string>
+                      <string>日语</string>
                      </property>
                     </item>
                     <item>
                      <property name="text">
-                      <string>日语</string>
+                      <string>韩语</string>
                      </property>
                     </item>
                     <item>
