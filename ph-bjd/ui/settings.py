@@ -232,7 +232,7 @@ class Ui_Settings(object):
         self.horizontalLayout_11.addWidget(self.label_13)
         self.rows = QtWidgets.QSpinBox(parent=self.tab)
         self.rows.setMinimum(1)
-        self.rows.setMaximum(9)
+        self.rows.setMaximum(6)
         self.rows.setProperty("value", 4)
         self.rows.setObjectName("rows")
         self.horizontalLayout_11.addWidget(self.rows)
@@ -241,7 +241,7 @@ class Ui_Settings(object):
         self.horizontalLayout_11.addWidget(self.label_14)
         self.cols = QtWidgets.QSpinBox(parent=self.tab)
         self.cols.setMinimum(1)
-        self.cols.setMaximum(9)
+        self.cols.setMaximum(6)
         self.cols.setProperty("value", 4)
         self.cols.setObjectName("cols")
         self.horizontalLayout_11.addWidget(self.cols)
@@ -273,10 +273,9 @@ class Ui_Settings(object):
         self.label_9.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_9.setObjectName("label_9")
         self.verticalLayout.addWidget(self.label_9)
-        self.label_11 = QtWidgets.QLabel(parent=self.tab)
-        self.label_11.setMaximumSize(QtCore.QSize(16777215, 220))
-        self.label_11.setObjectName("label_11")
-        self.verticalLayout.addWidget(self.label_11)
+        self.textBrowser = QtWidgets.QTextBrowser(parent=self.tab)
+        self.textBrowser.setObjectName("textBrowser")
+        self.verticalLayout.addWidget(self.textBrowser)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
@@ -629,7 +628,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_6.setText(_translate("Settings", "图床api地址："))
+        self.label_6.setText(_translate("Settings", "图床Api地址："))
         self.pictureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -676,7 +675,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_7.setText(_translate("Settings", "图床api密钥："))
+        self.label_7.setText(_translate("Settings", "图床Api密钥："))
         self.pictureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1272,41 +1271,24 @@ class Ui_Settings(object):
 ""))
         self.secondConfirmFileName.setText(_translate("Settings", "二次确认文件名"))
         self.label_9.setText(_translate("Settings", "说明"))
-        self.label_11.setStyleSheet(_translate("Settings", "QPushButton {\n"
-"    display: inline-block;\n"
-"    padding: 5px 5px;\n"
-"    font-size: 16px;\n"
-"    cursor: pointer;\n"
-"    text-align: center;\n"
-"    text-decoration: none;\n"
-"    outline: none;\n"
-"    color:#fff;\n"
-"    background-color: #559e24;\n"
-"    border: none;\n"
-"    border-radius: 15px;\n"
-"    box-shadow: 0 9px #999;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"background-color: #4a8821;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: #3c6f1b;\n"
-"}\n"
-""))
-        self.label_11.setText(_translate("Settings", "截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。\n"
-"关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，过大会导致截图数量不足。\n"
-"截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。\n"
-"截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。\n"
-"对文件夹处理时仅获取其中第一个视频的参数信息，并仅对文件夹重命名。\n"
-"制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。\n"
-"一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。\n"
-"文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。\n"
-"目前支持的免费图床：\n"
-"https://freeimage.host/\n"
-"https://imgbb.com/\n"
-"图床的api地址和密钥请到图床主页获取。"))
+        self.textBrowser.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"hr { height: 1px; border-width: 0; }\n"
+"li.unchecked::marker { content: \"\\2610\"; }\n"
+"li.checked::marker { content: \"\\2612\"; }\n"
+"</style></head><body style=\" font-family:\'Microsoft YaHei UI\'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，数量不足会随机截图。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。</p>\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">目前支持的免费图床： <span style=\" color:#0000ff;\">https://freeimage.host/ https://imgbb.com/</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">图床的Api地址和密钥请到图床主页获取。</p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Settings", "常规"))
         self.label_15.setText(_translate("Settings", "主标题："))
         self.mainTitleMovie.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))

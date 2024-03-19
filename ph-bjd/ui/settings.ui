@@ -163,7 +163,7 @@ QPushButton:pressed {
 </string>
              </property>
              <property name="text">
-              <string>图床api地址：</string>
+              <string>图床Api地址：</string>
              </property>
             </widget>
            </item>
@@ -246,7 +246,7 @@ QPushButton:pressed {
 </string>
              </property>
              <property name="text">
-              <string>图床api密钥：</string>
+              <string>图床Api密钥：</string>
              </property>
             </widget>
            </item>
@@ -1096,7 +1096,7 @@ QPushButton:pressed {
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>9</number>
+              <number>6</number>
              </property>
              <property name="value">
               <number>4</number>
@@ -1166,7 +1166,7 @@ QPushButton:pressed {
               <number>1</number>
              </property>
              <property name="maximum">
-              <number>9</number>
+              <number>6</number>
              </property>
              <property name="value">
               <number>4</number>
@@ -1350,51 +1350,26 @@ QPushButton:pressed {
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="label_11">
-           <property name="maximumSize">
-            <size>
-             <width>16777215</width>
-             <height>220</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string>QPushButton {
-    display: inline-block;
-    padding: 5px 5px;
-    font-size: 16px;
-    cursor: pointer;
-    text-align: center;
-    text-decoration: none;
-    outline: none;
-    color:#fff;
-    background-color: #559e24;
-    border: none;
-    border-radius: 15px;
-    box-shadow: 0 9px #999;
-}
-
-QPushButton:hover {
-background-color: #4a8821;
-}
-
-QPushButton:pressed {
-    background-color: #3c6f1b;
-}
-</string>
-           </property>
-           <property name="text">
-            <string>截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。
-关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，过大会导致截图数量不足。
-截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。
-截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。
-对文件夹处理时仅获取其中第一个视频的参数信息，并仅对文件夹重命名。
-制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。
-一键启动请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。
-文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。
-目前支持的免费图床：
-https://freeimage.host/
-https://imgbb.com/
-图床的api地址和密钥请到图床主页获取。</string>
+          <widget class="QTextBrowser" name="textBrowser">
+           <property name="html">
+            <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;meta charset=&quot;utf-8&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+hr { height: 1px; border-width: 0; }
+li.unchecked::marker { content: &quot;\2610&quot;; }
+li.checked::marker { content: &quot;\2612&quot;; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Microsoft YaHei UI'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图数量最多5个，图片越多、视频越高清速度越慢，请耐心等待。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，数量不足会随机截图。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。&lt;/p&gt;
+&lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;目前支持的免费图床： &lt;span style=&quot; color:#0000ff;&quot;&gt;https://freeimage.host/ https://imgbb.com/&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;图床的Api地址和密钥请到图床主页获取。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
