@@ -56,6 +56,8 @@ def get_media_info(file_path):
                 ]:
                     value = track[key][0] if isinstance(track.get(key), list) else track.get(key)
                     if value is not None:
+                        if label == "Complete name":
+                            value = os.path.basename(value)  # 用于只保留影片文件名，去除路径
                         output += f"{label:36}: {value}\n"
 
             elif track["track_type"] == "Video":
@@ -193,7 +195,7 @@ def get_media_info(file_path):
                         output += f"{timestamp:36} : {value}\n"
 
         if get_settings("media_info_suffix"):
-            output += "\nCreated by ph-bjd"
+            output += "\nCreated by Publish Helper"
 
         return True, output
 

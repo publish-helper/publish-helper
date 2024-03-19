@@ -162,7 +162,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             source)
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
-        self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板")
+        self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         if get_settings("open_auto_feed_link"):
             webbrowser.open(auto_feed_link)
 
@@ -178,7 +178,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
             return
         print("尝试启动pt_gen_thread")
-        self.debugBrowserMovie.append("尝试启动pt_gen_thread")
+        self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_movie_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
@@ -351,7 +351,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
-            self.debugBrowserMovie.append("尝试启动pt_gen_thread")
+            self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
             self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
@@ -631,7 +631,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             source)
         self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
-        self.debugBrowserTV.append("auto_feed链接已经复制到剪切板")
+        self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         if get_settings("open_auto_feed_link"):
             webbrowser.open(auto_feed_link)
 
@@ -647,7 +647,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
             return
         print("尝试启动pt_gen_thread")
-        self.debugBrowserTV.append("尝试启动pt_gen_thread")
+        self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_tv_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
@@ -818,7 +818,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
-            self.debugBrowserTV.append("尝试启动pt_gen_thread")
+            self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
             self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
@@ -1157,7 +1157,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             source)
         self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
-        self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板")
+        self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         if get_settings("open_auto_feed_link"):
             webbrowser.open(auto_feed_link)
 
