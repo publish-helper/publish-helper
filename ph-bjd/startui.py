@@ -1179,12 +1179,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 season = self.seasonBoxPlaylet.text()
                 if season != '1':
                     original_title += ' 第' + num_to_chinese(int(season)) + '季'
-                self.descriptionBrowserPlaylet.append('◎片　　名　' + original_title)
+                self.descriptionBrowserPlaylet.append('\n◎片　　名　' + original_title)
                 self.descriptionBrowserPlaylet.append('◎年　　代　' + year)
                 self.descriptionBrowserPlaylet.append('◎产　　地　' + area)
                 self.descriptionBrowserPlaylet.append('◎类　　别　' + category)
                 self.descriptionBrowserPlaylet.append('◎语　　言　' + language)
-                self.descriptionBrowserPlaylet.append('◎简　　介　')
+                self.descriptionBrowserPlaylet.append('◎简　　介　\n')
             else:
                 self.debugBrowserPlaylet.append('您没有填写资源名称！')
         except Exception as e:
