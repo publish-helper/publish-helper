@@ -3,6 +3,7 @@ import glob
 import json
 import os
 import random
+import re
 import shutil
 from tkinter import filedialog, Tk
 
@@ -378,6 +379,13 @@ def chinese_name_to_pinyin(chinese_name):
     return result
 
 
+def natural_keys(text):
+    """
+    alist.sort(key=natural_keys) 使用这个函数作为key来按数字顺序排序文本
+    """
+    return [int(c) if c.isdigit() else c.lower() for c in re.split('(\d+)', text)]
+
+
 def get_video_files(folder_path):
     try:
         # 要查找的视频文件扩展名列表
@@ -397,8 +405,8 @@ def get_video_files(folder_path):
             # 查找匹配的文件并扩展列表
             video_files.extend(glob.glob(pattern))
 
-        # 对文件列表进行排序
-        video_files.sort()
+        # 使用自定义的natural_keys函数进行排序
+        video_files.sort(key=natural_keys)
 
         return True, video_files
 
