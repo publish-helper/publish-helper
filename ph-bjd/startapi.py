@@ -5,8 +5,8 @@ from tool import check_path_and_find_video
 app = Flask(__name__)
 
 
-# 例子
 @app.route('/api/add', methods=['GET'])
+# 例子，用于计算两个数字的和
 def api_add_numbers():
     # 从请求URL中获取两个参数'a'和'b'
     a = request.args.get('a', default=0, type=int)
