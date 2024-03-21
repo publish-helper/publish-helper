@@ -4,7 +4,9 @@
 # KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A
 # PARTICULAR PURPOSE. See the Mulan PSL v2 for more details.
 from startgui import start_ui
+from startapi import app
 
 # bjdbjd
 if __name__ == '__main__':
-    start_ui()
+    # app.run(port=8080, debug=True)  # api
+    start_ui()  # gui

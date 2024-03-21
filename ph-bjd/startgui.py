@@ -354,13 +354,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.mediainfoBrowserMovie.setText("")
         is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            get_media_info_success, mediainfo = get_media_info(video_path)
+            get_media_info_success, media_info = get_media_info(video_path)
             if get_media_info_success:
-                self.mediainfoBrowserMovie.setText(mediainfo)
+                self.mediainfoBrowserMovie.setText(media_info)
                 self.mediainfoBrowserMovie.append('\n')
                 self.debugBrowserMovie.append("成功获取到MediaInfo")
             else:
-                self.debugBrowserMovie.append(mediainfo)
+                self.debugBrowserMovie.append(media_info)
         else:
             self.debugBrowserMovie.append("您的视频文件路径有误")
 
@@ -840,13 +840,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.mediainfoBrowserTV.setText("")
         is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            get_media_info_success, mediainfo = get_media_info(video_path)
+            get_media_info_success, media_info = get_media_info(video_path)
             if get_media_info_success:
-                self.mediainfoBrowserTV.setText(mediainfo)
+                self.mediainfoBrowserTV.setText(media_info)
                 self.mediainfoBrowserTV.append('\n')
                 self.debugBrowserTV.append("成功获取到MediaInfo")
             else:
-                self.debugBrowserTV.append(mediainfo)
+                self.debugBrowserTV.append(media_info)
         else:
             self.debugBrowserTV.append("您的视频文件路径有误")
 
