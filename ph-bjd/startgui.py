@@ -1062,7 +1062,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("SecondTitle" + second_title)
                     file_name = get_name_from_example(en_title, original_title, season, '@@', year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                      audio_codec, '^&*' + channels, team, other_titles, season_number,
+                                                      audio_codec, '^&' + channels, team, other_titles, season_number,
                                                       total_episode,
                                                       "",
                                                       category, actors, "file_name_tv")
@@ -1075,10 +1075,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(file_number_season_name, '.')
                     file_name = file_name.replace(file_roman_season_name, '.')
                     file_name = file_name.replace(file_special_roman_season_name, '.')
-                    file_name = file_name.replace('.^&*', '.')  # 防止声道数量被误杀
+                    file_name = file_name.replace('.^&', '.')  # 防止声道数量被误杀
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
-                                                        '请确认文件名称，如有问题请修改', QLineEdit.EchoMode.Normal,
+                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）', QLineEdit.EchoMode.Normal,
                                                         file_name)
                         if ok:
                             print(f'您确认文件名为: {text}')
@@ -1538,7 +1538,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
-                        text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
+                        text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
                                                         QLineEdit.EchoMode.Normal, file_name)
                         if ok:
                             print(f'您确认文件名为: {text}')
