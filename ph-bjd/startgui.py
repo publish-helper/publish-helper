@@ -894,10 +894,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 lowercase_season_info_with_spaces = ' season ' + season  # 用于后期替换多余的season名称
                 uppercase_season_info_with_spaces = ' Season ' + season  # 用于后期替换多余的Season名称
                 main_title_number_season_name = ' ' + season + ' '  # 用于后期替换主标题多余的数字季名称
-                file_number_season_name = '.' + season + '.'  # 用于后期替换文件名多余的数字季名称
                 main_title_roman_season_name = ' ' + int_to_roman(int(season)) + ' '  # 用于后期替换主标题多余的罗马季名称
                 main_title_special_roman_season_name = ' ' + int_to_special_roman(
                     int(season)) + ' '  # 用于后期替换主标题多余的特殊罗马季名称
+                file_number_season_name = '.' + season + '.'  # 用于后期替换文件名多余的数字季名称
                 file_roman_season_name = '.' + int_to_roman(int(season)) + '.'  # 用于后期替换文件名多余的罗马季名称
                 file_special_roman_season_name = '.' + int_to_special_roman(int(season)) + '.'  # 用于后期替换文件名多余的特殊罗马季名称
                 print('需要替换的内容：',
@@ -1046,11 +1046,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                        channels, team, other_titles, season_number, total_episode, "",
                                                        category,
                                                        actors, "main_title_tv")
-                    main_title = main_title.replace(lowercase_season_info_without_spaces, '')
-                    main_title = main_title.replace(uppercase_season_info_without_spaces, '')
-                    main_title = main_title.replace(lowercase_season_info_with_spaces, '')
-                    main_title = main_title.replace(uppercase_season_info_with_spaces, '')
+                    main_title = main_title.replace(lowercase_season_info_without_spaces, ' ')
+                    main_title = main_title.replace(uppercase_season_info_without_spaces, ' ')
+                    main_title = main_title.replace(lowercase_season_info_with_spaces, ' ')
+                    main_title = main_title.replace(uppercase_season_info_with_spaces, ' ')
                     main_title = main_title.replace('_', ' ')
+                    main_title = main_title.replace(main_title_number_season_name, ' ')
+                    main_title = main_title.replace(main_title_roman_season_name, ' ')
+                    main_title = main_title.replace(main_title_special_roman_season_name, ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
                     second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
@@ -1066,10 +1069,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                       total_episode,
                                                       "",
                                                       category, actors, "file_name_tv")
-                    file_name = file_name.replace(lowercase_season_info_without_spaces, '')
-                    file_name = file_name.replace(uppercase_season_info_without_spaces, '')
-                    file_name = file_name.replace(lowercase_season_info_with_spaces, '')
-                    file_name = file_name.replace(uppercase_season_info_with_spaces, '')
+                    file_name = file_name.replace(lowercase_season_info_without_spaces, '.')
+                    file_name = file_name.replace(uppercase_season_info_without_spaces, '.')
+                    file_name = file_name.replace(lowercase_season_info_with_spaces, '.')
+                    file_name = file_name.replace(uppercase_season_info_with_spaces, '.')
                     file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     file_name = file_name.replace(file_number_season_name, '.')
