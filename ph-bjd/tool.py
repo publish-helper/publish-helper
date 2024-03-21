@@ -140,6 +140,7 @@ def get_settings(parameter_name):
 
 
 def rename_file_with_same_extension(old_name, new_name_without_extension):
+    new_name_without_extension = re.sub(r'[\<\>\:\"\/\\\|\?\*]', '.', new_name_without_extension)
     # 分割原始文件名以获取扩展名和目录
     file_dir, file_base = os.path.split(old_name)
     file_name, file_extension = os.path.splitext(file_base)
@@ -173,6 +174,7 @@ def rename_directory(current_dir, new_name):
     OSError - 如果重命名操作失败。
     """
     try:
+        new_name = re.sub(r'[\<\>\:\"\/\\\|\?\*]', '.', new_name)
         # 检查当前路径是否为一个存在的目录
         if not os.path.isdir(current_dir):
             print("提供的路径不是一个目录或不存在。")
@@ -376,7 +378,24 @@ def chinese_name_to_pinyin(chinese_name):
     for c in s:
         result += c.capitalize()
         result += ' '
+    result = filter_string(result)
+    result = result.replace(' :', ':')
+    result = result.replace('( ', '(')
+    result = result.replace(' )', ')')
+    result = re.sub(r'\s+', ' ', result)  # 将连续的空格变成一个
     return result
+
+
+def filter_string(original_str):
+    # 使用正则表达式匹配允许的字符
+    pattern = r"[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+"
+
+    # 找到所有匹配的字符
+    matches = re.findall(pattern, original_str)
+
+    # 将所有匹配的字符组合成一个新字符串
+    filtered_str = ''.join(matches)
+    return filtered_str
 
 
 def natural_keys(text):

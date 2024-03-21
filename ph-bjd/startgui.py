@@ -503,11 +503,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                       audio_codec, channels, team, other_titles, "", "",
                                                       "",
                                                       category, actors, "file_name_movie")
-                    file_name = file_name.replace(' – ', '.')
-                    file_name = file_name.replace(' - ', '.')
-                    file_name = file_name.replace('_', '.')
-                    file_name = file_name.replace(': ', '.')
-                    file_name = file_name.replace(' ', '.')
+                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
@@ -1016,7 +1012,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                          category, actors, "second_title_tv")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
-                    file_name = get_name_from_example(en_title, original_title, season, '??', year, video_format,
+                    file_name = get_name_from_example(en_title, original_title, season, '@@', year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                                       audio_codec, '^&*' + channels, team, other_titles, season_number,
                                                       total_episode,
@@ -1026,11 +1022,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(uppercase_season_info_without_spaces, '')
                     file_name = file_name.replace(lowercase_season_info_with_spaces, '')
                     file_name = file_name.replace(uppercase_season_info_with_spaces, '')
-                    file_name = file_name.replace(' – ', '.')
-                    file_name = file_name.replace(' - ', '.')
-                    file_name = file_name.replace('_', '.')
-                    file_name = file_name.replace(': ', '.')
-                    file_name = file_name.replace(' ', '.')
+                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     file_name = file_name.replace(file_number_season_name, '.')
                     file_name = file_name.replace(file_roman_season_name, '.')
@@ -1080,7 +1072,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, output = rename_file_with_same_extension(video_file,
-                                                                                          file_name.replace('??', e))
+                                                                                          file_name.replace('@@', e))
                             if rename_file_success:
                                 self.videoPathTV.setText(output)
                                 video_path = output
@@ -1091,8 +1083,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("对文件夹重新命名")
                         self.debugBrowserTV.append("开始对文件夹重新命名")
                         rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
-                                                                            replace('E??', '').
-                                                                            replace('??', ''))
+                                                                            replace('E@@', '').
+                                                                            replace('@@', ''))
                         if rename_directory_success:
                             self.videoPathTV.setText(output)
                             video_path = output
@@ -1463,12 +1455,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                          category, "", "second_title_playlet")
                     print("SecondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                    file_name = get_name_from_example(en_title, original_title, season, '??', year, video_format,
+                    file_name = get_name_from_example(en_title, original_title, season, '@@', year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                                       audio_codec, channels, team, "", season_number, total_episode,
                                                       type,
                                                       category, "", "file_name_playlet")
-                    file_name = file_name.replace(' ', '.')
+                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
@@ -1514,7 +1506,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, output = rename_file_with_same_extension(video_file,
-                                                                                          file_name.replace('??', e))
+                                                                                          file_name.replace('@@', e))
 
                             if rename_file_success:
                                 self.videoPathPlaylet.setText(output)
@@ -1527,8 +1519,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("对文件夹重新命名")
                         self.debugBrowserPlaylet.append("开始对文件夹重新命名")
                         rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
-                                                                            replace('E??', '').
-                                                                            replace('??', ''))
+                                                                            replace('E@@', '').
+                                                                            replace('@@', ''))
                         if rename_directory_success:
                             self.videoPathPlaylet.setText(output)
                             video_path = output
