@@ -69,6 +69,7 @@ def get_settings(parameter_name):
                 "get_thumbnails": "True",
                 "rows": "3",
                 "cols": "3",
+                "delay": "2.0",
                 "auto_upload_screenshot": "True",
                 "paste_screenshot_url": "True",
                 "delete_screenshot": "True",
@@ -107,6 +108,7 @@ def get_settings(parameter_name):
         "get_thumbnails": "True",
         "rows": "3",
         "cols": "3",
+        "delay": "2.0",
         "auto_upload_screenshot": "True",
         "paste_screenshot_url": "True",
         "delete_screenshot": "True",
@@ -343,7 +345,7 @@ def create_torrent(folder_path, torrent_path):
         current_time = datetime.datetime.now()
 
         # 创建 Torrent 对象，添加当前时间作为创建时间
-        t = Torrent(path=folder_path, trackers=['http://tracker.example.com/announce'], created_by='ph-bjd',
+        t = Torrent(path=folder_path, trackers=['http://tracker.example.com/announce'], created_by='Publish Helper',
                     creation_date=current_time)
 
         # 生成和写入 Torrent 文件

@@ -245,6 +245,16 @@ class Ui_Settings(object):
         self.cols.setProperty("value", 4)
         self.cols.setObjectName("cols")
         self.horizontalLayout_11.addWidget(self.cols)
+        self.label_31 = QtWidgets.QLabel(parent=self.tab)
+        self.label_31.setObjectName("label_31")
+        self.horizontalLayout_11.addWidget(self.label_31)
+        self.delay = QtWidgets.QDoubleSpinBox(parent=self.tab)
+        self.delay.setDecimals(1)
+        self.delay.setMaximum(10.0)
+        self.delay.setSingleStep(0.1)
+        self.delay.setProperty("value", 2.0)
+        self.delay.setObjectName("delay")
+        self.horizontalLayout_11.addWidget(self.delay)
         self.verticalLayout.addLayout(self.horizontalLayout_11)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setContentsMargins(5, 5, 5, 5)
@@ -1174,6 +1184,53 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
+        self.label_31.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_31.setText(_translate("Settings", "上传延迟(s):"))
+        self.delay.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
         self.label_10.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1282,6 +1339,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，数量不足会随机截图。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">如果发现生成的缩略图位置不在最后，请适当增大上传延迟。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。</p>\n"

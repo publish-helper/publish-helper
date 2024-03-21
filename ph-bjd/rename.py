@@ -61,10 +61,6 @@ def extract_details_from_ptgen(data):
                 actors.append(cleaned_actor.group())
                 if len(actors) == 5:  # 提取前五个演员后停止
                     break
-    special_characters = r'\/:*?"<>|'
-    for char in special_characters:
-        original_name = original_name.replace(char, '_')
-        english_name = english_name.replace(char, "_")
     if '◎语　　言' in category:
         category = "暂无分类"
     print("原始名称:", original_name)

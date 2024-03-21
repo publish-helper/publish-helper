@@ -1173,6 +1173,79 @@ QPushButton:pressed {
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_31">
+             <property name="styleSheet">
+              <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+             </property>
+             <property name="text">
+              <string>上传延迟(s):</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QDoubleSpinBox" name="delay">
+             <property name="styleSheet">
+              <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+             </property>
+             <property name="decimals">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <double>10.000000000000000</double>
+             </property>
+             <property name="singleStep">
+              <double>0.100000000000000</double>
+             </property>
+             <property name="value">
+              <double>2.000000000000000</double>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
          <item>
@@ -1363,6 +1436,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，数量不足会随机截图。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果发现生成的缩略图位置不在最后，请适当增大上传延迟。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。&lt;/p&gt;

@@ -234,52 +234,77 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserMovie.append("开始自动上传截图到图床" + picture_bed_path)
                     self.pictureUrlBrowserMovie.setText("")
                     if len(res) > 0:
-                        self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
-                                                                          False)
-                        self.upload_picture_thread0.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 1:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
+                                                                              False, False)
+                        self.upload_picture_thread0.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
-                        if get_thumbnails and len(res) == 2:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程0")
                     if len(res) > 1:
-                        self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
-                                                                          False)
-                        self.upload_picture_thread1.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 2:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, False)
+                        self.upload_picture_thread1.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread1.start()  # 启动线程
-                        if get_thumbnails and len(res) == 3:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程1")
                     if len(res) > 2:
-                        self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token, res[2],
-                                                                          False)
-                        self.upload_picture_thread2.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 3:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, False)
+                        self.upload_picture_thread2.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread2.start()  # 启动线程
-                        if get_thumbnails and len(res) == 4:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程2")
                     if len(res) > 3:
-                        self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token, res[3],
-                                                                          False)
-                        self.upload_picture_thread3.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 4:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, False)
+                        self.upload_picture_thread3.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread3.start()  # 启动线程
-                        if get_thumbnails and len(res) == 5:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程3")
                     if len(res) > 4:
-                        self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token, res[4],
-                                                                          False)
-                        self.upload_picture_thread4.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 5:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, False)
+                        self.upload_picture_thread4.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
-                        if get_thumbnails and len(res) == 6:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程4")
                     if len(res) > 5:
-                        self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token, res[5],
-                                                                          False)
-                        self.upload_picture_thread5.result_signal.connect(
-                            self.handle_upload_picture_movie_result)  # 连接信号
+                        if get_thumbnails and len(res) == 6:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, False)
+                        self.upload_picture_thread5.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
-                    print("上传图床线程启动")
+                        print("启动线程5")
+                    print("上传图床线程全部启动")
                     self.debugBrowserMovie.append("上传图床线程启动，请耐心等待图床Api的响应...")
 
                 else:
@@ -297,7 +322,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def handle_upload_picture_movie_result(self, upload_success, api_response, screenshot_path):
         # 这个函数用于处理上传的结果，它将在主线程中被调用
         # 更新UI，显示上传结果等
-        print("接受到线程请求的结果")
         self.debugBrowserMovie.append("接受到线程请求的结果")
         if upload_success:
             self.pictureUrlBrowserMovie.append(api_response)
@@ -700,54 +724,78 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserTV.append("开始自动上传截图到图床" + picture_bed_path)
                     self.pictureUrlBrowserTV.setText("")
                     if len(res) > 0:
-                        self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
-                                                                          False)
-                        self.upload_picture_thread0.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 1:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
+                                                                              False, False)
+                        self.upload_picture_thread0.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
-                        if get_thumbnails and len(res) == 2:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程0")
                     if len(res) > 1:
-                        self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
-                                                                          False)
-                        self.upload_picture_thread1.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 2:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, False)
+                        self.upload_picture_thread1.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread1.start()  # 启动线程
-                        if get_thumbnails and len(res) == 3:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程1")
                     if len(res) > 2:
-                        self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token, res[2],
-                                                                          False)
-                        self.upload_picture_thread2.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 3:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, False)
+                        self.upload_picture_thread2.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread2.start()  # 启动线程
-                        if get_thumbnails and len(res) == 4:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程2")
                     if len(res) > 3:
-                        self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token, res[3],
-                                                                          False)
-                        self.upload_picture_thread3.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 4:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, False)
+                        self.upload_picture_thread3.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread3.start()  # 启动线程
-                        if get_thumbnails and len(res) == 5:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程3")
                     if len(res) > 4:
-                        self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token, res[4],
-                                                                          False)
-                        self.upload_picture_thread4.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 5:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, False)
+                        self.upload_picture_thread4.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
-                        if get_thumbnails and len(res) == 6:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程4")
                     if len(res) > 5:
-                        self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token, res[5],
-                                                                          False)
-                        self.upload_picture_thread5.result_signal.connect(
-                            self.handle_upload_picture_tv_result)  # 连接信号
+                        if get_thumbnails and len(res) == 6:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, False)
+                        self.upload_picture_thread5.result_signal.connect(self.handle_upload_picture_tv_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
-                    print("上传图床线程启动")
+                        print("启动线程5")
+                    print("上传图床线程全部启动")
                     self.debugBrowserTV.append("上传图床线程启动，请耐心等待图床Api的响应...")
-
                 else:
                     self.debugBrowserTV.append("未选择自动上传图床功能，图片已储存在本地")
                     output = ""
@@ -1191,7 +1239,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             picture_bed_token = get_settings("picture_bed_token")  # 图床Token
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path)
 
-            self.upload_cover_thread = UploadPictureThread(picture_bed_path, picture_bed_token, cover_path, True)
+            self.upload_cover_thread = UploadPictureThread(picture_bed_path, picture_bed_token, cover_path, True, False)
             self.upload_cover_thread.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
             self.upload_cover_thread.start()  # 启动线程
             print("上传图床线程启动")
@@ -1234,55 +1282,81 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
-                    self.debugBrowserPlaylet.append("开始自动上传截图到图床" + picture_bed_path)
+                    print("开始自动上传截图到图床：" + picture_bed_path)
+                    self.debugBrowserPlaylet.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserPlaylet.setText("")
                     if len(res) > 0:
-                        self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
-                                                                          False)
-                        self.upload_picture_thread0.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 1:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
+                                                                              False, False)
+                        self.upload_picture_thread0.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
-                        if get_thumbnails and len(res) == 2:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程0")
                     if len(res) > 1:
-                        self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token, res[1],
-                                                                          False)
-                        self.upload_picture_thread1.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 2:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[1],
+                                                                              False, False)
+                        self.upload_picture_thread1.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread1.start()  # 启动线程
-                        if get_thumbnails and len(res) == 3:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程1")
                     if len(res) > 2:
-                        self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token, res[2],
-                                                                          False)
-                        self.upload_picture_thread2.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 3:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[2],
+                                                                              False, False)
+                        self.upload_picture_thread2.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread2.start()  # 启动线程
-                        if get_thumbnails and len(res) == 4:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程2")
                     if len(res) > 3:
-                        self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token, res[3],
-                                                                          False)
-                        self.upload_picture_thread3.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 4:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[3],
+                                                                              False, False)
+                        self.upload_picture_thread3.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread3.start()  # 启动线程
-                        if get_thumbnails and len(res) == 5:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程3")
                     if len(res) > 4:
-                        self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token, res[4],
-                                                                          False)
-                        self.upload_picture_thread4.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 5:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[4],
+                                                                              False, False)
+                        self.upload_picture_thread4.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
-                        if get_thumbnails and len(res) == 6:
-                            time.sleep(1)  # 等待 1000 毫秒
+                        print("启动线程4")
                     if len(res) > 5:
-                        self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token, res[5],
-                                                                          False)
-                        self.upload_picture_thread5.result_signal.connect(
-                            self.handle_upload_picture_playlet_result)  # 连接信号
+                        if get_thumbnails and len(res) == 6:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, True)
+                        else:
+                            self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[5],
+                                                                              False, False)
+                        self.upload_picture_thread5.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
-                    print("上传图床线程启动")
+                        print("启动线程5")
+                    print("上传图床线程全部启动")
                     self.debugBrowserPlaylet.append("上传图床线程启动，请耐心等待图床Api的响应...")
 
                 else:
@@ -1300,7 +1374,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def handle_upload_picture_playlet_result(self, upload_success, api_response, screenshot_path, is_cover):
         # 这个函数用于处理上传的结果，它将在主线程中被调用
         # 更新UI，显示上传结果等
-        print('is_cover', is_cover)
+        print('is_cover ', is_cover)
         print("接受到线程请求的结果")
         self.debugBrowserPlaylet.append("接受到线程请求的结果")
         if upload_success:
@@ -1317,14 +1391,15 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.descriptionBrowserPlaylet.append(api_response)
                     self.debugBrowserPlaylet.append("成功将图片链接粘贴到简介后")
             if delete_screenshot:
-                if os.path.exists(screenshot_path):
-                    # 删除文件
-                    os.remove(screenshot_path)
-                    print(f"文件 {screenshot_path} 已被删除。")
-                    self.debugBrowserPlaylet.append(f"文件 {screenshot_path} 已被删除。")
-                else:
-                    print(f"文件 {screenshot_path} 不存在。")
-                    self.debugBrowserPlaylet.append(f"文件 {screenshot_path} 不存在。")
+                if not is_cover:
+                    if os.path.exists(screenshot_path):
+                        # 删除文件
+                        os.remove(screenshot_path)
+                        print(f"文件 {screenshot_path} 已被删除。")
+                        self.debugBrowserPlaylet.append(f"文件 {screenshot_path} 已被删除。")
+                    else:
+                        print(f"文件 {screenshot_path} 不存在。")
+                        self.debugBrowserPlaylet.append(f"文件 {screenshot_path} 不存在。")
         else:
             self.debugBrowserPlaylet.append("图床响应无效：" + api_response)
 
@@ -1638,6 +1713,7 @@ class settings(QDialog, Ui_Settings):
         self.getThumbnails.setChecked(bool(get_settings("get_thumbnails")))
         self.rows.setValue(int(get_settings("rows")))
         self.cols.setValue(int(get_settings("cols")))
+        self.delay.setValue(float(get_settings("delay")))
         self.autoUploadScreenshot.setChecked(bool(get_settings("auto_upload_screenshot")))
         self.pasteScreenshotUrl.setChecked(bool(get_settings("paste_screenshot_url")))
         self.deleteScreenshot.setChecked(bool(get_settings("delete_screenshot")))
@@ -1673,6 +1749,7 @@ class settings(QDialog, Ui_Settings):
             update_settings("get_thumbnails", "")
         update_settings("rows", str(self.rows.text()))
         update_settings("cols", str(self.cols.text()))
+        update_settings("delay", str(self.delay.text()))
         if self.autoUploadScreenshot.isChecked():
             update_settings("auto_upload_screenshot", "True")
         else:
@@ -1746,29 +1823,32 @@ class GetPtGenThread(QThread):
 
 class UploadPictureThread(QThread):
     # 创建一个信号，用于在数据处理完毕后与主线程通信
-    result_signal = pyqtSignal(bool, str, str, bool)
+    result_signal = pyqtSignal(bool, str, str, bool, bool)
 
-    def __init__(self, picture_bed_path, picture_bed_token, screenshot_path, is_cover):
+    def __init__(self, picture_bed_path, picture_bed_token, screenshot_path, is_cover, is_thumbnails):
         super().__init__()
         self.picture_bed_path = picture_bed_path
         self.picture_bed_token = picture_bed_token
         self.screenshot_path = screenshot_path
         self.is_cover = is_cover
+        self.is_thumbnails = is_thumbnails
+        print("上传图床初始化完成111")
 
     def run(self):
         try:
+            if self.is_thumbnails:
+                time.sleep(float(get_settings("delay")))  # 等待
             # 这里放置耗时的HTTP请求操作
             upload_success, api_response = upload_screenshot(self.picture_bed_path, self.picture_bed_token,
                                                              self.screenshot_path)
 
             # 发送信号，包括请求的结果
             print("上传图床成功，开始返回结果")
-            self.result_signal.emit(upload_success, api_response, self.screenshot_path, self.is_cover)
+            self.result_signal.emit(upload_success, api_response, self.screenshot_path, self.is_cover, self.is_thumbnails)
             print("返回结果成功")
-            # self.result_signal(upload_success,api_response)
         except Exception as e:
             print(f"异常发生: {e}")
-            self.result_signal.emit(False, f"异常发生: {e}", self.screenshot_path, self.is_cover)
+            self.result_signal.emit(False, f"异常发生: {e}", self.screenshot_path)
             # 这里可以发射一个包含错误信息的信号
 
 
