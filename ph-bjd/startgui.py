@@ -151,14 +151,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def auto_feed_button_movie_clicked(self):
         mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
-        mian_title = self.mainTitleBrowserMovie.toPlainText()
-        second_title = self.secondTitleBrowserMovie.toPlainText()
-        description = self.ptGenBrowserMovie.toPlainText()
-        media_info = self.mediainfoBrowserMovie.toPlainText()
-        file_name = self.fileNameBrowserMovie.toPlainText()
-        type = "电影"
-        team = self.teamMovie.currentText()
-        source = self.sourceMovie.currentText()
+        mian_title += self.mainTitleBrowserMovie.toPlainText()
+        second_title += self.secondTitleBrowserMovie.toPlainText()
+        description += self.ptGenBrowserMovie.toPlainText()
+        media_info += self.mediainfoBrowserMovie.toPlainText()
+        file_name += self.fileNameBrowserMovie.toPlainText()
+        type += "电影"
+        team += self.teamMovie.currentText()
+        source += self.sourceMovie.currentText()
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
                                             source)
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
