@@ -91,7 +91,7 @@ def api_get_screenshot():
                     "screenshotNumber": str(screenshot_number),
                     "screenshotPath": screenshot_path
                 },
-                "message": "获取截图成功"  # 提示信息
+                "message": "获取截图成功。"  # 提示信息
             })
         else:
             return jsonify({

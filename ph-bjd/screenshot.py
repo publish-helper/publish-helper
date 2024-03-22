@@ -25,7 +25,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
         return False, ["路径已存在，且不是目录。"]
     except Exception as e:
         print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}"]
+        return False, [f"创建目录时出错：{e}。"]
 
     try:
         # 加载视频
@@ -92,7 +92,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
             return True, extracted_images
     except Exception as e:
         print(f"截图出错：{e}")
-        return False, [f"截图出错：{e}"]
+        return False, [f"截图出错：{e}。"]
 
 
 def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screenshot_end):
