@@ -14,7 +14,7 @@ from mediainfo import get_media_info
 from picturebed import upload_screenshot
 from ptgen import fetch_and_format_ptgen_data
 from rename import extract_details_from_ptgen, get_video_info, get_name_from_example
-from screenshot import extract_complex_keyframes, get_thumbnail
+from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
@@ -231,9 +231,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                     screenshot_threshold, screenshot_start,
-                                                                     screenshot_end, min_interval_pct=0.01)
+            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+                                                          screenshot_threshold, screenshot_start,
+                                                          screenshot_end, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
             if get_thumbnails:
@@ -549,7 +549,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                       audio_codec, channels, team, other_titles, "", "",
                                                       "",
                                                       category, actors, "file_name_movie")
-                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
+                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
@@ -728,9 +728,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                     screenshot_threshold, screenshot_start,
-                                                                     screenshot_end, min_interval_pct=0.01)
+            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+                                                          screenshot_threshold, screenshot_start,
+                                                          screenshot_end, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
             if get_thumbnails:
@@ -1096,7 +1096,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace(uppercase_season_info_without_spaces, '.')
                     file_name = file_name.replace(lowercase_season_info_with_spaces, '.')
                     file_name = file_name.replace(uppercase_season_info_with_spaces, '.')
-                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
+                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     file_name = file_name.replace(file_number_season_name, '.')
                     file_name = file_name.replace(file_roman_season_name, '.')
@@ -1294,9 +1294,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = extract_complex_keyframes(video_path, screenshot_path, screenshot_number,
-                                                                     screenshot_threshold, screenshot_start,
-                                                                     screenshot_end, min_interval_pct=0.01)
+            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+                                                          screenshot_threshold, screenshot_start,
+                                                          screenshot_end, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
             if get_thumbnails:
@@ -1395,11 +1395,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
                 else:
                     self.debugBrowserPlaylet.append("未选择自动上传图床功能，图片已储存在本地")
-                    output = ""
+                    screenshot_path = ""
                     for r in res:
-                        output += r
-                        output += '\n'
-                    self.pictureUrlBrowserMovie.setText(output)
+                        screenshot_path += r
+                        screenshot_path += '\n'
+                    self.pictureUrlBrowserMovie.setText(screenshot_path)
             else:
                 self.debugBrowserPlaylet.append("截图失败" + str(res))
         else:
@@ -1569,7 +1569,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                       audio_codec, channels, team, "", season_number, total_episode,
                                                       type,
                                                       category, "", "file_name_playlet")
-                    file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
+                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',

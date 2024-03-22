@@ -7,15 +7,15 @@ import numpy as np
 from tool import generate_image_filename
 
 
-# 参数：video_path：源视频路径；output_path：输出图片路径；screenshot_number：截图的总数量；start_pct：截图的起始帧占比，避免截取黑帧；
-# end_pct：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval_pct：最小帧间隔占比，避免连续截图；
-# picture_threshold：参数，用于判断关键帧的复杂程度，数字越大越复杂，不宜过大，否则可能会导致截图数量不够
-def extract_complex_keyframes(video_path, output_path, screenshot_number, picture_threshold, start_pct, end_pct,
-                              min_interval_pct=0.01):
+# 参数：video_path：源视频路径；screenshot_path：输出图片路径；screenshot_number：截图的总数量；screenshot_start：截图的起始帧占比，避免截取黑帧；
+# screenshot_end：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval：最小帧间隔占比，避免连续截图；
+# screenshot_threshold：参数，用于判断关键帧的复杂程度，数字越大越复杂，不宜过大，否则可能会导致截图数量不够
+def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_threshold, screenshot_start, screenshot_end,
+                   screenshot_min_interval=0.01):
     # 确保输出路径存在
     try:
-        if not os.path.exists(output_path):
-            os.makedirs(output_path)
+        if not os.path.exists(screenshot_path):
+            os.makedirs(screenshot_path)
             print("已创建输出路径")
     except PermissionError:
         print("权限不足，无法创建目录。")
@@ -40,14 +40,14 @@ def extract_complex_keyframes(video_path, output_path, screenshot_number, pictur
             print("加载视频成功")
 
             # 计算起止时间帧编号
-            start_frame = int(total_frames * start_pct)
-            end_frame = int(total_frames * end_pct)
-            min_interval = duration * min_interval_pct
-            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(min_interval))
+            start_frame = int(total_frames * screenshot_start)
+            end_frame = int(total_frames * screenshot_end)
+            screenshot_min_interval = duration * screenshot_min_interval
+            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(screenshot_min_interval))
 
             # 初始化变量
             extracted_images = []
-            last_keyframe_time = -min_interval
+            last_keyframe_time = -screenshot_min_interval
 
             # 生成随机时间戳
             timestamps = sorted(random.sample(range(start_frame, end_frame), screenshot_number))
@@ -60,12 +60,12 @@ def extract_complex_keyframes(video_path, output_path, screenshot_number, pictur
                     continue
 
                 current_time = timestamp / fps
-                if current_time >= last_keyframe_time + min_interval:
+                if current_time >= last_keyframe_time + screenshot_min_interval:
                     std_dev = np.std(frame)
                     print(f"Frame ID: {timestamp}, Timestamp: {current_time}, Std Dev: {std_dev}")  # 调试信息
 
-                    if std_dev > picture_threshold:
-                        frame_path = generate_image_filename(output_path)
+                    if std_dev > screenshot_threshold:
+                        frame_path = generate_image_filename(screenshot_path)
                         cv2.imwrite(frame_path, frame)
                         extracted_images.append(frame_path)
                         last_keyframe_time = current_time
@@ -74,7 +74,7 @@ def extract_complex_keyframes(video_path, output_path, screenshot_number, pictur
                         timestamp = random.sample(range(start_frame, end_frame), 1)[0]
                         cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                         ret, frame = cap.read()
-                        frame_path = generate_image_filename(output_path)
+                        frame_path = generate_image_filename(screenshot_path)
                         cv2.imwrite(frame_path, frame)
                         extracted_images.append(frame_path)
                 else:
@@ -82,7 +82,7 @@ def extract_complex_keyframes(video_path, output_path, screenshot_number, pictur
                     timestamp = random.sample(range(start_frame, end_frame), 1)[0]
                     cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                     ret, frame = cap.read()
-                    frame_path = generate_image_filename(output_path)
+                    frame_path = generate_image_filename(screenshot_path)
                     cv2.imwrite(frame_path, frame)
                     extracted_images.append(frame_path)
 
@@ -95,7 +95,7 @@ def extract_complex_keyframes(video_path, output_path, screenshot_number, pictur
         return False, [f"截图出错：{e}"]
 
 
-def get_thumbnail(video_path, output_path, cols, rows, start_pct, end_pct):
+def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screenshot_end):
     try:
         if not os.path.exists(output_path):
             os.makedirs(output_path)
@@ -119,8 +119,8 @@ def get_thumbnail(video_path, output_path, cols, rows, start_pct, end_pct):
         total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
 
         # 计算开始和结束帧
-        start_frame = int(total_frames * start_pct)
-        end_frame = int(total_frames * end_pct)
+        start_frame = int(total_frames * screenshot_start)
+        end_frame = int(total_frames * screenshot_end)
 
         # 计算每张截取图像的时间间隔
         interval = (end_frame - start_frame) // (rows * cols)
