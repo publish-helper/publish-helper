@@ -15,11 +15,11 @@ from picturebed import upload_screenshot
 from ptgen import fetch_and_format_ptgen_data
 from rename import extract_details_from_ptgen, get_video_info, get_name_from_example
 from screenshot import extract_complex_keyframes, get_thumbnail
+from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese
-from startapi import api, run_api
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
