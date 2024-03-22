@@ -1781,9 +1781,9 @@ class settings(QDialog, Ui_Settings):
         update_settings("screenshot_start_percentage", str(self.screenshotStartPercentage.text()))
         update_settings("screenshot_end_percentage", str(self.screenshotEndPercentage.text()))
         if self.doGetThumbnail.isChecked():
-            update_settings("get_thumbnail", "True")
+            update_settings("do_get_thumbnail", "True")
         else:
-            update_settings("get_thumbnail", "")
+            update_settings("do_get_thumbnail", "")
         update_settings("thumbnail_rows", str(self.thumbnailRows.text()))
         update_settings("thumbnail_cols", str(self.thumbnailCols.text()))
         update_settings("thumbnail_delay", str(self.thumbnailDelay.text()))

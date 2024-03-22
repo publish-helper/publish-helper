@@ -34,6 +34,7 @@ def agsv_picture_bed(api_url, api_token, frame_path):
 
     # 将响应文本转换为字典
     try:
+        print(str(res.text))
         api_response = json.loads(res.text)
     except json.JSONDecodeError:
         print("响应不是有效的JSON格式")
