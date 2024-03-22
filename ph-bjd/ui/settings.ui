@@ -163,7 +163,7 @@ QPushButton:pressed {
 </string>
              </property>
              <property name="text">
-              <string>图床Api地址:</string>
+              <string>图床API地址:</string>
              </property>
             </widget>
            </item>
@@ -246,7 +246,7 @@ QPushButton:pressed {
 </string>
              </property>
              <property name="text">
-              <string>图床Api密钥:</string>
+              <string>图床API密钥:</string>
              </property>
             </widget>
            </item>
@@ -1402,6 +1402,99 @@ QPushButton:pressed {
           </layout>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_27">
+           <property name="leftMargin">
+            <number>5</number>
+           </property>
+           <property name="topMargin">
+            <number>5</number>
+           </property>
+           <property name="rightMargin">
+            <number>5</number>
+           </property>
+           <property name="bottomMargin">
+            <number>5</number>
+           </property>
+           <item>
+            <widget class="QCheckBox" name="enableApi">
+             <property name="text">
+              <string>启用API功能（更改后需要重启软件生效）</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_32">
+             <property name="styleSheet">
+              <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+             </property>
+             <property name="text">
+              <string>监听端口（1-65535）:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSpinBox" name="apiPort">
+             <property name="styleSheet">
+              <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>65535</number>
+             </property>
+             <property name="value">
+              <number>5372</number>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <widget class="QLabel" name="label_9">
            <property name="maximumSize">
             <size>
@@ -1443,7 +1536,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。&lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;目前支持的免费图床： &lt;span style=&quot; color:#0000ff;&quot;&gt;https://freeimage.host/ https://imgbb.com/&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;图床的Api地址和密钥请到图床主页获取。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;图床的API地址和密钥请到图床主页获取。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>

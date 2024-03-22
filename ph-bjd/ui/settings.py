@@ -275,6 +275,22 @@ class Ui_Settings(object):
         self.secondConfirmFileName.setObjectName("secondConfirmFileName")
         self.horizontalLayout_10.addWidget(self.secondConfirmFileName)
         self.verticalLayout.addLayout(self.horizontalLayout_10)
+        self.horizontalLayout_27 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_27.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_27.setObjectName("horizontalLayout_27")
+        self.enableApi = QtWidgets.QCheckBox(parent=self.tab)
+        self.enableApi.setObjectName("enableApi")
+        self.horizontalLayout_27.addWidget(self.enableApi)
+        self.label_32 = QtWidgets.QLabel(parent=self.tab)
+        self.label_32.setObjectName("label_32")
+        self.horizontalLayout_27.addWidget(self.label_32)
+        self.apiPort = QtWidgets.QSpinBox(parent=self.tab)
+        self.apiPort.setMinimum(1)
+        self.apiPort.setMaximum(65535)
+        self.apiPort.setProperty("value", 5372)
+        self.apiPort.setObjectName("apiPort")
+        self.horizontalLayout_27.addWidget(self.apiPort)
+        self.verticalLayout.addLayout(self.horizontalLayout_27)
         self.label_9 = QtWidgets.QLabel(parent=self.tab)
         self.label_9.setMaximumSize(QtCore.QSize(16777215, 20))
         font = QtGui.QFont()
@@ -638,7 +654,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_6.setText(_translate("Settings", "图床Api地址:"))
+        self.label_6.setText(_translate("Settings", "图床API地址:"))
         self.pictureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -685,7 +701,7 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_7.setText(_translate("Settings", "图床Api密钥:"))
+        self.label_7.setText(_translate("Settings", "图床API密钥:"))
         self.pictureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1327,6 +1343,54 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.secondConfirmFileName.setText(_translate("Settings", "二次确认文件名"))
+        self.enableApi.setText(_translate("Settings", "启用API功能（更改后需要重启软件生效）"))
+        self.label_32.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_32.setText(_translate("Settings", "监听端口（1-65535）:"))
+        self.apiPort.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
         self.label_9.setText(_translate("Settings", "说明"))
         self.textBrowser.setHtml(_translate("Settings", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><meta charset=\"utf-8\" /><style type=\"text/css\">\n"
@@ -1346,7 +1410,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">文件越大制作种子越慢，可查看任务管理器获取程序运行情况，资源路径可以直接复制文件粘贴到文本框中。</p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">目前支持的免费图床： <span style=\" color:#0000ff;\">https://freeimage.host/ https://imgbb.com/</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">图床的Api地址和密钥请到图床主页获取。</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">图床的API地址和密钥请到图床主页获取。</p></body></html>"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Settings", "常规"))
         self.label_15.setText(_translate("Settings", "主标题:"))
         self.mainTitleMovie.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))

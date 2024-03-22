@@ -19,17 +19,18 @@ from tool import update_settings, get_settings, get_video_file_path, rename_file
     move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese
+from startapi import api, run_api
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
 
-def start_ui():
-    app = QApplication(sys.argv)
+def start():
+    gui = QApplication(sys.argv)
     my_mainwindow = mainwindow()
     my_ico = QIcon("static/ph-bjd.ico")
     my_mainwindow.setWindowIcon(my_ico)
     my_mainwindow.show()
-    sys.exit(app.exec())
+    sys.exit(gui.exec())
 
 
 def git_clicked():
@@ -53,6 +54,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.upload_picture_thread5 = None
         self.upload_cover_thread = None
         self.make_torrent_thread = None
+        self.api_thread = None
 
         # 初始化
         self.videoPathMovie.setDragEnabled(True)
@@ -103,7 +105,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         # 初始化成功
         self.debugBrowserMovie.append(
-            "程序初始化成功，使用前请查看设置中的说明！\n制作不易，如有帮助请帮忙点亮仓库的Star！\n地址：https://github.com/bjdbjd/publish-helper")
+            "程序初始化成功，使用前请查看设置中的说明！制作不易，如有帮助请帮忙点亮仓库的Star！\n地址：https://github.com/bjdbjd/publish-helper")
+
+        if get_settings("enable_api"):
+            self.run_api_thread()
 
     def initialize_team_combobox(self):
         team_names = load_names('static/team.json', 'team')
@@ -130,6 +135,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         my_ico = QIcon("static/ph-bjd.ico")
         self.my_settings.setWindowIcon(my_ico)
         self.my_settings.show()  # 加上self避免页面一闪而过
+
+    def run_api_thread(self):
+        self.debugBrowserMovie.append("您选择启用API功能，正在尝试启动api_thread")
+        self.api_thread = apiThread()
+        self.api_thread.result_signal.connect(self.handle_run_api_result)  # 连接信号
+        self.api_thread.start()  # 启动线程
+        self.debugBrowserMovie.append("api_thread启动成功，监听端口：" + str(get_settings("api_port")))
+
+    def handle_run_api_result(self, response):
+        self.debugBrowserMovie.append(response)
 
     # 以下是Movie页面的代码
 
@@ -235,13 +250,15 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.pictureUrlBrowserMovie.setText("")
                     if len(res) > 0:
                         if get_thumbnails and len(res) == 1:
-                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
                                                                               False, True)
                         else:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[0],
                                                                               False, False)
-                        self.upload_picture_thread0.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread0.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
                         print("启动线程0")
                     if len(res) > 1:
@@ -253,7 +270,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[1],
                                                                               False, False)
-                        self.upload_picture_thread1.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread1.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread1.start()  # 启动线程
                         print("启动线程1")
                     if len(res) > 2:
@@ -265,7 +283,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[2],
                                                                               False, False)
-                        self.upload_picture_thread2.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread2.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread2.start()  # 启动线程
                         print("启动线程2")
                     if len(res) > 3:
@@ -277,7 +296,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[3],
                                                                               False, False)
-                        self.upload_picture_thread3.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread3.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread3.start()  # 启动线程
                         print("启动线程3")
                     if len(res) > 4:
@@ -289,7 +309,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[4],
                                                                               False, False)
-                        self.upload_picture_thread4.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread4.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
                         print("启动线程4")
                     if len(res) > 5:
@@ -301,7 +322,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[5],
                                                                               False, False)
-                        self.upload_picture_thread5.result_signal.connect(self.handle_upload_picture_movie_result)  # 连接信号
+                        self.upload_picture_thread5.result_signal.connect(
+                            self.handle_upload_picture_movie_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
                         print("启动线程5")
                     print("上传图床线程全部启动")
@@ -725,7 +747,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.pictureUrlBrowserTV.setText("")
                     if len(res) > 0:
                         if get_thumbnails and len(res) == 1:
-                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
                                                                               False, True)
                         else:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
@@ -1081,7 +1104,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = file_name.replace('.^&', '.')  # 防止声道数量被误杀
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
-                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）', QLineEdit.EchoMode.Normal,
+                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
+                                                        QLineEdit.EchoMode.Normal,
                                                         file_name)
                         if ok:
                             print(f'您确认文件名为: {text}')
@@ -1290,13 +1314,15 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.pictureUrlBrowserPlaylet.setText("")
                     if len(res) > 0:
                         if get_thumbnails and len(res) == 1:
-                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token, res[0],
+                            self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
+                                                                              res[0],
                                                                               False, True)
                         else:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[0],
                                                                               False, False)
-                        self.upload_picture_thread0.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread0.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread0.start()  # 启动线程
                         print("启动线程0")
                     if len(res) > 1:
@@ -1308,7 +1334,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[1],
                                                                               False, False)
-                        self.upload_picture_thread1.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread1.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread1.start()  # 启动线程
                         print("启动线程1")
                     if len(res) > 2:
@@ -1320,7 +1347,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[2],
                                                                               False, False)
-                        self.upload_picture_thread2.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread2.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread2.start()  # 启动线程
                         print("启动线程2")
                     if len(res) > 3:
@@ -1332,7 +1360,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[3],
                                                                               False, False)
-                        self.upload_picture_thread3.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread3.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread3.start()  # 启动线程
                         print("启动线程3")
                     if len(res) > 4:
@@ -1344,7 +1373,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[4],
                                                                               False, False)
-                        self.upload_picture_thread4.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread4.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread4.start()  # 启动线程
                         print("启动线程4")
                     if len(res) > 5:
@@ -1356,7 +1386,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[5],
                                                                               False, False)
-                        self.upload_picture_thread5.result_signal.connect(self.handle_upload_picture_playlet_result)  # 连接信号
+                        self.upload_picture_thread5.result_signal.connect(
+                            self.handle_upload_picture_playlet_result)  # 连接信号
                         self.upload_picture_thread5.start()  # 启动线程
                         print("启动线程5")
                     print("上传图床线程全部启动")
@@ -1541,7 +1572,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     file_name = re.sub(r'[\<\>\:\"\/\\\|\?\*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
-                        text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
+                        text, ok = QInputDialog.getText(self, '确认',
+                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
                                                         QLineEdit.EchoMode.Normal, file_name)
                         if ok:
                             print(f'您确认文件名为: {text}')
@@ -1724,6 +1756,8 @@ class settings(QDialog, Ui_Settings):
         self.makeDir.setChecked(bool(get_settings("make_dir")))
         self.renameFile.setChecked(bool(get_settings("rename_file")))
         self.secondConfirmFileName.setChecked(bool(get_settings("second_confirm_file_name")))
+        self.enableApi.setChecked(bool(get_settings("enable_api")))
+        self.apiPort.setValue(int(get_settings("api_port")))
         self.mainTitleMovie.setText(str(get_settings("main_title_movie")))
         self.secondTitleMovie.setText(str(get_settings("second_title_movie")))
         self.fileNameMovie.setText(str(get_settings("file_name_movie")))
@@ -1781,6 +1815,11 @@ class settings(QDialog, Ui_Settings):
             update_settings("second_confirm_file_name", "True")
         else:
             update_settings("second_confirm_file_name", "")
+        if self.enableApi.isChecked():
+            update_settings("enable_api", "True")
+        else:
+            update_settings("enable_api", "")
+        update_settings("api_port", self.apiPort.text())
         update_settings("main_title_movie", self.mainTitleMovie.text())
         update_settings("second_title_movie", self.secondTitleMovie.text())
         update_settings("file_name_movie", self.fileNameMovie.text())
@@ -1847,7 +1886,8 @@ class UploadPictureThread(QThread):
 
             # 发送信号，包括请求的结果
             print("上传图床成功，开始返回结果")
-            self.result_signal.emit(upload_success, api_response, self.screenshot_path, self.is_cover, self.is_thumbnails)
+            self.result_signal.emit(upload_success, api_response, self.screenshot_path, self.is_cover,
+                                    self.is_thumbnails)
             print("返回结果成功")
         except Exception as e:
             print(f"异常发生: {e}")
@@ -1877,3 +1917,21 @@ class MakeTorrentThread(QThread):
         except Exception as e:
             print(f"异常发生: {e}")
             # 这里可以发射一个包含错误信息的信号
+
+
+class apiThread(QThread):
+    # 创建一个信号，用于在数据处理完毕后与主线程通信
+    result_signal = pyqtSignal(str)
+
+    def __init__(self):
+        super().__init__()
+
+    def run(self):
+        try:
+            print("尝试启动API")
+            run_api()
+            print("API线程终止")
+            self.result_signal.emit("API线程终止")
+        except Exception as e:
+            print(f"异常发生: {e}")
+            self.result_signal.emit(f"异常发生: {e}")
