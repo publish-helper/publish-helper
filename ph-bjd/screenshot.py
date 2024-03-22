@@ -95,10 +95,10 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
         return False, [f"截图出错：{e}。"]
 
 
-def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screenshot_end):
+def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, screenshot_start, screenshot_end):
     try:
-        if not os.path.exists(output_path):
-            os.makedirs(output_path)
+        if not os.path.exists(screenshot_path):
+            os.makedirs(screenshot_path)
             print("已创建输出路径")
     except PermissionError:
         print("权限不足，无法创建目录。")
@@ -123,11 +123,11 @@ def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screens
         end_frame = int(total_frames * screenshot_end)
 
         # 计算每张截取图像的时间间隔
-        interval = (end_frame - start_frame) // (rows * cols)
+        interval = (end_frame - start_frame) // (thumbnail_rows * thumbnail_cols)
 
         images = []
 
-        for i in range((rows * cols)):
+        for i in range((thumbnail_rows * thumbnail_cols)):
             frame_number = start_frame + i * interval
             if frame_number >= end_frame:
                 break
@@ -141,18 +141,18 @@ def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screens
             images.append(frame)
 
         # 处理图像数量小于预期的情况
-        if len(images) < (rows * cols):
-            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {rows * cols} 张")
+        if len(images) < (thumbnail_rows * thumbnail_cols):
+            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_rows * thumbnail_cols} 张")
 
-        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / cols, fy=1.0 / cols) for image in images]
+        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_cols, fy=1.0 / thumbnail_cols) for image in images]
 
         border_size = 5
-        concatenated_image = np.ones((rows * (resized_images[0].shape[0] + 2 * border_size),
-                                      cols * (resized_images[0].shape[1] + 2 * border_size), 3), dtype=np.uint8) * 255
+        concatenated_image = np.ones((thumbnail_rows * (resized_images[0].shape[0] + 2 * border_size),
+                                      thumbnail_cols * (resized_images[0].shape[1] + 2 * border_size), 3), dtype=np.uint8) * 255
 
-        for i in range(rows):
-            for j in range(cols):
-                index = i * cols + j
+        for i in range(thumbnail_rows):
+            for j in range(thumbnail_cols):
+                index = i * thumbnail_cols + j
                 if index >= len(resized_images):
                     break
                 y_offset = i * (resized_images[0].shape[0] + 2 * border_size) + border_size
@@ -161,7 +161,7 @@ def get_thumbnail(video_path, output_path, cols, rows, screenshot_start, screens
                 concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
                 x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
 
-        sv_path = generate_image_filename(output_path)
+        sv_path = generate_image_filename(screenshot_path)
         cv2.imwrite(sv_path, concatenated_image)
 
     except Exception as e:

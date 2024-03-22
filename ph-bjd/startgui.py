@@ -184,7 +184,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_pt_gen_button_movie_clicked(self):
         self.ptGenBrowserMovie.setText("")
-        pt_gen_path = get_settings("pt_gen_path")
+        pt_gen_path = get_settings("pt_gen_api_url")
         pt_gen_url = self.ptGenUrlMovie.text()
 
         if pt_gen_url == "":
@@ -218,28 +218,28 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserMovie.append("获取视频" + video_path + "的截图")
             screenshot_path = get_settings("screenshot_path")  # 截图储存路径
-            picture_bed_path = get_settings("picture_bed_path")  # 图床地址
-            picture_bed_token = get_settings("picture_bed_token")  # 图床Token
+            picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
+            picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
             screenshot_threshold = float(get_settings("screenshot_threshold"))
-            screenshot_start = float(get_settings("screenshot_start"))
-            screenshot_end = float(get_settings("screenshot_end"))
-            get_thumbnails = bool(get_settings("get_thumbnails"))
-            rows = int(get_settings("rows"))
-            cols = int(get_settings("cols"))
+            screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+            screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+            do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
+            rows = int(get_settings("thumbnail_rows"))
+            cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
             screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
-                                                          screenshot_threshold, screenshot_start,
-                                                          screenshot_end, screenshot_min_interval=0.01)
+                                                          screenshot_threshold, screenshot_start_percentage,
+                                                          screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
-            if get_thumbnails:
-                get_thumbnails_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                                screenshot_start, screenshot_end)
-                if get_thumbnails_success:
+            if do_get_thumbnail:
+                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
+                                                               screenshot_start_percentage, screenshot_end_percentage)
+                if get_thumbnail_success:
                     res.append(sv_path)
             if screenshot_success:
                 res = response + res
@@ -249,7 +249,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserMovie.append("开始自动上传截图到图床" + picture_bed_path)
                     self.pictureUrlBrowserMovie.setText("")
                     if len(res) > 0:
-                        if get_thumbnails and len(res) == 1:
+                        if do_get_thumbnail and len(res) == 1:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[0],
                                                                               False, True)
@@ -262,7 +262,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.start()  # 启动线程
                         print("启动线程0")
                     if len(res) > 1:
-                        if get_thumbnails and len(res) == 2:
+                        if do_get_thumbnail and len(res) == 2:
                             self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[1],
                                                                               False, True)
@@ -275,7 +275,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread1.start()  # 启动线程
                         print("启动线程1")
                     if len(res) > 2:
-                        if get_thumbnails and len(res) == 3:
+                        if do_get_thumbnail and len(res) == 3:
                             self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[2],
                                                                               False, True)
@@ -288,7 +288,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread2.start()  # 启动线程
                         print("启动线程2")
                     if len(res) > 3:
-                        if get_thumbnails and len(res) == 4:
+                        if do_get_thumbnail and len(res) == 4:
                             self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[3],
                                                                               False, True)
@@ -301,7 +301,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread3.start()  # 启动线程
                         print("启动线程3")
                     if len(res) > 4:
-                        if get_thumbnails and len(res) == 5:
+                        if do_get_thumbnail and len(res) == 5:
                             self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[4],
                                                                               False, True)
@@ -314,7 +314,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread4.start()  # 启动线程
                         print("启动线程4")
                     if len(res) > 5:
-                        if get_thumbnails and len(res) == 6:
+                        if do_get_thumbnail and len(res) == 6:
                             self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[5],
                                                                               False, True)
@@ -389,7 +389,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def get_name_button_movie_clicked(self):
         try:
             self.ptGenBrowserMovie.setText("")
-            pt_gen_path = get_settings("pt_gen_path")
+            pt_gen_path = get_settings("pt_gen_api_url")
             pt_gen_url = self.ptGenUrlMovie.text()
             if pt_gen_url == "":
                 self.debugBrowserMovie.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
@@ -680,7 +680,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_pt_gen_button_tv_clicked(self):
         self.ptGenBrowserTV.setText("")
-        pt_gen_path = get_settings("pt_gen_path")
+        pt_gen_path = get_settings("pt_gen_api_url")
         pt_gen_url = self.ptGenUrlTV.text()
 
         if pt_gen_url == "":
@@ -715,28 +715,28 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserTV.append("获取视频" + video_path + "的截图")
             screenshot_path = get_settings("screenshot_path")  # 截图储存路径
-            picture_bed_path = get_settings("picture_bed_path")  # 图床地址
-            picture_bed_token = get_settings("picture_bed_token")  # 图床Token
+            picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
+            picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
             screenshot_threshold = float(get_settings("screenshot_threshold"))
-            screenshot_start = float(get_settings("screenshot_start"))
-            screenshot_end = float(get_settings("screenshot_end"))
-            get_thumbnails = bool(get_settings("get_thumbnails"))
-            rows = int(get_settings("rows"))
-            cols = int(get_settings("cols"))
+            screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+            screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+            do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
+            rows = int(get_settings("thumbnail_rows"))
+            cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
             screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
-                                                          screenshot_threshold, screenshot_start,
-                                                          screenshot_end, screenshot_min_interval=0.01)
+                                                          screenshot_threshold, screenshot_start_percentage,
+                                                          screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
-            if get_thumbnails:
-                get_thumbnails_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                                screenshot_start, screenshot_end)
-                if get_thumbnails_success:
+            if do_get_thumbnail:
+                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
+                                                               screenshot_start_percentage, screenshot_end_percentage)
+                if get_thumbnail_success:
                     res.append(sv_path)
             if screenshot_success:
                 res = response + res
@@ -746,7 +746,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserTV.append("开始自动上传截图到图床" + picture_bed_path)
                     self.pictureUrlBrowserTV.setText("")
                     if len(res) > 0:
-                        if get_thumbnails and len(res) == 1:
+                        if do_get_thumbnail and len(res) == 1:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[0],
                                                                               False, True)
@@ -758,7 +758,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.start()  # 启动线程
                         print("启动线程0")
                     if len(res) > 1:
-                        if get_thumbnails and len(res) == 2:
+                        if do_get_thumbnail and len(res) == 2:
                             self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[1],
                                                                               False, True)
@@ -770,7 +770,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread1.start()  # 启动线程
                         print("启动线程1")
                     if len(res) > 2:
-                        if get_thumbnails and len(res) == 3:
+                        if do_get_thumbnail and len(res) == 3:
                             self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[2],
                                                                               False, True)
@@ -782,7 +782,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread2.start()  # 启动线程
                         print("启动线程2")
                     if len(res) > 3:
-                        if get_thumbnails and len(res) == 4:
+                        if do_get_thumbnail and len(res) == 4:
                             self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[3],
                                                                               False, True)
@@ -794,7 +794,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread3.start()  # 启动线程
                         print("启动线程3")
                     if len(res) > 4:
-                        if get_thumbnails and len(res) == 5:
+                        if do_get_thumbnail and len(res) == 5:
                             self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[4],
                                                                               False, True)
@@ -806,7 +806,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread4.start()  # 启动线程
                         print("启动线程4")
                     if len(res) > 5:
-                        if get_thumbnails and len(res) == 6:
+                        if do_get_thumbnail and len(res) == 6:
                             self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[5],
                                                                               False, True)
@@ -876,7 +876,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def get_name_button_tv_clicked(self):
         try:
             self.ptGenBrowserTV.setText("")
-            pt_gen_path = get_settings("pt_gen_path")
+            pt_gen_path = get_settings("pt_gen_api_url")
             pt_gen_url = self.ptGenUrlTV.text()
 
             if pt_gen_url == "":
@@ -1262,8 +1262,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         cover_path = self.coverPathPlaylet.text()
         if cover_path and cover_path != '':
             self.debugBrowserPlaylet.append("上传封面" + cover_path)
-            picture_bed_path = get_settings("picture_bed_path")  # 图床地址
-            picture_bed_token = get_settings("picture_bed_token")  # 图床Token
+            picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
+            picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path)
 
             self.upload_cover_thread = UploadPictureThread(picture_bed_path, picture_bed_token, cover_path, True, False)
@@ -1281,28 +1281,28 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserPlaylet.append("获取视频" + video_path + "的截图")
             screenshot_path = get_settings("screenshot_path")  # 截图储存路径
-            picture_bed_path = get_settings("picture_bed_path")  # 图床地址
-            picture_bed_token = get_settings("picture_bed_token")  # 图床Token
+            picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
+            picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
             screenshot_threshold = float(get_settings("screenshot_threshold"))
-            screenshot_start = float(get_settings("screenshot_start"))
-            screenshot_end = float(get_settings("screenshot_end"))
-            get_thumbnails = bool(get_settings("get_thumbnails"))
-            rows = int(get_settings("rows"))
-            cols = int(get_settings("cols"))
+            screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+            screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+            do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
+            rows = int(get_settings("thumbnail_rows"))
+            cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
             screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
-                                                          screenshot_threshold, screenshot_start,
-                                                          screenshot_end, screenshot_min_interval=0.01)
+                                                          screenshot_threshold, screenshot_start_percentage,
+                                                          screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
-            if get_thumbnails:
-                get_thumbnails_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                                screenshot_start, screenshot_end)
-                if get_thumbnails_success:
+            if do_get_thumbnail:
+                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
+                                                               screenshot_start_percentage, screenshot_end_percentage)
+                if get_thumbnail_success:
                     res.append(sv_path)
             if screenshot_success:
                 res = response + res
@@ -1313,7 +1313,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserPlaylet.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserPlaylet.setText("")
                     if len(res) > 0:
-                        if get_thumbnails and len(res) == 1:
+                        if do_get_thumbnail and len(res) == 1:
                             self.upload_picture_thread0 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[0],
                                                                               False, True)
@@ -1326,7 +1326,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread0.start()  # 启动线程
                         print("启动线程0")
                     if len(res) > 1:
-                        if get_thumbnails and len(res) == 2:
+                        if do_get_thumbnail and len(res) == 2:
                             self.upload_picture_thread1 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[1],
                                                                               False, True)
@@ -1339,7 +1339,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread1.start()  # 启动线程
                         print("启动线程1")
                     if len(res) > 2:
-                        if get_thumbnails and len(res) == 3:
+                        if do_get_thumbnail and len(res) == 3:
                             self.upload_picture_thread2 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[2],
                                                                               False, True)
@@ -1352,7 +1352,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread2.start()  # 启动线程
                         print("启动线程2")
                     if len(res) > 3:
-                        if get_thumbnails and len(res) == 4:
+                        if do_get_thumbnail and len(res) == 4:
                             self.upload_picture_thread3 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[3],
                                                                               False, True)
@@ -1365,7 +1365,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread3.start()  # 启动线程
                         print("启动线程3")
                     if len(res) > 4:
-                        if get_thumbnails and len(res) == 5:
+                        if do_get_thumbnail and len(res) == 5:
                             self.upload_picture_thread4 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[4],
                                                                               False, True)
@@ -1378,7 +1378,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.upload_picture_thread4.start()  # 启动线程
                         print("启动线程4")
                     if len(res) > 5:
-                        if get_thumbnails and len(res) == 6:
+                        if do_get_thumbnail and len(res) == 6:
                             self.upload_picture_thread5 = UploadPictureThread(picture_bed_path, picture_bed_token,
                                                                               res[5],
                                                                               False, True)
@@ -1738,17 +1738,17 @@ class settings(QDialog, Ui_Settings):
     def getSettings(self):
         self.screenshotPath.setText(str(get_settings("screenshot_path")))
         self.torrentPath.setText(str(get_settings("torrent_path")))
-        self.ptGenPath.setText(get_settings("pt_gen_path"))
-        self.pictureBedPath.setText(get_settings("picture_bed_path"))
-        self.pictureBedToken.setText(get_settings("picture_bed_token"))
+        self.ptGenApiUrl.setText(get_settings("pt_gen_api_url"))
+        self.pictureBedApiUrl.setText(get_settings("picture_bed_api_url"))
+        self.pictureBedApiToken.setText(get_settings("picture_bed_api_token"))
         self.screenshotNumber.setValue(int(get_settings("screenshot_number")))
         self.screenshotThreshold.setValue(float(get_settings("screenshot_threshold")))
-        self.screenshotStart.setValue(float(get_settings("screenshot_start")))
-        self.screenshotEnd.setValue(float(get_settings("screenshot_end")))
-        self.getThumbnails.setChecked(bool(get_settings("get_thumbnails")))
-        self.rows.setValue(int(get_settings("rows")))
-        self.cols.setValue(int(get_settings("cols")))
-        self.delay.setValue(float(get_settings("delay")))
+        self.screenshotStartPercentage.setValue(float(get_settings("screenshot_start_percentage")))
+        self.screenshotEndPercentage.setValue(float(get_settings("screenshot_end_percentage")))
+        self.doGetThumbnail.setChecked(bool(get_settings("do_get_thumbnail")))
+        self.thumbnailRows.setValue(int(get_settings("thumbnail_rows")))
+        self.thumbnailCols.setValue(int(get_settings("thumbnail_cols")))
+        self.thumbnailDelay.setValue(float(get_settings("thumbnail_delay")))
         self.autoUploadScreenshot.setChecked(bool(get_settings("auto_upload_screenshot")))
         self.pasteScreenshotUrl.setChecked(bool(get_settings("paste_screenshot_url")))
         self.deleteScreenshot.setChecked(bool(get_settings("delete_screenshot")))
@@ -1773,20 +1773,20 @@ class settings(QDialog, Ui_Settings):
     def updateSettings(self):
         update_settings("screenshot_path", self.screenshotPath.text())
         update_settings("torrent_path", self.torrentPath.text())
-        update_settings("pt_gen_path", self.ptGenPath.text())
-        update_settings("picture_bed_path", self.pictureBedPath.text())
-        update_settings("picture_bed_token", self.pictureBedToken.text())
+        update_settings("pt_gen_api_url", self.ptGenApiUrl.text())
+        update_settings("picture_bed_api_url", self.pictureBedApiUrl.text())
+        update_settings("picture_bed_api_token", self.pictureBedApiToken.text())
         update_settings("screenshot_number", str(self.screenshotNumber.text()))
         update_settings("screenshot_threshold", str(self.screenshotThreshold.text()))
-        update_settings("screenshot_start", str(self.screenshotStart.text()))
-        update_settings("screenshot_end", str(self.screenshotEnd.text()))
-        if self.getThumbnails.isChecked():
-            update_settings("get_thumbnails", "True")
+        update_settings("screenshot_start_percentage", str(self.screenshotStartPercentage.text()))
+        update_settings("screenshot_end_percentage", str(self.screenshotEndPercentage.text()))
+        if self.doGetThumbnail.isChecked():
+            update_settings("get_thumbnail", "True")
         else:
-            update_settings("get_thumbnails", "")
-        update_settings("rows", str(self.rows.text()))
-        update_settings("cols", str(self.cols.text()))
-        update_settings("delay", str(self.delay.text()))
+            update_settings("get_thumbnail", "")
+        update_settings("thumbnail_rows", str(self.thumbnailRows.text()))
+        update_settings("thumbnail_cols", str(self.thumbnailCols.text()))
+        update_settings("thumbnail_delay", str(self.thumbnailDelay.text()))
         if self.autoUploadScreenshot.isChecked():
             update_settings("auto_upload_screenshot", "True")
         else:
@@ -1879,7 +1879,7 @@ class UploadPictureThread(QThread):
     def run(self):
         try:
             if self.is_thumbnails:
-                time.sleep(float(get_settings("delay")))  # 等待
+                time.sleep(float(get_settings("thumbnail_delay")))  # 等待
             # 这里放置耗时的HTTP请求操作
             upload_success, api_response = upload_screenshot(self.picture_bed_path, self.picture_bed_token,
                                                              self.screenshot_path)

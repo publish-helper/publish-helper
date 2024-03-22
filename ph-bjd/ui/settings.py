@@ -30,11 +30,11 @@ class Ui_Settings(object):
         self.label_8 = QtWidgets.QLabel(parent=self.tab)
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_6.addWidget(self.label_8)
-        self.ptGenPath = QtWidgets.QLineEdit(parent=self.tab)
-        self.ptGenPath.setText("")
-        self.ptGenPath.setClearButtonEnabled(True)
-        self.ptGenPath.setObjectName("ptGenPath")
-        self.horizontalLayout_6.addWidget(self.ptGenPath)
+        self.ptGenApiUrl = QtWidgets.QLineEdit(parent=self.tab)
+        self.ptGenApiUrl.setText("")
+        self.ptGenApiUrl.setClearButtonEnabled(True)
+        self.ptGenApiUrl.setObjectName("ptGenApiUrl")
+        self.horizontalLayout_6.addWidget(self.ptGenApiUrl)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(5, 5, 5, 5)
@@ -42,11 +42,11 @@ class Ui_Settings(object):
         self.label_6 = QtWidgets.QLabel(parent=self.tab)
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_4.addWidget(self.label_6)
-        self.pictureBedPath = QtWidgets.QLineEdit(parent=self.tab)
-        self.pictureBedPath.setText("")
-        self.pictureBedPath.setClearButtonEnabled(True)
-        self.pictureBedPath.setObjectName("pictureBedPath")
-        self.horizontalLayout_4.addWidget(self.pictureBedPath)
+        self.pictureBedApiUrl = QtWidgets.QLineEdit(parent=self.tab)
+        self.pictureBedApiUrl.setText("")
+        self.pictureBedApiUrl.setClearButtonEnabled(True)
+        self.pictureBedApiUrl.setObjectName("pictureBedApiUrl")
+        self.horizontalLayout_4.addWidget(self.pictureBedApiUrl)
         self.verticalLayout.addLayout(self.horizontalLayout_4)
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_5.setContentsMargins(5, 5, 5, 5)
@@ -54,12 +54,12 @@ class Ui_Settings(object):
         self.label_7 = QtWidgets.QLabel(parent=self.tab)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7)
-        self.pictureBedToken = QtWidgets.QLineEdit(parent=self.tab)
-        self.pictureBedToken.setText("")
-        self.pictureBedToken.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
-        self.pictureBedToken.setClearButtonEnabled(True)
-        self.pictureBedToken.setObjectName("pictureBedToken")
-        self.horizontalLayout_5.addWidget(self.pictureBedToken)
+        self.pictureBedApiToken = QtWidgets.QLineEdit(parent=self.tab)
+        self.pictureBedApiToken.setText("")
+        self.pictureBedApiToken.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
+        self.pictureBedApiToken.setClearButtonEnabled(True)
+        self.pictureBedApiToken.setObjectName("pictureBedApiToken")
+        self.horizontalLayout_5.addWidget(self.pictureBedApiToken)
         self.verticalLayout.addLayout(self.horizontalLayout_5)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
@@ -183,23 +183,23 @@ class Ui_Settings(object):
         self.label_4 = QtWidgets.QLabel(parent=self.tab)
         self.label_4.setObjectName("label_4")
         self.horizontalLayout_8.addWidget(self.label_4)
-        self.screenshotStart = QtWidgets.QDoubleSpinBox(parent=self.tab)
-        self.screenshotStart.setDecimals(2)
-        self.screenshotStart.setMaximum(1.0)
-        self.screenshotStart.setSingleStep(0.01)
-        self.screenshotStart.setProperty("value", 0.1)
-        self.screenshotStart.setObjectName("screenshotStart")
-        self.horizontalLayout_8.addWidget(self.screenshotStart)
+        self.screenshotStartPercentage = QtWidgets.QDoubleSpinBox(parent=self.tab)
+        self.screenshotStartPercentage.setDecimals(2)
+        self.screenshotStartPercentage.setMaximum(1.0)
+        self.screenshotStartPercentage.setSingleStep(0.01)
+        self.screenshotStartPercentage.setProperty("value", 0.1)
+        self.screenshotStartPercentage.setObjectName("screenshotStartPercentage")
+        self.horizontalLayout_8.addWidget(self.screenshotStartPercentage)
         self.label_5 = QtWidgets.QLabel(parent=self.tab)
         self.label_5.setObjectName("label_5")
         self.horizontalLayout_8.addWidget(self.label_5)
-        self.screenshotEnd = QtWidgets.QDoubleSpinBox(parent=self.tab)
-        self.screenshotEnd.setDecimals(2)
-        self.screenshotEnd.setMaximum(1.0)
-        self.screenshotEnd.setSingleStep(0.01)
-        self.screenshotEnd.setProperty("value", 0.9)
-        self.screenshotEnd.setObjectName("screenshotEnd")
-        self.horizontalLayout_8.addWidget(self.screenshotEnd)
+        self.screenshotEndPercentage = QtWidgets.QDoubleSpinBox(parent=self.tab)
+        self.screenshotEndPercentage.setDecimals(2)
+        self.screenshotEndPercentage.setMaximum(1.0)
+        self.screenshotEndPercentage.setSingleStep(0.01)
+        self.screenshotEndPercentage.setProperty("value", 0.9)
+        self.screenshotEndPercentage.setObjectName("screenshotEndPercentage")
+        self.horizontalLayout_8.addWidget(self.screenshotEndPercentage)
         self.verticalLayout.addLayout(self.horizontalLayout_8)
         self.horizontalLayout_9 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_9.setContentsMargins(5, 5, 5, 5)
@@ -224,37 +224,37 @@ class Ui_Settings(object):
         self.horizontalLayout_11 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_11.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_11.setObjectName("horizontalLayout_11")
-        self.getThumbnails = QtWidgets.QCheckBox(parent=self.tab)
-        self.getThumbnails.setObjectName("getThumbnails")
-        self.horizontalLayout_11.addWidget(self.getThumbnails)
+        self.doGetThumbnail = QtWidgets.QCheckBox(parent=self.tab)
+        self.doGetThumbnail.setObjectName("doGetThumbnail")
+        self.horizontalLayout_11.addWidget(self.doGetThumbnail)
         self.label_13 = QtWidgets.QLabel(parent=self.tab)
         self.label_13.setObjectName("label_13")
         self.horizontalLayout_11.addWidget(self.label_13)
-        self.rows = QtWidgets.QSpinBox(parent=self.tab)
-        self.rows.setMinimum(1)
-        self.rows.setMaximum(6)
-        self.rows.setProperty("value", 4)
-        self.rows.setObjectName("rows")
-        self.horizontalLayout_11.addWidget(self.rows)
+        self.thumbnailRows = QtWidgets.QSpinBox(parent=self.tab)
+        self.thumbnailRows.setMinimum(1)
+        self.thumbnailRows.setMaximum(6)
+        self.thumbnailRows.setProperty("value", 4)
+        self.thumbnailRows.setObjectName("thumbnailRows")
+        self.horizontalLayout_11.addWidget(self.thumbnailRows)
         self.label_14 = QtWidgets.QLabel(parent=self.tab)
         self.label_14.setObjectName("label_14")
         self.horizontalLayout_11.addWidget(self.label_14)
-        self.cols = QtWidgets.QSpinBox(parent=self.tab)
-        self.cols.setMinimum(1)
-        self.cols.setMaximum(6)
-        self.cols.setProperty("value", 4)
-        self.cols.setObjectName("cols")
-        self.horizontalLayout_11.addWidget(self.cols)
+        self.thumbnailCols = QtWidgets.QSpinBox(parent=self.tab)
+        self.thumbnailCols.setMinimum(1)
+        self.thumbnailCols.setMaximum(6)
+        self.thumbnailCols.setProperty("value", 4)
+        self.thumbnailCols.setObjectName("thumbnailCols")
+        self.horizontalLayout_11.addWidget(self.thumbnailCols)
         self.label_31 = QtWidgets.QLabel(parent=self.tab)
         self.label_31.setObjectName("label_31")
         self.horizontalLayout_11.addWidget(self.label_31)
-        self.delay = QtWidgets.QDoubleSpinBox(parent=self.tab)
-        self.delay.setDecimals(1)
-        self.delay.setMaximum(10.0)
-        self.delay.setSingleStep(0.1)
-        self.delay.setProperty("value", 2.0)
-        self.delay.setObjectName("delay")
-        self.horizontalLayout_11.addWidget(self.delay)
+        self.thumbnailDelay = QtWidgets.QDoubleSpinBox(parent=self.tab)
+        self.thumbnailDelay.setDecimals(1)
+        self.thumbnailDelay.setMaximum(10.0)
+        self.thumbnailDelay.setSingleStep(0.1)
+        self.thumbnailDelay.setProperty("value", 2.0)
+        self.thumbnailDelay.setObjectName("thumbnailDelay")
+        self.horizontalLayout_11.addWidget(self.thumbnailDelay)
         self.verticalLayout.addLayout(self.horizontalLayout_11)
         self.horizontalLayout_10 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_10.setContentsMargins(5, 5, 5, 5)
@@ -608,7 +608,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_8.setText(_translate("Settings", "PT Gen地址:"))
-        self.ptGenPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.ptGenApiUrl.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -655,7 +655,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_6.setText(_translate("Settings", "图床API地址:"))
-        self.pictureBedPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.pictureBedApiUrl.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -702,7 +702,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_7.setText(_translate("Settings", "图床API密钥:"))
-        self.pictureBedToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.pictureBedApiToken.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -939,7 +939,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_4.setText(_translate("Settings", "截图起始点（百分比）:"))
-        self.screenshotStart.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.screenshotStartPercentage.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -986,7 +986,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_5.setText(_translate("Settings", "截图终止点（百分比）:"))
-        self.screenshotEnd.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.screenshotEndPercentage.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -1105,7 +1105,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.mediaInfoSuffix.setText(_translate("Settings", "MediaInfo工具后缀"))
-        self.getThumbnails.setText(_translate("Settings", "生成缩略图"))
+        self.doGetThumbnail.setText(_translate("Settings", "生成缩略图"))
         self.label_13.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
@@ -1130,7 +1130,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_13.setText(_translate("Settings", "横向数量:"))
-        self.rows.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.thumbnailRows.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -1177,7 +1177,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_14.setText(_translate("Settings", "纵向数量:"))
-        self.cols.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.thumbnailCols.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -1224,7 +1224,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_31.setText(_translate("Settings", "上传延迟(s):"))
-        self.delay.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.thumbnailDelay.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"

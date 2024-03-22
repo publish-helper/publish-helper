@@ -85,7 +85,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="ptGenPath">
+            <widget class="QLineEdit" name="ptGenApiUrl">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -168,7 +168,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="pictureBedPath">
+            <widget class="QLineEdit" name="pictureBedApiUrl">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -251,7 +251,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="pictureBedToken">
+            <widget class="QLineEdit" name="pictureBedApiToken">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -741,7 +741,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="screenshotStart">
+            <widget class="QDoubleSpinBox" name="screenshotStartPercentage">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -814,7 +814,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="screenshotEnd">
+            <widget class="QDoubleSpinBox" name="screenshotEndPercentage">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -1027,7 +1027,7 @@ QPushButton:pressed {
             <number>5</number>
            </property>
            <item>
-            <widget class="QCheckBox" name="getThumbnails">
+            <widget class="QCheckBox" name="doGetThumbnail">
              <property name="text">
               <string>生成缩略图</string>
              </property>
@@ -1066,7 +1066,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="rows">
+            <widget class="QSpinBox" name="thumbnailRows">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -1136,7 +1136,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="cols">
+            <widget class="QSpinBox" name="thumbnailCols">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -1206,7 +1206,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QDoubleSpinBox" name="delay">
+            <widget class="QDoubleSpinBox" name="thumbnailDelay">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
