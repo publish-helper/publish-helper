@@ -69,16 +69,16 @@ def api_get_screenshot():
     screenshot_number = int(request.args.get('screenshotNumber', default=get_settings("screenshot_number"), type=str))
     screenshot_threshold = float(
         request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"), type=str))
-    screenshot_start = float(request.args.get('screenshot_start', default=get_settings("screenshot_start"), type=str))
-    screenshot_end = float(request.args.get('screenshotEnd', default=get_settings("screenshot_end"), type=str))
-    screenshot_min_interval = float(request.args.get('screenshotMinInterval', default="0.01", type=str))
+    screenshot_start_percentage = float(request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str))
+    screenshot_end_percentage = float(request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str))
+    screenshot_min_interval_percentage = float(request.args.get('screenshotMinIntervalPercentage', default="0.01", type=str))
     if screenshot_number > 0:
         if screenshot_number < 6:
             is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
             if is_video_path == 1 or is_video_path == 2:
                 screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
-                                                              screenshot_threshold, screenshot_start,
-                                                              screenshot_end, screenshot_min_interval)
+                                                              screenshot_threshold, screenshot_start_percentage,
+                                                              screenshot_end_percentage, screenshot_min_interval_percentage)
                 if screenshot_success:
                     screenshot_path = ''
                     screenshot_number = 0
