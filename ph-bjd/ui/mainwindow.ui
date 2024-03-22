@@ -439,7 +439,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="ptGenBrowserMovie"/>
+                 <widget class="QTextEdit" name="descriptionBrowserMovie"/>
                 </item>
                 <item>
                  <widget class="QPushButton" name="getPtGenButtonMovie">
@@ -1441,7 +1441,7 @@ QPushButton:pressed {
                  </widget>
                 </item>
                 <item>
-                 <widget class="QTextEdit" name="ptGenBrowserTV"/>
+                 <widget class="QTextEdit" name="descriptionBrowserTV"/>
                 </item>
                 <item>
                  <widget class="QPushButton" name="getPtGenButtonTV">

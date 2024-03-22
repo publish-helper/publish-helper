@@ -12,8 +12,8 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QM
 from autofeed import get_auto_feed_link
 from mediainfo import get_media_info
 from picturebed import upload_screenshot
-from ptgen import fetch_and_format_ptgen_data
-from rename import extract_details_from_ptgen, get_video_info, get_name_from_example
+from ptgen import fetch_and_format_pt_gen_data
+from rename import extract_details_from_pt_gen, get_video_info, get_name_from_example
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
@@ -58,7 +58,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         # 初始化
         self.videoPathMovie.setDragEnabled(True)
-        self.ptGenBrowserMovie.setText("")
+        self.descriptionBrowserMovie.setText("")
         self.pictureUrlBrowserMovie.setText("")
         self.mediainfoBrowserMovie.setText("")
         self.debugBrowserMovie.setText("")
@@ -168,7 +168,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
         mian_title += self.mainTitleBrowserMovie.toPlainText()
         second_title += self.secondTitleBrowserMovie.toPlainText()
-        description += self.ptGenBrowserMovie.toPlainText()
+        description += self.descriptionBrowserMovie.toPlainText()
         media_info += self.mediainfoBrowserMovie.toPlainText()
         file_name += self.fileNameBrowserMovie.toPlainText()
         type += "电影"
@@ -183,7 +183,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             webbrowser.open(auto_feed_link)
 
     def get_pt_gen_button_movie_clicked(self):
-        self.ptGenBrowserMovie.setText("")
+        self.descriptionBrowserMovie.setText("")
         pt_gen_path = get_settings("pt_gen_api_url")
         pt_gen_url = self.ptGenUrlMovie.text()
 
@@ -205,7 +205,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         if get_success:
             if response:
                 print(response)
-                self.ptGenBrowserMovie.setText(response)
+                self.descriptionBrowserMovie.setText(response)
                 self.debugBrowserMovie.append("成功获取Pt-Gen信息")
             else:
                 self.debugBrowserMovie.append("获取Pt-Gen信息失败")
@@ -350,7 +350,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             paste_screenshot_url = bool(get_settings("paste_screenshot_url"))
             delete_screenshot = bool(get_settings("delete_screenshot"))
             if paste_screenshot_url:
-                self.ptGenBrowserMovie.append(api_response)
+                self.descriptionBrowserMovie.append(api_response)
                 self.debugBrowserMovie.append("成功将图片链接粘贴到简介后")
             if delete_screenshot:
                 if os.path.exists(screenshot_path):
@@ -388,7 +388,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_name_button_movie_clicked(self):
         try:
-            self.ptGenBrowserMovie.setText("")
+            self.descriptionBrowserMovie.setText("")
             pt_gen_path = get_settings("pt_gen_api_url")
             pt_gen_url = self.ptGenUrlMovie.text()
             if pt_gen_url == "":
@@ -411,7 +411,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def handle_get_pt_gen_for_name_movie_result(self, get_success, response):
         try:
             if get_success:
-                self.ptGenBrowserMovie.setText(response)
+                self.descriptionBrowserMovie.setText(response)
                 if response:
                     print("获得的Pt-Gen Api响应：" + response)
                     if response == "":
@@ -444,7 +444,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         self.debugBrowserMovie.append("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
+                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_pt_gen(
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
@@ -664,7 +664,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
         mian_title = self.mainTitleBrowserTV.toPlainText()
         second_title = self.secondTitleBrowserTV.toPlainText()
-        description = self.ptGenBrowserTV.toPlainText()
+        description = self.descriptionBrowserTV.toPlainText()
         media_info = self.mediainfoBrowserTV.toPlainText()
         file_name = self.fileNameBrowserTV.toPlainText()
         type = "剧集"
@@ -679,7 +679,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             webbrowser.open(auto_feed_link)
 
     def get_pt_gen_button_tv_clicked(self):
-        self.ptGenBrowserTV.setText("")
+        self.descriptionBrowserTV.setText("")
         pt_gen_path = get_settings("pt_gen_api_url")
         pt_gen_url = self.ptGenUrlTV.text()
 
@@ -701,7 +701,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         if get_success:
             if response:
                 print(response)
-                self.ptGenBrowserTV.setText(response)
+                self.descriptionBrowserTV.setText(response)
                 self.debugBrowserTV.append("成功获取Pt-Gen信息")
             else:
                 self.debugBrowserTV.append("获取Pt-Gen信息失败")
@@ -841,7 +841,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             paste_screenshot_url = bool(get_settings("paste_screenshot_url"))
             delete_screenshot = bool(get_settings("delete_screenshot"))
             if paste_screenshot_url:
-                self.ptGenBrowserTV.append(api_response)
+                self.descriptionBrowserTV.append(api_response)
                 self.debugBrowserTV.append("成功将图片链接粘贴到简介后")
             if delete_screenshot:
                 if os.path.exists(screenshot_path):
@@ -875,7 +875,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_name_button_tv_clicked(self):
         try:
-            self.ptGenBrowserTV.setText("")
+            self.descriptionBrowserTV.setText("")
             pt_gen_path = get_settings("pt_gen_api_url")
             pt_gen_url = self.ptGenUrlTV.text()
 
@@ -899,7 +899,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def handle_get_pt_gen_for_name_tv_result(self, get_success, response):
         try:
             if get_success:
-                self.ptGenBrowserTV.setText(response)
+                self.descriptionBrowserTV.setText(response)
                 if response:
                     print("获得的Pt-Gen Api响应：" + response)
                     if response == "":
@@ -978,7 +978,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_ptgen(
+                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_pt_gen(
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
@@ -1851,7 +1851,7 @@ class GetPtGenThread(QThread):
     def run(self):
         try:
             # 这里放置耗时的HTTP请求操作
-            get_success, response = fetch_and_format_ptgen_data(self.api_url, self.resource_url)
+            get_success, response = fetch_and_format_pt_gen_data(self.api_url, self.resource_url)
 
             # 发送信号，包括请求的结果
             print("Pt-Gen请求成功，开始返回结果")

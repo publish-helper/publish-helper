@@ -1,7 +1,7 @@
 import requests
 
 
-def fetch_and_format_ptgen_data(api_url, resource_url):
+def fetch_and_format_pt_gen_data(api_url, resource_url):
     try:
         # 设置一个合理的超时时间，例如10秒
         response = requests.get(f"{api_url}?url={resource_url}", timeout=10)

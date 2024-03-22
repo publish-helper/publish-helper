@@ -26,14 +26,14 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     imdb_pattern = r"https://www\.imdb\.com/title/tt\d+/"
     match = re.search(imdb_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
-    url = match.group(0) if match else ""
+    url += match.group(0) if match else ""
     print("获取到IMDb链接" + url)
 
     # 获取豆瓣链接
     douban_pattern = r"https://movie\.douban\.com/subject/\d+/"
     match = re.search(douban_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
-    dburl = match.group(0) if match else ""
+    dburl += match.group(0) if match else ""
     print("获取到豆瓣链接" + dburl)
 
     # 获取其他类型 电影/纪录/体育/剧集/动画/综艺……

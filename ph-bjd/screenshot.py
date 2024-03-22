@@ -10,7 +10,8 @@ from tool import generate_image_filename
 # 参数：video_path：源视频路径；screenshot_path：输出图片路径；screenshot_number：截图的总数量；screenshot_start：截图的起始帧占比，避免截取黑帧；
 # screenshot_end：截图的结束帧占比，中间的范围不要太小，否则会导致截图数量不够；min_interval：最小帧间隔占比，避免连续截图；
 # screenshot_threshold：参数，用于判断关键帧的复杂程度，数字越大越复杂，不宜过大，否则可能会导致截图数量不够
-def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_threshold, screenshot_start, screenshot_end,
+def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_threshold, screenshot_start,
+                   screenshot_end,
                    screenshot_min_interval=0.01):
     # 确保输出路径存在
     try:
@@ -43,7 +44,8 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
             start_frame = int(total_frames * screenshot_start)
             end_frame = int(total_frames * screenshot_end)
             screenshot_min_interval = duration * screenshot_min_interval
-            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(screenshot_min_interval))
+            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(
+                screenshot_min_interval))
 
             # 初始化变量
             extracted_images = []
@@ -109,7 +111,7 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
     except Exception as e:
         print(f"创建目录时出错：{e}")
         return False, [f"创建目录时出错：{e}"]
-
+    video_capture = None
     try:
         video_capture = cv2.VideoCapture(video_path)
 
@@ -144,11 +146,13 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
         if len(images) < (thumbnail_rows * thumbnail_cols):
             print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_rows * thumbnail_cols} 张")
 
-        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_cols, fy=1.0 / thumbnail_cols) for image in images]
+        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_cols, fy=1.0 / thumbnail_cols) for image in
+                          images]
 
         border_size = 5
         concatenated_image = np.ones((thumbnail_rows * (resized_images[0].shape[0] + 2 * border_size),
-                                      thumbnail_cols * (resized_images[0].shape[1] + 2 * border_size), 3), dtype=np.uint8) * 255
+                                      thumbnail_cols * (resized_images[0].shape[1] + 2 * border_size), 3),
+                                     dtype=np.uint8) * 255
 
         for i in range(thumbnail_rows):
             for j in range(thumbnail_cols):

@@ -242,9 +242,9 @@ class Ui_Mainwindow(object):
         self.label_11.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_11.setObjectName("label_11")
         self.verticalLayout.addWidget(self.label_11)
-        self.ptGenBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
-        self.ptGenBrowserMovie.setObjectName("ptGenBrowserMovie")
-        self.verticalLayout.addWidget(self.ptGenBrowserMovie)
+        self.descriptionBrowserMovie = QtWidgets.QTextEdit(parent=self.tab)
+        self.descriptionBrowserMovie.setObjectName("descriptionBrowserMovie")
+        self.verticalLayout.addWidget(self.descriptionBrowserMovie)
         self.getPtGenButtonMovie = QtWidgets.QPushButton(parent=self.tab)
         self.getPtGenButtonMovie.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
@@ -810,9 +810,9 @@ class Ui_Mainwindow(object):
         self.label_50.setAlignment(QtCore.Qt.AlignmentFlag.AlignCenter)
         self.label_50.setObjectName("label_50")
         self.verticalLayout_36.addWidget(self.label_50)
-        self.ptGenBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
-        self.ptGenBrowserTV.setObjectName("ptGenBrowserTV")
-        self.verticalLayout_36.addWidget(self.ptGenBrowserTV)
+        self.descriptionBrowserTV = QtWidgets.QTextEdit(parent=self.tab_2)
+        self.descriptionBrowserTV.setObjectName("descriptionBrowserTV")
+        self.verticalLayout_36.addWidget(self.descriptionBrowserTV)
         self.getPtGenButtonTV = QtWidgets.QPushButton(parent=self.tab_2)
         self.getPtGenButtonTV.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"

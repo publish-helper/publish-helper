@@ -130,4 +130,3 @@ def api_get_screenshot():
             },
             "message": "一次获取的截图数量不能小于1张。"  # 提示信息
         })
-

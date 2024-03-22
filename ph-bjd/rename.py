@@ -7,7 +7,7 @@ from pymediainfo import MediaInfo
 from tool import get_settings
 
 
-def extract_details_from_ptgen(data):
+def extract_details_from_pt_gen(data):
     # 正则表达式
     year_match = re.search(r"◎年　　代\s*(\d{4})", data)
     category_match = re.search(r"◎类　　别\s*([^\n]*)", data)
