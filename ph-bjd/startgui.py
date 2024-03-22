@@ -105,7 +105,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         # 初始化成功
         self.debugBrowserMovie.append(
-            "程序初始化成功，使用前请查看设置中的说明！制作不易，如有帮助请帮忙点亮仓库的Star！\n地址：https://github.com/bjdbjd/publish-helper")
+            "程序初始化成功，使用前请查看设置中的说明！制作不易，如有帮助请帮忙点亮仓库的Star！\n仓库地址：https://github.com/bjdbjd/publish-helper")
 
         if get_settings("enable_api"):
             self.run_api_thread()
