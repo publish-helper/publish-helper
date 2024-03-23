@@ -1,10 +1,10 @@
 from flask import Flask, request, jsonify
 
 from mediainfo import get_media_info
+from ptgen import get_pt_gen_description
+from rename import get_video_info
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings
-from rename import get_pt_gen_info, get_video_info
-from ptgen import get_pt_gen_description
 
 api = Flask(__name__)
 

@@ -166,16 +166,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_movie_clicked(self):
-        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
+        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
         mian_title += self.mainTitleBrowserMovie.toPlainText()
         second_title += self.secondTitleBrowserMovie.toPlainText()
         description += self.descriptionBrowserMovie.toPlainText()
         media_info += self.mediainfoBrowserMovie.toPlainText()
         file_name += self.fileNameBrowserMovie.toPlainText()
-        type += "电影"
+        category += "电影"
         team += self.teamMovie.currentText()
         source += self.sourceMovie.currentText()
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
+                                            team,
                                             source)
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
@@ -664,16 +665,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_tv_clicked(self):
-        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
-        mian_title = self.mainTitleBrowserTV.toPlainText()
-        second_title = self.secondTitleBrowserTV.toPlainText()
-        description = self.descriptionBrowserTV.toPlainText()
-        media_info = self.mediainfoBrowserTV.toPlainText()
-        file_name = self.fileNameBrowserTV.toPlainText()
-        type = "剧集"
-        team = self.teamTV.currentText()
-        source = self.sourceTV.currentText()
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
+        mian_title += self.mainTitleBrowserTV.toPlainText()
+        second_title += self.secondTitleBrowserTV.toPlainText()
+        description += self.descriptionBrowserTV.toPlainText()
+        media_info += self.mediainfoBrowserTV.toPlainText()
+        file_name += self.fileNameBrowserTV.toPlainText()
+        category += "剧集"
+        team += self.teamTV.currentText()
+        source += self.sourceTV.currentText()
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
+                                            team,
                                             source)
         self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
@@ -1221,16 +1223,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_playlet_clicked(self):
-        mian_title, second_title, description, media_info, file_name, type, team, source = '', '', '', '', '', '', '', ''
-        mian_title = self.mainTitleBrowserPlaylet.toPlainText()
-        second_title = self.secondTitleBrowserPlaylet.toPlainText()
-        description = self.descriptionBrowserPlaylet.toPlainText()
-        media_info = self.mediainfoBrowserPlaylet.toPlainText()
-        file_name = self.fileNameBrowserPlaylet.toPlainText()
-        type = "短剧"
+        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
+        mian_title += self.mainTitleBrowserPlaylet.toPlainText()
+        second_title += self.secondTitleBrowserPlaylet.toPlainText()
+        description += self.descriptionBrowserPlaylet.toPlainText()
+        media_info += self.mediainfoBrowserPlaylet.toPlainText()
+        file_name += self.fileNameBrowserPlaylet.toPlainText()
+        category += "短剧"
         team = self.teamPlaylet.currentText()
         source = self.sourcePlaylet.currentText()
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team,
+        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
+                                            team,
                                             source)
         self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)

@@ -4,7 +4,7 @@ import re
 from tool import get_settings
 
 
-def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, type, team, source):
+def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source):
     auto_feed_link = str(get_settings("auto_feed_link"))
     name = mian_title  # 主标题
     small_descr = second_title  # 副标题
@@ -13,7 +13,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     descr = description  # 简介
     media_info = media_info  # MI
     torrent_name = file_name + '.torrent'  # 种子名称
-    type = type  # 类型
+    category = category  # 类型
     source_sel = ''  # 地区
     standard_sel = ''  # 分辨率
     audiocodec_sel = ''  # 音频编码
@@ -37,21 +37,21 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     print("获取到豆瓣链接" + dburl)
 
     # 获取其他类型 电影/纪录/体育/剧集/动画/综艺……
-    type_pattern = r"◎类　　别　([^\n]+)"
-    match = re.search(douban_pattern, description)
+    category_pattern = r"◎类　　别　([^\n]+)"
+    match = re.search(category_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
     t = match.group(0) if match else ""
     if "纪录" in t:
-        type = "纪录"
+        category = "纪录"
     if "体育" in t:
-        type = "体育"
+        category = "体育"
     if "动画" in t:
-        type = "动画"
+        category = "动画"
     if "综艺" in t or "脱口秀" in t:
-        type = "综艺"
+        category = "综艺"
     if "短片" in t:
-        type = "短剧"
-    print("获取到类型" + type)
+        category = "短剧"
+    print("获取到类型" + category)
 
     # 获取产地 欧美/大陆/港台/日本/韩国/印度
     area_pattern = r"◎产　　地　([^\n]+)"
@@ -150,7 +150,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     auto_feed_link = auto_feed_link.replace('{简介}', descr)
     auto_feed_link = auto_feed_link.replace('{MediaInfo}', media_info)
     auto_feed_link = auto_feed_link.replace('{种子名称}', torrent_name)
-    auto_feed_link = auto_feed_link.replace('{类型}', type)
+    auto_feed_link = auto_feed_link.replace('{类型}', category)
     auto_feed_link = auto_feed_link.replace('{地区}', source_sel)
     auto_feed_link = auto_feed_link.replace('{分辨率}', standard_sel)
     auto_feed_link = auto_feed_link.replace('{音频编码}', audiocodec_sel)
