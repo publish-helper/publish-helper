@@ -35,30 +35,30 @@ def api_get_media_info():
         get_media_info_success, response = get_media_info(video_path)
         if get_media_info_success:
             return jsonify({
-                "success": True,
                 "data": {
-                    "videoPath": video_path,
-                    "mediaInfo": response
+                    "mediaInfo": response,
+                    "videoPath": video_path
                 },
-                "message": "获取MediaInfo成功。"  # 提示信息
+                "message": "获取MediaInfo成功。",  # 提示信息
+                "success": True
             })
         else:
             return jsonify({
-                "success": False,
                 "data": {
+                    "mediaInfo": "",
                     "videoPath": video_path,
-                    "mediaInfo": ""
                 },
-                "message": f"获取视频路径成功，但是获取MediaInfo失败，错误：{response}"  # 提示信息
+                "message": f"获取视频路径成功，但是获取MediaInfo失败，错误：{response}",  # 提示信息
+                "success": False
             })
     else:
         return jsonify({
-            "success": False,
             "data": {
-                "videoPath": "",
-                "mediaInfo": ""
+                "mediaInfo": "",
+                "videoPath": ""
             },
-            "message": f"获取视频路径失败，{video_path}"  # 提示信息
+            "message": f"获取视频路径失败，{video_path}",  # 提示信息
+            "success": False
         })
 
 
@@ -95,73 +95,73 @@ def api_get_screenshot():
                                 screenshot_path += '\n'
                                 screenshot_number += 1
                             return jsonify({
-                                "success": True,
                                 "data": {
-                                    "videoPath": video_path,
                                     "screenshotNumber": str(screenshot_number),
-                                    "screenshotPath": screenshot_path
+                                    "screenshotPath": screenshot_path,
+                                    "videoPath": video_path
                                 },
-                                "message": "获取截图成功。"  # 提示信息
+                                "message": "获取截图成功。",  # 提示信息
+                                "success": True
                             })
                         else:
                             return jsonify({
-                                "success": False,
                                 "data": {
-                                    "videoPath": video_path,
                                     "screenshotNumber": "0",
-                                    "screenshotPath": ""
+                                    "screenshotPath": "",
+                                    "videoPath": video_path
                                 },
-                                "message": f"获取截图失败：{response[0]}"  # 提示信息
+                                "message": f"获取截图失败：{response[0]}",  # 提示信息
+                                "success": False
                             })
                     else:
                         return jsonify({
-                            "success": False,
                             "data": {
-                                "videoPath": "",
                                 "screenshotNumber": "0",
-                                "screenshotPath": ""
+                                "screenshotPath": "",
+                                "videoPath": ""
                             },
-                            "message": f"获取视频路径失败，{video_path}"  # 提示信息
+                            "message": f"获取视频路径失败，{video_path}",  # 提示信息
+                            "success": False
                         })
                 else:
                     return jsonify({
-                        "success": False,
                         "data": {
-                            "videoPath": "",
                             "screenshotNumber": "0",
-                            "screenshotPath": ""
+                            "screenshotPath": "",
+                            "videoPath": ""
                         },
-                        "message": "截图起始点不能大于终止点。"  # 提示信息
+                        "message": "截图起始点不能大于终止点。",  # 提示信息
+                        "success": False
                     })
             else:
                 return jsonify({
-                    "success": False,
                     "data": {
-                        "videoPath": "",
                         "screenshotNumber": "0",
-                        "screenshotPath": ""
+                        "screenshotPath": "",
+                        "videoPath": ""
                     },
-                    "message": "截图起始点和终止点不能小于0或大于1。"  # 提示信息
+                    "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
+                    "success": False
                 })
         else:
             return jsonify({
-                "success": False,
                 "data": {
-                    "videoPath": "",
                     "screenshotNumber": "0",
-                    "screenshotPath": ""
+                    "screenshotPath": "",
+                    "videoPath": ""
                 },
-                "message": "一次获取的截图数量不能大于5张。"  # 提示信息
+                "message": "一次获取的截图数量不能大于5张。",  # 提示信息
+                "success": False
             })
     else:
         return jsonify({
-            "success": False,
             "data": {
-                "videoPath": "",
                 "screenshotNumber": "0",
-                "screenshotPath": ""
+                "screenshotPath": "",
+                "videoPath": "",
             },
-            "message": "一次获取的截图数量不能小于1张。"  # 提示信息
+            "message": "一次获取的截图数量不能小于1张。",  # 提示信息
+            "success": False
         })
 
 
@@ -188,57 +188,57 @@ def api_get_thumbnail():
                                                                     screenshot_end_percentage)
                     if get_thumbnail_success:
                         return jsonify({
-                            "success": True,
                             "data": {
-                                "videoPath": video_path,
-                                "thumbnailPath": response
+                                "thumbnailPath": response,
+                                "videoPath": video_path
                             },
-                            "message": "获取截图成功。"  # 提示信息
+                            "message": "获取截图成功。",  # 提示信息
+                            "success": True
                         })
                     else:
                         return jsonify({
-                            "success": False,
                             "data": {
-                                "videoPath": video_path,
-                                "thumbnailPath": ""
+                                "thumbnailPath": "",
+                                "videoPath": video_path
                             },
-                            "message": f"获取截图失败：{response}"  # 提示信息
+                            "message": f"获取截图失败：{response}",  # 提示信息
+                            "success": False
                         })
                 else:
                     return jsonify({
-                        "success": False,
                         "data": {
-                            "videoPath": "",
-                            "thumbnailPath": ""
+                            "thumbnailPath": "",
+                            "videoPath": ""
                         },
-                        "message": f"获取视频路径失败，{video_path}"  # 提示信息
+                        "message": f"获取视频路径失败，{video_path}",  # 提示信息
+                        "success": False
                     })
             else:
                 return jsonify({
-                    "success": False,
                     "data": {
-                        "videoPath": "",
-                        "thumbnailPath": ""
+                        "thumbnailPath": "",
+                        "videoPath": ""
                     },
-                    "message": "截图起始点不能大于终止点。"  # 提示信息
+                    "message": "截图起始点不能大于终止点。",  # 提示信息
+                    "success": False
                 })
         else:
             return jsonify({
-                "success": False,
                 "data": {
-                    "videoPath": "",
-                    "thumbnailPath": ""
+                    "thumbnailPath": "",
+                    "videoPath": ""
                 },
-                "message": "截图起始点和终止点不能小于0或大于1。"  # 提示信息
+                "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
+                "success": False
             })
     else:
         return jsonify({
-            "success": False,
             "data": {
-                "videoPath": "",
-                "thumbnailPath": ""
+                "thumbnailPath": "",
+                "videoPath": ""
             },
-            "message": "缩略图横向、纵向数量均需要大于0。"  # 提示信息
+            "message": "缩略图横向、纵向数量均需要大于0。",  # 提示信息
+            "success": False
         })
 
 
@@ -260,7 +260,6 @@ def api_get_video_info():
             audio_codec = output[5]
             channels = output[6]
             return jsonify({
-                "success": True,
                 "data": {
                     "videoPath": video_path,
                     "videoFormat": video_format,
@@ -271,11 +270,11 @@ def api_get_video_info():
                     "audioCodec": audio_codec,
                     "channel": channels
                 },
-                "message": "获取视频关键参数成功。"  # 提示信息
+                "message": "获取视频关键参数成功。",  # 提示信息
+                "success": True
             })
     else:
         return jsonify({
-            "success": False,
             "data": {
                 "videoPath": "",
                 "videoFormat": "",
@@ -286,7 +285,8 @@ def api_get_video_info():
                 "audioCodec": "",
                 "channel": ""
             },
-            "message": f"获取视频路径失败，{video_path}"  # 提示信息
+            "message": f"获取视频路径失败，{video_path}",  # 提示信息
+            "success": False
         })
 
 
