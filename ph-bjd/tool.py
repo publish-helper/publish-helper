@@ -146,7 +146,7 @@ def get_settings(parameter_name):
 
 
 def rename_file_with_same_extension(old_name, new_name_without_extension):
-    new_name_without_extension = re.sub(r'[\<\>\:\"\/\\\|\?\*]', '.', new_name_without_extension)
+    new_name_without_extension = re.sub(r'[<>:\"/\\|?*]', '.', new_name_without_extension)
     # 分割原始文件名以获取扩展名和目录
     file_dir, file_base = os.path.split(old_name)
     file_name, file_extension = os.path.splitext(file_base)
@@ -180,7 +180,7 @@ def rename_directory(current_dir, new_name):
     OSError - 如果重命名操作失败。
     """
     try:
-        new_name = re.sub(r'[\<\>\:\"\/\\\|\?\*]', '.', new_name)
+        new_name = re.sub(r'[<>:\"/\\|?*]', '.', new_name)
         # 检查当前路径是否为一个存在的目录
         if not os.path.isdir(current_dir):
             print("提供的路径不是一个目录或不存在。")
