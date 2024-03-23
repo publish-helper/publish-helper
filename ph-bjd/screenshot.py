@@ -19,21 +19,21 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
             os.makedirs(screenshot_path)
             print("已创建输出路径")
     except PermissionError:
-        print("权限不足，无法创建目录。")
-        return False, ["权限不足，无法创建目录。"]
+        print("权限不足，无法创建目录")
+        return False, ["权限不足，无法创建目录"]
     except FileExistsError:
-        print("路径已存在，且不是目录。")
-        return False, ["路径已存在，且不是目录。"]
+        print("路径已存在，且不是目录")
+        return False, ["路径已存在，且不是目录"]
     except Exception as e:
         print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}。"]
+        return False, [f"创建目录时出错：{e}"]
 
     try:
         # 加载视频
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
-            print("无法加载视频。")
-            return False, ["无法加载视频。"]
+            print("无法加载视频")
+            return False, ["无法加载视频"]
         else:
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -94,7 +94,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
             return True, extracted_images
     except Exception as e:
         print(f"截图出错：{e}")
-        return False, [f"截图出错：{e}。"]
+        return False, [f"截图出错：{e}"]
 
 
 def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
@@ -105,13 +105,13 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, s
             print("已创建输出路径。")
     except PermissionError:
         print("权限不足，无法创建目录。")
-        return False, ["权限不足，无法创建目录。"]
+        return False, ["权限不足，无法创建目录"]
     except FileExistsError:
         print("路径已存在，且不是目录。")
-        return False, ["路径已存在，且不是目录。"]
+        return False, ["路径已存在，且不是目录"]
     except Exception as e:
         print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}。"]
+        return False, [f"创建目录时出错：{e}"]
     video_capture = None
     try:
         video_capture = cv2.VideoCapture(video_path)
@@ -145,7 +145,7 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, s
 
         # 处理图像数量小于预期的情况
         if len(images) < (thumbnail_cols * thumbnail_rows):
-            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_cols * thumbnail_rows} 张。")
+            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_cols * thumbnail_rows} 张")
 
         resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_rows, fy=1.0 / thumbnail_rows) for image in
                           images]
@@ -167,11 +167,11 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, s
         cv2.imwrite(thumbnail_path, concatenated_image)
 
     except Exception as e:
-        print(f"发生异常: {e}。")
+        print(f"发生异常: {e}")
         return False, str(e)
 
     finally:
         video_capture.release()
 
-    print(f"拼接后的图像已保存到{thumbnail_path}。")
+    print(f"拼接后的图像已保存到{thumbnail_path}")
     return True, thumbnail_path

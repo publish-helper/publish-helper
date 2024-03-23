@@ -265,18 +265,20 @@ def api_get_video_info():
     path = request.args.get('path', default='', type=str)
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
-        get_video_info_success, output = get_video_info(video_path)
+        get_video_info_success, response = get_video_info(video_path)
         if get_video_info_success:
-            print("获取到关键参数：" + str(output))
-            video_format = output[0]
-            video_codec = output[1]
-            bit_depth = output[2]
-            hdr_format = output[3]
-            frame_rate = output[4]
-            audio_codec = output[5]
-            channels = output[6]
+            print("获取到关键参数：" + str(response))
+            video_format = response[0]
+            video_codec = response[1]
+            bit_depth = response[2]
+            hdr_format = response[3]
+            frame_rate = response[4]
+            audio_codec = response[5]
+            channels = response[6]
             return jsonify({
                 "data": {
+                    "code": "OK",
+                    "message": "获取视频关键参数成功。",  # 提示信息
                     "videoPath": video_path,
                     "videoFormat": video_format,
                     "videoCodec": video_codec,
@@ -286,12 +288,29 @@ def api_get_video_info():
                     "audioCodec": audio_codec,
                     "channel": channels
                 },
-                "message": "获取视频关键参数成功。",  # 提示信息
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"获取视频关键参数失败：{response[0]}。",  # 提示信息
+                    "videoPath": video_path,
+                    "videoFormat": "",
+                    "videoCodec": "",
+                    "bitDepth": "",
+                    "hdrFormat": "",
+                    "frameRate": "",
+                    "audioCodec": "",
+                    "channel": "",
+                },
                 "success": True
             })
     else:
         return jsonify({
             "data": {
+                "code": "FILE_PATH_ERROR",
+                "message": f"获取视频路径失败，{video_path}。",  # 提示信息
                 "videoPath": "",
                 "videoFormat": "",
                 "videoCodec": "",
@@ -301,7 +320,6 @@ def api_get_video_info():
                 "audioCodec": "",
                 "channel": ""
             },
-            "message": f"获取视频路径失败，{video_path}",  # 提示信息
             "success": True
         })
 
@@ -318,17 +336,19 @@ def api_get_pt_gen_description():
     if get_pt_gen_description_success:
         return jsonify({
             "data": {
+                "code": "OK",
+                "message": "获取PT-Gen简介成功。",  # 提示信息
                 "description": response
             },
-            "message": "获取PT-Gen简介成功。",  # 提示信息
             "success": True
         })
     else:
         return jsonify({
             "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"获取PT-Gen简介失败，{response}。",  # 提示信息
                 "description": ""
             },
-            "message": f"获取PT-Gen简介失败，{response}",  # 提示信息
             "success": True
         })
 
@@ -340,7 +360,8 @@ def api_get_pt_gen_info():
     description = request.args.get('description', default='', type=str)
     if description and description != '':
         try:
-            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(description)
+            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+                description)
             print(original_title, english_title, year, other_names_sorted, category, actors_list)
             actors = ''
             other_titles = ''
@@ -348,7 +369,7 @@ def api_get_pt_gen_info():
             for data in actors_list:  # 把演员名转化成str
                 if is_first:
                     actors += data
-                    is_first = True
+                    is_first = False
                 else:
                     actors += ' / '
                     actors += data
@@ -358,6 +379,8 @@ def api_get_pt_gen_info():
             other_titles = other_titles[: -3]
             return jsonify({
                 "data": {
+                    "code": "OK",
+                    "message": "获取PT-Gen简介关键参数成功。",  # 提示信息
                     "originalTitle": original_title,
                     "englishTitle": english_title,
                     "year": year,
@@ -365,12 +388,13 @@ def api_get_pt_gen_info():
                     "category": category,
                     "actors": actors
                 },
-                "message": "获取PT-Gen简介关键参数成功。",  # 提示信息
                 "success": True
             })
         except Exception as e:
             return jsonify({
                 "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"对于简介的分析有错误：{e}。",  # 提示信息
                     "originalTitle": "",
                     "englishTitle": "",
                     "year": "",
@@ -378,12 +402,13 @@ def api_get_pt_gen_info():
                     "category": "",
                     "actors": ""
                 },
-                "message": f"对于简介的分析有错误：{e}",  # 提示信息
                 "success": True
             })
     else:
         return jsonify({
             "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "您输入的简介为空。",  # 提示信息
                 "originalTitle": "",
                 "englishTitle": "",
                 "year": "",
@@ -391,6 +416,5 @@ def api_get_pt_gen_info():
                 "category": "",
                 "actors": ""
             },
-            "message": "您输入的简介为空。",  # 提示信息
             "success": True
         })
