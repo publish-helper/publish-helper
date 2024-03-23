@@ -7,50 +7,53 @@ from pymediainfo import MediaInfo
 from tool import get_settings
 
 
-def get_pt_gen_info(data):
+def get_pt_gen_info(description):
+    description = description.replace("\\n", "\n")
+    description = description.replace("\\\n", "\\n")
+    print(description)
     # 正则表达式
-    year_match = re.search(r"◎年　　代\s*(\d{4})", data)
-    category_match = re.search(r"◎类　　别\s*([^\n]*)", data)
+    year_match = re.search(r"◎年　　代\s*(\d{4})", description)
+    category_match = re.search(r"◎类　　别\s*([^\n]*)", description)
 
     # 正则表达式获取名称
     pattern = r"◎片　　名　(.*?)\n|◎译　　名　(.*?)\n"
-    matches = re.findall(pattern, data)
+    matches = re.findall(pattern, description)
 
     # 将片名放第一位
     if matches:
         matches.insert(0, matches.pop())
 
-    # Extract and separate the names
-    names = [name for match in matches for name in match if name]
-    separated_names = [name.strip() for names_group in names for name in names_group.split('/')]
-    print("获取的名称" + str(separated_names))
+    # Extract and separate the titles
+    titles = [title for match in matches for title in match if title]
+    separated_titles = [title.strip() for titles_group in titles for title in titles_group.split('/')]
+    print("获取的名称" + str(separated_titles))
 
-    english_name = ""
+    english_title = ""
     english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$"
-    for name in separated_names:
-        if re.match(english_pattern, name):
-            english_name += name
-            print("英文名称是 " + name)
+    for title in separated_titles:
+        if re.match(english_pattern, title):
+            english_title += title
+            print("英文名称是 " + title)
             break
 
-    original_name = ""
+    original_title = ""
     original_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
                         r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
-    for name in separated_names:
-        if re.search(original_pattern, name) and not re.match(english_pattern, name):
-            original_name += name
-            print("原始名称是 " + name)
+    for title in separated_titles:
+        if re.search(original_pattern, title) and not re.match(english_pattern, title):
+            original_title += title
+            print("原始名称是 " + title)
             break
-    print("所有名称是 " + str(separated_names))
-    other_names = [name for name in separated_names if name not in [english_name, original_name]]
-    print("其他名称是 " + str(other_names))
+    print("所有名称是 " + str(separated_titles))
+    other_titles = [title for title in separated_titles if title not in [english_title, original_title]]
+    print("其他名称是 " + str(other_titles))
 
     # 类别
     category = category_match.group(1).strip() if category_match else None
 
     # 正则表达式匹配“◎主　　演”行和接下来的四行
     actor_pattern = r'◎主　　演\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n' or r'◎演　　员\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n'
-    actor_match = re.search(actor_pattern, data, re.DOTALL)
+    actor_match = re.search(actor_pattern, description, re.DOTALL)
 
     actors = []
     if actor_match:
@@ -63,13 +66,13 @@ def get_pt_gen_info(data):
                     break
     if '◎语　　言' in category:
         category = "暂无分类"
-    print("原始名称:", original_name)
-    print("英文名称:", english_name)
+    print("原始名称:", original_title)
+    print("英文名称:", english_title)
     print("年份:", year_match.group(1) if year_match else None)
-    print("其他名称:", other_names)
+    print("其他名称:", other_titles)
     print("类别:", category)
     print("演员:", str(actors))
-    return original_name, english_name, year_match.group(1) if year_match else None, other_names, category, actors
+    return original_title, english_title, year_match.group(1) if year_match else None, other_titles, category, actors
 
 
 def get_video_info(file_path):

@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 from mediainfo import get_media_info
 from ptgen import get_pt_gen_description
-from rename import get_video_info
+from rename import get_video_info, get_pt_gen_info
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings
 
@@ -23,43 +23,6 @@ def api_add_numbers():
     result = a + b
     # 返回结果
     return jsonify({'result': result})
-
-
-@api.route('/api/getMediaInfo', methods=['GET'])
-# 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
-def api_get_media_info():
-    # 从请求URL中获取path
-    path = request.args.get('path', default='', type=str)
-    is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
-    if is_video_path == 1 or is_video_path == 2:
-        get_media_info_success, response = get_media_info(video_path)
-        if get_media_info_success:
-            return jsonify({
-                "data": {
-                    "mediaInfo": response,
-                    "videoPath": video_path
-                },
-                "message": "获取MediaInfo成功。",  # 提示信息
-                "success": True
-            })
-        else:
-            return jsonify({
-                "data": {
-                    "mediaInfo": "",
-                    "videoPath": video_path,
-                },
-                "message": f"获取视频路径成功，但是获取MediaInfo失败，错误：{response}",  # 提示信息
-                "success": False
-            })
-    else:
-        return jsonify({
-            "data": {
-                "mediaInfo": "",
-                "videoPath": ""
-            },
-            "message": f"获取视频路径失败，{video_path}",  # 提示信息
-            "success": False
-        })
 
 
 @api.route('/api/getScreenshot', methods=['GET'])
@@ -96,72 +59,79 @@ def api_get_screenshot():
                                 screenshot_number += 1
                             return jsonify({
                                 "data": {
+                                    "code": "OK",
+                                    "message": "获取截图成功。",  # 提示信息
                                     "screenshotNumber": str(screenshot_number),
                                     "screenshotPath": screenshot_path,
                                     "videoPath": video_path
                                 },
-                                "message": "获取截图成功。",  # 提示信息
                                 "success": True
                             })
                         else:
                             return jsonify({
                                 "data": {
+                                    "code": "GENERAL_ERROR",
+                                    "message": f"获取截图失败：{response[0]}",  # 提示信息
                                     "screenshotNumber": "0",
                                     "screenshotPath": "",
                                     "videoPath": video_path
                                 },
-                                "message": f"获取截图失败：{response[0]}",  # 提示信息
-                                "success": False
+                                "success": True
                             })
                     else:
                         return jsonify({
                             "data": {
+                                "code": "FILE_PATH_ERROR",
+                                "message": f"获取视频路径失败，{video_path}",  # 提示信息
                                 "screenshotNumber": "0",
                                 "screenshotPath": "",
                                 "videoPath": ""
                             },
-                            "message": f"获取视频路径失败，{video_path}",  # 提示信息
-                            "success": False
+                            "success": True
                         })
                 else:
                     return jsonify({
                         "data": {
+                            "code": "VALUE_RELATIONSHIP_ERROR",
+                            "message": "截图起始点不能大于终止点。",  # 提示信息
                             "screenshotNumber": "0",
                             "screenshotPath": "",
                             "videoPath": ""
                         },
-                        "message": "截图起始点不能大于终止点。",  # 提示信息
-                        "success": False
+                        "success": True
                     })
             else:
                 return jsonify({
                     "data": {
+                        "code": "VALUE_RANGE_ERROR",
+                        "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
                         "screenshotNumber": "0",
                         "screenshotPath": "",
                         "videoPath": ""
                     },
-                    "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
-                    "success": False
+                    "success": True
                 })
         else:
             return jsonify({
                 "data": {
+                    "code": "VALUE_RANGE_ERROR",
+                    "message": "一次获取的截图数量不能大于5张。",  # 提示信息
                     "screenshotNumber": "0",
                     "screenshotPath": "",
                     "videoPath": ""
                 },
-                "message": "一次获取的截图数量不能大于5张。",  # 提示信息
-                "success": False
+                "success": True
             })
     else:
         return jsonify({
             "data": {
+                "code": "VALUE_RANGE_ERROR",
+                "message": "一次获取的截图数量不能小于1张。",  # 提示信息
                 "screenshotNumber": "0",
                 "screenshotPath": "",
                 "videoPath": "",
             },
-            "message": "一次获取的截图数量不能小于1张。",  # 提示信息
-            "success": False
+            "success": True
         })
 
 
@@ -189,56 +159,102 @@ def api_get_thumbnail():
                     if get_thumbnail_success:
                         return jsonify({
                             "data": {
+                                "code": "OK",
+                                "message": "获取截图成功。",  # 提示信息
                                 "thumbnailPath": response,
                                 "videoPath": video_path
                             },
-                            "message": "获取截图成功。",  # 提示信息
                             "success": True
                         })
                     else:
                         return jsonify({
                             "data": {
+                                "code": "GENERAL_ERROR",
+                                "message": f"获取截图失败：{response}",  # 提示信息
                                 "thumbnailPath": "",
                                 "videoPath": video_path
                             },
-                            "message": f"获取截图失败：{response}",  # 提示信息
-                            "success": False
+                            "success": True
                         })
                 else:
                     return jsonify({
                         "data": {
+                            "code": "FILE_PATH_ERROR",
+                            "message": f"获取视频路径失败，{video_path}",  # 提示信息
                             "thumbnailPath": "",
                             "videoPath": ""
                         },
-                        "message": f"获取视频路径失败，{video_path}",  # 提示信息
-                        "success": False
+                        "success": True
                     })
             else:
                 return jsonify({
                     "data": {
+                        "code": "VALUE_RELATIONSHIP_ERROR",
+                        "message": "截图起始点不能大于终止点。",  # 提示信息
                         "thumbnailPath": "",
                         "videoPath": ""
                     },
-                    "message": "截图起始点不能大于终止点。",  # 提示信息
-                    "success": False
+                    "success": True
                 })
         else:
             return jsonify({
                 "data": {
+                    "code": "VALUE_RANGE_ERROR",
+                    "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
                     "thumbnailPath": "",
                     "videoPath": ""
                 },
-                "message": "截图起始点和终止点不能小于0或大于1。",  # 提示信息
-                "success": False
+                "success": True
             })
     else:
         return jsonify({
             "data": {
+                "code": "VALUE_RANGE_ERROR",
+                "message": "缩略图横向、纵向数量均需要大于0。",  # 提示信息
                 "thumbnailPath": "",
                 "videoPath": ""
             },
-            "message": "缩略图横向、纵向数量均需要大于0。",  # 提示信息
-            "success": False
+            "success": True
+        })
+
+
+@api.route('/api/getMediaInfo', methods=['GET'])
+# 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
+def api_get_media_info():
+    # 从请求URL中获取path
+    path = request.args.get('path', default='', type=str)
+    is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+    if is_video_path == 1 or is_video_path == 2:
+        get_media_info_success, response = get_media_info(video_path)
+        if get_media_info_success:
+            return jsonify({
+                "data": {
+                    "code": "OK",
+                    "message": "获取MediaInfo成功。",  # 提示信息
+                    "mediaInfo": response,
+                    "videoPath": video_path
+                },
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"获取视频路径成功，但是获取MediaInfo失败，错误：{response}。",  # 提示信息
+                    "mediaInfo": "",
+                    "videoPath": video_path
+                },
+                "success": True
+            })
+    else:
+        return jsonify({
+            "data": {
+                "code": "FILE_PATH_ERROR",
+                "message": f"获取视频路径失败，{video_path}。",  # 提示信息
+                "mediaInfo": "",
+                "videoPath": ""
+            },
+            "success": True
         })
 
 
@@ -286,7 +302,7 @@ def api_get_video_info():
                 "channel": ""
             },
             "message": f"获取视频路径失败，{video_path}",  # 提示信息
-            "success": False
+            "success": True
         })
 
 
@@ -313,5 +329,68 @@ def api_get_pt_gen_description():
                 "description": ""
             },
             "message": f"获取PT-Gen简介失败，{response}",  # 提示信息
-            "success": False
+            "success": True
+        })
+
+
+@api.route('/api/getPtGenInfo', methods=['GET'])
+# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+def api_get_pt_gen_info():
+    # 从请求URL中获取参数
+    description = request.args.get('description', default='', type=str)
+    if description and description != '':
+        try:
+            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(description)
+            print(original_title, english_title, year, other_names_sorted, category, actors_list)
+            actors = ''
+            other_titles = ''
+            is_first = True
+            for data in actors_list:  # 把演员名转化成str
+                if is_first:
+                    actors += data
+                    is_first = True
+                else:
+                    actors += ' / '
+                    actors += data
+            for data in other_names_sorted:  # 把别名转化为str
+                other_titles += data
+                other_titles += ' / '
+            other_titles = other_titles[: -3]
+            return jsonify({
+                "data": {
+                    "originalTitle": original_title,
+                    "englishTitle": english_title,
+                    "year": year,
+                    "otherTitles": other_titles,
+                    "category": category,
+                    "actors": actors
+                },
+                "message": "获取PT-Gen简介关键参数成功。",  # 提示信息
+                "success": True
+            })
+        except Exception as e:
+            return jsonify({
+                "data": {
+                    "originalTitle": "",
+                    "englishTitle": "",
+                    "year": "",
+                    "otherTitles": "",
+                    "category": "",
+                    "actors": ""
+                },
+                "message": f"对于简介的分析有错误：{e}",  # 提示信息
+                "success": True
+            })
+    else:
+        return jsonify({
+            "data": {
+                "originalTitle": "",
+                "englishTitle": "",
+                "year": "",
+                "otherTitles": "",
+                "category": "",
+                "actors": ""
+            },
+            "message": "您输入的简介为空。",  # 提示信息
+            "success": True
         })

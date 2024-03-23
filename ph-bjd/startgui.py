@@ -448,7 +448,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         self.debugBrowserMovie.append("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+                            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
@@ -460,9 +460,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return False, [
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！"]
-                        print(original_title, en_title, year, other_names_sorted, category, actors_list)
+                        print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
-                            "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
+                            "分析后的结果为：" + original_title + english_title + year + str(other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
@@ -488,14 +488,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                     widget = QWidget(self)
                     if original_title != '':
-                        if en_title == '':
+                        if english_title == '':
                             ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
                                                          '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
                             print('你的选择是', ok)
                             if ok == QMessageBox.StandardButton.Yes:
-                                en_title = chinese_name_to_pinyin(original_title)
-                            if not re.match(english_pattern, en_title):
+                                english_title = chinese_name_to_pinyin(original_title)
+                            if not re.match(english_pattern, english_title):
                                 print("first_english_name does not match the english_pattern.")
                                 if ok == QMessageBox.StandardButton.Yes:
                                     QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
@@ -504,9 +504,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 if ok:
                                     print(f'您输入的数据为: {text}')
                                     self.debugBrowserMovie.append(f'您输入的数据为: {text}')
-                                    en_title = text.replace('.', ' ')
+                                    english_title = text.replace('.', ' ')
                                     invalid_characters = ''
-                                    for char in en_title:
+                                    for char in english_title:
                                         if not re.match(english_pattern, char):
                                             invalid_characters += char
                                     print("不匹配的字符：", invalid_characters)
@@ -519,7 +519,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 else:
                                     print('未输入任何数据')
                                     self.debugBrowserMovie.append('未输入任何数据')
-                                    en_title = ''
+                                    english_title = ''
                     get_video_info_success, output = get_video_info(video_path)
                     if get_video_info_success:
                         print("获取到关键参数：" + str(output))
@@ -535,20 +535,20 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     team = self.teamMovie.currentText()
                     print("关键参数赋值成功")
                     self.debugBrowserMovie.append("关键参数赋值成功")
-                    main_title = get_name_from_example(en_title, original_title, "", "", year,
+                    main_title = get_name_from_example(english_title, original_title, "", "", year,
                                                        video_format, source, video_codec, bit_depth, hdr_format,
                                                        frame_rate, audio_codec, channels, team, other_titles, "",
                                                        "", "", category, actors, "main_title_movie")
                     main_title = main_title.replace('_', ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(en_title, original_title, "", "", year, video_format,
+                    second_title = get_name_from_example(english_title, original_title, "", "", year, video_format,
                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
                                                          audio_codec, channels, team, other_titles, "", "", "",
                                                          category, actors, "second_title_movie")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
-                    file_name = get_name_from_example(en_title, original_title, "", "", year, video_format,
+                    file_name = get_name_from_example(english_title, original_title, "", "", year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                                       audio_codec, channels, team, other_titles, "", "",
                                                       "",
@@ -675,8 +675,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         team += self.teamTV.currentText()
         source += self.sourceTV.currentText()
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team,
-                                            source)
+                                            team, source)
         self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
@@ -958,7 +957,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())
                 english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                 widget = QWidget(self)
-                if is_video_path == 1 or is_video_path == 2:  # 视频路径是文件夹
+                if is_video_path == 1 or is_video_path == 2:  # 视频路径是文件或文件夹
                     get_video_files_success, video_files = get_video_files(
                         self.videoPathTV.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
                     if get_video_files_success:
@@ -985,7 +984,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+                            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
@@ -997,23 +996,23 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return False, [
                                 f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！"]
-                        print(original_title, en_title, year, other_names_sorted, category, actors_list)
+                        print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
-                            "分析后的结果为：" + original_title + en_title + year + str(other_names_sorted) + category +
+                            "分析后的结果为：" + original_title + english_title + year + str(other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
                             return
                         if original_title != '':
-                            if en_title == '':
+                            if english_title == '':
                                 ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
                                                              '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
                                 print('你的选择是', ok)
                                 if ok == QMessageBox.StandardButton.Yes:
-                                    en_title = chinese_name_to_pinyin(original_title)
-                                if not re.match(english_pattern, en_title):
+                                    english_title = chinese_name_to_pinyin(original_title)
+                                if not re.match(english_pattern, english_title):
                                     print("first_english_name does not match the english_pattern.")
                                     if ok == QMessageBox.StandardButton.Yes:
                                         QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
@@ -1022,9 +1021,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     if ok:
                                         print(f'您输入的数据为: {text}')
                                         self.debugBrowserTV.append(f'您输入的数据为: {text}')
-                                        en_title = text.replace('.', ' ')
+                                        english_title = text.replace('.', ' ')
                                         invalid_characters = ''
-                                        for char in en_title:
+                                        for char in english_title:
                                             if not re.match(english_pattern, char):
                                                 invalid_characters += char
                                         print("不匹配的字符：", invalid_characters)
@@ -1037,8 +1036,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     else:
                                         print('未输入任何数据')
                                         self.debugBrowserTV.append('未输入任何数据')
-                                        en_title = ''
-                        print(original_title, en_title, year, other_names_sorted, category,
+                                        english_title = ''
+                        print(original_title, english_title, year, other_names_sorted, category,
                               actors_list)
                         print("获取Pt-Gen关键信息成功")
                         self.debugBrowserTV.append("获取Pt-Gen关键信息成功")
@@ -1070,12 +1069,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     team = self.teamTV.currentText()
                     print("关键参数赋值成功")
                     self.debugBrowserTV.append("关键参数赋值成功")
-                    main_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                    main_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec,
-                                                       channels, team, other_titles, season_number, total_episode, "",
-                                                       category,
-                                                       actors, "main_title_tv")
+                                                       audio_codec, channels, team, other_titles, season_number,
+                                                       total_episode, "", category, actors, "main_title_tv")
                     main_title = main_title.replace(lowercase_season_info_without_spaces, ' ')
                     main_title = main_title.replace(uppercase_season_info_without_spaces, ' ')
                     main_title = main_title.replace(lowercase_season_info_with_spaces, ' ')
@@ -1086,19 +1083,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     main_title = main_title.replace(main_title_special_roman_season_name, ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                    second_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
                                                          audio_codec, channels, team, other_titles, season_number,
-                                                         total_episode, "",
-                                                         category, actors, "second_title_tv")
+                                                         total_episode, "", category, actors, "second_title_tv")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
-                    file_name = get_name_from_example(en_title, original_title, season, '@@', year, video_format,
+                    file_name = get_name_from_example(english_title, original_title, season, '@@', year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                                       audio_codec, '^&' + channels, team, other_titles, season_number,
-                                                      total_episode,
-                                                      "",
-                                                      category, actors, "file_name_tv")
+                                                      total_episode, "", category, actors, "file_name_tv")
                     file_name = file_name.replace(lowercase_season_info_without_spaces, '.')
                     file_name = file_name.replace(uppercase_season_info_without_spaces, '.')
                     file_name = file_name.replace(lowercase_season_info_with_spaces, '.')
@@ -1124,8 +1118,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return
                     if is_filename_too_long(file_name):
                         text, ok = QInputDialog.getText(self, '警告',
-                                                        '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal,
-                                                        file_name)
+                                                        '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal, file_name)
                         if ok:
                             print(f'您修改文件名为: {text}')
                             self.debugBrowserTV.append(f'您修改文件名为: {text}')
@@ -1468,7 +1461,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         try:
             self.get_description_playlet_clicked()
             original_title = self.originalNameEditPlaylet.text()
-            en_title = ''
+            english_title = ''
             english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
             widget = QWidget(self)
             if original_title != '':
@@ -1478,8 +1471,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
                     print('你的选择是', ok)
                     if ok == QMessageBox.StandardButton.Yes:
-                        en_title = chinese_name_to_pinyin(original_title)
-                    if not re.match(english_pattern, en_title):
+                        english_title = chinese_name_to_pinyin(original_title)
+                    if not re.match(english_pattern, english_title):
                         print("first_english_name does not match the english_pattern.")
                         if ok == QMessageBox.StandardButton.Yes:
                             QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
@@ -1488,9 +1481,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         if ok:
                             print(f'您输入的数据为: {text}')
                             self.debugBrowserTV.append(f'您输入的数据为: {text}')
-                            en_title = text.replace('.', ' ')
+                            english_title = text.replace('.', ' ')
                             invalid_characters = ''
-                            for char in en_title:
+                            for char in english_title:
                                 if not re.match(english_pattern, char):
                                     invalid_characters += char
                             print("不匹配的字符：", invalid_characters)
@@ -1502,7 +1495,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         else:
                             print('未输入任何数据')
                             self.debugBrowserTV.append('未输入任何数据')
-                            en_title = ''
+                            english_title = ''
                 year = self.yearEditPlaylet.text()
                 season = self.seasonBoxPlaylet.text()
                 total_episode = ""
@@ -1555,21 +1548,21 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     category = self.get_category()
                     print('类型为：' + category)
                     self.debugBrowserPlaylet.append('类型为：' + category)
-                    main_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                    main_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec,
                                                        channels, team, "", season_number, total_episode, type, category,
                                                        "", "main_title_playlet")
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(en_title, original_title, season, "", year, video_format,
+                    second_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
                                                          audio_codec, channels, team, "", season_number, total_episode,
                                                          type,
                                                          category, "", "second_title_playlet")
                     print("SecondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                    file_name = get_name_from_example(en_title, original_title, season, '@@', year, video_format,
+                    file_name = get_name_from_example(english_title, original_title, season, '@@', year, video_format,
                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                                       audio_codec, channels, team, "", season_number, total_episode,
                                                       type,
