@@ -27,7 +27,7 @@ def api_add_numbers():
 # 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
 def api_get_media_info():
     # 从请求URL中获取path
-    path = request.args.get('path', default=0, type=str)
+    path = request.args.get('path', default='', type=str)
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
         get_media_info_success, media_info = get_media_info(video_path)
@@ -74,26 +74,46 @@ def api_get_screenshot():
     screenshot_min_interval_percentage = float(request.args.get('screenshotMinIntervalPercentage', default="0.01", type=str))
     if screenshot_number > 0:
         if screenshot_number < 6:
-            is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
-            if is_video_path == 1 or is_video_path == 2:
-                screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
-                                                              screenshot_threshold, screenshot_start_percentage,
-                                                              screenshot_end_percentage, screenshot_min_interval_percentage)
-                if screenshot_success:
-                    screenshot_path = ''
-                    screenshot_number = 0
-                    for r in response:
-                        screenshot_path += r
-                        screenshot_path += '\n'
-                        screenshot_number += 1
-                    return jsonify({
-                        "success": True,
-                        "data": {
-                            "screenshotNumber": str(screenshot_number),
-                            "screenshotPath": screenshot_path
-                        },
-                        "message": "获取截图成功。"  # 提示信息
-                    })
+            if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
+                if screenshot_start_percentage < screenshot_end_percentage:
+                    is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+                    if is_video_path == 1 or is_video_path == 2:
+                        screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+                                                                      screenshot_threshold, screenshot_start_percentage,
+                                                                      screenshot_end_percentage, screenshot_min_interval_percentage)
+                        if screenshot_success:
+                            screenshot_path = ''
+                            screenshot_number = 0
+                            for r in response:
+                                screenshot_path += r
+                                screenshot_path += '\n'
+                                screenshot_number += 1
+                            return jsonify({
+                                "success": True,
+                                "data": {
+                                    "screenshotNumber": str(screenshot_number),
+                                    "screenshotPath": screenshot_path
+                                },
+                                "message": "获取截图成功。"  # 提示信息
+                            })
+                        else:
+                            return jsonify({
+                                "success": False,
+                                "data": {
+                                    "screenshotNumber": "0",
+                                    "screenshotPath": ""
+                                },
+                                "message": response[0]  # 提示信息
+                            })
+                    else:
+                        return jsonify({
+                            "success": False,
+                            "data": {
+                                "screenshotNumber": "0",
+                                "screenshotPath": ""
+                            },
+                            "message": "获取视频路径失败，您输入的路径错误。"  # 提示信息
+                        })
                 else:
                     return jsonify({
                         "success": False,
@@ -101,7 +121,7 @@ def api_get_screenshot():
                             "screenshotNumber": "0",
                             "screenshotPath": ""
                         },
-                        "message": response[0]  # 提示信息
+                        "message": "截图起始点不能大于终止点。"  # 提示信息
                     })
             else:
                 return jsonify({
@@ -110,7 +130,7 @@ def api_get_screenshot():
                         "screenshotNumber": "0",
                         "screenshotPath": ""
                     },
-                    "message": "获取视频路径失败，您输入的路径错误。"  # 提示信息
+                    "message": "截图起始点和终止点不能小于0或大于1。"  # 提示信息
                 })
         else:
             return jsonify({
