@@ -97,11 +97,12 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
         return False, [f"截图出错：{e}。"]
 
 
-def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, screenshot_start, screenshot_end):
+def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
+                  screenshot_end_percentage):
     try:
         if not os.path.exists(screenshot_path):
             os.makedirs(screenshot_path)
-            print("已创建输出路径")
+            print("已创建输出路径。")
     except PermissionError:
         print("权限不足，无法创建目录。")
         return False, ["权限不足，无法创建目录。"]
@@ -110,7 +111,7 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
         return False, ["路径已存在，且不是目录。"]
     except Exception as e:
         print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}"]
+        return False, [f"创建目录时出错：{e}。"]
     video_capture = None
     try:
         video_capture = cv2.VideoCapture(video_path)
@@ -121,15 +122,15 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
         total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
 
         # 计算开始和结束帧
-        start_frame = int(total_frames * screenshot_start)
-        end_frame = int(total_frames * screenshot_end)
+        start_frame = int(total_frames * screenshot_start_percentage)
+        end_frame = int(total_frames * screenshot_end_percentage)
 
         # 计算每张截取图像的时间间隔
-        interval = (end_frame - start_frame) // (thumbnail_rows * thumbnail_cols)
+        interval = (end_frame - start_frame) // (thumbnail_cols * thumbnail_rows)
 
         images = []
 
-        for i in range((thumbnail_rows * thumbnail_cols)):
+        for i in range((thumbnail_cols * thumbnail_rows)):
             frame_number = start_frame + i * interval
             if frame_number >= end_frame:
                 break
@@ -143,20 +144,18 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
             images.append(frame)
 
         # 处理图像数量小于预期的情况
-        if len(images) < (thumbnail_rows * thumbnail_cols):
-            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_rows * thumbnail_cols} 张")
+        if len(images) < (thumbnail_cols * thumbnail_rows):
+            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_cols * thumbnail_rows} 张。")
 
-        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_cols, fy=1.0 / thumbnail_cols) for image in
+        resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_rows, fy=1.0 / thumbnail_rows) for image in
                           images]
-
         border_size = 5
-        concatenated_image = np.ones((thumbnail_rows * (resized_images[0].shape[0] + 2 * border_size),
-                                      thumbnail_cols * (resized_images[0].shape[1] + 2 * border_size), 3),
+        concatenated_image = np.ones((thumbnail_cols * (resized_images[0].shape[0] + 2 * border_size),
+                                      thumbnail_rows * (resized_images[0].shape[1] + 2 * border_size), 3),
                                      dtype=np.uint8) * 255
-
-        for i in range(thumbnail_rows):
-            for j in range(thumbnail_cols):
-                index = i * thumbnail_cols + j
+        for i in range(thumbnail_cols):
+            for j in range(thumbnail_rows):
+                index = i * thumbnail_rows + j
                 if index >= len(resized_images):
                     break
                 y_offset = i * (resized_images[0].shape[0] + 2 * border_size) + border_size
@@ -164,16 +163,15 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_cols, thumbnail_rows, s
 
                 concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
                 x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
-
-        sv_path = generate_image_filename(screenshot_path)
-        cv2.imwrite(sv_path, concatenated_image)
+        thumbnail_path = generate_image_filename(screenshot_path)
+        cv2.imwrite(thumbnail_path, concatenated_image)
 
     except Exception as e:
-        print(f"发生异常: {e}")
+        print(f"发生异常: {e}。")
         return False, str(e)
 
     finally:
         video_capture.release()
 
-    print(f"拼接后的图像已保存到{sv_path}")
-    return True, sv_path
+    print(f"拼接后的图像已保存到{thumbnail_path}。")
+    return True, thumbnail_path
