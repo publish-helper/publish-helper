@@ -12,8 +12,8 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QM
 from autofeed import get_auto_feed_link
 from mediainfo import get_media_info
 from picturebed import upload_screenshot
-from ptgen import fetch_and_format_pt_gen_data
-from rename import extract_details_from_pt_gen, get_video_info, get_name_from_example
+from ptgen import get_pt_gen_description
+from rename import get_pt_gen_info, get_video_info, get_name_from_example
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
@@ -225,8 +225,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
             screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
             do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
-            rows = int(get_settings("thumbnail_rows"))
-            cols = int(get_settings("thumbnail_cols"))
+            thumbnail_rows = int(get_settings("thumbnail_rows"))
+            thumbnail_cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
@@ -237,10 +237,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                               screenshot_start_percentage, screenshot_end_percentage)
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                                                                      thumbnail_cols,
+                                                                      screenshot_start_percentage,
+                                                                      screenshot_end_percentage)
                 if get_thumbnail_success:
-                    res.append(sv_path)
+                    res.append(thumbnail_path)
             if screenshot_success:
                 res = response + res
                 self.debugBrowserMovie.append("成功获取截图：" + str(res))
@@ -444,7 +446,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         self.debugBrowserMovie.append("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_pt_gen(
+                            original_title, en_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
@@ -722,8 +724,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
             screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
             do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
-            rows = int(get_settings("thumbnail_rows"))
-            cols = int(get_settings("thumbnail_cols"))
+            thumbnail_rows = int(get_settings("thumbnail_rows"))
+            thumbnail_cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
@@ -734,10 +736,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                               screenshot_start_percentage, screenshot_end_percentage)
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                                                                      thumbnail_cols,
+                                                                      screenshot_start_percentage,
+                                                                      screenshot_end_percentage)
                 if get_thumbnail_success:
-                    res.append(sv_path)
+                    res.append(thumbnail_path)
             if screenshot_success:
                 res = response + res
                 self.debugBrowserTV.append("成功获取截图：" + str(res))
@@ -978,7 +982,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("开始获取Pt-Gen关键信息")
                         self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
                         try:
-                            original_title, en_title, year, other_names_sorted, category, actors_list = extract_details_from_pt_gen(
+                            original_title, en_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
@@ -1288,8 +1292,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
             screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
             do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
-            rows = int(get_settings("thumbnail_rows"))
-            cols = int(get_settings("thumbnail_cols"))
+            thumbnail_rows = int(get_settings("thumbnail_rows"))
+            thumbnail_cols = int(get_settings("thumbnail_cols"))
             auto_upload_screenshot = bool(get_settings("auto_upload_screenshot"))
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
@@ -1300,10 +1304,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, sv_path = get_thumbnail(video_path, screenshot_path, rows, cols,
-                                                               screenshot_start_percentage, screenshot_end_percentage)
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                                                                      thumbnail_cols, screenshot_start_percentage,
+                                                                      screenshot_end_percentage)
                 if get_thumbnail_success:
-                    res.append(sv_path)
+                    res.append(thumbnail_path)
             if screenshot_success:
                 res = response + res
                 self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
@@ -1517,8 +1522,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
                 is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
-                get_video_info_success, output = get_video_info(video_path)  # 通过视频获取视频的MI参数
-                print(get_video_info_success, output)
+                get_video_info_success, response = get_video_info(video_path)  # 通过视频获取视频的MI参数
+                print(get_video_info_success, response)
                 if is_video_path == 2:  # 视频路径是文件夹
                     get_video_files_success, video_files = get_video_files(
                         self.videoPathPlaylet.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
@@ -1534,14 +1539,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 total_episode = '第' + str(episode_start) + '-' + str(
                                     episode_start + episode_num - 1) + '集'
                     if get_video_info_success:
-                        self.debugBrowserPlaylet.append("获取到关键参数：" + str(output))
-                        video_format = output[0]
-                        video_codec = output[1]
-                        bit_depth = output[2]
-                        hdr_format = output[3]
-                        frame_rate = output[4]
-                        audio_codec = output[5]
-                        channels = output[6]
+                        self.debugBrowserPlaylet.append("获取到关键参数：" + str(response))
+                        video_format = response[0]
+                        video_codec = response[1]
+                        bit_depth = response[2]
+                        hdr_format = response[3]
+                        frame_rate = response[4]
+                        audio_codec = response[5]
+                        channels = response[6]
                     source = self.sourcePlaylet.currentText()
                     team = self.teamPlaylet.currentText()
                     type += self.typePlaylet.currentText()
@@ -1615,28 +1620,28 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
-                            rename_file_success, output = rename_file_with_same_extension(video_file,
+                            rename_file_success, response = rename_file_with_same_extension(video_file,
                                                                                           file_name.replace('@@', e))
 
                             if rename_file_success:
-                                self.videoPathPlaylet.setText(output)
-                                video_path = output
+                                self.videoPathPlaylet.setText(response)
+                                video_path = response
                                 self.debugBrowserPlaylet.append("视频成功重新命名为：" + video_path)
                             else:
-                                self.debugBrowserPlaylet.append("重命名失败：" + output)
+                                self.debugBrowserPlaylet.append("重命名失败：" + response)
                             i += 1
 
                         print("对文件夹重新命名")
                         self.debugBrowserPlaylet.append("开始对文件夹重新命名")
-                        rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
+                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
                                                                             replace('E@@', '').
                                                                             replace('@@', ''))
                         if rename_directory_success:
-                            self.videoPathPlaylet.setText(output)
-                            video_path = output
+                            self.videoPathPlaylet.setText(response)
+                            video_path = response
                             self.debugBrowserPlaylet.append("视频地址成功重新命名为：" + video_path)
                         else:
-                            self.debugBrowserPlaylet.append("重命名失败：" + output)
+                            self.debugBrowserPlaylet.append("重命名失败：" + response)
                 else:
                     self.debugBrowserPlaylet.append("您的视频文件路径有误")
             else:
@@ -1851,13 +1856,12 @@ class GetPtGenThread(QThread):
     def run(self):
         try:
             # 这里放置耗时的HTTP请求操作
-            get_success, response = fetch_and_format_pt_gen_data(self.api_url, self.resource_url)
+            get_pt_gen_description_success, response = get_pt_gen_description(self.api_url, self.resource_url)
 
             # 发送信号，包括请求的结果
             print("Pt-Gen请求成功，开始返回结果")
-            self.result_signal.emit(get_success, response)
+            self.result_signal.emit(get_pt_gen_description_success, response)
             print("返回结果成功")
-            # self.result_signal(upload_success,api_response)
         except Exception as e:
             print(f"异常发生: {e}")
             # 这里可以发射一个包含错误信息的信号
@@ -1913,7 +1917,6 @@ class MakeTorrentThread(QThread):
             print("Torrent请求成功，开始等待返回结果")
             self.result_signal.emit(get_success, response)
             print("返回结果成功")
-            # self.result_signal(upload_success,api_response)
         except Exception as e:
             print(f"异常发生: {e}")
             # 这里可以发射一个包含错误信息的信号

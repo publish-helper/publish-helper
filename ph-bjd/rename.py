@@ -7,7 +7,7 @@ from pymediainfo import MediaInfo
 from tool import get_settings
 
 
-def extract_details_from_pt_gen(data):
+def get_pt_gen_info(data):
     # 正则表达式
     year_match = re.search(r"◎年　　代\s*(\d{4})", data)
     category_match = re.search(r"◎类　　别\s*([^\n]*)", data)
@@ -29,7 +29,7 @@ def extract_details_from_pt_gen(data):
     english_pattern = r"^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$"
     for name in separated_names:
         if re.match(english_pattern, name):
-            english_name = name
+            english_name += name
             print("英文名称是 " + name)
             break
 
@@ -38,7 +38,7 @@ def extract_details_from_pt_gen(data):
                         r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
     for name in separated_names:
         if re.search(original_pattern, name) and not re.match(english_pattern, name):
-            original_name = name
+            original_name += name
             print("原始名称是 " + name)
             break
     print("所有名称是 " + str(separated_names))
@@ -85,7 +85,7 @@ def get_video_info(file_path):
         hdr_format = ""
         frame_rate = ""
         audio_codec = ""
-        channels = ""
+        channel = ""
         width = ""
         height = ""
         for track in media_info.tracks:
@@ -95,15 +95,15 @@ def get_video_info(file_path):
                 # ... 添加其他General信息
             elif track.track_type == "Video":
                 if track.other_width:
-                    width = track.other_width[0]
+                    width += track.other_width[0]
                 if track.other_width:
-                    height = track.other_height[0]
+                    height += track.other_height[0]
                 if track.other_format:
-                    video_codec = track.other_format[0]
+                    video_codec += track.other_format[0]
                 if track.other_hdr_format:
-                    hdr_format = track.other_hdr_format[0]
+                    hdr_format += track.other_hdr_format[0]
                 if track.other_bit_depth:
-                    bit_depth = track.other_bit_depth[0]
+                    bit_depth += track.other_bit_depth[0]
                 if track.writing_library:  # 判断是否为x26*重编码
                     if "x264" in track.writing_library:
                         video_codec = "x264"
@@ -115,24 +115,24 @@ def get_video_info(file_path):
                         # ... 添加其他Video信息
             elif track.track_type == "Audio":
                 audio_codec = track.commercial_name
-                channels = track.channel_layout
+                channel = track.channel_layout
                 break
                 # ... 添加其他Audio信息
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
-            video_format = width
+            video_format += width
         else:
-            video_format = height
+            video_format += height
         return True, [get_abbreviation(video_format), get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
-                      get_abbreviation(channels)]
+                      get_abbreviation(channel)]
     except OSError as e:
         # 文件路径相关的错误
-        print(f"文件路径错误: {e}")
-        return False, [f"文件路径错误: {e}"]
+        print(f"文件路径错误: {e}。")
+        return False, [f"文件路径错误: {e}。"]
     except Exception as e:
         # MediaInfo无法解析文件
-        print(f"无法解析文件: {e}")
-        return False, [f"无法解析文件: {e}"]
+        print(f"无法解析文件: {e}。")
+        return False, [f"无法解析文件: {e}。"]
 
 
 # 用于在分辨率中提取数字
@@ -148,16 +148,6 @@ def extract_numbers(string):
 
 
 def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
-    """
-    Gets the abbreviation for a given name from a specified JSON file.
-
-    Parameters:
-    original_name (str): The original name to find the abbreviation for.
-    json_file_path (str): Path to the JSON file containing abbreviations.
-
-    Returns:
-    str: Abbreviation if found in the JSON file, else returns the original name.
-    """
     print("开始对参数名称进行转化")
     try:
         with open(json_file_path, 'r') as file:
