@@ -19,7 +19,8 @@ from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese
+    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese, \
+    get_playlet_description
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
@@ -1242,7 +1243,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.descriptionBrowserPlaylet.setText('')
             original_title = self.originalNameEditPlaylet.text()
             if original_title:
-                year, area, type, language = '', '', '', ''
+                year, area, category, language = '', '', '', ''
                 year += self.yearEditPlaylet.text()
                 area += self.areaPlaylet.currentText()
                 category = self.get_category()
@@ -1250,12 +1251,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 season = self.seasonBoxPlaylet.text()
                 if season != '1':
                     original_title += ' 第' + num_to_chinese(int(season)) + '季'
-                self.descriptionBrowserPlaylet.append('\n◎片　　名　' + original_title)
-                self.descriptionBrowserPlaylet.append('◎年　　代　' + year)
-                self.descriptionBrowserPlaylet.append('◎产　　地　' + area)
-                self.descriptionBrowserPlaylet.append('◎类　　别　' + category)
-                self.descriptionBrowserPlaylet.append('◎语　　言　' + language)
-                self.descriptionBrowserPlaylet.append('◎简　　介　\n')
+                self.descriptionBrowserPlaylet.append(
+                    get_playlet_description(original_title, year, area, category, language, season))
             else:
                 self.debugBrowserPlaylet.append('您没有填写资源名称！')
         except Exception as e:
@@ -1621,7 +1618,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, response = rename_file_with_same_extension(video_file,
-                                                                                          file_name.replace('@@', e))
+                                                                                            file_name.replace('@@', e))
 
                             if rename_file_success:
                                 self.videoPathPlaylet.setText(response)
@@ -1634,8 +1631,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("对文件夹重新命名")
                         self.debugBrowserPlaylet.append("开始对文件夹重新命名")
                         rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
-                                                                            replace('E@@', '').
-                                                                            replace('@@', ''))
+                                                                              replace('E@@', '').
+                                                                              replace('@@', ''))
                         if rename_directory_success:
                             self.videoPathPlaylet.setText(response)
                             video_path = response

@@ -322,7 +322,12 @@ def check_path_and_find_video(path):
         return 0, '您提供的路径既不是文件也不是文件夹。'  # 路径既不是文件也不是文件夹
 
 
-# create_torrent("src", "out")
+def get_playlet_description(original_title, year, area, category, language, season):
+    if season != '1':
+        original_title += ' 第' + num_to_chinese(int(season)) + '季'
+    return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
+
+
 def create_torrent(folder_path, torrent_path):
     print(folder_path + '  ' + torrent_path)
     try:
