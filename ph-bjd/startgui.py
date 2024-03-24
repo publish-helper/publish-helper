@@ -219,7 +219,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserMovie.append("获取视频" + video_path + "的截图")
-            screenshot_path = get_settings("screenshot_path")  # 截图储存路径
+            screenshot_storage_path = get_settings("screenshot_storage_path")  # 截图储存路径
             picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
             picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
@@ -233,13 +233,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+            screenshot_success, response = get_screenshot(video_path, screenshot_storage_path, screenshot_number,
                                                           screenshot_threshold, screenshot_start_percentage,
                                                           screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
                                                                       thumbnail_cols,
                                                                       screenshot_start_percentage,
                                                                       screenshot_end_percentage)
@@ -630,10 +630,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def make_torrent_button_movie_clicked(self):
         is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            torrent_path = str(get_settings("torrent_path"))
+            torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)
-            self.debugBrowserMovie.append("开始将" + folder_path + "制作种子，储存在" + torrent_path)
-            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
+            self.debugBrowserMovie.append("开始将" + folder_path + "制作种子，储存在" + torrent_storage_path)
+            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_storage_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_movie_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserMovie.append("制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...")
@@ -718,7 +718,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserTV.append("获取视频" + video_path + "的截图")
-            screenshot_path = get_settings("screenshot_path")  # 截图储存路径
+            screenshot_storage_path = get_settings("screenshot_storage_path")  # 截图储存路径
             picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
             picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
@@ -732,13 +732,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+            screenshot_success, response = get_screenshot(video_path, screenshot_storage_path, screenshot_number,
                                                           screenshot_threshold, screenshot_start_percentage,
                                                           screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
                                                                       thumbnail_cols,
                                                                       screenshot_start_percentage,
                                                                       screenshot_end_percentage)
@@ -1177,10 +1177,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def make_torrent_button_tv_clicked(self):
         is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            torrent_path = str(get_settings("torrent_path"))
+            torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)
-            self.debugBrowserTV.append("开始将" + folder_path + "制作种子，储存在" + torrent_path)
-            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
+            self.debugBrowserTV.append("开始将" + folder_path + "制作种子，储存在" + torrent_storage_path)
+            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_storage_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_tv_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserTV.append("制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...")
@@ -1277,7 +1277,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserPlaylet.append("获取视频" + video_path + "的截图")
-            screenshot_path = get_settings("screenshot_path")  # 截图储存路径
+            screenshot_storage_path = get_settings("screenshot_storage_path")  # 截图储存路径
             picture_bed_path = get_settings("picture_bed_api_url")  # 图床地址
             picture_bed_token = get_settings("picture_bed_api_token")  # 图床Token
             screenshot_number = int(get_settings("screenshot_number"))
@@ -1291,13 +1291,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserPlaylet.append("图床参数获取成功，图床地址是：" + picture_bed_path + "\n开始执行截图函数")
             print("参数获取成功，开始执行截图函数")
             res = []
-            screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+            screenshot_success, response = get_screenshot(video_path, screenshot_storage_path, screenshot_number,
                                                           screenshot_threshold, screenshot_start_percentage,
                                                           screenshot_end_percentage, screenshot_min_interval=0.01)
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
                                                                       thumbnail_cols, screenshot_start_percentage,
                                                                       screenshot_end_percentage)
                 if get_thumbnail_success:
@@ -1646,10 +1646,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def make_torrent_button_playlet_clicked(self):
         is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            torrent_path = str(get_settings("torrent_path"))
+            torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)
-            self.debugBrowserPlaylet.append("开始将" + folder_path + "制作种子，储存在" + torrent_path)
-            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_path)
+            self.debugBrowserPlaylet.append("开始将" + folder_path + "制作种子，储存在" + torrent_storage_path)
+            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_storage_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_result_playlet)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserPlaylet.append("制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...")
@@ -1726,16 +1726,16 @@ class settings(QDialog, Ui_Settings):
     def selectScreenshotPathButtonClicked(self):
         path = get_folder_path()
         if path != '':
-            self.screenshotPath.setText(path)
+            self.screenshotStoragePath.setText(path)
 
     def selectTorrentPathButtonClicked(self):
         path = get_folder_path()
         if path != '':
-            self.torrentPath.setText(path)
+            self.torrentStoragePath.setText(path)
 
     def getSettings(self):
-        self.screenshotPath.setText(str(get_settings("screenshot_path")))
-        self.torrentPath.setText(str(get_settings("torrent_path")))
+        self.screenshotStoragePath.setText(str(get_settings("screenshot_storage_path")))
+        self.torrentStoragePath.setText(str(get_settings("torrent_storage_path")))
         self.ptGenApiUrl.setText(get_settings("pt_gen_api_url"))
         self.pictureBedApiUrl.setText(get_settings("picture_bed_api_url"))
         self.pictureBedApiToken.setText(get_settings("picture_bed_api_token"))
@@ -1769,8 +1769,8 @@ class settings(QDialog, Ui_Settings):
         self.openAutoFeedLink.setChecked(bool(get_settings("open_auto_feed_link")))
 
     def updateSettings(self):
-        update_settings("screenshot_path", self.screenshotPath.text())
-        update_settings("torrent_path", self.torrentPath.text())
+        update_settings("screenshot_storage_path", self.screenshotStoragePath.text())
+        update_settings("torrent_storage_path", self.torrentStoragePath.text())
         update_settings("pt_gen_api_url", self.ptGenApiUrl.text())
         update_settings("picture_bed_api_url", self.pictureBedApiUrl.text())
         update_settings("picture_bed_api_token", self.pictureBedApiToken.text())

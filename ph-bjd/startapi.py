@@ -33,16 +33,41 @@ def api_add_numbers():
 def api_get_screenshot():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
+
     screenshot_path = request.args.get('screenshotPath', default=get_settings("screenshot_path"), type=str)
-    screenshot_number = int(request.args.get('screenshotNumber', default=get_settings("screenshot_number"), type=str))
-    screenshot_threshold = float(
-        request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"), type=str))
-    screenshot_start_percentage = float(
-        request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str))
-    screenshot_end_percentage = float(
-        request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str))
-    screenshot_min_interval_percentage = float(
-        request.args.get('screenshotMinIntervalPercentage', default="0.01", type=str))
+    if screenshot_path == '':
+        screenshot_path = get_settings("screenshot_path")
+
+    screenshot_number = request.args.get('screenshotNumber', default=get_settings("screenshot_number"), type=str)
+    if screenshot_number == '':
+        screenshot_number = int(get_settings("screenshot_number"))
+    else:
+        screenshot_number = int(screenshot_number)
+
+    screenshot_threshold = request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"), type=str)
+    if screenshot_threshold == '':
+        screenshot_threshold = float(get_settings("screenshot_threshold"))
+    else:
+        screenshot_threshold = float(screenshot_threshold)
+
+    screenshot_start_percentage = request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str)
+    if screenshot_start_percentage == '':
+        screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+    else:
+        screenshot_start_percentage = float(screenshot_start_percentage)
+
+    screenshot_end_percentage = request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str)
+    if screenshot_end_percentage == '':
+        screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+    else:
+        screenshot_end_percentage = float(screenshot_end_percentage)
+
+    screenshot_min_interval_percentage = request.args.get('screenshotMinIntervalPercentage', default="0.01", type=str)
+    if screenshot_min_interval_percentage == '':
+        screenshot_min_interval_percentage = 0.01
+    else:
+        screenshot_min_interval_percentage = float(screenshot_min_interval_percentage)
+
     if screenshot_number > 0:
         if screenshot_number < 6:
             if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
@@ -143,13 +168,35 @@ def api_get_screenshot():
 def api_get_thumbnail():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
+
     screenshot_path = request.args.get('screenshotPath', default=get_settings("screenshot_path"), type=str)
-    thumbnail_rows = int(request.args.get('thumbnailRows', default=get_settings("thumbnail_rows"), type=str))
-    thumbnail_cols = int(request.args.get('thumbnailCols', default=get_settings("thumbnail_cols"), type=str))
-    screenshot_start_percentage = float(
-        request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str))
-    screenshot_end_percentage = float(
-        request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str))
+    if screenshot_path == '':
+        screenshot_path = get_settings("screenshot_path")
+
+    thumbnail_rows = request.args.get('thumbnailRows', default=get_settings("thumbnail_rows"), type=str)
+    if thumbnail_rows == '':
+        thumbnail_rows = int(get_settings("thumbnail_rows"))
+    else:
+        thumbnail_rows = int(thumbnail_rows)
+
+    thumbnail_cols = request.args.get('thumbnailCols', default=get_settings("thumbnail_cols"), type=str)
+    if thumbnail_cols == '':
+        thumbnail_cols = int(get_settings("thumbnail_cols"))
+    else:
+        thumbnail_cols = int(thumbnail_cols)
+
+    screenshot_start_percentage = request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str)
+    if screenshot_start_percentage == '':
+        screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+    else:
+        screenshot_start_percentage = float(screenshot_start_percentage)
+
+    screenshot_end_percentage = request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str)
+    if screenshot_end_percentage == '':
+        screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+    else:
+        screenshot_end_percentage = float(screenshot_end_percentage)
+
     if thumbnail_rows > 0 and thumbnail_cols > 0:
         if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
             if screenshot_start_percentage < screenshot_end_percentage:
@@ -226,8 +273,15 @@ def api_get_thumbnail():
 def api_upload_picture():
     # 从请求URL中获取参数
     picture_path = request.args.get('picturePath', default='', type=str)
+
     picture_bed_api_url = request.args.get('pictureBedApiUrl', default=get_settings("picture_bed_api_url"), type=str)
+    if picture_bed_api_url == '':
+        picture_bed_api_url = get_settings("picture_bed_api_url")
+
     picture_bed_api_token = request.args.get('pictureBedApiToken', default=get_settings("picture_bed_api_token"), type=str)
+    if picture_bed_api_token == '':
+        picture_bed_api_token = get_settings("picture_bed_api_token")
+
     if os.path.exists(picture_path):
         upload_picture_success, response = upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path)
         if upload_picture_success:
@@ -265,6 +319,7 @@ def api_upload_picture():
 def api_get_media_info():
     # 从请求URL中获取path
     path = request.args.get('path', default='', type=str)
+
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
         get_media_info_success, response = get_media_info(video_path)
@@ -305,6 +360,7 @@ def api_get_media_info():
 def api_get_video_info():
     # 从请求URL中获取path
     path = request.args.get('path', default='', type=str)
+
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
         get_video_info_success, response = get_video_info(video_path)
@@ -371,7 +427,11 @@ def api_get_video_info():
 def api_get_pt_gen_description():
     # 从请求URL中获取参数
     resource_url = request.args.get('resourceUrl', default='', type=str)
+
     pt_gen_api_url = request.args.get('ptGenApiUrl', default=get_settings("pt_gen_api_url"), type=str)
+    if pt_gen_api_url == '':
+        pt_gen_api_url = get_settings("pt_gen_api_url")
+
     if pt_gen_api_url == '':
         pt_gen_api_url = get_settings("pt_gen_api_url")
     get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
@@ -400,6 +460,7 @@ def api_get_pt_gen_description():
 def api_get_pt_gen_info():
     # 从请求URL中获取参数
     description = request.args.get('description', default='', type=str)
+
     if description and description != '':
         try:
             original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(

@@ -97,11 +97,11 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
         return False, [f"截图出错：{e}"]
 
 
-def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
+def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
                   screenshot_end_percentage):
     try:
-        if not os.path.exists(screenshot_path):
-            os.makedirs(screenshot_path)
+        if not os.path.exists(screenshot_storage_path):
+            os.makedirs(screenshot_storage_path)
             print("已创建输出路径。")
     except PermissionError:
         print("权限不足，无法创建目录。")
@@ -163,7 +163,7 @@ def get_thumbnail(video_path, screenshot_path, thumbnail_rows, thumbnail_cols, s
 
                 concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
                 x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
-        thumbnail_path = generate_image_filename(screenshot_path)
+        thumbnail_path = generate_image_filename(screenshot_storage_path)
         cv2.imwrite(thumbnail_path, concatenated_image)
 
     except Exception as e:

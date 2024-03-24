@@ -57,8 +57,8 @@ def get_settings(parameter_name):
         # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
         with open(settings_file, 'w', encoding='utf-8') as file:
             default_settings = {
-                "screenshot_path": "temp/pic",
-                "torrent_path": "temp/torrent",
+                "screenshot_storage_path": "temp/pic",
+                "torrent_storage_path": "temp/torrent",
                 "pt_gen_api_url": "https://ptgen.agsvpt.work/",
                 "picture_bed_api_url": "https://freeimage.host/api/1/upload",
                 "picture_bed_api_token": "6d207e02198a847aa98d0a2a901485a5",
@@ -98,8 +98,8 @@ def get_settings(parameter_name):
 
     # 设置参数的标准值
     standard_values = {
-        "screenshot_path": "temp/pic",
-        "torrent_path": "temp/torrent",
+        "screenshot_storage_path": "temp/pic",
+        "torrent_storage_path": "temp/torrent",
         "pt_gen_api_url": "https://ptgen.agsvpt.work/",
         "picture_bed_api_url": "https://freeimage.host/api/1/upload",
         "picture_bed_api_token": "6d207e02198a847aa98d0a2a901485a5",
@@ -328,19 +328,25 @@ def get_playlet_description(original_title, year, area, category, language, seas
     return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
 
 
-def make_torrent(folder_path, torrent_path):
-    print(folder_path + '  ' + torrent_path)
+# 为了防止出现意外，此方法默认只对文件夹做种子，如果传入的path是一个文件，那么会自动读取其上级文件夹
+def make_torrent(path, torrent_path):
+    print(path + '  ' + torrent_path)
     try:
         # 检查路径是否存在
-        if not os.path.exists(folder_path):
-            raise ValueError("Provided folder path does not exist.")
+        if not os.path.exists(path):
+            raise ValueError("提供的路径不存在")
 
-        # 检查路径是否指向一个非空目录或一个文件
-        if os.path.isdir(folder_path) and not os.listdir(folder_path):
-            raise ValueError("Provided folder path is empty.")
+        # 检查路径是否指向一个文件
+        if os.path.isfile(path):
+            # 如果是，获取文件的上级目录
+            path = os.path.dirname(path)
+
+        # 然后检查这个路径是否是一个非空目录
+        if os.path.isdir(path) and not os.listdir(path):
+            raise ValueError("路径指向一个空目录")
 
         # 构造完整的torrent文件路径
-        torrent_file_name = os.path.basename(folder_path.rstrip("/\\")) + '.torrent'
+        torrent_file_name = os.path.basename(path.rstrip("/\\")) + '.torrent'
         torrent_file_path = torrent_path + '/' + torrent_file_name
 
         # 确保torrent文件的目录存在
@@ -354,7 +360,7 @@ def make_torrent(folder_path, torrent_path):
         current_time = datetime.datetime.now()
 
         # 创建 Torrent 对象，添加当前时间作为创建时间
-        t = Torrent(path=folder_path, trackers=['http://tracker.example.com/announce'], created_by='Publish Helper',
+        t = Torrent(path=path, trackers=['http://tracker.example.com/announce'], created_by='Publish Helper',
                     creation_date=current_time)
 
         # 生成和写入 Torrent 文件

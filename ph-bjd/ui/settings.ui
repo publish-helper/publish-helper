@@ -337,7 +337,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="screenshotPath">
+            <widget class="QLineEdit" name="screenshotStoragePath">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;
@@ -461,7 +461,7 @@ QPushButton:pressed {
             </widget>
            </item>
            <item>
-            <widget class="QLineEdit" name="torrentPath">
+            <widget class="QLineEdit" name="torrentStoragePath">
              <property name="styleSheet">
               <string>QPushButton {
     display: inline-block;

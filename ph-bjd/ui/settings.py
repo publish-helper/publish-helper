@@ -67,11 +67,11 @@ class Ui_Settings(object):
         self.label_3 = QtWidgets.QLabel(parent=self.tab)
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
-        self.screenshotPath = QtWidgets.QLineEdit(parent=self.tab)
-        self.screenshotPath.setText("")
-        self.screenshotPath.setClearButtonEnabled(True)
-        self.screenshotPath.setObjectName("screenshotPath")
-        self.horizontalLayout_2.addWidget(self.screenshotPath)
+        self.screenshotStoragePath = QtWidgets.QLineEdit(parent=self.tab)
+        self.screenshotStoragePath.setText("")
+        self.screenshotStoragePath.setClearButtonEnabled(True)
+        self.screenshotStoragePath.setObjectName("screenshotStoragePath")
+        self.horizontalLayout_2.addWidget(self.screenshotStoragePath)
         self.selectScreenshotPathButton = QtWidgets.QPushButton(parent=self.tab)
         self.selectScreenshotPathButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
@@ -114,11 +114,11 @@ class Ui_Settings(object):
         self.label_12 = QtWidgets.QLabel(parent=self.tab)
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_3.addWidget(self.label_12)
-        self.torrentPath = QtWidgets.QLineEdit(parent=self.tab)
-        self.torrentPath.setText("")
-        self.torrentPath.setClearButtonEnabled(True)
-        self.torrentPath.setObjectName("torrentPath")
-        self.horizontalLayout_3.addWidget(self.torrentPath)
+        self.torrentStoragePath = QtWidgets.QLineEdit(parent=self.tab)
+        self.torrentStoragePath.setText("")
+        self.torrentStoragePath.setClearButtonEnabled(True)
+        self.torrentStoragePath.setObjectName("torrentStoragePath")
+        self.horizontalLayout_3.addWidget(self.torrentStoragePath)
         self.selectTorrentPathButton = QtWidgets.QPushButton(parent=self.tab)
         self.selectTorrentPathButton.setStyleSheet("QPushButton {\n"
 "    display: inline-block;\n"
@@ -749,7 +749,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_3.setText(_translate("Settings", "截图储存地址:"))
-        self.screenshotPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.screenshotStoragePath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
@@ -797,7 +797,7 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.label_12.setText(_translate("Settings", "种子储存地址:"))
-        self.torrentPath.setStyleSheet(_translate("Settings", "QPushButton {\n"
+        self.torrentStoragePath.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
