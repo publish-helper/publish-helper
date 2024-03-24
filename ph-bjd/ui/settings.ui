@@ -2054,7 +2054,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>

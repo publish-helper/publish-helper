@@ -1518,7 +1518,7 @@ class Ui_Settings(object):
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700;\">static/abbreviation.json</span>进行自定义</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#0000ff;\">蓝色选项</span>可通过修改<span style=\" font-weight:700;\">static目录</span>下对应的<span style=\" font-weight:700;\">json文件</span>进行自定义</p></body></html>"))
         self.nameTabWidget.setTabText(self.nameTabWidget.indexOf(self.tab_5), _translate("Settings", "短剧"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Settings", "命名"))
         self.label_28.setText(_translate("Settings", "链接:"))
