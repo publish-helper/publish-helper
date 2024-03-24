@@ -34,9 +34,9 @@ def api_get_screenshot():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
 
-    screenshot_path = request.args.get('screenshotPath', default=get_settings("screenshot_path"), type=str)
-    if screenshot_path == '':
-        screenshot_path = get_settings("screenshot_path")
+    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"), type=str)
+    if screenshot_storage_path == '':
+        screenshot_storage_path = get_settings("screenshot_storage_path")
 
     screenshot_number = request.args.get('screenshotNumber', default=get_settings("screenshot_number"), type=str)
     if screenshot_number == '':
@@ -74,23 +74,23 @@ def api_get_screenshot():
                 if screenshot_start_percentage < screenshot_end_percentage:
                     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
                     if is_video_path == 1 or is_video_path == 2:
-                        screenshot_success, response = get_screenshot(video_path, screenshot_path, screenshot_number,
+                        screenshot_success, response = get_screenshot(video_path, screenshot_storage_path, screenshot_number,
                                                                       screenshot_threshold, screenshot_start_percentage,
                                                                       screenshot_end_percentage,
                                                                       screenshot_min_interval_percentage)
                         if screenshot_success:
-                            screenshot_path = ''
+                            screenshot_storage_path = ''
                             screenshot_number = 0
                             for r in response:
-                                screenshot_path += r
-                                screenshot_path += '\n'
+                                screenshot_storage_path += r
+                                screenshot_storage_path += '\n'
                                 screenshot_number += 1
                             return jsonify({
                                 "data": {
                                     "code": "OK",
                                     "message": "获取截图成功。",  # 提示信息
                                     "screenshotNumber": str(screenshot_number),
-                                    "screenshotPath": screenshot_path,
+                                    "screenshotPath": screenshot_storage_path,
                                     "videoPath": video_path
                                 },
                                 "success": True
@@ -169,9 +169,9 @@ def api_get_thumbnail():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
 
-    screenshot_path = request.args.get('screenshotPath', default=get_settings("screenshot_path"), type=str)
-    if screenshot_path == '':
-        screenshot_path = get_settings("screenshot_path")
+    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"), type=str)
+    if screenshot_storage_path == '':
+        screenshot_storage_path = get_settings("screenshot_storage_path")
 
     thumbnail_rows = request.args.get('thumbnailRows', default=get_settings("thumbnail_rows"), type=str)
     if thumbnail_rows == '':
@@ -203,7 +203,7 @@ def api_get_thumbnail():
                 is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
                 if is_video_path == 1 or is_video_path == 2:
 
-                    get_thumbnail_success, response = get_thumbnail(video_path, screenshot_path, thumbnail_rows,
+                    get_thumbnail_success, response = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
                                                                     thumbnail_cols, screenshot_start_percentage,
                                                                     screenshot_end_percentage)
                     if get_thumbnail_success:
