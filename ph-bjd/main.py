@@ -1,10 +1,14 @@
-# Copyright (c) 2023 BJD Publish Helper is licensed under Mulan PSL v2. You can use this software according to the
-# terms and conditions of the Mulan PSL v2. You may obtain a copy of Mulan PSL v2 at:
-# http://license.coscl.org.cn/MulanPSL2 THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY
-# KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A
-# PARTICULAR PURPOSE. See the Mulan PSL v2 for more details.
+"""
+Publish Helper  Copyright (C) 2023  BJD
+This program comes with ABSOLUTELY NO WARRANTY; for details type `show w'.
+This is free software, and you are welcome to redistribute it
+under certain conditions; type `show c' for details.
+
+The licensing of this program is under the GNU General Public License version 3 (GPLv3) or later.
+For more information on this license, you can visit https://www.gnu.org/licenses/gpl-3.0.html
+"""
 from startgui import start
 
-# bjdbjd
+# 作者：bjdbjd ID：bjd
 if __name__ == '__main__':
     start()  # gui启动
