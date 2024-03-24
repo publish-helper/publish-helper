@@ -159,9 +159,11 @@ def rename_file_with_same_extension(old_name, new_name_without_extension):
         os.rename(old_name, new_name)
         print(old_name, "文件成功重命名为", new_name)
         return True, new_name
+
     except FileNotFoundError:
         print(f"未找到文件: '{old_name}'")
         return False, f"未找到文件: '{old_name}'"
+
     except OSError as e:
         print(f"重命名文件时出错: {e}")
         return False, f"重命名文件时出错: {e}"
@@ -195,6 +197,7 @@ def rename_directory(current_dir, new_name):
         os.rename(current_dir, new_dir)
         print(f"目录已重命名为: {new_dir}")
         return True, new_dir
+
     except OSError as e:
         # 捕获并打印任何操作系统错误
         print(f"重命名目录时发生错误: {e}")
@@ -234,6 +237,7 @@ def move_file_to_folder(file_name, folder_name):
         shutil.move(file_name, target_file)
         print(f"文件 '{file_name}' 已成功移动到 '{target_file}'")
         return True, target_file
+
     except Exception as e:
         print(f"移动文件时出错: {e}")
         return False, f"移动文件时出错: {e}"

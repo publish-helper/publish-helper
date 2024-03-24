@@ -578,7 +578,7 @@ class Ui_Settings(object):
 
         self.retranslateUi(Settings)
         self.tabWidget.setCurrentIndex(0)
-        self.nameTabWidget.setCurrentIndex(2)
+        self.nameTabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Settings)
 
     def retranslateUi(self, Settings):
@@ -1513,7 +1513,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{team}：制作组</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{season_number}：季数 （不补0，用于副标题：第{season_number}季）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{total_episode}：总集数（全n集/第m-n集，取决于是否开始于第1集）</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{type}：短剧收费类型</span></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{type}：短剧来源类型（网络收费短剧、抖音短剧等）</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型 </p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
