@@ -2,7 +2,7 @@ Publish Helper v1.3.6
 
 使用前务必请先看设置！！！
 
-软件功能和界面请见WiKi：https://github.com/bjdbjd/publish-helper/wiki
+具体的软件功能、界面和使用方法请见WiKi：https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki
 
 目前支持的免费公共图床：https://freeimage.host/ https://imgbb.com/
 
@@ -78,9 +78,9 @@ static/abbreviation.json
 
 软件获取地址：
 
-https://github.com/bjdbjd/publish-helper/releases/
+https://github.com/publish-helper/publish-helper-gui/releases
 
-https://gitee.com/bjdbjd/publish-helper/releases/
+https://gitee.com/publish-helper/publish-helper-gui/releases
 
 更新时只需要保留static文件夹即可将配置完美迁移。
 
