@@ -88,7 +88,7 @@ def get_video_info(file_path):
         hdr_format = ""
         frame_rate = ""
         audio_codec = ""
-        channel = ""
+        channels = ""
         width = ""
         height = ""
         for track in media_info.tracks:
@@ -118,7 +118,7 @@ def get_video_info(file_path):
                         # ... 添加其他Video信息
             elif track.track_type == "Audio":
                 audio_codec = track.commercial_name
-                channel = track.channel_layout
+                channels = track.channel_layout
                 break
                 # ... 添加其他Audio信息
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
@@ -127,7 +127,7 @@ def get_video_info(file_path):
             video_format += height
         return True, [get_abbreviation(video_format), get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
-                      get_abbreviation(channel)]
+                      get_abbreviation(channels)]
     except OSError as e:
         # 文件路径相关的错误
         print(f"文件路径错误: {e}。")
@@ -166,10 +166,9 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
         return original_name
 
 
-def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec, bit_depth,
-                           hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
-                           total_episode, type,
-                           category, actors, template):
+def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
+                           bit_depth, hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
+                           total_episode, type, category, actors, template):
     name = get_settings(template)
     name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)

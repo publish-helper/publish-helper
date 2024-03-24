@@ -384,7 +384,7 @@ def api_get_video_info():
                     "hdrFormat": hdr_format,
                     "frameRate": frame_rate,
                     "audioCodec": audio_codec,
-                    "channel": channels
+                    "channels": channels
                 },
                 "success": True
             })
@@ -400,7 +400,7 @@ def api_get_video_info():
                     "hdrFormat": "",
                     "frameRate": "",
                     "audioCodec": "",
-                    "channel": "",
+                    "channels": "",
                 },
                 "success": True
             })
@@ -416,7 +416,7 @@ def api_get_video_info():
                 "hdrFormat": "",
                 "frameRate": "",
                 "audioCodec": "",
-                "channel": ""
+                "channels": ""
             },
             "success": True
         })
