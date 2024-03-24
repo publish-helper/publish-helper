@@ -4,7 +4,7 @@ Publish Helper v1.3.5
 
 目前的一些简单的功能有：
 
-1. 自动获取Pt-Gen简介信息（需要Pt-Gen Api）
+1. 自动获取PT-Gen简介信息（需要PT-Gen Api）
 2. 自动获取MediaInfo信息
 3. 自动截图
 4. 自动获取缩略图
