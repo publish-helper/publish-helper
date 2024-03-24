@@ -32,7 +32,18 @@ def api_add_numbers():
 # 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
 def api_get_screenshot():
     # 从请求URL中获取参数
-    path = request.args.get('path', default='', type=str)
+    path = request.args.get('path', default='', type=str)  # 必须信息
+    if path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "screenshotNumber": "0",
+                "screenshotPath": "",
+                "videoPath": "",
+            },
+            "success": True
+        })
 
     screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
                                                type=str)
@@ -172,7 +183,17 @@ def api_get_screenshot():
 # 用于获取缩略图，传入相关参数，返回缩略图路径
 def api_get_thumbnail():
     # 从请求URL中获取参数
-    path = request.args.get('path', default='', type=str)
+    path = request.args.get('path', default='', type=str)  # 必须信息
+    if path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "thumbnailPath": "",
+                "videoPath": ""
+            },
+            "success": True
+        })
 
     screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
                                                type=str)
@@ -280,7 +301,16 @@ def api_get_thumbnail():
 #  用于上传本地图片到图床
 def api_upload_picture():
     # 从请求URL中获取参数
-    picture_path = request.args.get('picturePath', default='', type=str)
+    picture_path = request.args.get('picturePath', default='', type=str)  # 必须信息
+    if picture_path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "pictureUrl": ""
+            },
+            "success": True
+        })
 
     picture_bed_api_url = request.args.get('pictureBedApiUrl', default=get_settings("picture_bed_api_url"), type=str)
     if picture_bed_api_url == '':
@@ -327,7 +357,17 @@ def api_upload_picture():
 # 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
 def api_get_media_info():
     # 从请求URL中获取path
-    path = request.args.get('path', default='', type=str)
+    path = request.args.get('path', default='', type=str)  # 必须信息
+    if path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "mediaInfo": "",
+                "videoPath": ""
+            },
+            "success": True
+        })
 
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
@@ -368,7 +408,23 @@ def api_get_media_info():
 # 用于获取视频关键信息，传入一个文件地址或者一个文件夹地址，返回视频文件路径和关键信息
 def api_get_video_info():
     # 从请求URL中获取path
-    path = request.args.get('path', default='', type=str)
+    path = request.args.get('path', default='', type=str)  # 必须信息
+    if path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "videoPath": "",
+                "videoFormat": "",
+                "videoCodec": "",
+                "bitDepth": "",
+                "hdrFormat": "",
+                "frameRate": "",
+                "audioCodec": "",
+                "channels": ""
+            },
+            "success": True
+        })
 
     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
     if is_video_path == 1 or is_video_path == 2:
@@ -435,7 +491,16 @@ def api_get_video_info():
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_get_pt_gen_description():
     # 从请求URL中获取参数
-    resource_url = request.args.get('resourceUrl', default='', type=str)
+    resource_url = request.args.get('resourceUrl', default='', type=str)  # 必须信息
+    if resource_url == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "description": ""
+            },
+            "success": True
+        })
 
     pt_gen_api_url = request.args.get('ptGenApiUrl', default=get_settings("pt_gen_api_url"), type=str)
     if pt_gen_api_url == '':
@@ -468,7 +533,21 @@ def api_get_pt_gen_description():
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_get_pt_gen_info():
     # 从请求URL中获取参数
-    description = request.args.get('description', default='', type=str)
+    description = request.args.get('description', default='', type=str)  # 必须信息
+    if description == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "originalTitle": "",
+                "englishTitle": "",
+                "year": "",
+                "otherTitles": "",
+                "category": "",
+                "actors": ""
+            },
+            "success": True
+        })
 
     if description and description != '':
         try:
@@ -536,7 +615,16 @@ def api_get_pt_gen_info():
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_make_torrent():
     # 从请求URL中获取参数
-    path = request.args.get('path', default='', type=str)
+    path = request.args.get('path', default='', type=str)  # 必须信息
+    if path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "torrentPath": ""
+            },
+            "success": True
+        })
 
     torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"),
                                             type=str)
