@@ -328,7 +328,7 @@ def get_playlet_description(original_title, year, area, category, language, seas
     return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
 
 
-def create_torrent(folder_path, torrent_path):
+def make_torrent(folder_path, torrent_path):
     print(folder_path + '  ' + torrent_path)
     try:
         # 检查路径是否存在

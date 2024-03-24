@@ -1,18 +1,23 @@
 # 此处仅提供一个简单的示例，具体实现起来方案有很多，可按需开发
 import json
+import os
 
 import requests
 
 
-def upload_screenshot(api_url, api_token, frame_path):
-    print(api_url, api_token, frame_path)
-    if 'https://img.agsv.top/api/' in api_url:
-        return agsv_picture_bed(api_url, api_token, frame_path)
-    if 'https://freeimage.host/api' in api_url:
-        return freeimage_picture_bed(api_url, api_token, frame_path)
-    if 'https://api.imgbb.com/1/upload' in api_url:
-        return imgbb_picture_bed(api_url, api_token, frame_path)
-    return False, '图床暂不支持'
+def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
+    print(picture_bed_api_url, picture_bed_api_token, picture_path)
+    if not os.path.exists(picture_path):
+        print("图片文件路径不存在")
+        return False, "图片文件路径不存在"
+    else:
+        if 'https://img.agsv.top/api/' in picture_bed_api_url:
+            return agsv_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+        if 'https://freeimage.host/api' in picture_bed_api_url:
+            return freeimage_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+        if 'https://api.imgbb.com/1/upload' in picture_bed_api_url:
+            return imgbb_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+        return False, f'您使用的图床接口{picture_bed_api_url}暂不支持，请联系本软件作者'
 
 
 def agsv_picture_bed(api_url, api_token, frame_path):

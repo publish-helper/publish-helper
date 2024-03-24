@@ -11,14 +11,14 @@ from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QM
 
 from autofeed import get_auto_feed_link
 from mediainfo import get_media_info
-from picturebed import upload_screenshot
+from picturebed import upload_picture
 from ptgen import get_pt_gen_description
 from rename import get_pt_gen_info, get_video_info, get_name_from_example
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
     move_file_to_folder, \
-    get_folder_path, check_path_and_find_video, rename_directory, create_torrent, load_names, chinese_name_to_pinyin, \
+    get_folder_path, check_path_and_find_video, rename_directory, make_torrent, load_names, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese, \
     get_playlet_description
 from ui.mainwindow import Ui_Mainwindow
@@ -1864,31 +1864,31 @@ class UploadPictureThread(QThread):
     # 创建一个信号，用于在数据处理完毕后与主线程通信
     result_signal = pyqtSignal(bool, str, str, bool, bool)
 
-    def __init__(self, picture_bed_path, picture_bed_token, screenshot_path, is_cover, is_thumbnails):
+    def __init__(self, picture_bed_api_path, picture_bed_api_token, picture_path, is_cover, is_thumbnail):
         super().__init__()
-        self.picture_bed_path = picture_bed_path
-        self.picture_bed_token = picture_bed_token
-        self.screenshot_path = screenshot_path
+        self.picture_bed_api_path = picture_bed_api_path
+        self.picture_bed_api_token = picture_bed_api_token
+        self.picture_path = picture_path
         self.is_cover = is_cover
-        self.is_thumbnails = is_thumbnails
+        self.is_thumbnail = is_thumbnail
         print("上传图床初始化完成111")
 
     def run(self):
         try:
-            if self.is_thumbnails:
+            if self.is_thumbnail:
                 time.sleep(float(get_settings("thumbnail_delay")))  # 等待
             # 这里放置耗时的HTTP请求操作
-            upload_success, api_response = upload_screenshot(self.picture_bed_path, self.picture_bed_token,
-                                                             self.screenshot_path)
+            upload_picture_success, response = upload_picture(self.picture_bed_api_path, self.picture_bed_api_token,
+                                                          self.picture_path)
 
             # 发送信号，包括请求的结果
             print("上传图床成功，开始返回结果")
-            self.result_signal.emit(upload_success, api_response, self.screenshot_path, self.is_cover,
-                                    self.is_thumbnails)
+            self.result_signal.emit(upload_picture_success, response, self.picture_path, self.is_cover,
+                                    self.is_thumbnail)
             print("返回结果成功")
         except Exception as e:
             print(f"异常发生: {e}")
-            self.result_signal.emit(False, f"异常发生: {e}", self.screenshot_path)
+            self.result_signal.emit(False, f"异常发生: {e}", self.picture_path)
             # 这里可以发射一个包含错误信息的信号
 
 
@@ -1904,7 +1904,7 @@ class MakeTorrentThread(QThread):
     def run(self):
         try:
             # 这里放置耗时的制作torrent操作
-            get_success, response = create_torrent(self.folder_path, self.torrent_path)
+            get_success, response = make_torrent(self.folder_path, self.torrent_path)
 
             # 发送信号
             print("Torrent请求成功，开始等待返回结果")

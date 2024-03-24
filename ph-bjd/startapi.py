@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, request, jsonify
 
 from mediainfo import get_media_info
@@ -5,6 +7,7 @@ from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings
+from picturebed import upload_picture
 
 api = Flask(__name__)
 
@@ -136,7 +139,7 @@ def api_get_screenshot():
 
 
 @api.route('/api/getThumbnail', methods=['GET'])
-# 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
+# 用于获取缩略图，传入相关参数，返回缩略图路径
 def api_get_thumbnail():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
@@ -213,6 +216,45 @@ def api_get_thumbnail():
                 "message": "缩略图横向、纵向数量均需要大于0。",  # 提示信息
                 "thumbnailPath": "",
                 "videoPath": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/uploadPicture', methods=['GET'])
+#  用于上传本地图片到图床
+def api_upload_picture():
+    # 从请求URL中获取参数
+    picture_path = request.args.get('picturePath', default='', type=str)
+    picture_bed_api_url = request.args.get('pictureBedApiUrl', default=get_settings("picture_bed_api_url"), type=str)
+    picture_bed_api_token = request.args.get('pictureBedApiToken', default=get_settings("picture_bed_api_token"), type=str)
+    if os.path.exists(picture_path):
+        upload_picture_success, response = upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path)
+        if upload_picture_success:
+            return jsonify({
+                "data": {
+                    "code": "OK",
+                    "message": "上传图片成功。",  # 提示信息
+                    "pictureUrl": response  # 注意是[img]1.png[/img]的bbcode格式
+                },
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"上传图片失败：{response}。",  # 提示信息
+                    "pictureUrl": ""  # 注意是[img]1.png[/img]的bbcode格式
+                },
+                "success": True
+            })
+
+    else:
+        return jsonify({
+            "data": {
+                "code": "FILE_PATH_ERROR",
+                "message": "您提供的图片路径有误。",  # 提示信息
+                "pictureUrl": ""
             },
             "success": True
         })
@@ -418,3 +460,5 @@ def api_get_pt_gen_info():
             },
             "success": True
         })
+
+
