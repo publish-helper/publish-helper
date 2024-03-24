@@ -3,11 +3,11 @@ import os
 from flask import Flask, request, jsonify
 
 from mediainfo import get_media_info
+from picturebed import upload_picture
 from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings, make_torrent
-from picturebed import upload_picture
 
 api = Flask(__name__)
 
@@ -34,7 +34,8 @@ def api_get_screenshot():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
 
-    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"), type=str)
+    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
+                                               type=str)
     if screenshot_storage_path == '':
         screenshot_storage_path = get_settings("screenshot_storage_path")
 
@@ -44,19 +45,22 @@ def api_get_screenshot():
     else:
         screenshot_number = int(screenshot_number)
 
-    screenshot_threshold = request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"), type=str)
+    screenshot_threshold = request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"),
+                                            type=str)
     if screenshot_threshold == '':
         screenshot_threshold = float(get_settings("screenshot_threshold"))
     else:
         screenshot_threshold = float(screenshot_threshold)
 
-    screenshot_start_percentage = request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str)
+    screenshot_start_percentage = request.args.get('screenshotStartPercentage',
+                                                   default=get_settings("screenshot_start_percentage"), type=str)
     if screenshot_start_percentage == '':
         screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
     else:
         screenshot_start_percentage = float(screenshot_start_percentage)
 
-    screenshot_end_percentage = request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str)
+    screenshot_end_percentage = request.args.get('screenshotEndPercentage',
+                                                 default=get_settings("screenshot_end_percentage"), type=str)
     if screenshot_end_percentage == '':
         screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
     else:
@@ -74,7 +78,8 @@ def api_get_screenshot():
                 if screenshot_start_percentage < screenshot_end_percentage:
                     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
                     if is_video_path == 1 or is_video_path == 2:
-                        screenshot_success, response = get_screenshot(video_path, screenshot_storage_path, screenshot_number,
+                        screenshot_success, response = get_screenshot(video_path, screenshot_storage_path,
+                                                                      screenshot_number,
                                                                       screenshot_threshold, screenshot_start_percentage,
                                                                       screenshot_end_percentage,
                                                                       screenshot_min_interval_percentage)
@@ -169,7 +174,8 @@ def api_get_thumbnail():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
 
-    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"), type=str)
+    screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
+                                               type=str)
     if screenshot_storage_path == '':
         screenshot_storage_path = get_settings("screenshot_storage_path")
 
@@ -185,13 +191,15 @@ def api_get_thumbnail():
     else:
         thumbnail_cols = int(thumbnail_cols)
 
-    screenshot_start_percentage = request.args.get('screenshotStartPercentage', default=get_settings("screenshot_start_percentage"), type=str)
+    screenshot_start_percentage = request.args.get('screenshotStartPercentage',
+                                                   default=get_settings("screenshot_start_percentage"), type=str)
     if screenshot_start_percentage == '':
         screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
     else:
         screenshot_start_percentage = float(screenshot_start_percentage)
 
-    screenshot_end_percentage = request.args.get('screenshotEndPercentage', default=get_settings("screenshot_end_percentage"), type=str)
+    screenshot_end_percentage = request.args.get('screenshotEndPercentage',
+                                                 default=get_settings("screenshot_end_percentage"), type=str)
     if screenshot_end_percentage == '':
         screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
     else:
@@ -278,7 +286,8 @@ def api_upload_picture():
     if picture_bed_api_url == '':
         picture_bed_api_url = get_settings("picture_bed_api_url")
 
-    picture_bed_api_token = request.args.get('pictureBedApiToken', default=get_settings("picture_bed_api_token"), type=str)
+    picture_bed_api_token = request.args.get('pictureBedApiToken', default=get_settings("picture_bed_api_token"),
+                                             type=str)
     if picture_bed_api_token == '':
         picture_bed_api_token = get_settings("picture_bed_api_token")
 
@@ -529,7 +538,8 @@ def api_make_torrent():
     # 从请求URL中获取参数
     path = request.args.get('path', default='', type=str)
 
-    torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"), type=str)
+    torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"),
+                                            type=str)
     if torrent_storage_path == '':
         torrent_storage_path = get_settings("torrent_storage_path")
 
@@ -562,5 +572,3 @@ def api_make_torrent():
             },
             "success": True
         })
-
-
