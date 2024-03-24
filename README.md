@@ -18,7 +18,7 @@ Publish Helper v1.3.6
 12. 结合auto_feed脚本实现一键上传内容（新）
 13. 短剧一键生成简介（新）
 
-具体的软件功能、界面和使用方法请见WiKi：https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki
+软件使用方法请见WiKi：https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki
 
 目前支持的免费公共图床：https://freeimage.host/ https://imgbb.com/
 
