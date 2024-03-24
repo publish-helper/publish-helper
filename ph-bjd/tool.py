@@ -329,8 +329,8 @@ def get_playlet_description(original_title, year, area, category, language, seas
 
 
 # 为了防止出现意外，此方法默认只对文件夹做种子，如果传入的path是一个文件，那么会自动读取其上级文件夹
-def make_torrent(path, torrent_path):
-    print(path + '  ' + torrent_path)
+def make_torrent(path, torrent_storage_path):
+    print(path + '  ' + torrent_storage_path)
     try:
         # 检查路径是否存在
         if not os.path.exists(path):
@@ -347,7 +347,7 @@ def make_torrent(path, torrent_path):
 
         # 构造完整的torrent文件路径
         torrent_file_name = os.path.basename(path.rstrip("/\\")) + '.torrent'
-        torrent_file_path = torrent_path + '/' + torrent_file_name
+        torrent_file_path = torrent_storage_path + '/' + torrent_file_name
 
         # 确保torrent文件的目录存在
         os.makedirs(os.path.dirname(torrent_file_path), exist_ok=True)

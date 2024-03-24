@@ -13,7 +13,7 @@ from autofeed import get_auto_feed_link
 from mediainfo import get_media_info
 from picturebed import upload_picture
 from ptgen import get_pt_gen_description
-from rename import get_pt_gen_info, get_video_info, get_name_from_example
+from rename import get_pt_gen_info, get_video_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
@@ -239,7 +239,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserMovie.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path,
+                                                                      thumbnail_rows,
                                                                       thumbnail_cols,
                                                                       screenshot_start_percentage,
                                                                       screenshot_end_percentage)
@@ -462,7 +463,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     response) + "\n请重试！"]
                         print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
-                            "分析后的结果为：" + original_title + english_title + year + str(other_names_sorted) + category +
+                            "分析后的结果为：" + original_title + english_title + year + str(
+                                other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
@@ -535,24 +537,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     team = self.teamMovie.currentText()
                     print("关键参数赋值成功")
                     self.debugBrowserMovie.append("关键参数赋值成功")
-                    main_title = get_name_from_example(english_title, original_title, "", "", year,
-                                                       video_format, source, video_codec, bit_depth, hdr_format,
-                                                       frame_rate, audio_codec, channels, team, other_titles, "",
-                                                       "", "", category, actors, "main_title_movie")
+                    main_title = get_name_from_template(english_title, original_title, "", "", year,
+                                                        video_format, source, video_codec, bit_depth, hdr_format,
+                                                        frame_rate, audio_codec, channels, team, other_titles, "",
+                                                        "", "", category, actors, "main_title_movie")
                     main_title = main_title.replace('_', ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(english_title, original_title, "", "", year, video_format,
-                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                         audio_codec, channels, team, other_titles, "", "", "",
-                                                         category, actors, "second_title_movie")
+                    second_title = get_name_from_template(english_title, original_title, "", "", year, video_format,
+                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                          audio_codec, channels, team, other_titles, "", "", "",
+                                                          category, actors, "second_title_movie")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
-                    file_name = get_name_from_example(english_title, original_title, "", "", year, video_format,
-                                                      source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                      audio_codec, channels, team, other_titles, "", "",
-                                                      "",
-                                                      category, actors, "file_name_movie")
+                    file_name = get_name_from_template(english_title, original_title, "", "", year, video_format,
+                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                       audio_codec, channels, team, other_titles, "", "",
+                                                       "",
+                                                       category, actors, "file_name_movie")
                     file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
@@ -738,7 +740,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserTV.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path,
+                                                                      thumbnail_rows,
                                                                       thumbnail_cols,
                                                                       screenshot_start_percentage,
                                                                       screenshot_end_percentage)
@@ -998,7 +1001,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     response) + "\n请重试！"]
                         print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
-                            "分析后的结果为：" + original_title + english_title + year + str(other_names_sorted) + category +
+                            "分析后的结果为：" + original_title + english_title + year + str(
+                                other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
                             print("Pt-Gen分析结果不包含年份，存在错误")
@@ -1069,10 +1073,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     team = self.teamTV.currentText()
                     print("关键参数赋值成功")
                     self.debugBrowserTV.append("关键参数赋值成功")
-                    main_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
-                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, team, other_titles, season_number,
-                                                       total_episode, "", category, actors, "main_title_tv")
+                    main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
+                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                        audio_codec, channels, team, other_titles, season_number,
+                                                        total_episode, "", category, actors, "main_title_tv")
                     main_title = main_title.replace(lowercase_season_info_without_spaces, ' ')
                     main_title = main_title.replace(uppercase_season_info_without_spaces, ' ')
                     main_title = main_title.replace(lowercase_season_info_with_spaces, ' ')
@@ -1083,16 +1087,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     main_title = main_title.replace(main_title_special_roman_season_name, ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
-                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                         audio_codec, channels, team, other_titles, season_number,
-                                                         total_episode, "", category, actors, "second_title_tv")
+                    second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
+                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                          audio_codec, channels, team, other_titles, season_number,
+                                                          total_episode, "", category, actors, "second_title_tv")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
-                    file_name = get_name_from_example(english_title, original_title, season, '@@', year, video_format,
-                                                      source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                      audio_codec, '^&' + channels, team, other_titles, season_number,
-                                                      total_episode, "", category, actors, "file_name_tv")
+                    file_name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                       audio_codec, '^&' + channels, team, other_titles, season_number,
+                                                       total_episode, "", category, actors, "file_name_tv")
                     file_name = file_name.replace(lowercase_season_info_without_spaces, '.')
                     file_name = file_name.replace(uppercase_season_info_without_spaces, '.')
                     file_name = file_name.replace(lowercase_season_info_with_spaces, '.')
@@ -1118,7 +1122,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return
                     if is_filename_too_long(file_name):
                         text, ok = QInputDialog.getText(self, '警告',
-                                                        '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal, file_name)
+                                                        '文件名过长，请修改文件名称！', QLineEdit.EchoMode.Normal,
+                                                        file_name)
                         if ok:
                             print(f'您修改文件名为: {text}')
                             self.debugBrowserTV.append(f'您修改文件名为: {text}')
@@ -1297,7 +1302,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print("成功获取截图函数的返回值")
             self.debugBrowserPlaylet.append("成功获取截图函数的返回值")
             if do_get_thumbnail:
-                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
+                get_thumbnail_success, thumbnail_path = get_thumbnail(video_path, screenshot_storage_path,
+                                                                      thumbnail_rows,
                                                                       thumbnail_cols, screenshot_start_percentage,
                                                                       screenshot_end_percentage)
                 if get_thumbnail_success:
@@ -1548,25 +1554,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     category = self.get_category()
                     print('类型为：' + category)
                     self.debugBrowserPlaylet.append('类型为：' + category)
-                    main_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
-                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec,
-                                                       channels, team, "", season_number, total_episode, type, category,
-                                                       "", "main_title_playlet")
+                    main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
+                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                        audio_codec,
+                                                        channels, team, "", season_number, total_episode, type,
+                                                        category,
+                                                        "", "main_title_playlet")
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
                     print(main_title)
-                    second_title = get_name_from_example(english_title, original_title, season, "", year, video_format,
-                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                         audio_codec, channels, team, "", season_number, total_episode,
-                                                         type,
-                                                         category, "", "second_title_playlet")
+                    second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
+                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                          audio_codec, channels, team, "", season_number, total_episode,
+                                                          type,
+                                                          category, "", "second_title_playlet")
                     print("SecondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                    file_name = get_name_from_example(english_title, original_title, season, '@@', year, video_format,
-                                                      source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                      audio_codec, channels, team, "", season_number, total_episode,
-                                                      type,
-                                                      category, "", "file_name_playlet")
+                    file_name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
+                                                       audio_codec, channels, team, "", season_number, total_episode,
+                                                       type,
+                                                       category, "", "file_name_playlet")
                     file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
                     if second_confirm_file_name:
@@ -1879,7 +1886,7 @@ class UploadPictureThread(QThread):
                 time.sleep(float(get_settings("thumbnail_delay")))  # 等待
             # 这里放置耗时的HTTP请求操作
             upload_picture_success, response = upload_picture(self.picture_bed_api_path, self.picture_bed_api_token,
-                                                          self.picture_path)
+                                                              self.picture_path)
 
             # 发送信号，包括请求的结果
             print("上传图床成功，开始返回结果")
@@ -1896,19 +1903,19 @@ class MakeTorrentThread(QThread):
     # 创建一个信号，用于在数据处理完毕后与主线程通信
     result_signal = pyqtSignal(bool, str)
 
-    def __init__(self, folder_path, torrent_path):
+    def __init__(self, path, torrent_storage_path):
         super().__init__()
-        self.folder_path = folder_path
-        self.torrent_path = torrent_path
+        self.path = path
+        self.torrent_storage_path = torrent_storage_path
 
     def run(self):
         try:
             # 这里放置耗时的制作torrent操作
-            get_success, response = make_torrent(self.folder_path, self.torrent_path)
+            make_torrent_success, response = make_torrent(self.path, self.torrent_storage_path)
 
             # 发送信号
             print("Torrent请求成功，开始等待返回结果")
-            self.result_signal.emit(get_success, response)
+            self.result_signal.emit(make_torrent_success, response)
             print("返回结果成功")
         except Exception as e:
             print(f"异常发生: {e}")

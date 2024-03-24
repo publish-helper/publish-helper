@@ -6,7 +6,7 @@ from mediainfo import get_media_info
 from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info
 from screenshot import get_screenshot, get_thumbnail
-from tool import check_path_and_find_video, get_settings
+from tool import check_path_and_find_video, get_settings, make_torrent
 from picturebed import upload_picture
 
 api = Flask(__name__)
@@ -518,6 +518,47 @@ def api_get_pt_gen_info():
                 "otherTitles": "",
                 "category": "",
                 "actors": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/makeTorrent', methods=['GET'])
+# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+def api_make_torrent():
+    # 从请求URL中获取参数
+    path = request.args.get('path', default='', type=str)
+
+    torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"), type=str)
+    if torrent_storage_path == '':
+        torrent_storage_path = get_settings("torrent_storage_path")
+
+    if os.path.exists(path):
+        make_torrent_success, response = make_torrent(path, torrent_storage_path)
+        if make_torrent_success:
+            return jsonify({
+                "data": {
+                    "code": "OK",
+                    "message": "制作种子成功。",  # 提示信息
+                    "torrentPath": response
+                },
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"制作种子失败，{response}。",  # 提示信息
+                    "torrentPath": ""
+                },
+                "success": True
+            })
+    else:
+        return jsonify({
+            "data": {
+                "code": "FILE_PATH_ERROR",
+                "message": "文件路径不存在。",  # 提示信息
+                "torrentPath": ""
             },
             "success": True
         })

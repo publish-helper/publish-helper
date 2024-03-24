@@ -38,7 +38,7 @@ def get_pt_gen_info(description):
 
     original_title = ""
     original_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
-                        r"\}\|\<\>\【\】\《\》\`\~\·\d\u2160-\u2188]+")
+                        r"\}\|\<\>\【\】\《\》\`\~\·\d\u0E00-\u0E7F\u3040-\u309F\u30A0-\u30FF\u4e00-\u9fff\u3400-\u4DBF\u20000-\u2EBE0\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F]+")
     for title in separated_titles:
         if re.search(original_pattern, title) and not re.match(english_pattern, title):
             original_title += title
@@ -166,12 +166,12 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
         return original_name
 
 
-def get_name_from_example(en_title, original_title, season, episode, year, video_format, source, video_codec, bit_depth,
-                          hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
-                          total_episode, type,
-                          category, actors, example):
-    name = get_settings(example)
-    name = name.replace("{en_title}", en_title)
+def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec, bit_depth,
+                           hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
+                           total_episode, type,
+                           category, actors, template):
+    name = get_settings(template)
+    name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)
     name = name.replace("{season}", season)
     name = name.replace("{episode}", episode)
