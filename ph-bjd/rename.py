@@ -38,7 +38,8 @@ def get_pt_gen_info(description):
 
     original_title = ""
     original_pattern = (r"[\u4e00-\u9fa5\-\—\:\：\s\(\)\（\）\'\"\@\#\$\%\^\&\*\!\?\,\;\！\？\,\.\;\，\。\；\[\]\{"
-                        r"\}\|\<\>\【\】\《\》\`\~\·\d\u0E00-\u0E7F\u3040-\u309F\u30A0-\u30FF\u4e00-\u9fff\u3400-\u4DBF\u20000-\u2EBE0\uAC00-\uD7A3\u1100-\u11FF\u3130-\u318F]+")
+                        r"\}\|\<\>\【\】\《\》\`\~\·\d\u0041-\u005A\u0061-\u007A\u00C0-\u00FF\u0400-\u04FF\u0600-\u06FF"
+                        r"\u0750-\u077F\u08A0-\u08FF\u0E00-\u0E7F\u0F00-\u0FFF\u3040-\u309F\u30A0-\u30FF\u3400-\u4DBF\u4e00-\u9fff\uAC00-\uD7AF]+")
     for title in separated_titles:
         if re.search(original_pattern, title) and not re.match(english_pattern, title):
             original_title += title
