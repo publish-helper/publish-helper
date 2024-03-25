@@ -169,7 +169,7 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
 
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
                            bit_depth, hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
-                           total_episode, type, category, actors, template):
+                           total_episode, playlet_source, category, actors, template):
     name = get_settings(template)
     name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)
@@ -188,7 +188,7 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     name = name.replace("{other_titles}", other_titles)
     name = name.replace("{season_number}", season_number)
     name = name.replace("{total_episode}", total_episode)
-    name = name.replace("{type}", type)
+    name = name.replace("{playlet_source}", playlet_source)
     name = name.replace("{category}", category)
     name = name.replace("{actors}", actors)
     return name

@@ -65,7 +65,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserMovie.setText("")
         self.initialize_team_combobox()
         self.initialize_source_combobox()
-        self.initialize_type_combobox()
+        self.initialize_playlet_source_combobox()
 
         # 绑定点击信号和槽函数
         # Movie
@@ -125,10 +125,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.sourceTV.addItem(name)
             self.sourcePlaylet.addItem(name)
 
-    def initialize_type_combobox(self):
-        type_names = load_names('static/type.json', 'type')
-        for name in type_names:
-            self.typePlaylet.addItem(name)
+    def initialize_playlet_source_combobox(self):
+        playlet_source = load_names('static/playlet-source.json', 'type')
+        for name in playlet_source:
+            self.playletSource.addItem(name)
 
     def settings_clicked(self):  # click对应的槽函数
         self.my_settings = settings()
@@ -1517,7 +1517,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 frame_rate = ""
                 audio_codec = ""
                 channels = ""
-                type = ""
+                playlet_source = ""
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
                 is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
@@ -1548,7 +1548,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         channels = response[6]
                     source = self.sourcePlaylet.currentText()
                     team = self.teamPlaylet.currentText()
-                    type += self.typePlaylet.currentText()
+                    playlet_source += self.playletSource.currentText()
                     print("收费类型、来源和小组参数获取成功")
                     self.debugBrowserPlaylet.append("收费类型、来源和小组参数获取成功")
                     category = self.get_category()
@@ -1557,7 +1557,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
                                                         audio_codec,
-                                                        channels, team, "", season_number, total_episode, type,
+                                                        channels, team, "", season_number, total_episode, playlet_source,
                                                         category,
                                                         "", "main_title_playlet")
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
@@ -1565,14 +1565,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
                                                           audio_codec, channels, team, "", season_number, total_episode,
-                                                          type,
+                                                          playlet_source,
                                                           category, "", "second_title_playlet")
                     print("SecondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
                     file_name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec, channels, team, "", season_number, total_episode,
-                                                       type,
+                                                       playlet_source,
                                                        category, "", "file_name_playlet")
                     file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个

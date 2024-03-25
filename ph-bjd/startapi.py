@@ -660,3 +660,31 @@ def api_make_torrent():
             },
             "success": True
         })
+
+
+@api.route('/api/getNameFromTemplate', methods=['GET'])
+# 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
+def api_get_name_from_template():
+    # 从请求URL中获取参数
+    template = request.args.get('template', default='', type=str)  # 必须信息
+
+    english_title = request.args.get('englishTitle', default='', type=str)
+    original_title = request.args.get('originalTitle', default='', type=str)
+    season = request.args.get('season', default='', type=str)
+    episode = request.args.get('episode', default='', type=str)  # Currently unused
+    year = request.args.get('year', default='', type=str)
+    video_format = request.args.get('videoFormat', default='', type=str)
+    source = request.args.get('source', default='', type=str)
+    video_codec = request.args.get('videoCodec', default='', type=str)
+    bit_depth = request.args.get('bitDepth', default='', type=str)
+    hdr_format = request.args.get('hdrFormat', default='', type=str)
+    frame_rate = request.args.get('frameRate', default='', type=str)
+    audio_codec = request.args.get('audioCodec', default='', type=str)
+    channels = request.args.get('channels', default='', type=str)
+    team = request.args.get('team', default='', type=str)
+    other_titles = request.args.get('otherTitles', default='', type=str)
+    season_number = request.args.get('seasonNumber', default='', type=str)
+    total_episode = request.args.get('totalEpisode', default='', type=str)
+    type_ = request.args.get('type', default='', type=str)  # Python keyword conflict resolved by appending an underscore
+    category = request.args.get('category', default='', type=str)
+    actors = request.args.get('actors', default='', type=str)

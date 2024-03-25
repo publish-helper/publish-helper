@@ -2166,20 +2166,6 @@ QPushButton:pressed {
                    <number>5</number>
                   </property>
                   <item>
-                   <widget class="QLabel" name="label_19">
-                    <property name="text">
-                     <string>类型:</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QComboBox" name="typePlaylet">
-                    <property name="editable">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <widget class="QLabel" name="label_33">
                     <property name="text">
                      <string>产地:</string>
@@ -2283,6 +2269,20 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
+                   <widget class="QLabel" name="label_19">
+                    <property name="text">
+                     <string>短剧来源:</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QComboBox" name="playletSource">
+                    <property name="editable">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
                    <widget class="QLabel" name="label_20">
                     <property name="font">
                      <font>
@@ -2291,7 +2291,7 @@ QPushButton:pressed {
                      </font>
                     </property>
                     <property name="text">
-                     <string>来源:</string>
+                     <string>资源来源:</string>
                     </property>
                    </widget>
                   </item>
