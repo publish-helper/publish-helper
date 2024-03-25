@@ -364,7 +364,7 @@ def make_torrent(path, torrent_storage_path):
         current_time = datetime.datetime.now()
 
         # 创建 Torrent 对象，添加当前时间作为创建时间
-        t = Torrent(path=path, trackers=['http://tracker.example.com/announce'], created_by='Publish Helper',
+        t = Torrent(path=path, trackers=['https://tracker.example.com/announce'], created_by='Publish Helper',
                     creation_date=current_time)
 
         # 生成和写入 Torrent 文件
@@ -388,6 +388,7 @@ def make_torrent(path, torrent_storage_path):
 def load_names(file_path, name):
     with open(file_path, 'r', encoding='utf-8') as file:
         data = json.load(file)
+
         return data[name]
 
 
@@ -399,25 +400,54 @@ def chinese_name_to_pinyin(chinese_name):
     for c in s:
         result += c.capitalize()
         result += ' '
-    result = filter_string(result)
+    result = convert_chinese_punctuation_to_english(result)
+    result = result.replace(' ,', ',')
+    result = result.replace(' .', '.')
+    result = result.replace(' !', '!')
+    result = result.replace(' ?', '?')
     result = result.replace(' :', ':')
+    result = result.replace(' ;', ';')
     result = result.replace('( ', '(')
     result = result.replace(' )', ')')
+    result = result.replace('[ ', '[')
+    result = result.replace(' ]', ']')
+    result = result.replace('< ', '<')
+    result = result.replace(' >', '>')
     result = re.sub(r'\s+', ' ', result)  # 将连续的空格变成一个
+
     return result
 
 
-def filter_string(original_str):
-    # 使用正则表达式匹配允许的字符
-    pattern = r"[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+"
+def convert_chinese_punctuation_to_english(text):
+    # Mapping of Chinese punctuation to English punctuation
+    punctuation_map = {
+        "，": ", ",  # Comma
+        "。": ". ",  # Period
+        "！": "! ",  # Exclamation mark
+        "？": "? ",  # Question mark
+        "：": ": ",  # Colon
+        "；": "; ",  # Semicolon
+        "“": "\"",  # Double quotation mark (opening)
+        "”": "\"",  # Double quotation mark (closing)
+        "‘": "'",  # Single quotation mark (opening)
+        "’": "'",  # Single quotation mark (closing)
+        "（": " (",  # Left parenthesis
+        "）": ") ",  # Right parenthesis
+        "【": " [",  # Left square bracket
+        "】": "] ",  # Right square bracket
+        "《": " <",  # Less than sign
+        "》": "> ",  # Greater than sign
+        "、": ", ",  # Enumeration comma
+        "——": "--",  # Dash
+        "…": "..."  # Ellipsis
+        # Add more mappings if necessary
+    }
 
-    # 找到所有匹配的字符
-    matches = re.findall(pattern, original_str)
+    # Replace each Chinese punctuation mark with its English equivalent
+    for chinese, english in punctuation_map.items():
+        text = text.replace(chinese, english)
 
-    # 将所有匹配的字符组合成一个新字符串
-    filtered_str = ''.join(matches)
-    return filtered_str
-
+    return text
 
 def natural_keys(text):
     """
@@ -529,3 +559,24 @@ def is_filename_too_long(filename):
         return True
     else:
         return False
+
+
+def delete_season_number(title, season_number):
+    lowercase_season_info_without_spaces = ' season' + season_number  # 用于后期替换多余的season名称
+    uppercase_season_info_without_spaces = ' Season' + season_number  # 用于后期替换多余的Season名称
+    lowercase_season_info_with_spaces = ' season ' + season_number  # 用于后期替换多余的season名称
+    uppercase_season_info_with_spaces = ' Season ' + season_number  # 用于后期替换多余的Season名称
+    number_season_name = ' ' + season_number  # 用于后期替换多余的数字季名称
+    roman_season_name = ' ' + int_to_roman(int(season_number))  # 用于后期替换多余的罗马季名称
+    special_roman_season_name = ' ' + int_to_special_roman(int(season_number))  # 用于后期替换多余的特殊罗马季名称
+
+    # Remove the specified strings from the title
+    title = title.replace(lowercase_season_info_without_spaces, '')
+    title = title.replace(uppercase_season_info_without_spaces, '')
+    title = title.replace(lowercase_season_info_with_spaces, '')
+    title = title.replace(uppercase_season_info_with_spaces, '')
+    title = title.replace(number_season_name, '')
+    title = title.replace(roman_season_name, '')
+    title = title.replace(special_roman_season_name, '')
+
+    return title.strip()

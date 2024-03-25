@@ -5,9 +5,9 @@ from flask import Flask, request, jsonify
 from mediainfo import get_media_info
 from picturebed import upload_picture
 from ptgen import get_pt_gen_description
-from rename import get_video_info, get_pt_gen_info
+from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
-from tool import check_path_and_find_video, get_settings, make_torrent
+from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number
 
 api = Flask(__name__)
 
@@ -646,7 +646,7 @@ def api_make_torrent():
             return jsonify({
                 "data": {
                     "code": "GENERAL_ERROR",
-                    "message": f"制作种子失败，{response}。",  # 提示信息
+                    "message": f"制作种子失败：{response}。",  # 提示信息
                     "torrentPath": ""
                 },
                 "success": True
@@ -667,6 +667,24 @@ def api_make_torrent():
 def api_get_name_from_template():
     # 从请求URL中获取参数
     template = request.args.get('template', default='', type=str)  # 必须信息
+    if template == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "name": ""
+            },
+            "success": True
+        })
+    if template != "main_title_movie" and template != "main_title_tv" and template != "main_title_playlet" and template != "second_title_movie" and template != "second_title_tv" and template != "second_title_playlet" and template != "file_name_movie" and template != "file_name_tv" and template != "file_name_playlet":
+        return jsonify({
+            "data": {
+                "code": "PARAMETER_RANGE_ERROR",
+                "message": "模板名称不在范围内。",  # 提示信息
+                "name": ""
+            },
+            "success": True
+        })
 
     english_title = request.args.get('englishTitle', default='', type=str)
     original_title = request.args.get('originalTitle', default='', type=str)
@@ -685,6 +703,29 @@ def api_get_name_from_template():
     other_titles = request.args.get('otherTitles', default='', type=str)
     season_number = request.args.get('seasonNumber', default='', type=str)
     total_episode = request.args.get('totalEpisode', default='', type=str)
-    type_ = request.args.get('type', default='', type=str)  # Python keyword conflict resolved by appending an underscore
+    playlet_source = request.args.get('playletSource', default='', type=str)
     category = request.args.get('category', default='', type=str)
     actors = request.args.get('actors', default='', type=str)
+    english_title = delete_season_number(english_title, season_number)
+    try:
+        name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+                                      source, video_codec, bit_depth, hdr_format, frame_rate,
+                                      audio_codec, channels, team, other_titles, season_number,
+                                      total_episode, playlet_source, category, actors, template)
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "获取名称成功。",  # 提示信息
+                "name": name
+            },
+            "success": True
+        })
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": "获取名称失败。",  # 提示信息
+                "name": f"获取名称失败：{e}。"
+            },
+            "success": True
+        })
