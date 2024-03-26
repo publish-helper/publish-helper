@@ -298,7 +298,7 @@ def api_get_thumbnail():
         })
 
 
-@api.route('/api/uploadPicture', methods=['GET'])
+@api.route('/api/uploadPicture', methods=['POST'])
 #  用于上传本地图片到图床
 def api_upload_picture():
     # 从请求URL中获取参数
@@ -614,7 +614,7 @@ def api_get_pt_gen_info():
         })
 
 
-@api.route('/api/makeTorrent', methods=['GET'])
+@api.route('/api/makeTorrent', methods=['POST'])
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_make_torrent():
     # 从请求URL中获取参数
@@ -738,7 +738,7 @@ def api_get_name_from_template():
         })
 
 
-@api.route('/api/renameFile', methods=['GET'])
+@api.route('/api/renameFile', methods=['POST'])
 # 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
 def api_rename_file():
     # 从请求URL中获取参数
@@ -776,7 +776,7 @@ def api_rename_file():
         })
 
 
-@api.route('/api/moveFileToFolder', methods=['GET'])
+@api.route('/api/moveFileToFolder', methods=['POST'])
 # 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
 def api_move_file_to_folder():
     # 从请求URL中获取参数
