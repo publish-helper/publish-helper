@@ -8,7 +8,7 @@ from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
-    move_file_to_folder, get_video_files, rename_directory
+    move_file_to_folder, get_video_files, rename_directory, read_data_from_json, update_data_in_json
 
 api = Flask(__name__)
 
@@ -96,18 +96,12 @@ def api_get_screenshot():
                                                                       screenshot_end_percentage,
                                                                       screenshot_min_interval_percentage)
                         if screenshot_success:
-                            screenshot_storage_path = ''
-                            screenshot_number = 0
-                            for r in response:
-                                screenshot_storage_path += r
-                                screenshot_storage_path += '\n'
-                                screenshot_number += 1
                             return jsonify({
                                 "data": {
                                     "code": "OK",
                                     "message": "获取截图成功。",  # 提示信息
-                                    "screenshotNumber": str(screenshot_number),
-                                    "screenshotPath": screenshot_storage_path,
+                                    "screenshotNumber": str(len(response)),
+                                    "screenshotPath": '\n'.join(response),
                                     "videoPath": video_path
                                 },
                                 "success": True
@@ -781,7 +775,7 @@ def api_rename_file():
 def api_move_file_to_folder():
     # 从请求URL中获取参数
     file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-    if file_path == '' or file_path == '':
+    if file_path == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
@@ -792,7 +786,7 @@ def api_move_file_to_folder():
         })
 
     folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
-    if folder_name == '' or folder_name == '':
+    if folder_name == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
@@ -829,7 +823,7 @@ def api_move_file_to_folder():
 def api_rename_episode():
     # 从请求URL中获取参数
     folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
-    if folder_path == '' or folder_path == '':
+    if folder_path == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
@@ -840,7 +834,7 @@ def api_rename_episode():
         })
 
     new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
-    if new_file_name == '' or new_file_name == '':
+    if new_file_name == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
@@ -949,7 +943,7 @@ def api_rename_episode():
 def api_get_total_episode():
     # 从请求URL中获取参数
     folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
-    if folder_path == '' or folder_path == '':
+    if folder_path == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
@@ -1026,3 +1020,102 @@ def api_get_total_episode():
             },
             "success": True
         })
+
+
+@api.route('/api/readConfigurationDataFromJson', methods=['GET'])
+# 用于读取playlet-source.json source.json team.json文件中的数据
+def api_read_configuration_data_from_json():
+    # 从请求URL中获取参数
+    configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
+    if configuration_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少所需数据名称。",  # 提示信息
+                "configurationData": ""
+            },
+            "success": True
+        })
+    if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
+        return jsonify({
+            "data": {
+                "code": "PARAMETER_RANGE_ERROR",
+                "message": "数据名称不在范围内。",  # 提示信息
+                "configurationData": ""
+            },
+            "success": True
+        })
+    else:
+        file_path = f"static/{configuration_name}.json"
+        read_data_from_json_success, response = read_data_from_json(file_path, configuration_name)
+        if read_data_from_json_success:
+            return jsonify({
+                "data": {
+                    "code": "OK",
+                    "message": "获取数据成功。",  # 提示信息
+                    "configurationData": response
+                },
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"获取数据失败：{response}。",  # 提示信息
+                    "configurationData": ""
+                },
+                "success": True
+            })
+
+
+@api.route('/api/updateConfigurationDataInJson', methods=['POST'])
+# 用于更新playlet-source.json source.json team.json文件中的数据
+def api_update_configuration_data_in_json():
+    # 从请求URL中获取参数
+    configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
+    if configuration_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少所需数据名称。"  # 提示信息
+            },
+            "success": True
+        })
+    if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
+        return jsonify({
+            "data": {
+                "code": "PARAMETER_RANGE_ERROR",
+                "message": "数据名称不在范围内。"  # 提示信息
+            },
+            "success": True
+        })
+
+    configuration_data = request.args.get('configurationData', default='', type=str)  # 必须信息
+    if configuration_data == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少数据内容。"  # 提示信息
+            },
+            "success": True
+        })
+
+    else:
+        file_path = f"static/{configuration_name}.json"
+        update_data_in_json_success, response = update_data_in_json(file_path, configuration_data, configuration_name)
+        if update_data_in_json_success:
+            return jsonify({
+                "data": {
+                    "code": "OK",
+                    "message": "更新数据成功。"  # 提示信息
+                },
+                "success": True
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "code": "GENERAL_ERROR",
+                    "message": f"更新数据失败：{response}。"  # 提示信息
+                },
+                "success": True
+            })

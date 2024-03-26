@@ -145,6 +145,55 @@ def get_settings(parameter_name):
     return parameter_value
 
 
+def read_data_from_json(file_path, configuration_name):
+    # 定义所需的JSON结构
+    default_data = {
+        configuration_name: [
+            "暂无数据"
+        ]
+    }
+
+    try:
+        # 尝试打开文件，如果文件存在，则读取内容
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        datas = data.get(configuration_name, [])
+        return True, '\n'.join(datas)
+    except FileNotFoundError:
+        # 如果文件不存在，创建文件并写入默认数据
+        with open(file_path, 'w', encoding='utf-8') as file:
+            json.dump(default_data, file)
+        print("文件不存在，已创建新文件。")
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+        datas = data.get(configuration_name, [])
+        return True, '\n'.join(datas)
+    except json.JSONDecodeError:
+        # 如果存在的文件不是有效的JSON，返回错误信息
+        return False, "JSON文件格式错误。"
+    except Exception as e:
+        # 处理其他所有异常
+        return False, f"读取失败，错误：{str(e)}"
+
+
+def update_data_in_json(file_path, configuration_data, configuration_name):
+    # 将给定的字符串分割成列表
+    sources_list = configuration_data.split('\\n')
+
+    # 准备要写入JSON的数据结构
+    data_to_write = {configuration_name: sources_list}
+
+    try:
+        # 不管文件是否存在，直接写入数据
+        # 如果文件不存在，open函数的写入模式('w')会创建该文件
+        with open(file_path, 'w', encoding='utf-8') as file:
+            json.dump(data_to_write, file)
+        return True, "更新成功。"
+    except Exception as e:
+        # 处理可能发生的其他异常
+        return False, f"更新失败，错误：{str(e)}"
+
+
 def rename_file(file_path, new_file_name):
     new_file_name = re.sub(r'[<>:\"/\\|?*]', '.', new_file_name)
     # 分割原始文件名以获取扩展名和目录
