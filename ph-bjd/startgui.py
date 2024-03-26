@@ -215,7 +215,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_picture_button_movie_clicked(self):
         self.pictureUrlBrowserMovie.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserMovie.append("获取视频" + video_path + "的截图")
             screenshot_storage_path = get_settings("screenshot_storage_path")  # 截图储存路径
@@ -378,7 +378,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_media_info_button_movie_clicked(self):
         self.mediainfoBrowserMovie.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             get_media_info_success, media_info = get_media_info(video_path)
             if get_media_info_success:
@@ -436,7 +436,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 make_dir = get_settings("make_dir")
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
-                is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())
+                is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text().replace('file:///', ''))
                 if is_video_path == 1 or is_video_path == 2:
                     print("重命名初始化完成")
                     self.debugBrowserMovie.append("重命名初始化完成")
@@ -629,7 +629,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_movie_clicked(self):
-        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathMovie.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)
@@ -715,7 +715,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_picture_button_tv_clicked(self):
         self.pictureUrlBrowserTV.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text().replace('file:///', ''))  # 视频资源的路径
 
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserTV.append("获取视频" + video_path + "的截图")
@@ -869,7 +869,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_media_info_button_tv_clicked(self):
         self.mediainfoBrowserTV.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             get_media_info_success, media_info = get_media_info(video_path)
             if get_media_info_success:
@@ -919,7 +919,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 season = self.seasonBoxTV.text()
                 total_episode = ""
                 episode_num = 0
-                episode_start = int(self.episodeStartBoxTV.text())
+                episode_start_number = int(self.episodeStartBoxTV.text())
                 season_number = season
                 if len(season) < 2:
                     season = '0' + season
@@ -934,23 +934,23 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 actors = ""
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
-                is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())
+                is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text().replace('file:///', ''))
                 english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                 widget = QWidget(self)
-                if is_video_path == 1 or is_video_path == 2:  # 视频路径是文件或文件夹
+                if is_video_path == 2:  # 视频路径是文件夹
                     get_video_files_success, video_files = get_video_files(
                         self.videoPathTV.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
                     if get_video_files_success:
                         print('检测到以下文件：', video_files)
                         episode_num = len(video_files)  # 获取视频文件的总数
-                        if episode_start == 1:
+                        if episode_start_number == 1:
                             total_episode = '全' + str(episode_num) + '集'
                         else:
-                            if str(episode_start) == str(episode_start + episode_num - 1):
-                                total_episode = '第' + str(episode_start) + '集'
+                            if str(episode_start_number) == str(episode_start_number + episode_num - 1):
+                                total_episode = '第' + str(episode_start_number) + '集'
                             else:
-                                total_episode = '第' + str(episode_start) + '-' + str(
-                                    episode_start + episode_num - 1) + '集'
+                                total_episode = '第' + str(episode_start_number) + '-' + str(
+                                    episode_start_number + episode_num - 1) + '集'
                         print(total_episode)
                     else:
                         print("获取文件失败")
@@ -1107,10 +1107,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if rename_file:
                         print("对文件重新命名")
                         self.debugBrowserTV.append("开始对文件重新命名")
-                        i = episode_start
+                        i = episode_start_number
                         for video_file in video_files:
                             e = str(i)
-                            while len(e) < len(str(episode_start + episode_num - 1)):
+                            while len(e) < len(str(episode_start_number + episode_num - 1)):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
@@ -1143,7 +1143,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_tv_clicked(self):
-        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)
@@ -1241,7 +1241,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_picture_button_playlet_clicked(self):
         self.pictureUrlBrowserPlaylet.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text().replace('file:///', ''))  # 视频资源的路径
 
         if is_video_path == 1 or is_video_path == 2:
             self.debugBrowserPlaylet.append("获取视频" + video_path + "的截图")
@@ -1414,7 +1414,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_media_info_button_playlet_clicked(self):
         self.mediainfoBrowserPlaylet.setText("")
-        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             get_media_info_success, mediainfo = get_media_info(video_path)
             if get_media_info_success:
@@ -1469,7 +1469,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 season = self.seasonBoxPlaylet.text()
                 total_episode = ""
                 episode_num = 0
-                episode_start = int(self.episodeStartBoxPlaylet.text())
+                episode_start_number = int(self.episodeStartBoxPlaylet.text())
                 season_number = season
                 if len(season) < 2:
                     season = '0' + season
@@ -1483,7 +1483,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 playlet_source = ""
                 rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
-                is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 获取视频的路径
+                is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text().replace('file:///', ''))  # 获取视频的路径
                 get_video_info_success, response = get_video_info(video_path)  # 通过视频获取视频的MI参数
                 print(get_video_info_success, response)
                 if is_video_path == 2:  # 视频路径是文件夹
@@ -1492,14 +1492,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if get_video_files_success:
                         print('检测到以下文件：', video_files)
                         episode_num = len(video_files)  # 获取视频文件的总数
-                        if episode_start == 1:
+                        if episode_start_number == 1:
                             total_episode = '全' + str(episode_num) + '集'
                         else:
-                            if str(episode_start) == str(episode_start + episode_num - 1):
-                                total_episode = '第' + str(episode_start) + '集'
+                            if str(episode_start_number) == str(episode_start_number + episode_num - 1):
+                                total_episode = '第' + str(episode_start_number) + '集'
                             else:
-                                total_episode = '第' + str(episode_start) + '-' + str(
-                                    episode_start + episode_num - 1) + '集'
+                                total_episode = '第' + str(episode_start_number) + '-' + str(
+                                    episode_start_number + episode_num - 1) + '集'
                     if get_video_info_success:
                         self.debugBrowserPlaylet.append("获取到关键参数：" + str(response))
                         video_format = response[0]
@@ -1577,10 +1577,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if rename_file:
                         print("对文件重新命名")
                         self.debugBrowserPlaylet.append("开始对文件重新命名")
-                        i = episode_start
+                        i = episode_start_number
                         for video_file in video_files:
                             e = str(i)
-                            while len(e) < len(str(episode_start + episode_num - 1)):
+                            while len(e) < len(str(episode_start_number + episode_num - 1)):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
@@ -1615,7 +1615,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"获取命名出错：{e}"]
 
     def make_torrent_button_playlet_clicked(self):
-        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text())  # 视频资源的路径
+        is_video_path, video_path = check_path_and_find_video(self.videoPathPlaylet.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
             torrent_storage_path = str(get_settings("torrent_storage_path"))
             folder_path = os.path.dirname(video_path)

@@ -8,7 +8,7 @@ from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
-    move_file_to_folder
+    move_file_to_folder, get_video_files, rename_directory
 
 api = Flask(__name__)
 
@@ -739,7 +739,7 @@ def api_get_name_from_template():
 
 
 @api.route('/api/renameFile', methods=['POST'])
-# 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
+# 用于重命名文件
 def api_rename_file():
     # 从请求URL中获取参数
     file_path = request.args.get('filePath', default='', type=str)  # 必须信息
@@ -777,16 +777,26 @@ def api_rename_file():
 
 
 @api.route('/api/moveFileToFolder', methods=['POST'])
-# 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
+# 用于将文件塞入指定文件夹
 def api_move_file_to_folder():
     # 从请求URL中获取参数
     file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-    folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
-    if file_path == '' or folder_name == '':
+    if file_path == '' or file_path == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少文件路径。",  # 提示信息
+                "newFilePath": ""
+            },
+            "success": True
+        })
+
+    folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
+    if folder_name == '' or folder_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少文件夹名称。",  # 提示信息
                 "newFilePath": ""
             },
             "success": True
@@ -809,6 +819,210 @@ def api_move_file_to_folder():
                 "code": "GENERAL_ERROR",
                 "message": f"移动文件失败：{response}。",  # 提示信息
                 "newFilePath": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/renameEpisode', methods=['POST'])
+# 用于给剧集批量重命名
+def api_rename_episode():
+    # 从请求URL中获取参数
+    folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
+    if folder_path == '' or folder_path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少资源路径。",  # 提示信息
+                "newFolderPath": ""
+            },
+            "success": True
+        })
+
+    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+    if new_file_name == '' or new_file_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少文件名称。",  # 提示信息
+                "newFolderPath": ""
+            },
+            "success": True
+        })
+
+    episode_start_number = request.args.get('episodeStartNumber', default='', type=str)  # 必须信息
+    if episode_start_number == '' or episode_start_number == '':
+        episode_start_number = '1'
+
+    try:
+        is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+        if is_video_path == 2:  # 视频路径是文件夹
+            get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
+
+            if get_video_files_success:
+                print('检测到以下文件：', video_files)
+                episode_start_number = int(episode_start_number)
+                episode_num = len(video_files)  # 获取视频文件的总数
+                if episode_start_number == 1:
+                    total_episode = '全' + str(episode_num) + '集'
+                else:
+                    if str(episode_start_number) == str(episode_start_number + episode_num - 1):
+                        total_episode = '第' + str(episode_start_number) + '集'
+                    else:
+                        total_episode = '第' + str(episode_start_number) + '-' + str(
+                            episode_start_number + episode_num - 1) + '集'
+                print(total_episode)
+
+                i = episode_start_number
+                for video_file in video_files:
+                    e = str(i)
+                    while len(e) < len(str(episode_start_number + episode_num - 1)):
+                        e = '0' + e
+                    if len(e) == 1:
+                        e = '0' + e
+                    rename_file_success, response = rename_file(video_file,
+                                                                new_file_name.replace('@@', e))
+                    if rename_file_success:
+                        video_path = response
+                        i += 1
+                    else:
+                        raise OSError("重命名文件失败：" + response)
+
+                print("开始对文件夹重新命名")
+                rename_directory_success, response = rename_directory(os.path.dirname(video_path), new_file_name.
+                                                                      replace('E@@', '').
+                                                                      replace('@@', ''))
+                if rename_directory_success:
+                    new_folder_path = response
+                    return jsonify({
+                        "data": {
+                            "code": "OK",
+                            "message": "批量重命名成功。",  # 提示信息
+                            "newFolderPath": response
+                        },
+                        "success": True
+                    })
+                else:
+                    raise OSError("重命名文件夹失败：" + response)
+            else:
+                return jsonify({
+                    "data": {
+                        "code": "GENERAL_ERROR",
+                        "message": f"获取资源错误：{video_files[0]}。",  # 提示信息
+                        "newFolderPath": ""
+                    },
+                    "success": True
+                })
+        else:
+            if is_video_path == 1:  # 视频路径是文件夹
+                return jsonify({
+                    "data": {
+                        "code": "FILE_PATH_ERROR",
+                        "message": f"不支持文件路径：{video_path}。",  # 提示信息
+                        "newFolderPath": ""
+                    },
+                    "success": True
+                })
+            else:
+                return jsonify({
+                    "data": {
+                        "code": "FILE_PATH_ERROR",
+                        "message": f"资源路径错误：{video_path}。",  # 提示信息
+                        "newFolderPath": ""
+                    },
+                    "success": True
+                })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"批量重命名失败：{e}。",  # 提示信息
+                "newFolderPath": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/getTotalEpisode', methods=['GET'])
+# 用于获取文件夹中的集数信息
+def api_get_total_episode():
+    # 从请求URL中获取参数
+    folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
+    if folder_path == '' or folder_path == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少资源路径。",  # 提示信息
+                "totalEpisode": ""
+            },
+            "success": True
+        })
+
+    episode_start_number = request.args.get('episodeStartNumber', default='', type=str)  # 必须信息
+    if episode_start_number == '' or episode_start_number == '':
+        episode_start_number = '1'
+    try:
+        is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+        if is_video_path == 2:  # 视频路径是文件夹
+            get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
+
+            if get_video_files_success:
+                print('检测到以下文件：', video_files)
+                episode_start_number = int(episode_start_number)
+                episode_num = len(video_files)  # 获取视频文件的总数
+                if episode_start_number == 1:
+                    total_episode = '全' + str(episode_num) + '集'
+                else:
+                    if str(episode_start_number) == str(episode_start_number + episode_num - 1):
+                        total_episode = '第' + str(episode_start_number) + '集'
+                    else:
+                        total_episode = '第' + str(episode_start_number) + '-' + str(
+                            episode_start_number + episode_num - 1) + '集'
+                print(total_episode)
+                return jsonify({
+                    "data": {
+                        "code": "OK",
+                        "message": "获取集数信息成功。",  # 提示信息
+                        "totalEpisode": total_episode
+                    },
+                    "success": True
+                })
+            else:
+                return jsonify({
+                    "data": {
+                        "code": "GENERAL_ERROR",
+                        "message": f"获取资源错误：{video_files[0]}。",  # 提示信息
+                        "totalEpisode": ""
+                    },
+                    "success": True
+                })
+        else:
+            if is_video_path == 1:  # 视频路径是文件夹
+                return jsonify({
+                    "data": {
+                        "code": "FILE_PATH_ERROR",
+                        "message": f"不支持文件路径：{video_path}。",  # 提示信息
+                        "totalEpisode": ""
+                    },
+                    "success": True
+                })
+            else:
+                return jsonify({
+                    "data": {
+                        "code": "FILE_PATH_ERROR",
+                        "message": f"资源路径错误：{video_path}。",  # 提示信息
+                        "totalEpisode": ""
+                    },
+                    "success": True
+                })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"批量重命名失败：{e}。",  # 提示信息
+                "totalEpisode": ""
             },
             "success": True
         })
