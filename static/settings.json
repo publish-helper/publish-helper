@@ -19,7 +19,7 @@
     "make_dir": "True",
     "rename_file": "True",
     "second_confirm_file_name": "True",
-    "enable_api": "",
+    "enable_api": "True",
     "api_port": "5372",
     "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels}-{team}",
     "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",

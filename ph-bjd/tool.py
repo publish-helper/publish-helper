@@ -145,24 +145,24 @@ def get_settings(parameter_name):
     return parameter_value
 
 
-def rename_file_with_same_extension(old_name, new_name_without_extension):
-    new_name_without_extension = re.sub(r'[<>:\"/\\|?*]', '.', new_name_without_extension)
+def rename_file(file_path, new_file_name):
+    new_file_name = re.sub(r'[<>:\"/\\|?*]', '.', new_file_name)
     # 分割原始文件名以获取扩展名和目录
-    file_dir, file_base = os.path.split(old_name)
+    file_dir, file_base = os.path.split(file_path)
     file_name, file_extension = os.path.splitext(file_base)
 
     # 构建新文件名，保留原扩展名
-    new_name = file_dir + '/' + new_name_without_extension + file_extension
+    new_name = file_dir + '/' + new_file_name + file_extension
 
     # 重命名文件
     try:
-        os.rename(old_name, new_name)
-        print(old_name, "文件成功重命名为", new_name)
+        os.rename(file_path, new_name)
+        print(file_path, "文件成功重命名为", new_name)
         return True, new_name
 
     except FileNotFoundError:
-        print(f"未找到文件: '{old_name}'")
-        return False, f"未找到文件: '{old_name}'"
+        print(f"未找到文件: '{file_path}'")
+        return False, f"未找到文件: '{file_path}'"
 
     except OSError as e:
         print(f"重命名文件时出错: {e}")
@@ -204,7 +204,7 @@ def rename_directory(current_dir, new_name):
         return False, f"重命名目录时发生错误: {e}"
 
 
-def move_file_to_folder(file_name, folder_name):
+def move_file_to_folder(file_path, folder_name):
     """
     将文件移动到同目录下的指定文件夹中，除非文件已在该文件夹中。
 
@@ -213,14 +213,14 @@ def move_file_to_folder(file_name, folder_name):
     folder_name (str): 目标文件夹名称。
     """
     # 获取文件的目录和文件名
-    print("开始移动文件", file_name, folder_name)
-    file_dir, file_base = os.path.split(file_name)
+    print("开始移动文件", file_path, folder_name)
+    file_dir, file_base = os.path.split(file_path)
     print(file_base, file_dir)
 
     # 检查文件是否已在目标文件夹中
     if os.path.basename(file_dir) == folder_name:
-        print(f"文件 '{file_name}' 已在 '{folder_name}' 中，无需移动。")
-        return False, f"文件 '{file_name}' 已在 '{folder_name}' 中，无需移动。"
+        print(f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动。")
+        return False, f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动。"
 
     # 目标文件夹的完整路径
     target_folder = file_dir + '/' + folder_name
@@ -234,8 +234,8 @@ def move_file_to_folder(file_name, folder_name):
 
     # 移动文件
     try:
-        shutil.move(file_name, target_file)
-        print(f"文件 '{file_name}' 已成功移动到 '{target_file}'")
+        shutil.move(file_path, target_file)
+        print(f"文件 '{file_path}' 已成功移动到 '{target_file}'")
         return True, target_file
 
     except Exception as e:
@@ -448,6 +448,7 @@ def convert_chinese_punctuation_to_english(text):
         text = text.replace(chinese, english)
 
     return text
+
 
 def natural_keys(text):
     """

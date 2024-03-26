@@ -7,7 +7,8 @@ from picturebed import upload_picture
 from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
-from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number
+from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
+    move_file_to_folder
 
 api = Flask(__name__)
 
@@ -581,6 +582,7 @@ def api_get_pt_gen_info():
                 },
                 "success": True
             })
+
         except Exception as e:
             return jsonify({
                 "data": {
@@ -595,6 +597,7 @@ def api_get_pt_gen_info():
                 },
                 "success": True
             })
+
     else:
         return jsonify({
             "data": {
@@ -642,6 +645,7 @@ def api_make_torrent():
                 },
                 "success": True
             })
+
         else:
             return jsonify({
                 "data": {
@@ -651,6 +655,7 @@ def api_make_torrent():
                 },
                 "success": True
             })
+
     else:
         return jsonify({
             "data": {
@@ -676,6 +681,7 @@ def api_get_name_from_template():
             },
             "success": True
         })
+
     if template != "main_title_movie" and template != "main_title_tv" and template != "main_title_playlet" and template != "second_title_movie" and template != "second_title_tv" and template != "second_title_playlet" and template != "file_name_movie" and template != "file_name_tv" and template != "file_name_playlet":
         return jsonify({
             "data": {
@@ -720,12 +726,89 @@ def api_get_name_from_template():
             },
             "success": True
         })
+
     except Exception as e:
         return jsonify({
             "data": {
                 "code": "GENERAL_ERROR",
-                "message": "获取名称失败。",  # 提示信息
-                "name": f"获取名称失败：{e}。"
+                "message": f"获取名称失败：{e}。",  # 提示信息
+                "name": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/renameFile', methods=['GET'])
+# 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
+def api_rename_file():
+    # 从请求URL中获取参数
+    file_path = request.args.get('filePath', default='', type=str)  # 必须信息
+    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+    if file_path == '' or new_file_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "newFilePath": ""
+            },
+            "success": True
+        })
+
+    rename_success, response = rename_file(file_path, new_file_name)
+    if rename_success:
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "重命名文件成功。",  # 提示信息
+                "newFilePath": response
+            },
+            "success": True
+        })
+
+    else:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"重命名文件失败：{response}。",  # 提示信息
+                "newFilePath": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/moveFileToFolder', methods=['GET'])
+# 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
+def api_move_file_to_folder():
+    # 从请求URL中获取参数
+    file_path = request.args.get('filePath', default='', type=str)  # 必须信息
+    folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
+    if file_path == '' or folder_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少必要信息。",  # 提示信息
+                "newFilePath": ""
+            },
+            "success": True
+        })
+
+    move_file_to_folder_success, response = move_file_to_folder(file_path, folder_name)
+    if move_file_to_folder_success:
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "重命名文件成功。",  # 提示信息
+                "newFilePath": response
+            },
+            "success": True
+        })
+
+    else:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"移动文件失败：{response}。",  # 提示信息
+                "newFilePath": ""
             },
             "success": True
         })

@@ -16,10 +16,9 @@ from ptgen import get_pt_gen_description
 from rename import get_pt_gen_info, get_video_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
-from tool import update_settings, get_settings, get_video_file_path, rename_file_with_same_extension, \
-    move_file_to_folder, \
+from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, make_torrent, load_names, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path, int_to_roman, int_to_special_roman, is_filename_too_long, num_to_chinese, \
+    get_video_files, get_picture_file_path, is_filename_too_long, num_to_chinese, \
     get_playlet_description, delete_season_number
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
@@ -602,7 +601,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if rename_file and is_video_path == 1:
                         print("开始对文件重新命名")
                         self.debugBrowserMovie.append("开始对文件重新命名")
-                        rename_file_success, output = rename_file_with_same_extension(video_path, file_name)
+                        rename_file_success, output = rename_file(video_path, file_name)
                         if rename_file_success:
                             self.videoPathMovie.setText(output)
                             video_path = output
@@ -1115,8 +1114,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
-                            rename_file_success, output = rename_file_with_same_extension(video_file,
-                                                                                          file_name.replace('@@', e))
+                            rename_file_success, output = rename_file(video_file,
+                                                                      file_name.replace('@@', e))
                             if rename_file_success:
                                 self.videoPathTV.setText(output)
                                 video_path = output
@@ -1521,7 +1520,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
                                                         audio_codec,
-                                                        channels, team, "", season_number, total_episode, playlet_source,
+                                                        channels, team, "", season_number, total_episode,
+                                                        playlet_source,
                                                         category,
                                                         "", "main_title_playlet")
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
@@ -1584,8 +1584,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
-                            rename_file_success, response = rename_file_with_same_extension(video_file,
-                                                                                            file_name.replace('@@', e))
+                            rename_file_success, response = rename_file(video_file,
+                                                                        file_name.replace('@@', e))
 
                             if rename_file_success:
                                 self.videoPathPlaylet.setText(response)
