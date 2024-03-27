@@ -8,7 +8,8 @@ from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
-    move_file_to_folder, get_video_files, rename_directory, read_data_from_json, update_data_in_json
+    move_file_to_folder, get_video_files, rename_directory, read_data_from_json, update_data_in_json, update_settings, \
+    get_playlet_description
 
 api = Flask(__name__)
 
@@ -38,7 +39,7 @@ def api_get_screenshot():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源路径。",  # 提示信息
                 "screenshotNumber": "0",
                 "screenshotPath": "",
                 "videoPath": "",
@@ -183,7 +184,7 @@ def api_get_thumbnail():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源路径。",  # 提示信息
                 "thumbnailPath": "",
                 "videoPath": ""
             },
@@ -301,7 +302,7 @@ def api_upload_picture():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少图片路径。",  # 提示信息
                 "pictureUrl": ""
             },
             "success": True
@@ -357,7 +358,7 @@ def api_get_media_info():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源路径。",  # 提示信息
                 "mediaInfo": "",
                 "videoPath": ""
             },
@@ -408,7 +409,7 @@ def api_get_video_info():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源路径。",  # 提示信息
                 "videoPath": "",
                 "videoFormat": "",
                 "videoCodec": "",
@@ -491,7 +492,7 @@ def api_get_pt_gen_description():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源链接。",  # 提示信息
                 "description": ""
             },
             "success": True
@@ -524,6 +525,47 @@ def api_get_pt_gen_description():
         })
 
 
+@api.route('/api/getPlayletDescription', methods=['GET'])
+# 用于获取短剧简介
+def api_get_playlet_description():
+    try:
+        original_title = request.args.get('originalTitle', default='', type=str)  # 必须信息
+        if original_title == '':
+            return jsonify({
+                "data": {
+                    "code": "MISSING_REQUIRED_PARAMETER",
+                    "message": "缺少资源名称。",  # 提示信息
+                    "playletDescription": ""
+                },
+                "success": True
+            })
+
+        year = request.args.get('year', default='', type=str)
+        area = request.args.get('area', default='', type=str)
+        category = request.args.get('category', default='', type=str)
+        language = request.args.get('language', default='', type=str)
+        season_number = request.args.get('seasonNumber', default='', type=str)
+        playlet_description = get_playlet_description(original_title, year, area, category, language, season_number)
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "获取短剧简介成功。",  # 提示信息
+                "playletDescription": playlet_description
+            },
+            "success": True
+        })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"获取短剧简介失败：{e}。",  # 提示信息
+                "playletDescription": ""
+            },
+            "success": True
+        })
+
+
 @api.route('/api/getPtGenInfo', methods=['GET'])
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_get_pt_gen_info():
@@ -533,7 +575,7 @@ def api_get_pt_gen_info():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少简介内容。",  # 提示信息
                 "originalTitle": "",
                 "englishTitle": "",
                 "year": "",
@@ -617,7 +659,7 @@ def api_make_torrent():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少资源路径。",  # 提示信息
                 "torrentPath": ""
             },
             "success": True
@@ -670,7 +712,7 @@ def api_get_name_from_template():
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少模板名称。",  # 提示信息
                 "name": ""
             },
             "success": True
@@ -737,12 +779,22 @@ def api_get_name_from_template():
 def api_rename_file():
     # 从请求URL中获取参数
     file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
-    if file_path == '' or new_file_name == '':
+    if file_path == '':
         return jsonify({
             "data": {
                 "code": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少必要信息。",  # 提示信息
+                "message": "缺少文件路径。",  # 提示信息
+                "newFilePath": ""
+            },
+            "success": True
+        })
+
+    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+    if new_file_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少需要重命名的名称信息。",  # 提示信息
                 "newFilePath": ""
             },
             "success": True
@@ -1119,3 +1171,83 @@ def api_update_configuration_data_in_json():
                 },
                 "success": True
             })
+
+
+@api.route('/api/getSettings', methods=['GET'])
+# 用于获取settings.json的数据
+def api_get_settings():
+    # 从请求URL中获取参数
+    settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
+    if settings_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少所需设置参数名称。",  # 提示信息
+                "settingsData": ""
+            },
+            "success": True
+        })
+    try:
+        settings_data = get_settings(settings_name)
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "获取设置信息成功。",  # 提示信息
+                "settingsData": settings_data
+            },
+            "success": True
+        })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"获取设置信息失败：{e}。",  # 提示信息
+                "settingsData": ""
+            },
+            "success": True
+        })
+
+
+@api.route('/api/updateSettings', methods=['POST'])
+# 用于更新settings.json的数据
+def api_update_settings():
+    # 从请求URL中获取参数
+    settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
+    if settings_name == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少所需设置参数名称。",  # 提示信息
+            },
+            "success": True
+        })
+
+    settings_data = request.args.get('settingsData', default='', type=str)  # 必须信息
+    if settings_data == '':
+        return jsonify({
+            "data": {
+                "code": "MISSING_REQUIRED_PARAMETER",
+                "message": "缺少所需设置参数的值。",  # 提示信息
+                "settingsData": ""
+            },
+            "success": True
+        })
+    try:
+        update_settings(settings_name, settings_data)
+        return jsonify({
+            "data": {
+                "code": "OK",
+                "message": "更新设置信息成功。"  # 提示信息
+            },
+            "success": True
+        })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "code": "GENERAL_ERROR",
+                "message": f"更新设置信息失败：{e}。"  # 提示信息
+            },
+            "success": True
+        })

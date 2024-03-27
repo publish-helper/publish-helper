@@ -12,7 +12,7 @@ from xpinyin import Pinyin
 
 
 # 更新settings
-def update_settings(parameter_name, value):
+def update_settings(settings_name, settings_data):
     """
     更新 static/settings.json 文件中的数据。
     如果指定的参数不存在，则创建该参数。
@@ -32,15 +32,15 @@ def update_settings(parameter_name, value):
         settings = {}
 
     # 更新设置
-    settings[parameter_name] = value
+    settings[settings_name] = settings_data
 
     # 写回文件
     with open(settings_file, 'w') as file:
         json.dump(settings, file, indent=4)
-    print("写入数据" + f"{parameter_name}: {value}")
+    print("写入数据" + f"{settings_name}: {settings_data}")
 
 
-def get_settings(parameter_name):
+def get_settings(settings_name):
     """
     从 static/settings.json 文件中获取特定参数的值。
     如果参数不存在，则创建一个并赋值为标准值。
@@ -134,15 +134,15 @@ def get_settings(parameter_name):
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
-    if parameter_name in standard_values and parameter_name not in settings:
-        settings[parameter_name] = standard_values[parameter_name]
+    if settings_name in standard_values and settings_name not in settings:
+        settings[settings_name] = standard_values[settings_name]
         with open(settings_file, 'w') as file:
             json.dump(settings, file)
 
-    parameter_value = settings.get(parameter_name, "")
-    print("读取数据" + f"{parameter_name}: {parameter_value}")
+    settings_data = settings.get(settings_name, "")
+    print("读取数据" + f"{settings_name}: {settings_data}")
 
-    return parameter_value
+    return settings_data
 
 
 def read_data_from_json(file_path, configuration_name):
@@ -375,9 +375,9 @@ def check_path_and_find_video(path):
         return 0, '您提供的路径既不是文件也不是文件夹。'  # 路径既不是文件也不是文件夹
 
 
-def get_playlet_description(original_title, year, area, category, language, season):
-    if season != '1':
-        original_title += ' 第' + num_to_chinese(int(season)) + '季'
+def get_playlet_description(original_title, year, area, category, language, season_number):
+    if season_number != '1':
+        original_title += ' 第' + num_to_chinese(int(season_number)) + '季'
     return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
 
 
