@@ -358,8 +358,8 @@ def check_path_and_find_video(path):
     if os.path.isfile(path):
         if any(path.endswith(ext) for ext in video_extensions):
             return 1, path  # 是文件且符合视频类型
-        print(f'路径下获取到文件{path}，但该文件不符合视频类型。')
-        return 0, f'路径下获取到文件{path}，但该文件不符合视频类型。'  # 是文件，但不符合视频类型
+        print(f'路径下获取到文件{path}，但该文件不符合视频类型')
+        return 0, f'路径下获取到文件{path}，但该文件不符合视频类型'  # 是文件，但不符合视频类型
 
     # 检查路径是否是一个文件夹
     elif os.path.isdir(path):
@@ -367,12 +367,12 @@ def check_path_and_find_video(path):
             if any(file.endswith(ext) for ext in video_extensions):
                 print(path + file)
                 return 2, path + '/' + file  # 在文件夹中找到符合类型的视频文件
-        print('文件夹中没有符合类型的视频文件。')
-        return 0, '文件夹中没有符合类型的视频文件。'  # 文件夹中没有符合类型的视频文件
+        print('文件夹中没有符合类型的视频文件')
+        return 0, '文件夹中没有符合类型的视频文件'  # 文件夹中没有符合类型的视频文件
 
     else:
-        print('您提供的路径既不是文件也不是文件夹。')
-        return 0, '您提供的路径既不是文件也不是文件夹。'  # 路径既不是文件也不是文件夹
+        print('您提供的路径既不是文件也不是文件夹')
+        return 0, '您提供的路径既不是文件也不是文件夹'  # 路径既不是文件也不是文件夹
 
 
 def get_playlet_description(original_title, year, area, category, language, season_number):
