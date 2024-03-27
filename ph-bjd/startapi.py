@@ -339,7 +339,7 @@ def api_upload_picture():
         if not os.path.exists(picture_path):
             return jsonify({
                 "data": {
-                    "pictureBbsCode": "",
+                    "pictureBbCode": "",
                     "pictureUrl": ""
                 },
                 "message": "您提供的图片路径不存在。",
@@ -360,7 +360,7 @@ def api_upload_picture():
         if upload_picture_success:
             return jsonify({
                 "data": {
-                    "pictureBbsCode": response,  # 注意是[img]1.png[/img]的bbsCode格式
+                    "pictureBbCode": response,  # 注意是[img]1.png[/img]的bbsCode格式
                     "pictureUrl": response[5:-6]
                 },
                 "message": "上传图片成功。",
@@ -369,7 +369,7 @@ def api_upload_picture():
         else:
             return jsonify({
                 "data": {
-                    "pictureBbsCode": "",
+                    "pictureBbCode": "",
                     "pictureUrl": ""
                 },
                 "message": f"上传图片失败：{response}。",
@@ -378,7 +378,7 @@ def api_upload_picture():
     except Exception as e:
         return jsonify({
             "data": {
-                "pictureBbsCode": "",
+                "pictureBbCode": "",
                 "pictureUrl": ""
             },
             "message": f"上传图片失败：{e}。",
