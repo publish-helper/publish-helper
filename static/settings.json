@@ -1,5 +1,5 @@
 {
-    "screenshot_storage_path": "temp/pic",
+    "screenshot_storage_path": "/temp/pic",
     "torrent_storage_path": "temp/torrent",
     "pt_gen_api_url": "https://ptgen.agsvpt.work/",
     "picture_bed_api_url": "https://freeimage.host/api/1/upload",

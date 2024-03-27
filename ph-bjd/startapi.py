@@ -18,41 +18,43 @@ def run_api():
     api.run(port=int(get_settings("api_port")), debug=True, use_reloader=False, threaded=True)
 
 
-@api.route('/api/add', methods=['GET'])
-# 例子，用于计算两个数字的和
-def api_add_numbers():
-    # 从请求URL中获取两个参数'a'和'b'
-    a = request.args.get('a', default=0, type=int)
-    b = request.args.get('b', default=0, type=int)
-    # 计算和
-    result = a + b
-    # 返回结果
-    return jsonify({'result': result})
-
-
 @api.route('/api/getScreenshot', methods=['GET'])
 # 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
 def api_get_screenshot():
     try:
         # 从请求URL中获取参数
         path = request.args.get('path', default='', type=str)  # 必须信息
+
         if path == '':
             return jsonify({
                 "data": {
                     "screenshotNumber": "0",
                     "screenshotPath": "",
-                    "videoPath": "",
+                    "videoPath": ""
                 },
                 "message": "缺少资源路径。",
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
-                                                   type=str)
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "screenshotNumber": "0",
+                    "screenshotPath": "",
+                    "videoPath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        screenshot_storage_path = request.args.get('screenshotStoragePath',
+                                                   default=get_settings("screenshot_storage_path"), type=str)
+
         if screenshot_storage_path == '':
             screenshot_storage_path = get_settings("screenshot_storage_path")
 
         screenshot_number = request.args.get('screenshotNumber', default=get_settings("screenshot_number"), type=str)
+
         if screenshot_number == '':
             screenshot_number = int(get_settings("screenshot_number"))
         else:
@@ -60,6 +62,7 @@ def api_get_screenshot():
 
         screenshot_threshold = request.args.get('screenshotThreshold', default=get_settings("screenshot_threshold"),
                                                 type=str)
+
         if screenshot_threshold == '':
             screenshot_threshold = float(get_settings("screenshot_threshold"))
         else:
@@ -67,6 +70,7 @@ def api_get_screenshot():
 
         screenshot_start_percentage = request.args.get('screenshotStartPercentage',
                                                        default=get_settings("screenshot_start_percentage"), type=str)
+
         if screenshot_start_percentage == '':
             screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
         else:
@@ -74,12 +78,15 @@ def api_get_screenshot():
 
         screenshot_end_percentage = request.args.get('screenshotEndPercentage',
                                                      default=get_settings("screenshot_end_percentage"), type=str)
+
         if screenshot_end_percentage == '':
             screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
         else:
             screenshot_end_percentage = float(screenshot_end_percentage)
 
-        screenshot_min_interval_percentage = request.args.get('screenshotMinIntervalPercentage', default="0.01", type=str)
+        screenshot_min_interval_percentage = request.args.get('screenshotMinIntervalPercentage', default="0.01",
+                                                              type=str)
+
         if screenshot_min_interval_percentage == '':
             screenshot_min_interval_percentage = 0.01
         else:
@@ -93,9 +100,11 @@ def api_get_screenshot():
                         if is_video_path == 1 or is_video_path == 2:
                             screenshot_success, response = get_screenshot(video_path, screenshot_storage_path,
                                                                           screenshot_number,
-                                                                          screenshot_threshold, screenshot_start_percentage,
+                                                                          screenshot_threshold,
+                                                                          screenshot_start_percentage,
                                                                           screenshot_end_percentage,
                                                                           screenshot_min_interval_percentage)
+
                             if screenshot_success:
                                 return jsonify({
                                     "data": {
@@ -123,8 +132,8 @@ def api_get_screenshot():
                                     "screenshotPath": "",
                                     "videoPath": ""
                                 },
-                                "message": f"获取视频路径失败，{video_path}",
-                                "statusCode": "FILE_PATH_ERROR"
+                                "message": f"获取视频路径失败：{video_path}",
+                                "statusCode": "BACKEND_PROCESSING_ERROR"
                             }), 400
                     else:
                         return jsonify({
@@ -184,6 +193,7 @@ def api_get_thumbnail():
     try:
         # 从请求URL中获取参数
         path = request.args.get('path', default='', type=str)  # 必须信息
+
         if path == '':
             return jsonify({
                 "data": {
@@ -194,8 +204,19 @@ def api_get_thumbnail():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        screenshot_storage_path = request.args.get('screenshotStoragePath', default=get_settings("screenshot_storage_path"),
-                                                   type=str)
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "thumbnailPath": "",
+                    "videoPath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        screenshot_storage_path = request.args.get('screenshotStoragePath',
+                                                   default=get_settings("screenshot_storage_path"), type=str)
+
         if screenshot_storage_path == '':
             screenshot_storage_path = get_settings("screenshot_storage_path")
 
@@ -230,10 +251,11 @@ def api_get_thumbnail():
                 if screenshot_start_percentage < screenshot_end_percentage:
                     is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
                     if is_video_path == 1 or is_video_path == 2:
-
-                        get_thumbnail_success, response = get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows,
+                        get_thumbnail_success, response = get_thumbnail(video_path, screenshot_storage_path,
+                                                                        thumbnail_rows,
                                                                         thumbnail_cols, screenshot_start_percentage,
                                                                         screenshot_end_percentage)
+
                         if get_thumbnail_success:
                             return jsonify({
                                 "data": {
@@ -258,8 +280,8 @@ def api_get_thumbnail():
                                 "thumbnailPath": "",
                                 "videoPath": ""
                             },
-                            "message": f"获取视频路径失败，{video_path}",
-                            "statusCode": "FILE_PATH_ERROR"
+                            "message": f"获取视频路径失败：{video_path}",
+                            "statusCode": "BACKEND_PROCESSING_ERROR"
                         }), 400
                 else:
                     return jsonify({
@@ -314,7 +336,18 @@ def api_upload_picture():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        picture_bed_api_url = request.args.get('pictureBedApiUrl', default=get_settings("picture_bed_api_url"), type=str)
+        if not os.path.exists(picture_path):
+            return jsonify({
+                "data": {
+                    "pictureBbsCode": "",
+                    "pictureUrl": ""
+                },
+                "message": "您提供的图片路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        picture_bed_api_url = request.args.get('pictureBedApiUrl', default=get_settings("picture_bed_api_url"),
+                                               type=str)
         if picture_bed_api_url == '':
             picture_bed_api_url = get_settings("picture_bed_api_url")
 
@@ -323,36 +356,25 @@ def api_upload_picture():
         if picture_bed_api_token == '':
             picture_bed_api_token = get_settings("picture_bed_api_token")
 
-        if os.path.exists(picture_path):
-            upload_picture_success, response = upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path)
-            if upload_picture_success:
-                return jsonify({
-                    "data": {
-                        "pictureBbsCode": response,  # 注意是[img]1.png[/img]的bbsCode格式
-                        "pictureUrl": response[5:-6]
-                    },
-                    "message": "上传图片成功。",
-                    "statusCode": "OK"
-                })
-            else:
-                return jsonify({
-                    "data": {
-                        "pictureBbsCode": "",
-                        "pictureUrl": ""
-                    },
-                    "message": f"上传图片失败：{response}。",
-                    "statusCode": "BACKEND_PROCESSING_ERROR"
-                }), 400
-
+        upload_picture_success, response = upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path)
+        if upload_picture_success:
+            return jsonify({
+                "data": {
+                    "pictureBbsCode": response,  # 注意是[img]1.png[/img]的bbsCode格式
+                    "pictureUrl": response[5:-6]
+                },
+                "message": "上传图片成功。",
+                "statusCode": "OK"
+            })
         else:
             return jsonify({
                 "data": {
                     "pictureBbsCode": "",
                     "pictureUrl": ""
                 },
-                "message": "您提供的图片路径有误。",
-                "statusCode": "FILE_PATH_ERROR"
-            }), 422
+                "message": f"上传图片失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
     except Exception as e:
         return jsonify({
             "data": {
@@ -378,6 +400,16 @@ def api_get_media_info():
                 },
                 "message": "缺少资源路径。",
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "mediaInfo": "",
+                    "videoPath": ""
+                },
+                "message": "您提供的图片路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
             }), 422
 
         is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
@@ -407,8 +439,8 @@ def api_get_media_info():
                     "mediaInfo": "",
                     "videoPath": ""
                 },
-                "message": f"获取视频路径失败，{video_path}。",
-                "statusCode": "FILE_PATH_ERROR"
+                "message": f"获取视频路径失败：{video_path}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
         return jsonify({
@@ -427,6 +459,7 @@ def api_get_video_info():
     try:
         # 从请求URL中获取path
         path = request.args.get('path', default='', type=str)  # 必须信息
+
         if path == '':
             return jsonify({
                 "data": {
@@ -443,7 +476,24 @@ def api_get_video_info():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "videoPath": "",
+                    "videoFormat": "",
+                    "videoCodec": "",
+                    "bitDepth": "",
+                    "hdrFormat": "",
+                    "frameRate": "",
+                    "audioCodec": "",
+                    "channels": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
         is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+
         if is_video_path == 1 or is_video_path == 2:
             get_video_info_success, response = get_video_info(video_path)
             if get_video_info_success:
@@ -496,8 +546,8 @@ def api_get_video_info():
                     "audioCodec": "",
                     "channels": ""
                 },
-                "message": f"获取视频路径失败，{video_path}。",
-                "statusCode": "FILE_PATH_ERROR"
+                "message": f"获取视频路径失败：{video_path}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
         return jsonify({
@@ -519,43 +569,48 @@ def api_get_video_info():
 @api.route('/api/getPtGenDescription', methods=['GET'])
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_get_pt_gen_description():
-    # 从请求URL中获取参数
-    resource_url = request.args.get('resourceUrl', default='', type=str)  # 必须信息
-    if resource_url == '':
+    try:
+        # 从请求URL中获取参数
+        resource_url = request.args.get('resourceUrl', default='', type=str)  # 必须信息
+
+        if resource_url == '':
+            return jsonify({
+                "data": {
+                    "description": ""
+                },
+                "message": "缺少资源链接。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        pt_gen_api_url = request.args.get('ptGenApiUrl', default=get_settings("pt_gen_api_url"), type=str)
+        if pt_gen_api_url == '':
+            pt_gen_api_url = get_settings("pt_gen_api_url")
+
+        get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
+        if get_pt_gen_description_success:
+            return jsonify({
+                "data": {
+                    "description": response
+                },
+                "message": "获取PT-Gen简介成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "description": ""
+                },
+                "message": f"获取PT-Gen简介失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少资源链接。",  # 提示信息
                 "description": ""
             },
-            "success": True
-        })
-
-    pt_gen_api_url = request.args.get('ptGenApiUrl', default=get_settings("pt_gen_api_url"), type=str)
-    if pt_gen_api_url == '':
-        pt_gen_api_url = get_settings("pt_gen_api_url")
-
-    if pt_gen_api_url == '':
-        pt_gen_api_url = get_settings("pt_gen_api_url")
-    get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
-    if get_pt_gen_description_success:
-        return jsonify({
-            "data": {
-                "statusCode": "OK",
-                "message": "获取PT-Gen简介成功。",  # 提示信息
-                "description": response
-            },
-            "success": True
-        })
-    else:
-        return jsonify({
-            "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"获取PT-Gen简介失败，{response}。",  # 提示信息
-                "description": ""
-            },
-            "success": True
-        })
+            "message": f"获取PT-Gen简介失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/getPlayletDescription', methods=['GET'])
@@ -563,15 +618,15 @@ def api_get_pt_gen_description():
 def api_get_playlet_description():
     try:
         original_title = request.args.get('originalTitle', default='', type=str)  # 必须信息
+
         if original_title == '':
             return jsonify({
                 "data": {
-                    "statusCode": "MISSING_REQUIRED_PARAMETER",
-                    "message": "缺少资源名称。",  # 提示信息
                     "playletDescription": ""
                 },
-                "success": True
-            })
+                "message": "缺少资源名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
 
         year = request.args.get('year', default='', type=str)
         area = request.args.get('area', default='', type=str)
@@ -581,82 +636,30 @@ def api_get_playlet_description():
         playlet_description = get_playlet_description(original_title, year, area, category, language, season_number)
         return jsonify({
             "data": {
-                "statusCode": "OK",
-                "message": "获取短剧简介成功。",  # 提示信息
                 "playletDescription": playlet_description
             },
-            "success": True
+            "message": "获取短剧简介成功。",
+            "statusCode": "OK"
         })
-
     except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"获取短剧简介失败：{e}。",  # 提示信息
                 "playletDescription": ""
             },
-            "success": True
-        })
+            "message": f"获取短剧简介失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/getPtGenInfo', methods=['GET'])
 # 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
 def api_get_pt_gen_info():
-    # 从请求URL中获取参数
-    description = request.args.get('description', default='', type=str)  # 必须信息
-    if description == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少简介内容。",  # 提示信息
-                "originalTitle": "",
-                "englishTitle": "",
-                "year": "",
-                "otherTitles": "",
-                "category": "",
-                "actors": ""
-            },
-            "success": True
-        })
-
-    if description and description != '':
-        try:
-            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
-                description)
-            print(original_title, english_title, year, other_names_sorted, category, actors_list)
-            actors = ''
-            other_titles = ''
-            is_first = True
-            for data in actors_list:  # 把演员名转化成str
-                if is_first:
-                    actors += data
-                    is_first = False
-                else:
-                    actors += ' / '
-                    actors += data
-            for data in other_names_sorted:  # 把别名转化为str
-                other_titles += data
-                other_titles += ' / '
-            other_titles = other_titles[: -3]
+    try:
+        # 从请求URL中获取参数
+        description = request.args.get('description', default='', type=str)  # 必须信息
+        if description == '':
             return jsonify({
                 "data": {
-                    "statusCode": "OK",
-                    "message": "获取PT-Gen简介关键参数成功。",  # 提示信息
-                    "originalTitle": original_title,
-                    "englishTitle": english_title,
-                    "year": year,
-                    "otherTitles": other_titles,
-                    "category": category,
-                    "actors": actors
-                },
-                "success": True
-            })
-
-        except Exception as e:
-            return jsonify({
-                "data": {
-                    "statusCode": "GENERAL_ERROR",
-                    "message": f"对于简介的分析有错误：{e}。",  # 提示信息
                     "originalTitle": "",
                     "englishTitle": "",
                     "year": "",
@@ -664,14 +667,45 @@ def api_get_pt_gen_info():
                     "category": "",
                     "actors": ""
                 },
-                "success": True
-            })
+                "message": "MISSING_REQUIRED_PARAMETER",
+                "statusCode": "缺少PT-Gen简介内容。"
+            }), 422
 
-    else:
+        original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+            description)
+        print(original_title, english_title, year, other_names_sorted, category, actors_list)
+        actors = ''
+        other_titles = ''
+        is_first = True
+
+        for data in actors_list:  # 把演员名转化成str
+            if is_first:
+                actors += data
+                is_first = False
+            else:
+                actors += ' / '
+                actors += data
+
+        for data in other_names_sorted:  # 把别名转化为str
+            other_titles += data
+            other_titles += ' / '
+
+        other_titles = other_titles[: -3]
         return jsonify({
             "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "您输入的简介为空。",  # 提示信息
+                "originalTitle": original_title,
+                "englishTitle": english_title,
+                "year": year,
+                "otherTitles": other_titles,
+                "category": category,
+                "actors": actors
+            },
+            "message": "获取PT-Gen简介关键参数成功。",
+            "statusCode": "OK"
+        })
+    except Exception as e:
+        return jsonify({
+            "data": {
                 "originalTitle": "",
                 "englishTitle": "",
                 "year": "",
@@ -679,262 +713,307 @@ def api_get_pt_gen_info():
                 "category": "",
                 "actors": ""
             },
-            "success": True
-        })
+            "message": f"对于简介的分析有错误：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/makeTorrent', methods=['POST'])
-# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+# 用于制作种子
 def api_make_torrent():
-    # 从请求URL中获取参数
-    path = request.args.get('path', default='', type=str)  # 必须信息
-    if path == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少资源路径。",  # 提示信息
-                "torrentPath": ""
-            },
-            "success": True
-        })
+    try:
+        # 从请求URL中获取参数
+        path = request.args.get('path', default='', type=str)  # 必须信息
 
-    torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"),
-                                            type=str)
-    if torrent_storage_path == '':
-        torrent_storage_path = get_settings("torrent_storage_path")
+        if path == '':
+            return jsonify({
+                "data": {
+                    "torrentPath": ""
+                },
+                "message": "缺少资源路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
 
-    if os.path.exists(path):
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "torrentPath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        torrent_storage_path = request.args.get('torrentStoragePath', default=get_settings("torrent_storage_path"),
+                                                type=str)
+        if torrent_storage_path == '':
+            torrent_storage_path = get_settings("torrent_storage_path")
+
         make_torrent_success, response = make_torrent(path, torrent_storage_path)
         if make_torrent_success:
             return jsonify({
                 "data": {
-                    "statusCode": "OK",
-                    "message": "制作种子成功。",  # 提示信息
                     "torrentPath": response
                 },
-                "success": True
+                "message": "制作种子成功。",
+                "statusCode": "OK"
             })
-
         else:
             return jsonify({
                 "data": {
-                    "statusCode": "GENERAL_ERROR",
-                    "message": f"制作种子失败：{response}。",  # 提示信息
                     "torrentPath": ""
                 },
-                "success": True
-            })
-
-    else:
+                "message": f"制作种子失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "FILE_PATH_ERROR",
-                "message": "文件路径不存在。",  # 提示信息
                 "torrentPath": ""
             },
-            "success": True
-        })
+            "message": f"制作种子失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 422
 
 
 @api.route('/api/getNameFromTemplate', methods=['GET'])
 # 用于通过模板数据获取命名，关键参数和模板，返回获取到的命名
 def api_get_name_from_template():
-    # 从请求URL中获取参数
-    template = request.args.get('template', default='', type=str)  # 必须信息
-    if template == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少模板名称。",  # 提示信息
-                "name": ""
-            },
-            "success": True
-        })
-
-    if template != "main_title_movie" and template != "main_title_tv" and template != "main_title_playlet" and template != "second_title_movie" and template != "second_title_tv" and template != "second_title_playlet" and template != "file_name_movie" and template != "file_name_tv" and template != "file_name_playlet":
-        return jsonify({
-            "data": {
-                "statusCode": "PARAMETER_RANGE_ERROR",
-                "message": "模板名称不在范围内。",  # 提示信息
-                "name": ""
-            },
-            "success": True
-        })
-
-    english_title = request.args.get('englishTitle', default='', type=str)
-    original_title = request.args.get('originalTitle', default='', type=str)
-    season = request.args.get('season', default='', type=str)
-    episode = request.args.get('episode', default='', type=str)  # Currently unused
-    year = request.args.get('year', default='', type=str)
-    video_format = request.args.get('videoFormat', default='', type=str)
-    source = request.args.get('source', default='', type=str)
-    video_statusCodec = request.args.get('videoCodec', default='', type=str)
-    bit_depth = request.args.get('bitDepth', default='', type=str)
-    hdr_format = request.args.get('hdrFormat', default='', type=str)
-    frame_rate = request.args.get('frameRate', default='', type=str)
-    audio_statusCodec = request.args.get('audioCodec', default='', type=str)
-    channels = request.args.get('channels', default='', type=str)
-    team = request.args.get('team', default='', type=str)
-    other_titles = request.args.get('otherTitles', default='', type=str)
-    season_number = request.args.get('seasonNumber', default='', type=str)
-    total_episode = request.args.get('totalEpisode', default='', type=str)
-    playlet_source = request.args.get('playletSource', default='', type=str)
-    category = request.args.get('category', default='', type=str)
-    actors = request.args.get('actors', default='', type=str)
-    english_title = delete_season_number(english_title, season_number)
     try:
+        # 从请求URL中获取参数
+        template = request.args.get('template', default='', type=str)  # 必须信息
+
+        if template == '':
+            return jsonify({
+                "data": {
+                    "name": ""
+                },
+                "message": "缺少模板名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if template != "main_title_movie" and template != "main_title_tv" and template != "main_title_playlet" and template != "second_title_movie" and template != "second_title_tv" and template != "second_title_playlet" and template != "file_name_movie" and template != "file_name_tv" and template != "file_name_playlet":
+            return jsonify({
+                "data": {
+                    "name": ""
+                },
+                "message": "模板名称不在范围内。",
+                "statusCode": "PARAMETER_RANGE_ERROR"
+            }), 422
+
+        english_title = request.args.get('englishTitle', default='', type=str)
+        original_title = request.args.get('originalTitle', default='', type=str)
+        season = request.args.get('season', default='', type=str)
+        # episode = request.args.get('episode', default='', type=str)  # Currently unused
+        year = request.args.get('year', default='', type=str)
+        video_format = request.args.get('videoFormat', default='', type=str)
+        source = request.args.get('source', default='', type=str)
+        video_codec = request.args.get('videoCodec', default='', type=str)
+        bit_depth = request.args.get('bitDepth', default='', type=str)
+        hdr_format = request.args.get('hdrFormat', default='', type=str)
+        frame_rate = request.args.get('frameRate', default='', type=str)
+        audio_codec = request.args.get('audioCodec', default='', type=str)
+        channels = request.args.get('channels', default='', type=str)
+        team = request.args.get('team', default='', type=str)
+        other_titles = request.args.get('otherTitles', default='', type=str)
+        season_number = request.args.get('seasonNumber', default='', type=str)
+        total_episode = request.args.get('totalEpisode', default='', type=str)
+        playlet_source = request.args.get('playletSource', default='', type=str)
+        category = request.args.get('category', default='', type=str)
+        actors = request.args.get('actors', default='', type=str)
+        english_title = delete_season_number(english_title, season_number)
+
         name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
-                                      source, video_statusCodec, bit_depth, hdr_format, frame_rate,
-                                      audio_statusCodec, channels, team, other_titles, season_number,
+                                      source, video_codec, bit_depth, hdr_format, frame_rate,
+                                      audio_codec, channels, team, other_titles, season_number,
                                       total_episode, playlet_source, category, actors, template)
         return jsonify({
             "data": {
-                "statusCode": "OK",
-                "message": "获取名称成功。",  # 提示信息
                 "name": name
             },
-            "success": True
+            "message": "获取名称成功。",
+            "statusCode": "OK"
         })
-
     except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"获取名称失败：{e}。",  # 提示信息
                 "name": ""
             },
-            "success": True
-        })
+            "message": f"获取名称失败：{e}",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/renameFile', methods=['POST'])
 # 用于重命名文件
 def api_rename_file():
-    # 从请求URL中获取参数
-    file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-    if file_path == '':
+    try:
+        # 从请求URL中获取参数
+        file_path = request.args.get('filePath', default='', type=str)  # 必须信息
+
+        if file_path == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少文件路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(file_path):
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+
+        if new_file_name == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少需要重命名的名称信息。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        rename_success, response = rename_file(file_path, new_file_name)
+
+        if rename_success:
+            return jsonify({
+                "data": {
+                    "newFilePath": response
+                },
+                "message": "重命名文件成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": f"重命名文件失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少文件路径。",  # 提示信息
                 "newFilePath": ""
             },
-            "success": True
-        })
-
-    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
-    if new_file_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少需要重命名的名称信息。",  # 提示信息
-                "newFilePath": ""
-            },
-            "success": True
-        })
-
-    rename_success, response = rename_file(file_path, new_file_name)
-    if rename_success:
-        return jsonify({
-            "data": {
-                "statusCode": "OK",
-                "message": "重命名文件成功。",  # 提示信息
-                "newFilePath": response
-            },
-            "success": True
-        })
-
-    else:
-        return jsonify({
-            "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"重命名文件失败：{response}。",  # 提示信息
-                "newFilePath": ""
-            },
-            "success": True
-        })
+            "message": f"重命名文件失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/moveFileToFolder', methods=['POST'])
 # 用于将文件塞入指定文件夹
 def api_move_file_to_folder():
-    # 从请求URL中获取参数
-    file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-    if file_path == '':
+    try:
+        # 从请求URL中获取参数
+        file_path = request.args.get('filePath', default='', type=str)  # 必须信息
+
+        if file_path == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少文件路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(file_path):
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
+
+        if folder_name == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少文件夹名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        move_file_to_folder_success, response = move_file_to_folder(file_path, folder_name)
+
+        if move_file_to_folder_success:
+            return jsonify({
+                "data": {
+                    "newFilePath": response
+                },
+                "message": "移动文件成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": f"移动文件失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少文件路径。",  # 提示信息
                 "newFilePath": ""
             },
-            "success": True
-        })
-
-    folder_name = request.args.get('folderName', default='', type=str)  # 必须信息
-    if folder_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少文件夹名称。",  # 提示信息
-                "newFilePath": ""
-            },
-            "success": True
-        })
-
-    move_file_to_folder_success, response = move_file_to_folder(file_path, folder_name)
-    if move_file_to_folder_success:
-        return jsonify({
-            "data": {
-                "statusCode": "OK",
-                "message": "重命名文件成功。",  # 提示信息
-                "newFilePath": response
-            },
-            "success": True
-        })
-
-    else:
-        return jsonify({
-            "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"移动文件失败：{response}。",  # 提示信息
-                "newFilePath": ""
-            },
-            "success": True
-        })
+            "message": f"移动文件失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/renameEpisode', methods=['POST'])
 # 用于给剧集批量重命名
 def api_rename_episode():
-    # 从请求URL中获取参数
-    folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
-    if folder_path == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少资源路径。",  # 提示信息
-                "newFolderPath": ""
-            },
-            "success": True
-        })
-
-    new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
-    if new_file_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少文件名称。",  # 提示信息
-                "newFolderPath": ""
-            },
-            "success": True
-        })
-
-    episode_start_number = request.args.get('episodeStartNumber', default='', type=str)  # 必须信息
-    if episode_start_number == '' or episode_start_number == '':
-        episode_start_number = '1'
-
     try:
+        # 从请求URL中获取参数
+        folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
+
+        if folder_path == '':
+            return jsonify({
+                "data": {
+                    "newFolderPath": ""
+                },
+                "message": "缺少资源路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(folder_path):
+            return jsonify({
+                "data": {
+                    "newFolderPath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+
+        if new_file_name == '':
+            return jsonify({
+                "data": {
+                    "newFolderPath": ""
+                },
+                "message": "缺少文件名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        episode_start_number = request.args.get('episodeStartNumber', default='', type=str)  # 必须信息
+
+        if episode_start_number == '' or episode_start_number == '':
+            episode_start_number = '1'
+
         is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+
         if is_video_path == 2:  # 视频路径是文件夹
             get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
 
@@ -942,25 +1021,19 @@ def api_rename_episode():
                 print('检测到以下文件：', video_files)
                 episode_start_number = int(episode_start_number)
                 episode_num = len(video_files)  # 获取视频文件的总数
-                if episode_start_number == 1:
-                    total_episode = '全' + str(episode_num) + '集'
-                else:
-                    if str(episode_start_number) == str(episode_start_number + episode_num - 1):
-                        total_episode = '第' + str(episode_start_number) + '集'
-                    else:
-                        total_episode = '第' + str(episode_start_number) + '-' + str(
-                            episode_start_number + episode_num - 1) + '集'
-                print(total_episode)
-
                 i = episode_start_number
+
                 for video_file in video_files:
                     e = str(i)
+
                     while len(e) < len(str(episode_start_number + episode_num - 1)):
                         e = '0' + e
+
                     if len(e) == 1:
                         e = '0' + e
-                    rename_file_success, response = rename_file(video_file,
-                                                                new_file_name.replace('@@', e))
+
+                    rename_file_success, response = rename_file(video_file, new_file_name.replace('@@', e))
+
                     if rename_file_success:
                         video_path = response
                         i += 1
@@ -971,78 +1044,84 @@ def api_rename_episode():
                 rename_directory_success, response = rename_directory(os.path.dirname(video_path), new_file_name.
                                                                       replace('E@@', '').
                                                                       replace('@@', ''))
+
                 if rename_directory_success:
-                    new_folder_path = response
                     return jsonify({
                         "data": {
-                            "statusCode": "OK",
-                            "message": "批量重命名成功。",  # 提示信息
                             "newFolderPath": response
                         },
-                        "success": True
+                        "message": "批量重命名成功。",
+                        "statusCode": "OK"
                     })
                 else:
                     raise OSError("重命名文件夹失败：" + response)
             else:
                 return jsonify({
                     "data": {
-                        "statusCode": "GENERAL_ERROR",
-                        "message": f"获取资源错误：{video_files[0]}。",  # 提示信息
                         "newFolderPath": ""
                     },
-                    "success": True
-                })
+                    "message": f"获取资源错误：{video_files[0]}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
         else:
             if is_video_path == 1:  # 视频路径是文件夹
                 return jsonify({
                     "data": {
-                        "statusCode": "FILE_PATH_ERROR",
-                        "message": f"不支持文件路径：{video_path}。",  # 提示信息
                         "newFolderPath": ""
                     },
-                    "success": True
-                })
+                    "message": f"不支持文件路径：{video_path}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
             else:
                 return jsonify({
                     "data": {
-                        "statusCode": "FILE_PATH_ERROR",
-                        "message": f"资源路径错误：{video_path}。",  # 提示信息
                         "newFolderPath": ""
                     },
-                    "success": True
-                })
-
+                    "message": f"资源路径错误：{video_path}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
     except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"批量重命名失败：{e}。",  # 提示信息
                 "newFolderPath": ""
             },
-            "success": True
-        })
+            "message": f"批量重命名失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/getTotalEpisode', methods=['GET'])
 # 用于获取文件夹中的集数信息
 def api_get_total_episode():
-    # 从请求URL中获取参数
-    folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
-    if folder_path == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少资源路径。",  # 提示信息
-                "totalEpisode": ""
-            },
-            "success": True
-        })
-
-    episode_start_number = request.args.get('episodeStartNumber', default='', type=str)  # 必须信息
-    if episode_start_number == '' or episode_start_number == '':
-        episode_start_number = '1'
     try:
+        # 从请求URL中获取参数
+        folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
+
+        if folder_path == '':
+            return jsonify({
+                "data": {
+                    "totalEpisode": ""
+                },
+                "message": "缺少资源路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(folder_path):
+            return jsonify({
+                "data": {
+                    "totalEpisode": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        episode_start_number = request.args.get('episodeStartNumber', default='', type=str)
+
+        if episode_start_number == '' or episode_start_number == '':
+            episode_start_number = '1'
+
         is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+
         if is_video_path == 2:  # 视频路径是文件夹
             get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
 
@@ -1050,6 +1129,7 @@ def api_get_total_episode():
                 print('检测到以下文件：', video_files)
                 episode_start_number = int(episode_start_number)
                 episode_num = len(video_files)  # 获取视频文件的总数
+
                 if episode_start_number == 1:
                     total_episode = '全' + str(episode_num) + '集'
                 else:
@@ -1058,229 +1138,222 @@ def api_get_total_episode():
                     else:
                         total_episode = '第' + str(episode_start_number) + '-' + str(
                             episode_start_number + episode_num - 1) + '集'
-                print(total_episode)
                 return jsonify({
                     "data": {
-                        "statusCode": "OK",
-                        "message": "获取集数信息成功。",  # 提示信息
                         "totalEpisode": total_episode
                     },
-                    "success": True
+                    "message": "获取集数信息成功。",
+                    "statusCode": "OK"
                 })
             else:
                 return jsonify({
                     "data": {
-                        "statusCode": "GENERAL_ERROR",
-                        "message": f"获取资源错误：{video_files[0]}。",  # 提示信息
                         "totalEpisode": ""
                     },
-                    "success": True
-                })
+                    "message": f"获取资源错误：{video_files[0]}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
         else:
             if is_video_path == 1:  # 视频路径是文件夹
                 return jsonify({
                     "data": {
-                        "statusCode": "FILE_PATH_ERROR",
-                        "message": f"不支持文件路径：{video_path}。",  # 提示信息
                         "totalEpisode": ""
                     },
-                    "success": True
-                })
+                    "message": f"不支持文件路径：{video_path}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
             else:
                 return jsonify({
                     "data": {
-                        "statusCode": "FILE_PATH_ERROR",
-                        "message": f"资源路径错误：{video_path}。",  # 提示信息
                         "totalEpisode": ""
                     },
-                    "success": True
-                })
-
+                    "message": f"资源路径错误：{video_path}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
     except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"批量重命名失败：{e}。",  # 提示信息
                 "totalEpisode": ""
             },
-            "success": True
-        })
+            "message": f"批量重命名失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/readConfigurationDataFromJson', methods=['GET'])
 # 用于读取playlet-source.json source.json team.json文件中的数据
 def api_read_configuration_data_from_json():
-    # 从请求URL中获取参数
-    configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
-    if configuration_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少所需数据名称。",  # 提示信息
-                "configurationData": ""
-            },
-            "success": True
-        })
-    if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
-        return jsonify({
-            "data": {
-                "statusCode": "PARAMETER_RANGE_ERROR",
-                "message": "数据名称不在范围内。",  # 提示信息
-                "configurationData": ""
-            },
-            "success": True
-        })
-    else:
-        file_path = f"static/{configuration_name}.json"
-        read_data_from_json_success, response = read_data_from_json(file_path, configuration_name)
-        if read_data_from_json_success:
+    try:
+        # 从请求URL中获取参数
+        configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
+
+        if configuration_name == '':
             return jsonify({
                 "data": {
-                    "statusCode": "OK",
-                    "message": "获取数据成功。",  # 提示信息
-                    "configurationData": response
-                },
-                "success": True
-            })
-        else:
-            return jsonify({
-                "data": {
-                    "statusCode": "GENERAL_ERROR",
-                    "message": f"获取数据失败：{response}。",  # 提示信息
                     "configurationData": ""
                 },
-                "success": True
-            })
+                "message": "缺少所需数据名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
+            return jsonify({
+                "data": {
+                    "configurationData": ""
+                },
+                "message": "数据名称不在范围内。",
+                "statusCode": "PARAMETER_RANGE_ERROR"
+            }), 422
+        else:
+            file_path = f"static/{configuration_name}.json"
+            read_data_from_json_success, response = read_data_from_json(file_path, configuration_name)
+
+            if read_data_from_json_success:
+                return jsonify({
+                    "data": {
+                        "configurationData": response
+                    },
+                    "message": "获取数据成功。",
+                    "statusCode": "OK"
+                })
+            else:
+                return jsonify({
+                    "data": {
+                        "configurationData": ""
+                    },
+                    "message": f"获取数据失败：{response}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "configurationData": ""
+            },
+            "message": f"获取数据失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/updateConfigurationDataInJson', methods=['POST'])
 # 用于更新playlet-source.json source.json team.json文件中的数据
 def api_update_configuration_data_in_json():
-    # 从请求URL中获取参数
-    configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
-    if configuration_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少所需数据名称。"  # 提示信息
-            },
-            "success": True
-        })
-    if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
-        return jsonify({
-            "data": {
-                "statusCode": "PARAMETER_RANGE_ERROR",
-                "message": "数据名称不在范围内。"  # 提示信息
-            },
-            "success": True
-        })
+    try:
+        # 从请求URL中获取参数
+        configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
 
-    configuration_data = request.args.get('configurationData', default='', type=str)  # 必须信息
-    if configuration_data == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少数据内容。"  # 提示信息
-            },
-            "success": True
-        })
-
-    else:
-        file_path = f"static/{configuration_name}.json"
-        update_data_in_json_success, response = update_data_in_json(file_path, configuration_data, configuration_name)
-        if update_data_in_json_success:
+        if configuration_name == '':
             return jsonify({
-                "data": {
-                    "statusCode": "OK",
-                    "message": "更新数据成功。"  # 提示信息
-                },
-                "success": True
-            })
+                "data": {},
+                "message": "缺少所需数据名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if configuration_name != 'playlet-source' and configuration_name != 'source' and configuration_name != 'team':
+            return jsonify({
+                "data": {},
+                "message": "数据名称不在范围内。",
+                "statusCode": "PARAMETER_RANGE_ERROR"
+            }), 422
+
+        configuration_data = request.args.get('configurationData', default='', type=str)  # 必须信息
+
+        if configuration_data == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少数据内容。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
         else:
-            return jsonify({
-                "data": {
-                    "statusCode": "GENERAL_ERROR",
-                    "message": f"更新数据失败：{response}。"  # 提示信息
-                },
-                "success": True
-            })
+            file_path = f"static/{configuration_name}.json"
+            update_data_in_json_success, response = update_data_in_json(file_path, configuration_data,
+                                                                        configuration_name)
+
+            if update_data_in_json_success:
+                return jsonify({
+                    "data": {},
+                    "message": "更新数据成功。",
+                    "statusCode": "OK"
+                })
+            else:
+                return jsonify({
+                    "data": {},
+                    "message": f"更新数据失败：{response}。",
+                    "statusCode": "BACKEND_PROCESSING_ERROR"
+                }), 400
+    except Exception as e:
+        return jsonify({
+            "data": {},
+            "message": f"更新数据失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/getSettings', methods=['GET'])
 # 用于获取settings.json的数据
 def api_get_settings():
-    # 从请求URL中获取参数
-    settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
-    if settings_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少所需设置参数名称。",  # 提示信息
-                "settingsData": ""
-            },
-            "success": True
-        })
     try:
+        # 从请求URL中获取参数
+        settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
+
+        if settings_name == '':
+            return jsonify({
+                "data": {
+                    "settingsData": ""
+                },
+                "message": "缺少所需获取的设置信息名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
         settings_data = get_settings(settings_name)
         return jsonify({
             "data": {
-                "statusCode": "OK",
-                "message": "获取设置信息成功。",  # 提示信息
                 "settingsData": settings_data
             },
-            "success": True
+            "message": "获取设置信息成功。",
+            "statusCode": "OK"
         })
-
     except Exception as e:
         return jsonify({
             "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"获取设置信息失败：{e}。",  # 提示信息
                 "settingsData": ""
             },
-            "success": True
-        })
+            "message": f"获取设置信息失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
 
 
 @api.route('/api/updateSettings', methods=['POST'])
 # 用于更新settings.json的数据
 def api_update_settings():
-    # 从请求URL中获取参数
-    settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
-    if settings_name == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少所需设置参数名称。",  # 提示信息
-            },
-            "success": True
-        })
-
-    settings_data = request.args.get('settingsData', default='', type=str)  # 必须信息
-    if settings_data == '':
-        return jsonify({
-            "data": {
-                "statusCode": "MISSING_REQUIRED_PARAMETER",
-                "message": "缺少所需设置参数的值。",  # 提示信息
-                "settingsData": ""
-            },
-            "success": True
-        })
     try:
+        # 从请求URL中获取参数
+        settings_name = request.args.get('settingsName', default='', type=str)  # 必须信息
+
+        if settings_name == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少所需更新的设置信息名称。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        settings_data = request.args.get('settingsData', default='', type=str)  # 必须信息
+
+        if settings_data == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少所需更新的设置信息的值。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
         update_settings(settings_name, settings_data)
         return jsonify({
-            "data": {
-                "statusCode": "OK",
-                "message": "更新设置信息成功。"  # 提示信息
-            },
-            "success": True
+            "data": {},
+            "message": "更新设置信息成功。",
+            "statusCode": "OK"
         })
-
     except Exception as e:
         return jsonify({
-            "data": {
-                "statusCode": "GENERAL_ERROR",
-                "message": f"更新设置信息失败：{e}。"  # 提示信息
-            },
-            "success": True
-        })
+            "data": {},
+            "message": f"更新设置信息失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
