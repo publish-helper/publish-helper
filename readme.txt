@@ -74,7 +74,7 @@ static/abbreviation.json
         ]
     }
 
-短剧类型：static/type.json
+短剧类型：static/playlet-source.json
 
     {
         "type": [
