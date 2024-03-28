@@ -30,7 +30,7 @@ Publish Helper v1.3.9
 
 **软件获取地址：**
 
-[【GitHub仓库】](https://github.com/publish-helper/publish-helper-gui/releases)[【Gitee仓库】](https://gitee.com/publish-helper/publish-helper-gui/releases)
+[【GitHub仓库】](https://github.com/publish-helper/publish-helper-gui/releases) [【Gitee仓库】](https://gitee.com/publish-helper/publish-helper-gui/releases)
 
 更新时只需要保留static文件夹即可将配置完美迁移。
 
