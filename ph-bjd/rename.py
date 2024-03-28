@@ -126,7 +126,14 @@ def get_video_info(file_path):
             video_format += width
         else:
             video_format += height
-        return True, [get_abbreviation(video_format), get_abbreviation(video_codec), get_abbreviation(bit_depth),
+
+        video_format = get_abbreviation(video_format)
+        # 如果没有获取到别称（通过以 ' pixels' 结尾为特征判断）
+        if video_format[-7:] == ' pixels':
+            # 自动获取默认的值
+            video_format = approximate_resolution_by_width(extract_numbers(video_format))
+
+        return True, [video_format, get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
                       get_abbreviation(channels)]
     except OSError as e:
@@ -137,6 +144,52 @@ def get_video_info(file_path):
         # MediaInfo无法解析文件
         print(f"无法解析文件: {e}。")
         return False, [f"无法解析文件: {e}。"]
+
+
+# 通过分段分辨率信息获取默认分辨率简称
+def approximate_resolution_by_width(width):
+    midpoints = load_min_widths_from_json("static/abbreviation.json")
+
+    for midpoint in sorted(midpoints.keys(), reverse=True):
+        if width >= midpoint:
+            return midpoints[midpoint]
+    return "240p"  # 其他更小的分辨率
+
+
+# 从json读取分段分辨率简写信息
+def load_min_widths_from_json(filepath="static/abbreviation.json"):
+    default_min_widths = {
+        "9600": "8640p",
+        "4608": "4320p",
+        "3200": "2160p",
+        "2240": "1440p",
+        "1600": "1080p",
+        "900": "720p",
+        "533": "480p"
+    }
+
+    # 尝试读取文件，检查是否存在 "min_widths" 键
+    try:
+        with open(filepath, 'r') as file:
+            data = json.load(file)
+            # 如果已经存在 "min_widths"，直接返回这个字典
+            if "min_widths" in data:
+                return {int(k): v for k, v in data["min_widths"].items()}
+    except FileNotFoundError:
+        # 如果文件不存在，将创建一个包含 default_min_widths 的新文件
+        print(f"File not found: {filepath}. Creating a new file with default min_widths.")
+        data = {}
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from file: {filepath}. Creating a new file with default min_widths.")
+        data = {}
+
+    # 如果 "min_widths" 键不存在或者在尝试读取文件时出现了错误，更新数据并写回文件
+    if "min_widths" not in data:
+        data["min_widths"] = default_min_widths
+        with open(filepath, 'w') as file:
+            json.dump(data, file, indent=4)
+
+    return {int(k): v for k, v in default_min_widths.items()}
 
 
 # 用于在分辨率中提取数字

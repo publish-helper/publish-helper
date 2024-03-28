@@ -1,20 +1,28 @@
-Publish Helper v1.3.8
+Publish Helper v1.3.9
 
 使用前务必请先看设置！！！
 
-具体的软件功能、界面和使用方法请见WiKi：https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki
+具体的软件功能、界面和使用方法请见Wiki：https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki
 
 目前支持的免费公共图床：https://freeimage.host/ https://imgbb.com/
 
-其他官方图床如有需要欢迎申请定制。
-
-图床的api地址和密钥请去图床主页左上角获取。
+图床的api地址和密钥请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
 
 如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改以下文件：
 
 static/abbreviation.json
 
     {
+        "min_widths": {
+            "9600": "8640p",
+            "4608": "4320p",
+            "3200": "2160p",
+            "2240": "1440p",
+            "1600": "1080p",
+            "900": "720p",
+            "533": "480p"
+        },
+
         "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible" : "HDR10+",
         "SMPTE ST 2086, HDR10 compatible": "HDR10",
 
@@ -38,7 +46,7 @@ static/abbreviation.json
         "无需识别的信息": ""（留空）
     }
 
-如需修改来源名称、小组名称或短剧类型，请访问：
+如需修改资源来源、小组名称或短剧来源默认值，请访问：
 
 来源名称：static/source.json
 
@@ -85,6 +93,8 @@ https://gitee.com/publish-helper/publish-helper-gui/releases
 更新时只需要保留static文件夹即可将配置完美迁移。
 
 如果出现错误，可能是配置文件结构有变化，请使用最新的static文件。
+
+如有帮助到您，请给项目点亮Star，并推广给有需要的朋友，十分感谢！
 
 Powered by Python 3.10
 
