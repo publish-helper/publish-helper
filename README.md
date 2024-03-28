@@ -24,7 +24,7 @@ Publish Helper v1.3.9
 
 图床的api地址和密钥请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
 
-如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的F&Q。
+如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的Q&A。
 
 本软件已支持API功能，具体请见[【API文档】](https://apifox.com/apidoc/shared-6d670fb1-eb1f-4431-afdb-29b19fe1ffe1)。
 
