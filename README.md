@@ -22,7 +22,7 @@ Publish Helper v1.3.9
 
 目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/)
 
-图床的api地址和密钥请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
+图床的api地址和令牌请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
 
 如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的Q&A。
 
