@@ -4,7 +4,8 @@ import re
 from tool import get_settings
 
 
-def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source):
+def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source,
+                       torrent_url):
     auto_feed_link = str(get_settings("auto_feed_link"))
     name = mian_title  # 主标题
     small_descr = second_title  # 副标题
@@ -157,6 +158,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     auto_feed_link = auto_feed_link.replace('{视频编码}', codec_sel)
     auto_feed_link = auto_feed_link.replace('{媒介}', medium_sel)
     auto_feed_link = auto_feed_link.replace('{小组}', team)
+    auto_feed_link = auto_feed_link.replace('{种子链接}', torrent_url)
     auto_feed_link = auto_feed_link.replace('%', '%25')
     auto_feed_link = auto_feed_link.replace('　', '%E3%80%80')
     auto_feed_link = auto_feed_link.replace(' ', '%20')

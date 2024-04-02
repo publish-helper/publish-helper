@@ -18,8 +18,8 @@ from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, make_torrent, load_names, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path, is_filename_too_long, num_to_chinese, \
-    get_playlet_description, delete_season_number, rename_file
+    get_video_files, get_picture_file_path, is_filename_too_long, get_playlet_description, delete_season_number, \
+    rename_file
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
@@ -44,6 +44,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.my_settings = None
         self.setupUi(self)  # 设置界面
 
+        # 初始化线程
         self.get_pt_gen_thread = None
         self.get_pt_gen_for_name_thread = None
         self.upload_picture_thread0 = None
@@ -65,6 +66,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.initialize_team_combobox()
         self.initialize_source_combobox()
         self.initialize_playlet_source_combobox()
+        self.torrent_url = ''
 
         # 绑定点击信号和槽函数
         # Movie
@@ -175,8 +177,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         team += self.teamMovie.currentText()
         source += self.sourceMovie.currentText()
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team,
-                                            source)
+                                            team, source, self.torrent_url)
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
@@ -632,6 +633,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_movie_clicked(self):
+        self.torrent_url = ''
         is_video_path, video_path = check_path_and_find_video(
             self.videoPathMovie.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
@@ -647,6 +649,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def handle_make_torrent_movie_result(self, get_success, response):
         if get_success:
+            self.torrent_url = f'http://127.0.0.1:{get_settings("api_port")}/api/getFile?filePath={response}'
             self.debugBrowserMovie.append("成功制作种子：" + response)
         else:
             self.debugBrowserMovie.append("制作种子失败：" + response)
@@ -680,7 +683,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         team += self.teamTV.currentText()
         source += self.sourceTV.currentText()
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team, source)
+                                            team, source, self.torrent_url)
         self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
@@ -1148,6 +1151,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_tv_clicked(self):
+        self.torrent_url = ''
         is_video_path, video_path = check_path_and_find_video(
             self.videoPathTV.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
@@ -1163,6 +1167,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def handle_make_torrent_tv_result(self, get_success, response):
         if get_success:
+            self.torrent_url = f'http://127.0.0.1:{get_settings("api_port")}/api/getFile?filePath={response}'
             self.debugBrowserTV.append("成功制作种子：" + response)
         else:
             self.debugBrowserTV.append("制作种子失败：" + response)
@@ -1200,8 +1205,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         team = self.teamPlaylet.currentText()
         source = self.sourcePlaylet.currentText()
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team,
-                                            source)
+                                            team, source, self.torrent_url)
         self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
@@ -1592,7 +1596,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, response = rename_file(video_file,
-                                                                           file_name.replace('@@', e))
+                                                                        file_name.replace('@@', e))
 
                             if rename_file_success:
                                 self.videoPathPlaylet.setText(response)
@@ -1622,6 +1626,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             return False, [f"获取命名出错：{e}"]
 
     def make_torrent_button_playlet_clicked(self):
+        self.torrent_url = ''
         is_video_path, video_path = check_path_and_find_video(
             self.videoPathPlaylet.text().replace('file:///', ''))  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
@@ -1637,6 +1642,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def handle_make_torrent_result_playlet(self, get_success, response):
         if get_success:
+            self.torrent_url = f'http://127.0.0.1:{get_settings("api_port")}/api/getFile?filePath={response}'
             self.debugBrowserPlaylet.append("成功制作种子：" + response)
         else:
             self.debugBrowserPlaylet.append("制作种子失败：" + response)

@@ -1,6 +1,7 @@
 import os
+import re
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 
 from mediainfo import get_media_info
 from picturebed import upload_picture
@@ -1355,5 +1356,58 @@ def api_update_settings():
         return jsonify({
             "data": {},
             "message": f"更新设置信息失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+@api.route('/api/getFile', methods=['GET'])
+# 用于获取本地种子、图片文件
+def api_get_file():
+    try:
+        # 从请求参数中获取文件路径
+        file_path = request.args.get('filePath', default='', type=str)  # 获取文件路径
+
+        # 检查文件路径参数是否已提供
+        if file_path == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少所需的文件路径参数。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        # 确保路径安全
+        if not file_path.startswith("temp") or '..' in file_path or re.match(r'/\.\./', file_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
+        # 构建绝对路径
+        target_path = os.path.abspath(file_path)
+
+        # 再次检查绝对路径是否合法（防止绕过）
+        if not target_path.startswith(os.path.abspath("temp")):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
+        # 检查文件是否存在
+        if not os.path.exists(target_path):
+            print(target_path)
+            return jsonify({
+                "data": {},
+                "message": "文件未找到。",
+                "statusCode": "FILE_NOT_FOUND"
+            }), 404
+
+        # 返回文件
+        return send_file(target_path, as_attachment=True)
+    except Exception as e:
+        return jsonify({
+            "data": {},
+            "message": f"获取文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
         }), 400
