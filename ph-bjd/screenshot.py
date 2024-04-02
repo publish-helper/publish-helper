@@ -3,6 +3,7 @@ import random
 
 import cv2
 import numpy as np
+from PIL import Image
 
 from tool import generate_image_filename
 
@@ -68,7 +69,8 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
 
                     if std_dev > screenshot_threshold:
                         frame_path = generate_image_filename(screenshot_path)
-                        cv2.imwrite(frame_path, frame)
+                        im_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                        im_pil.save(Path(frame_path))
                         extracted_images.append(frame_path)
                         last_keyframe_time = current_time
                     else:
@@ -77,7 +79,8 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
                         cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                         ret, frame = cap.read()
                         frame_path = generate_image_filename(screenshot_path)
-                        cv2.imwrite(frame_path, frame)
+                        im_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                        im_pil.save(Path(frame_path))
                         extracted_images.append(frame_path)
                 else:
                     print("当前帧不满足时间间隔要求，获取随机帧代替")  # 调试信息
@@ -85,7 +88,8 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
                     cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                     ret, frame = cap.read()
                     frame_path = generate_image_filename(screenshot_path)
-                    cv2.imwrite(frame_path, frame)
+                    im_pil = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+                    im_pil.save(Path(frame_path))
                     extracted_images.append(frame_path)
 
             cap.release()
@@ -164,7 +168,8 @@ def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail
                 concatenated_image[y_offset:y_offset + resized_images[0].shape[0],
                 x_offset:x_offset + resized_images[0].shape[1]] = resized_images[index]
         thumbnail_path = generate_image_filename(screenshot_storage_path)
-        cv2.imwrite(thumbnail_path, concatenated_image)
+        im_pil = Image.fromarray(cv2.cvtColor(concatenated_image, cv2.COLOR_BGR2RGB))
+        im_pil.save(Path(thumbnail_path))
 
     except Exception as e:
         print(f"发生异常: {e}")
