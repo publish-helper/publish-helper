@@ -107,7 +107,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         # 初始化成功
         self.debugBrowserMovie.append(
-            "程序初始化成功，使用前请查看设置中的说明！制作不易，如有帮助请帮忙点亮仓库的Star！\n仓库地址：https://github.com/publish-helper/publish-helper-gui")
+            "程序初始化成功，使用前请查看设置中的说明！制作不易，如有帮助请帮忙点亮仓库的Star！\n作者：BJD 仓库地址：https://github.com/publish-helper/publish-helper-gui")
 
         if get_settings("enable_api"):
             self.run_api_thread()
@@ -252,7 +252,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserMovie.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
-                    self.debugBrowserMovie.append("开始自动上传截图到图床" + picture_bed_path)
+                    self.debugBrowserMovie.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserMovie.setText("")
                     if len(res) > 0:
                         if do_get_thumbnail and len(res) == 1:
@@ -759,7 +759,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserTV.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
                 if auto_upload_screenshot:
-                    self.debugBrowserTV.append("开始自动上传截图到图床" + picture_bed_path)
+                    self.debugBrowserTV.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserTV.setText("")
                     if len(res) > 0:
                         if do_get_thumbnail and len(res) == 1:
@@ -1856,7 +1856,7 @@ class UploadPictureThread(QThread):
         self.picture_path = picture_path
         self.is_cover = is_cover
         self.is_thumbnail = is_thumbnail
-        print("上传图床初始化完成111")
+        print("上传图床初始化完成")
 
     def run(self):
         try:

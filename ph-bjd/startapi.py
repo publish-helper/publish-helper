@@ -16,7 +16,7 @@ api = Flask(__name__)
 
 
 def run_api():
-    api.run(port=int(get_settings("api_port")), debug=True, use_reloader=False, threaded=True)
+    api.run(host='0.0.0.0', port=int(get_settings("api_port")), debug=True, use_reloader=False, threaded=True)
 
 
 @api.route('/api/getScreenshot', methods=['GET'])

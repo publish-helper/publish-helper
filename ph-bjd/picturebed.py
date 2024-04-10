@@ -17,6 +17,8 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
             return freeimage_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
         if 'https://api.imgbb.com/1/upload' in picture_bed_api_url:
             return imgbb_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+        if 'https://img.ptvicomo.net/api' in picture_bed_api_url:
+            return ptvicomo_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
         return False, f'您使用的图床接口{picture_bed_api_url}暂不支持，请联系本软件作者'
 
 
@@ -31,8 +33,8 @@ def agsv_picture_bed(api_url, api_token, frame_path):
         res = requests.post(url, data=data, files=files)
         print("已成功发送上传图床的请求")
     except requests.RequestException as e:
-        print("请求过程中出现错误:", e)
-        return False, "请求过程中出现错误:" + str(e)
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
 
     # 关闭文件流，避免资源泄露
     files['uploadedFile'][1].close()
@@ -60,10 +62,8 @@ def agsv_picture_bed(api_url, api_token, frame_path):
 def freeimage_picture_bed(api_url, api_token, frame_path):
     print('接受到上传freeimage图床请求')
     url = api_url
+    data = {'key': api_token, 'format': 'txt'}
     files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
-    data = {'key': api_token,
-            'format': 'txt'
-            }
     print('值已经获取')
     try:
         # 发送POST请求
@@ -71,8 +71,8 @@ def freeimage_picture_bed(api_url, api_token, frame_path):
         res = requests.post(url, data=data, files=files)
         print("已成功发送上传图床的请求")
     except requests.RequestException as e:
-        print("请求过程中出现错误:", e)
-        return False, "请求过程中出现错误:" + str(e)
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
 
     print(res.text)
     if res.text[:4] == "http":
@@ -86,10 +86,8 @@ def freeimage_picture_bed(api_url, api_token, frame_path):
 def imgbb_picture_bed(api_url, api_token, frame_path):
     print('接受到上传imgbb图床请求')
     url = api_url
+    data = {'expiration': '600', 'key': api_token}
     files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
-    data = {'expiration': '600',
-            'key': api_token,
-            }
     print('值已经获取')
     try:
         # 发送POST请求
@@ -97,8 +95,8 @@ def imgbb_picture_bed(api_url, api_token, frame_path):
         res = requests.post(url, data=data, files=files)
         print("已成功发送上传图床的请求")
     except requests.RequestException as e:
-        print("请求过程中出现错误:", e)
-        return False, "请求过程中出现错误:" + str(e)
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
 
     try:
         data = json.loads(res.text)
@@ -107,8 +105,40 @@ def imgbb_picture_bed(api_url, api_token, frame_path):
         print(image_url)
         return True, '[img]' + image_url + '[/img]'
     except KeyError as e:
-        print(False, "您输入的Api密钥有问题" + str(e))
-        return False, "您输入的Api密钥有问题" + str(e) + str(res)
+        print(False, "图床响应结果缺少所需的值：" + str(e))
+        return False, "图床响应结果缺少所需的值：" + str(e) + str(res)
     except json.JSONDecodeError as e:
-        print(False, "处理返回的JSON过程中出现错误:" + str(e))
-        return False, "处理返回的JSON过程中出现错误:" + str(e) + str(res)
+        print(False, "处理返回的JSON过程中出现错误：" + str(e))
+        return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
+
+
+def ptvicomo_picture_bed(api_url, api_token, frame_path):
+    print('接受到上传ptvicomo图床请求')
+    url = api_url
+    files = {'file': (frame_path, open(frame_path, 'rb'), "image/png")}
+    headers = {'Authorization': api_token, 'Accept': 'json'}
+    data = {}
+    print('值已经获取')
+    try:
+        # 发送POST请求
+        print("开始发送上传图床的请求")
+        res = requests.post(url, headers=headers, data=data, files=files)
+        print("已成功发送上传图床的请求")
+    except requests.RequestException as e:
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
+
+    try:
+        data = json.loads(res.text)
+        # 提取所需的URL
+        image_url = data["data"]["links"]["bbcode"]
+        print(image_url)
+        return True, image_url
+    except KeyError as e:
+        print(False, "图床响应结果缺少所需的值：" + str(e))
+        return False, "图床响应结果缺少所需的值：" + str(e) + str(res)
+    except json.JSONDecodeError as e:
+        print(False, "处理返回的JSON过程中出现错误：" + str(e))
+        return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
+
+
