@@ -24,7 +24,7 @@ from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
 
-def start():
+def start_gui():
     gui = QApplication(sys.argv)
     my_mainwindow = mainwindow()
     my_ico = QIcon("static/ph-bjd.ico")

@@ -13,8 +13,8 @@ For more information on this license, you can visit https://www.gnu.org/licenses
 # 打包编译后需要将项目根目录下的"static"文件夹和"temp"文件夹拷贝到"Publish Helper.exe"所在文件夹中方可运行。
 # 项目仓库地址：https://github.com/publish-helper/publish-helper-gui
 
-from startgui import start
+from startgui import start_gui
 
 # 作者：bjdbjd ID：bjd
 if __name__ == '__main__':
-    start()  # gui启动
+    start_gui()  # gui启动
