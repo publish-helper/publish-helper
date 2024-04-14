@@ -8,7 +8,7 @@ Publish Helper v1.4.2
 
 目前支持的公共图床架构：兰空图床(Lsky Pro)(https://github.com/lsky-org/lsky-pro)
 
-图床的API地址和令牌请去图床主页获取，其他图床如有需要单独适配欢迎申请定制。
+图床的API地址和令牌请去图床主页获取，其他图床如需要单独适配请提Issues，前提是图床支持API上传！
 
 如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改static/abbreviation.json：
 

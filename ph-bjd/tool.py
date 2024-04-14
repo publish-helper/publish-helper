@@ -228,8 +228,8 @@ def get_picture_bed_type(picture_bed_api_url):
         # Define default content if key is missing
         default_content = {
             "lsky-pro": [
-                "https://picture.agsv.top/api/v1",
-                "https://img.ptvicomo.net/api/v1"
+                "https://picture.agsv.top/api/v1/upload",
+                "https://img.ptvicomo.net/api/v1/upload"
             ],
             "agsv-official": [
                 "https://img.agsv.top/api/upload"
@@ -253,7 +253,8 @@ def get_picture_bed_type(picture_bed_api_url):
         # Load content from the file
         with open(file_path, 'r', encoding='utf-8') as file:
             picture_bed_api_data = json.load(file)
-            get_picture_bed_type_success, picture_bed_type = find_picture_bed_type(picture_bed_api_url, picture_bed_api_data)
+            get_picture_bed_type_success, picture_bed_type = find_picture_bed_type(picture_bed_api_url,
+                                                                                   picture_bed_api_data)
             if get_picture_bed_type_success:
                 print(picture_bed_type)
                 return True, picture_bed_type
@@ -264,6 +265,37 @@ def get_picture_bed_type(picture_bed_api_url):
     except Exception as e:
         # Return False and the error message if an exception occurs
         return False, str(e)
+
+
+def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
+    """
+    根据给定的URL和JSON数据，寻找URL对应的标识符。
+    如果URL以http开头，自动替换为https。
+    如果URL最后一位是'/'，则去除这个'/'。
+    如果找不到URL对应的标识符，返回"没找到"。
+
+    参数:
+    url (str): 需要查找的网址
+    json_data (dict): 包含网址和对应标识符的JSON字典
+
+    返回:
+    str: URL对应的标识符或者"没找到"
+    """
+    # 替换http为https
+    if picture_bed_api_url.startswith("http://"):
+        picture_bed_api_url = "https://" + picture_bed_api_url[7:]
+
+    # 去除URL末尾的'/'
+    if picture_bed_api_url.endswith('/'):
+        picture_bed_api_url = picture_bed_api_url[:-1]
+
+    # 遍历JSON数据，查找对应的标识符
+    for identifier, urls in picture_bed_api_data.items():
+        if picture_bed_api_url in urls:
+            return True, identifier
+
+    # 如果找不到对应的标识符，返回"没找到"
+    return False, f"您使用的图床上传接口{picture_bed_api_url}暂未配置，请检查static/picture-bed-data.json文件，如果您的图床符合其中的配置，可将上传接口URL按照格式添加到对应类型下"
 
 
 def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
@@ -340,37 +372,6 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
     except json.JSONDecodeError:
         print(f"Error decoding JSON from file: {json_file_path}")
         return original_name
-
-
-def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
-    """
-    根据给定的URL和JSON数据，寻找URL对应的标识符。
-    如果URL以http开头，自动替换为https。
-    如果URL最后一位是'/'，则去除这个'/'。
-    如果找不到URL对应的标识符，返回"没找到"。
-
-    参数:
-    url (str): 需要查找的网址
-    json_data (dict): 包含网址和对应标识符的JSON字典
-
-    返回:
-    str: URL对应的标识符或者"没找到"
-    """
-    # 替换http为https
-    if picture_bed_api_url.startswith("http://"):
-        picture_bed_api_url = "https://" + picture_bed_api_url[7:]
-
-    # 去除URL末尾的'/'
-    if picture_bed_api_url.endswith('/'):
-        picture_bed_api_url = picture_bed_api_url[:-1]
-
-    # 遍历JSON数据，查找对应的标识符
-    for identifier, urls in picture_bed_api_data.items():
-        if picture_bed_api_url in urls:
-            return True, identifier
-
-    # 如果找不到对应的标识符，返回"没找到"
-    return False, f"您使用的图床接口{picture_bed_api_url}暂未配置，请检查static/picture-bed-data.json文件，如果您的图床符合其中的配置，可按照格式添加到对应类型下"
 
 
 def read_data_from_json(file_path, configuration_name):

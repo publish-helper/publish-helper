@@ -1,4 +1,4 @@
-import json
+import os
 import os
 import re
 import sys
@@ -18,7 +18,7 @@ from rename import get_pt_gen_info, get_video_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
-    get_folder_path, check_path_and_find_video, rename_directory, make_torrent, load_names, chinese_name_to_pinyin, \
+    get_folder_path, check_path_and_find_video, rename_directory, make_torrent, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, is_filename_too_long, get_playlet_description, delete_season_number, \
     rename_file, get_combo_box_data
 from ui.mainwindow import Ui_Mainwindow
@@ -144,7 +144,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.playletSource.addItem(name)
         else:
             self.debugBrowserPlaylet.append(f"获取短剧来源信息出错：{data[0]}")
-
 
     def settings_clicked(self):  # click对应的槽函数
         self.my_settings = settings()
