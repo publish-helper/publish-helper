@@ -37,6 +37,7 @@
 
   "60.000 FPS": "60FPS",
   "50.000 FPS": "50FPS",
+  "48.000 FPS": "48FPS",
   "30.000 FPS": "",
   "29.970 FPS": "",
   "25.000 FPS": "",
@@ -44,8 +45,8 @@
   "24.000 FPS": "",
   "23.976 FPS": "",
 
-  "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
   "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
+  "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
   "DTS-HD Master Audio": "DTS-HD MA",
   "Dolby Digital Plus": "DDP",
   "Dolby Digital": "DD",

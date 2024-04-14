@@ -1,4 +1,4 @@
-Publish Helper v1.4.1
+Publish Helper v1.4.2
 
 使用前务必请先看设置！！！
 
@@ -6,11 +6,11 @@ Publish Helper v1.4.1
 
 目前支持的免费公共图床：https://freeimage.host/ https://imgbb.com/
 
-图床的api地址和令牌请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
+目前支持的公共图床架构：兰空图床(Lsky Pro)(https://github.com/lsky-org/lsky-pro)
 
-如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改以下文件：
+图床的API地址和令牌请去图床主页获取，其他图床如有需要单独适配欢迎申请定制。
 
-static/abbreviation.json
+如果您发现自动命名时视频、音频的编码格式没有正确识别，请参考格式修改static/abbreviation.json：
 
     {
         "min_widths": {
@@ -46,43 +46,38 @@ static/abbreviation.json
         "无需识别的信息": ""（留空）
     }
 
-如需修改资源来源、小组名称或短剧来源默认值，请访问：
+如需修改资源来源、小组名称或短剧来源默认值，请修改static/combo-box-data.json：
 
-来源名称：static/source.json
-
-    {
-        "source": [
-          "WEB-DL",
-          "Remux",
-          "Blu-ray",
-          "UHD Blu-ray",
-          "你想要的来源名称"
-        ]
-    }
-
-小组名称：static/team.json
-
-    {
-        "team": [
-          "AGSVWEB",
-          "AGSVMUS",
-          "AGSVPT",
-          "GodDramas",
-          "CatEDU",
-          "Pack",
-          "你想要的小组名称"
-        ]
-    }
-
-短剧类型：static/playlet-source.json
-
-    {
-        "type": [
-          "网络收费短剧",
-          "网络免费短剧",
-          "你想要的短剧类型"
-        ]
-    }
+{
+    "team": [
+        "AGSVWEB",
+        "AGSVMUS",
+        "AGSVPT",
+        "GodDramas",
+        "CatEDU",
+        "Pack",
+        ""
+    ],
+    "source": [
+        "WEB-DL",
+        "Remux",
+        "Blu-ray",
+        "UHD Blu-ray",
+        "Blu-ray Remux",
+        "UHD Blu-ray Remux",
+        "HDTV",
+        "DVD",
+        ""
+    ],
+    "playlet-source": [
+        "网络收费短剧",
+        "网络免费短剧",
+        "抖音短剧",
+        "快手短剧",
+        "腾讯短剧",
+        ""
+    ]
+}
 
 软件获取地址：
 
@@ -98,4 +93,4 @@ https://gitee.com/publish-helper/publish-helper-gui/releases
 
 Powered by Python 3.10
 
-Created by bjd
+Created by BJD

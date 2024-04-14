@@ -1529,13 +1529,14 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;关键帧复杂度指对画面的要求，数字越大画面越复杂，符合条件的画面也会越少，数量不足会随机截图。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图起始点指截图开始的时刻在整个电影长度的占比，不易过小，以免截取片头。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果发现生成的缩略图位置不在最后，请适当增大上传延迟。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;如果发现生成的缩略图上传后生成的URL位置不在最后，请适当增大上传延迟。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，Pt-Gen连接性不好时不建议使用。&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;文件越大制作种子越慢，可查看任务管理器获取运行情况，资源路径可以直接复制文件粘贴到文本框。&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;目前支持的免费图床： &lt;span style=&quot; color:#0000ff;&quot;&gt;https://freeimage.host/ https://imgbb.com/&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;图床的API地址和令牌请到图床主页获取。&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;支持免费图床： &lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;https://freeimage.host/ https://imgbb.com/&lt;/span&gt;&lt;span style=&quot; color:#0000ff;&quot;&gt;，&lt;/span&gt;API地址和令牌请到图床主页获取。&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;目前公共图床架构支持兰空图床(Lsky Pro)，如需使用请在&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;static/picture-bed-data.json&lt;/span&gt;&lt;span style=&quot; color:#000000;&quot;&gt;文件中的&amp;quot;l&lt;/span&gt;sky-pro&lt;span style=&quot; color:#000000;&quot;&gt;&amp;quot;字段里添加你的图床API接口地址，注意最后不要加&amp;quot;/&amp;quot;!&lt;/span&gt;&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; color:#000000;&quot;&gt;如果需要支持更多新类型的图床请提Issues，前提是图床支持API上传！&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
           </widget>
          </item>
@@ -1710,8 +1711,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{actors}：主要演员 &lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;static/combo-box-data.json&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -1882,8 +1883,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{actors}：主要演员 &lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;static/combo-box-data.json&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>
@@ -2053,8 +2054,8 @@ li.checked::marker { content: &quot;\2612&quot;; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;{category}：影片类型 &lt;/p&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;注意：&lt;/span&gt;&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700;&quot;&gt;static目录&lt;/span&gt;下对应的&lt;span style=&quot; font-weight:700;&quot;&gt;json文件&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;红色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#ff0000;&quot;&gt;static/abbreviation.json&lt;/span&gt;进行自定义&lt;/p&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;蓝色选项&lt;/span&gt;可通过修改&lt;span style=&quot; font-weight:700; color:#0000ff;&quot;&gt;static/combo-box-data.json&lt;/span&gt;进行自定义&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                  </property>
                 </widget>
                </item>

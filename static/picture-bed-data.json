@@ -1,0 +1,15 @@
+{
+    "lsky-pro": [
+        "https://picture.agsv.top/api/v1",
+        "https://img.ptvicomo.net/api/v1"
+    ],
+    "agsv-official": [
+        "https://img.agsv.top/api/upload"
+    ],
+    "freeimage": [
+        "https://freeimage.host/api/1/upload"
+    ],
+    "imgbb": [
+        "https://api.imgbb.com/1/upload"
+    ]
+}

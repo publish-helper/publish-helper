@@ -1,0 +1,30 @@
+{
+    "team": [
+        "AGSVWEB",
+        "AGSVMUS",
+        "AGSVPT",
+        "GodDramas",
+        "CatEDU",
+        "Pack",
+        ""
+    ],
+    "source": [
+        "WEB-DL",
+        "Remux",
+        "Blu-ray",
+        "UHD Blu-ray",
+        "Blu-ray Remux",
+        "UHD Blu-ray Remux",
+        "HDTV",
+        "DVD",
+        ""
+    ],
+    "playlet-source": [
+        "网络收费短剧",
+        "网络免费短剧",
+        "抖音短剧",
+        "快手短剧",
+        "腾讯短剧",
+        ""
+    ]
+}

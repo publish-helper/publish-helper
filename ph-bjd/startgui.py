@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import sys
@@ -19,7 +20,7 @@ from startapi import run_api
 from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, make_torrent, load_names, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, is_filename_too_long, get_playlet_description, delete_season_number, \
-    rename_file
+    rename_file, get_combo_box_data
 from ui.mainwindow import Ui_Mainwindow
 from ui.settings import Ui_Settings
 
@@ -113,23 +114,37 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.run_api_thread()
 
     def initialize_team_combobox(self):
-        team_names = load_names('static/team.json', 'team')
-        for name in team_names:
-            self.teamMovie.addItem(name)
-            self.teamTV.addItem(name)
-            self.teamPlaylet.addItem(name)
+        get_data_success, data = get_combo_box_data('team')
+        if get_data_success:
+            for name in data:
+                self.teamMovie.addItem(name)
+                self.teamTV.addItem(name)
+                self.teamPlaylet.addItem(name)
+        else:
+            self.debugBrowserMovie.append(f"获取制作组信息出错：{data[0]}")
+            self.debugBrowserTV.append(f"获取制作组信息出错：{data[0]}")
+            self.debugBrowserPlaylet.append(f"获取制作组信息出错：{data[0]}")
 
     def initialize_source_combobox(self):
-        source_names = load_names('static/source.json', 'source')
-        for name in source_names:
-            self.sourceMovie.addItem(name)
-            self.sourceTV.addItem(name)
-            self.sourcePlaylet.addItem(name)
+        get_data_success, data = get_combo_box_data('source')
+        if get_data_success:
+            for name in data:
+                self.sourceMovie.addItem(name)
+                self.sourceTV.addItem(name)
+                self.sourcePlaylet.addItem(name)
+        else:
+            self.debugBrowserMovie.append(f"获取资源来源信息出错：{data[0]}")
+            self.debugBrowserTV.append(f"获取资源来源信息出错：{data[0]}")
+            self.debugBrowserPlaylet.append(f"获取资源来源信息出错：{data[0]}")
 
     def initialize_playlet_source_combobox(self):
-        playlet_source = load_names('static/playlet-source.json', 'type')
-        for name in playlet_source:
-            self.playletSource.addItem(name)
+        get_data_success, data = get_combo_box_data('playlet-source')
+        if get_data_success:
+            for name in data:
+                self.playletSource.addItem(name)
+        else:
+            self.debugBrowserPlaylet.append(f"获取短剧来源信息出错：{data[0]}")
+
 
     def settings_clicked(self):  # click对应的槽函数
         self.my_settings = settings()

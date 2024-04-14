@@ -1,14 +1,14 @@
-Publish Helper v1.4.1
+Publish Helper v1.4.2
 
 **使用前务必请先看设置！！！**
 
 目前的一些简单的功能有：
 
-1. 自动获取PT-Gen简介信息（需要PT-Gen Api）
+1. 自动获取PT-Gen简介信息（需要PT-Gen API）
 2. 自动获取MediaInfo信息
 3. 自动截图
 4. 自动获取缩略图
-5. 并上传图床（需要自行获取图床的Api）
+5. 并上传图床（需要自行获取图床的API）
 6. 根据简介信息和MediaInfo信息自动分析生成主副标题和文件名
 7. 自动将资源塞入文件夹并重命名
 8. 自动将资源制作种子
@@ -22,9 +22,11 @@ Publish Helper v1.4.1
 
 目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/)
 
-图床的api地址和令牌请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
+目前支持的公共图床架构：[【兰空图床(Lsky Pro)】](https://github.com/lsky-org/lsky-pro)
 
-如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的Q&A。
+图床的API地址和令牌请去图床主页左上角获取，其他官方图床如有需要单独适配欢迎申请定制。
+
+如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的Q&A或查看**readme.txt**。
 
 本软件已支持API功能，具体请见[【API文档】](https://apifox.com/apidoc/shared-6d670fb1-eb1f-4431-afdb-29b19fe1ffe1)。
 
@@ -38,6 +40,6 @@ Publish Helper v1.4.1
 
 如有帮助到您，请给项目**点亮Star**，并推广给有需要的朋友，十分感谢！
 
-Powered by Python 3.10
+**Powered by Python 3.10**
 
-Created by bjd
+**Created by BJD**

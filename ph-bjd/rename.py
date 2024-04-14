@@ -4,7 +4,7 @@ import re
 
 from pymediainfo import MediaInfo
 
-from tool import get_settings
+from tool import get_settings, get_abbreviation
 
 
 def get_pt_gen_info(description):
@@ -202,22 +202,6 @@ def extract_numbers(string):
         return int(result)
     else:
         return None
-
-
-def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
-    print("开始对参数名称进行转化")
-    try:
-        with open(json_file_path, 'r') as file:
-            abbreviation_map = json.load(file)
-
-        # Return the abbreviation if found, else return the original name
-        return abbreviation_map.get(original_name, original_name)
-    except FileNotFoundError:
-        print(f"File not found: {json_file_path}")
-        return original_name
-    except json.JSONDecodeError:
-        print(f"Error decoding JSON from file: {json_file_path}")
-        return original_name
 
 
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,

@@ -145,6 +145,234 @@ def get_settings(settings_name):
     return settings_data
 
 
+def get_combo_box_data(data_name):
+    try:
+        # Define the file path
+        file_path = 'static/combo-box-data.json'
+
+        default_content = {}
+
+        # Define default content if key is missing
+        if data_name == 'playlet-source':
+            default_content = {
+                "playlet-source": [
+                    "网络收费短剧",
+                    "网络免费短剧",
+                    "抖音短剧",
+                    "快手短剧",
+                    "腾讯短剧",
+                    ""
+                ]
+            }
+
+        elif data_name == 'source':
+            default_content = {
+                "source": [
+                    "WEB-DL",
+                    "Remux",
+                    "Blu-ray",
+                    "UHD Blu-ray",
+                    "Blu-ray Remux",
+                    "UHD Blu-ray Remux",
+                    "HDTV",
+                    "DVD",
+                    ""
+                ]
+            }
+
+        elif data_name == 'team':
+            default_content = {
+                "team": [
+                    "AGSVWEB",
+                    "AGSVMUS",
+                    "AGSVPT",
+                    "GodDramas",
+                    "CatEDU",
+                    "Pack",
+                    ""
+                ]
+            }
+
+        # Check if the file exists
+        if not os.path.exists(file_path):
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            # Write the default content to the file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(default_content, file, ensure_ascii=False, indent=4)
+
+        # Load content from the file
+        with open(file_path, 'r', encoding='utf-8') as file:
+            data = json.load(file)
+
+        # Check if the specified data_name key exists in the loaded data
+        if data_name not in data:
+            # Update data with default content if not present
+            data.update(default_content)
+            # Save updated data back to the file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+
+        return True, data[data_name]
+
+    except Exception as e:
+        # Return False and the error message if an exception occurs
+        return False, [str(e)]
+
+
+def get_picture_bed_type(picture_bed_api_url):
+    try:
+        # Define the file path
+        file_path = 'static/picture-bed-data.json'
+
+        # Define default content if key is missing
+        default_content = {
+            "lsky-pro": [
+                "https://picture.agsv.top/api/v1",
+                "https://img.ptvicomo.net/api/v1"
+            ],
+            "agsv-official": [
+                "https://img.agsv.top/api/upload"
+            ],
+            "freeimage": [
+                "https://freeimage.host/api/1/upload"
+            ],
+            "imgbb": [
+                "https://api.imgbb.com/1/upload"
+            ]
+        }
+
+        # Check if the file exists
+        if not os.path.exists(file_path):
+            # Create directory if it doesn't exist
+            os.makedirs(os.path.dirname(file_path), exist_ok=True)
+            # Write the default content to the file
+            with open(file_path, 'w', encoding='utf-8') as file:
+                json.dump(default_content, file, ensure_ascii=False, indent=4)
+
+        # Load content from the file
+        with open(file_path, 'r', encoding='utf-8') as file:
+            picture_bed_api_data = json.load(file)
+            get_picture_bed_type_success, picture_bed_type = find_picture_bed_type(picture_bed_api_url, picture_bed_api_data)
+            if get_picture_bed_type_success:
+                print(picture_bed_type)
+                return True, picture_bed_type
+            else:
+                print(picture_bed_type)
+                return False, picture_bed_type
+
+    except Exception as e:
+        # Return False and the error message if an exception occurs
+        return False, str(e)
+
+
+def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
+    print("开始对参数名称进行转化")
+    try:
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
+
+        # Check if the file exists; if not, create it with default data
+        if not os.path.exists(json_file_path):
+            default_data = {
+                "min_widths": {
+                    "9600": "8640p",
+                    "4608": "4320p",
+                    "3200": "2160p",
+                    "2240": "1440p",
+                    "1600": "1080p",
+                    "900": "720p",
+                    "533": "480p"
+                },
+                "7 680 pixels": "4320p",
+                "3 840 pixels": "2160p",
+                "2 560 pixels": "1440p",
+                "1 920 pixels": "1080p",
+                "1 440 pixels": "720p",
+                "1 280 pixels": "720p",
+                "720 pixels": "480p",
+                "640 pixels": "480p",
+                "HEVC": "HEVC",
+                "AVC": "AVC",
+                "AV1": "AV1",
+                "x264": "x264",
+                "x265": "x265",
+                "x266": "x266",
+                "12 bits": "12bit",
+                "10 bits": "10bit",
+                "8 bits": "",
+                "Dolby Vision, Version 1.0, dvhe.05.06, BL+RPU": "DV",
+                "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible": "HDR10+",
+                "SMPTE ST 2086, HDR10 compatible": "HDR10",
+                "HDR Vivid, Version 1": "HDR",
+                "60.000 FPS": "60FPS",
+                "50.000 FPS": "50FPS",
+                "48.000 FPS": "48FPS",
+                "30.000 FPS": "",
+                "29.970 FPS": "",
+                "25.000 FPS": "",
+                "24.037 FPS": "",
+                "24.000 FPS": "",
+                "23.976 FPS": "",
+                "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
+                "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
+                "DTS-HD Master Audio": "DTS-HD MA",
+                "Dolby Digital Plus": "DDP",
+                "Dolby Digital": "DD",
+                "HE-AAC": "AAC",
+                "L R C LFE Ls Rs Lb Rb": "7.1",
+                "L R C LFE Ls Rs": "5.1",
+                "C L R Ls Rs LFE": "5.1",
+                "L R": "2.0"
+            }
+            with open(json_file_path, 'w', encoding='utf-8') as file:
+                json.dump(default_data, file, ensure_ascii=False, indent=4)
+
+        # Open and load the abbreviation map
+        with open(json_file_path, 'r', encoding='utf-8') as file:
+            abbreviation_map = json.load(file)
+
+        # Return the abbreviation if found, else return the original name
+        return abbreviation_map.get(original_name, original_name)
+    except FileNotFoundError:
+        print(f"File not found: {json_file_path}")
+        return original_name
+    except json.JSONDecodeError:
+        print(f"Error decoding JSON from file: {json_file_path}")
+        return original_name
+
+
+def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
+    """
+    根据给定的URL和JSON数据，寻找URL对应的标识符。
+    如果URL以http开头，自动替换为https。
+    如果URL最后一位是'/'，则去除这个'/'。
+    如果找不到URL对应的标识符，返回"没找到"。
+
+    参数:
+    url (str): 需要查找的网址
+    json_data (dict): 包含网址和对应标识符的JSON字典
+
+    返回:
+    str: URL对应的标识符或者"没找到"
+    """
+    # 替换http为https
+    if picture_bed_api_url.startswith("http://"):
+        picture_bed_api_url = "https://" + picture_bed_api_url[7:]
+
+    # 去除URL末尾的'/'
+    if picture_bed_api_url.endswith('/'):
+        picture_bed_api_url = picture_bed_api_url[:-1]
+
+    # 遍历JSON数据，查找对应的标识符
+    for identifier, urls in picture_bed_api_data.items():
+        if picture_bed_api_url in urls:
+            return True, identifier
+
+    # 如果找不到对应的标识符，返回"没找到"
+    return False, f"您使用的图床接口{picture_bed_api_url}暂未配置，请检查static/picture-bed-data.json文件，如果您的图床符合其中的配置，可按照格式添加到对应类型下"
+
+
 def read_data_from_json(file_path, configuration_name):
     # 定义所需的JSON结构
     default_data = {
