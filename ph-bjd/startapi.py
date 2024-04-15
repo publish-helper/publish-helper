@@ -9,8 +9,8 @@ from ptgen import get_pt_gen_description
 from rename import get_video_info, get_pt_gen_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
 from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
-    move_file_to_folder, get_video_files, rename_directory, read_data_from_json, update_data_in_json, update_settings, \
-    get_playlet_description
+    move_file_to_folder, get_video_files, rename_directory, update_combo_box_data, update_settings, \
+    get_playlet_description, get_combo_box_data
 
 api = Flask(__name__)
 
@@ -1181,9 +1181,9 @@ def api_get_total_episode():
         }), 400
 
 
-@api.route('/api/readConfigurationDataFromJson', methods=['GET'])
+@api.route('/api/getComboBoxData', methods=['GET'])
 # 用于读取playlet-source.json source.json team.json文件中的数据
-def api_read_configuration_data_from_json():
+def api_get_combo_box_data():
     try:
         # 从请求URL中获取参数
         configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
@@ -1206,10 +1206,9 @@ def api_read_configuration_data_from_json():
                 "statusCode": "PARAMETER_RANGE_ERROR"
             }), 422
         else:
-            file_path = f"static/{configuration_name}.json"
-            read_data_from_json_success, response = read_data_from_json(file_path, configuration_name)
-
-            if read_data_from_json_success:
+            get_combo_box_data_success, response = get_combo_box_data(configuration_name)
+            response = '\n'.join(response)
+            if get_combo_box_data_success:
                 return jsonify({
                     "data": {
                         "configurationData": response
@@ -1235,9 +1234,9 @@ def api_read_configuration_data_from_json():
         }), 400
 
 
-@api.route('/api/updateConfigurationDataInJson', methods=['POST'])
-# 用于更新playlet-source.json source.json team.json文件中的数据
-def api_update_configuration_data_in_json():
+@api.route('/api/updateComboBoxData', methods=['POST'])
+# 用于更新combo-box-data.json文件中的数据
+def api_update_combo_box_data():
     try:
         # 从请求URL中获取参数
         configuration_name = request.args.get('configurationName', default='', type=str)  # 必须信息
@@ -1265,10 +1264,7 @@ def api_update_configuration_data_in_json():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
         else:
-            file_path = f"static/{configuration_name}.json"
-            update_data_in_json_success, response = update_data_in_json(file_path, configuration_data,
-                                                                        configuration_name)
-
+            update_data_in_json_success, response = update_combo_box_data(configuration_data, configuration_name)
             if update_data_in_json_success:
                 return jsonify({
                     "data": {},
