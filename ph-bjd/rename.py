@@ -81,6 +81,7 @@ def get_video_info(file_path):
         print("文件路径不存在")
         return False, ["视频文件路径不存在"]
     try:
+        audio_count = 0
         media_info = MediaInfo.parse(file_path)
         print(media_info.to_json())
         video_format = ""
@@ -118,9 +119,10 @@ def get_video_info(file_path):
 
                         # ... 添加其他Video信息
             elif track.track_type == "Audio":
-                audio_codec = track.commercial_name
-                channels = track.channel_layout
-                break
+                if audio_count == 0:
+                    audio_codec = track.commercial_name
+                    channels = track.channel_layout
+                audio_count += 1
                 # ... 添加其他Audio信息
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
             video_format += width
@@ -133,9 +135,13 @@ def get_video_info(file_path):
             # 自动获取默认的值
             video_format = approximate_resolution_by_width(extract_numbers(video_format))
 
+        if audio_count == 1:
+            audio_num = ""
+        else:
+            audio_num = str(audio_count) + get_abbreviation("Audio")
         return True, [video_format, get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
-                      get_abbreviation(channels)]
+                      get_abbreviation(channels), audio_num]
     except OSError as e:
         # 文件路径相关的错误
         print(f"文件路径错误: {e}。")
@@ -205,8 +211,8 @@ def extract_numbers(string):
 
 
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
-                           bit_depth, hdr_format, frame_rate, audio_codec, channels, team, other_titles, season_number,
-                           total_episode, playlet_source, category, actors, template):
+                           bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, team, other_titles,
+                           season_number, total_episode, playlet_source, category, actors, template):
     name = get_settings(template)
     name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)
@@ -220,12 +226,25 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     name = name.replace("{hdr_format}", hdr_format)
     name = name.replace("{frame_rate}", frame_rate)
     name = name.replace("{audio_codec}", audio_codec)
-    name = name.replace("{channels}", str(channels))
-    name = name.replace("{team}", str(team))
+    name = name.replace("{channels}", channels)
+    name = name.replace("{audio_num}", audio_num)
+    name = name.replace("{team}", team)
     name = name.replace("{other_titles}", other_titles)
     name = name.replace("{season_number}", season_number)
     name = name.replace("{total_episode}", total_episode)
     name = name.replace("{playlet_source}", playlet_source)
     name = name.replace("{category}", category)
     name = name.replace("{actors}", actors)
+    if "main_title" in template:
+        name = name.replace('_', ' ')
+        name = re.sub(r'\s+', ' ', name)  # 将连续的空格变成一个
+        name = re.sub(' -', '-', name)  # 将' -'变成'-'
+        name = re.sub(' @', '@', name)  # 将' @'变成'@'
+    if "second_title" in template:
+        name = name.replace(' /  | ', ' | ')  # 避免单别名导致的错误
+    if "file_name" in template:
+        name = re.sub(r'[<>:\"/\\|?*\s]', '.', name)  # 将Windows不允许出现的字符变成'.'
+        name = re.sub(r'\.{2,}', '.', name)  # 将连续的'.'变成一个
+        name = re.sub(r'\.-', '-', name)  # 将'.-'变成'.'
+        name = re.sub(r'\.@', '@', name)  # 将'.@'变成'@'
     return name

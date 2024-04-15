@@ -448,6 +448,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 frame_rate = ""
                 audio_codec = ""
                 channels = ""
+                audio_num = ""
                 other_titles = ""
                 actors = ""
                 make_dir = get_settings("make_dir")
@@ -539,41 +540,47 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     print('未输入任何数据')
                                     self.debugBrowserMovie.append('未输入任何数据')
                                     english_title = ''
-                    get_video_info_success, output = get_video_info(video_path)
+                    get_video_info_success, response = get_video_info(video_path)
                     if get_video_info_success:
-                        print("获取到关键参数：" + str(output))
-                        self.debugBrowserMovie.append("获取到关键参数：" + str(output))
-                        video_format = output[0]
-                        video_codec = output[1]
-                        bit_depth = output[2]
-                        hdr_format = output[3]
-                        frame_rate = output[4]
-                        audio_codec = output[5]
-                        channels = output[6]
+                        print("获取到关键参数：" + str(response))
+                        self.debugBrowserMovie.append("获取到关键参数：" + str(response))
+                        video_format += response[0]
+                        video_codec += response[1]
+                        bit_depth += response[2]
+                        hdr_format += response[3]
+                        frame_rate += response[4]
+                        audio_codec += response[5]
+                        channels += response[6]
+                        audio_num += response[7]
                     source = self.sourceMovie.currentText()
                     team = self.teamMovie.currentText()
                     print("关键参数赋值成功")
                     self.debugBrowserMovie.append("关键参数赋值成功")
                     main_title = get_name_from_template(english_title, original_title, "", "", year,
                                                         video_format, source, video_codec, bit_depth, hdr_format,
-                                                        frame_rate, audio_codec, channels, team, other_titles, "",
+                                                        frame_rate, audio_codec, channels, audio_num, team,
+                                                        other_titles, "",
                                                         "", "", category, actors, "main_title_movie")
                     main_title = main_title.replace('_', ' ')
                     main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
+                    main_title = re.sub(' -', '-', main_title)  # 将' -'变成'-'
+                    main_title = re.sub(' @', '@', main_title)  # 将' @'变成'@'
                     print(main_title)
                     second_title = get_name_from_template(english_title, original_title, "", "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, team, other_titles, "", "", "",
+                                                          audio_codec, channels, audio_num, team, other_titles, "", "",
+                                                          "",
                                                           category, actors, "second_title_movie")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
                     file_name = get_name_from_template(english_title, original_title, "", "", year, video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, team, other_titles, "", "",
-                                                       "",
-                                                       category, actors, "file_name_movie")
+                                                       audio_codec, channels, audio_num, team, other_titles, "",
+                                                       "", "", category, actors, "file_name_movie")
                     file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
                     file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
+                    file_name = re.sub('.-', '-', file_name)  # 将'.-'变成'.'
+                    file_name = re.sub('.@', '@', file_name)  # 将'.@'变成'@'
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
                                                         QLineEdit.EchoMode.Normal, file_name)
@@ -609,33 +616,33 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if make_dir and is_video_path == 1:
                         print("开始创建文件夹")
                         self.debugBrowserMovie.append("开始创建文件夹")
-                        move_file_to_folder_success, output = move_file_to_folder(video_path, file_name)
+                        move_file_to_folder_success, response = move_file_to_folder(video_path, file_name)
                         if move_file_to_folder_success:
-                            self.videoPathMovie.setText(output)
-                            video_path = output
+                            self.videoPathMovie.setText(response)
+                            video_path = response
                             self.debugBrowserMovie.append("视频成功移动到：" + video_path)
                         else:
-                            self.debugBrowserMovie.append("创建文件夹失败：" + output)
+                            self.debugBrowserMovie.append("创建文件夹失败：" + response)
                     if do_rename_file and is_video_path == 1:
                         print("开始对文件重新命名")
                         self.debugBrowserMovie.append("开始对文件重新命名")
-                        rename_file_success, output = rename_file(video_path, file_name)
+                        rename_file_success, response = rename_file(video_path, file_name)
                         if rename_file_success:
-                            self.videoPathMovie.setText(output)
-                            video_path = output
+                            self.videoPathMovie.setText(response)
+                            video_path = response
                             self.debugBrowserMovie.append("视频成功重新命名为：" + video_path)
                         else:
-                            self.debugBrowserMovie.append("重命名失败：" + output)
+                            self.debugBrowserMovie.append("重命名失败：" + response)
                     if do_rename_file and is_video_path == 2:
                         print("对文件夹重新命名")
                         self.debugBrowserMovie.append("开始对文件夹重新命名")
-                        rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name)
+                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name)
                         if rename_directory_success:
-                            self.videoPathMovie.setText(output)
-                            video_path = output
+                            self.videoPathMovie.setText(response)
+                            video_path = response
                             self.debugBrowserMovie.append("视频地址成功重新命名为：" + video_path)
                         else:
-                            self.debugBrowserMovie.append("重命名失败：" + output)
+                            self.debugBrowserMovie.append("重命名失败：" + response)
 
                 else:
                     self.debugBrowserMovie.append("您的视频文件路径有误")
@@ -953,6 +960,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 frame_rate = ""
                 audio_codec = ""
                 channels = ""
+                audio_num = ""
                 other_titles = ""
                 actors = ""
                 do_rename_file = get_settings("rename_file")
@@ -1058,17 +1066,18 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             other_titles += data
                             other_titles += ' / '
                         other_titles = other_titles[: -3]
-                    get_video_info_success, output = get_video_info(video_path)
+                    get_video_info_success, response = get_video_info(video_path)
                     if get_video_info_success:
-                        print("获取到关键参数：" + str(output))
-                        self.debugBrowserTV.append("获取到关键参数：" + str(output))
-                        video_format = output[0]
-                        video_codec = output[1]
-                        bit_depth = output[2]
-                        hdr_format = output[3]
-                        frame_rate = output[4]
-                        audio_codec = output[5]
-                        channels = output[6]
+                        print("获取到关键参数：" + str(response))
+                        self.debugBrowserTV.append("获取到关键参数：" + str(response))
+                        video_format += response[0]
+                        video_codec += response[1]
+                        bit_depth += response[2]
+                        hdr_format += response[3]
+                        frame_rate += response[4]
+                        audio_codec += response[5]
+                        channels += response[6]
+                        audio_num += response[7]
                     source = self.sourceTV.currentText()
                     team = self.teamTV.currentText()
                     print("关键参数赋值成功")
@@ -1076,26 +1085,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     english_title = delete_season_number(english_title, season_number)
                     main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                        audio_codec, channels, team, other_titles, season_number,
+                                                        audio_codec, channels, audio_num, team, other_titles,
+                                                        season_number,
                                                         total_episode, "", category, actors, "main_title_tv")
-                    main_title = main_title.replace('_', ' ')
-                    main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
-                    print(main_title)
+                    print("mainTitle" + main_title)
                     second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, team, other_titles, season_number,
+                                                          audio_codec, channels, audio_num, team, other_titles,
+                                                          season_number,
                                                           total_episode, "", category, actors, "second_title_tv")
-                    second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
-                    print("SecondTitle" + second_title)
-                    file_name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+                    print("secondTitle" + second_title)
+                    file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
+                                                       video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, team, other_titles, season_number,
+                                                       audio_codec, channels, audio_num, team, other_titles,
+                                                       season_number,
                                                        total_episode, "", category, actors, "file_name_tv")
-                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
-                    file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
+                    print("fileName" + file_name)
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
-                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
+                                                        '请确认文件名称，如有问题请修改（{集数}表示集数，请勿删除）',
                                                         QLineEdit.EchoMode.Normal,
                                                         file_name)
                         if ok:
@@ -1137,25 +1146,25 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
-                            rename_file_success, output = rename_file(video_file, file_name.replace('@@', e))
+                            rename_file_success, response = rename_file(video_file, file_name.replace('{集数}', e))
                             if rename_file_success:
-                                self.videoPathTV.setText(output)
-                                video_path = output
+                                self.videoPathTV.setText(response)
+                                video_path = response
                                 self.debugBrowserTV.append("视频成功重新命名为：" + video_path)
                             else:
-                                self.debugBrowserTV.append("重命名失败：" + output)
+                                self.debugBrowserTV.append("重命名失败：" + response)
                             i += 1
                         print("对文件夹重新命名")
                         self.debugBrowserTV.append("开始对文件夹重新命名")
-                        rename_directory_success, output = rename_directory(os.path.dirname(video_path), file_name.
-                                                                            replace('E@@', '').
-                                                                            replace('@@', ''))
+                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
+                                                                              replace('E{集数}', '').
+                                                                              replace('{集数}', ''))
                         if rename_directory_success:
-                            self.videoPathTV.setText(output)
-                            video_path = output
+                            self.videoPathTV.setText(response)
+                            video_path = response
                             self.debugBrowserTV.append("视频地址成功重新命名为：" + video_path)
                         else:
-                            self.debugBrowserTV.append("重命名失败：" + output)
+                            self.debugBrowserTV.append("重命名失败：" + response)
                 else:
                     self.debugBrowserTV.append("您的视频文件路径有误")
             else:
@@ -1504,6 +1513,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 frame_rate = ""
                 audio_codec = ""
                 channels = ""
+                audio_num = ""
                 playlet_source = ""
                 do_rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
@@ -1527,13 +1537,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     episode_start_number + episode_num - 1) + '集'
                     if get_video_info_success:
                         self.debugBrowserPlaylet.append("获取到关键参数：" + str(response))
-                        video_format = response[0]
-                        video_codec = response[1]
-                        bit_depth = response[2]
-                        hdr_format = response[3]
-                        frame_rate = response[4]
-                        audio_codec = response[5]
-                        channels = response[6]
+                        video_format += response[0]
+                        video_codec += response[1]
+                        bit_depth += response[2]
+                        hdr_format += response[3]
+                        frame_rate += response[4]
+                        audio_codec += response[5]
+                        channels += response[6]
+                        audio_num += response[7]
                     source = self.sourcePlaylet.currentText()
                     team = self.teamPlaylet.currentText()
                     playlet_source += self.playletSource.currentText()
@@ -1544,30 +1555,27 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserPlaylet.append('类型为：' + category)
                     main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                        audio_codec,
-                                                        channels, team, "", season_number, total_episode,
-                                                        playlet_source,
-                                                        category,
+                                                        audio_codec, channels, audio_num, team, "", season_number,
+                                                        total_episode, playlet_source, category,
                                                         "", "main_title_playlet")
-                    main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
-                    print(main_title)
+                    print("mainTitle" + main_title)
                     second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, team, "", season_number, total_episode,
-                                                          playlet_source,
+                                                          audio_codec, channels, audio_num, team, "", season_number,
+                                                          total_episode, playlet_source,
                                                           category, "", "second_title_playlet")
-                    print("SecondTitle" + second_title)
+                    print("secondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
-                    file_name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+                    file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
+                                                       video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, team, "", season_number, total_episode,
-                                                       playlet_source,
+                                                       audio_codec, channels, audio_num, team, "", season_number,
+                                                       total_episode, playlet_source,
                                                        category, "", "file_name_playlet")
-                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
-                    file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
+                    print("fileName" + file_name)
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
-                                                        '请确认文件名称，如有问题请修改（@@表示集数，请勿删除）',
+                                                        '请确认文件名称，如有问题请修改（{集数}表示集数，请勿删除）',
                                                         QLineEdit.EchoMode.Normal, file_name)
                         if ok:
                             print(f'您确认文件名为: {text}')
@@ -1610,7 +1618,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, response = rename_file(video_file,
-                                                                        file_name.replace('@@', e))
+                                                                        file_name.replace('{集数}', e))
 
                             if rename_file_success:
                                 self.videoPathPlaylet.setText(response)
@@ -1623,8 +1631,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("对文件夹重新命名")
                         self.debugBrowserPlaylet.append("开始对文件夹重新命名")
                         rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
-                                                                              replace('E@@', '').
-                                                                              replace('@@', ''))
+                                                                              replace('E{集数}', '').
+                                                                              replace('{集数}', ''))
                         if rename_directory_success:
                             self.videoPathPlaylet.setText(response)
                             video_path = response

@@ -471,7 +471,8 @@ def api_get_video_info():
                     "hdrFormat": "",
                     "frameRate": "",
                     "audioCodec": "",
-                    "channels": ""
+                    "channels": "",
+                    "audioNum": ""
                 },
                 "message": "缺少资源路径。",
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
@@ -487,7 +488,8 @@ def api_get_video_info():
                     "hdrFormat": "",
                     "frameRate": "",
                     "audioCodec": "",
-                    "channels": ""
+                    "channels": "",
+                    "audioNum": ""
                 },
                 "message": "您提供的文件路径不存在。",
                 "statusCode": "FILE_PATH_ERROR"
@@ -506,6 +508,7 @@ def api_get_video_info():
                 frame_rate = response[4]
                 audio_codec = response[5]
                 channels = response[6]
+                audio_num = response[7]
                 return jsonify({
                     "data": {
                         "videoPath": video_path,
@@ -515,7 +518,8 @@ def api_get_video_info():
                         "hdrFormat": hdr_format,
                         "frameRate": frame_rate,
                         "audioCodec": audio_codec,
-                        "channels": channels
+                        "channels": channels,
+                        "audioNum": audio_num
                     },
                     "message": "获取视频关键参数成功。",
                     "statusCode": "OK"
@@ -531,6 +535,7 @@ def api_get_video_info():
                         "frameRate": "",
                         "audioCodec": "",
                         "channels": "",
+                        "audioNum": ""
                     },
                     "message": f"获取视频关键参数失败：{response[0]}。",
                     "statusCode": "BACKEND_PROCESSING_ERROR"
@@ -545,7 +550,8 @@ def api_get_video_info():
                     "hdrFormat": "",
                     "frameRate": "",
                     "audioCodec": "",
-                    "channels": ""
+                    "channels": "",
+                    "audioNum": ""
                 },
                 "message": f"获取视频路径失败：{video_path}。",
                 "statusCode": "BACKEND_PROCESSING_ERROR"
@@ -560,7 +566,8 @@ def api_get_video_info():
                 "hdrFormat": "",
                 "frameRate": "",
                 "audioCodec": "",
-                "channels": ""
+                "channels": "",
+                "audioNum": ""
             },
             "message": f"获取视频关键参数失败：{e}。",
             "statusCode": "GENERAL_ERROR"
@@ -814,6 +821,7 @@ def api_get_name_from_template():
         frame_rate = request.args.get('frameRate', default='', type=str)
         audio_codec = request.args.get('audioCodec', default='', type=str)
         channels = request.args.get('channels', default='', type=str)
+        audio_num = request.args.get('audioNum', default='', type=str)
         team = request.args.get('team', default='', type=str)
         other_titles = request.args.get('otherTitles', default='', type=str)
         season_number = request.args.get('seasonNumber', default='', type=str)
@@ -823,10 +831,19 @@ def api_get_name_from_template():
         actors = request.args.get('actors', default='', type=str)
         english_title = delete_season_number(english_title, season_number)
 
-        name = get_name_from_template(english_title, original_title, season, '@@', year, video_format,
+        name = get_name_from_template(english_title, original_title, season, '{集数}', year, video_format,
                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                      audio_codec, channels, team, other_titles, season_number,
+                                      audio_codec, channels, audio_num, team, other_titles, season_number,
                                       total_episode, playlet_source, category, actors, template)
+        if "main_title" in template:
+            name = re.sub(r'\s+', ' ', name)  # 将连续的空格变成一个
+            name = re.sub(' -', '-', name)  # 将' -'变成'-'
+            name = re.sub(' @', '@', name)  # 将' @'变成'@'
+        if "file_name" in template:
+            name = re.sub(r'[<>:\"/\\|?*\s]', '.', name)
+            name = re.sub(r'\.{2,}', '.', name)  # 将连续的'.'变成一个
+            name = re.sub('.-', '-', name)  # 将'.-'变成'.'
+            name = re.sub('.@', '@', name)  # 将'.@'变成'@'
         return jsonify({
             "data": {
                 "name": name
@@ -1033,7 +1050,7 @@ def api_rename_episode():
                     if len(e) == 1:
                         e = '0' + e
 
-                    rename_file_success, response = rename_file(video_file, new_file_name.replace('@@', e))
+                    rename_file_success, response = rename_file(video_file, new_file_name.replace('{集数}', e))
 
                     if rename_file_success:
                         video_path = response
@@ -1043,8 +1060,8 @@ def api_rename_episode():
 
                 print("开始对文件夹重新命名")
                 rename_directory_success, response = rename_directory(os.path.dirname(video_path), new_file_name.
-                                                                      replace('E@@', '').
-                                                                      replace('@@', ''))
+                                                                      replace('E{集数}', '').
+                                                                      replace('{集数}', ''))
 
                 if rename_directory_success:
                     return jsonify({
