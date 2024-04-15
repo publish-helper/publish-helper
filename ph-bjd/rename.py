@@ -245,6 +245,6 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     if "file_name" in template:
         name = re.sub(r'[<>:\"/\\|?*\s]', '.', name)  # 将Windows不允许出现的字符变成'.'
         name = re.sub(r'\.{2,}', '.', name)  # 将连续的'.'变成一个
-        name = re.sub(r'\.-', '-', name)  # 将'.-'变成'.'
+        name = re.sub(r'\.-', '-', name)  # 将'.-'变成'-'
         name = re.sub(r'\.@', '@', name)  # 将'.@'变成'@'
     return name
