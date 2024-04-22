@@ -17,7 +17,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>ph-bjd</string>
+   <string>Publish Helper</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
