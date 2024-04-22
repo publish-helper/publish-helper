@@ -8,7 +8,7 @@ The licensing of this program is under the GNU General Public License version 3 
 For more information on this license, you can visit https://www.gnu.org/licenses/gpl-3.0.html
 """
 """
-打包编译方式(Windows)：安装Python 3.10或更高版本，执行pip install pyinstaller，安装“requirements.txt”中的所有相关模块后，在项目根目录下执行下面的代码：
+打包编译方式(Windows)：安装Python 3.10，执行pip install pyinstaller，安装“requirements.txt”中的所有相关模块后，在项目根目录下执行下面的代码：
 
 pyinstaller -F -w -i static/ph-bjd.ico ph-bjd/main.py -n "Publish Helper.exe"
 xcopy static dist\static /E /I /Y
