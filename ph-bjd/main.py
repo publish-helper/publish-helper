@@ -18,7 +18,7 @@ copy README.md dist\
 copy readme.txt dist\
 
 项目根目录下生成的dist文件夹就是打包好的软件。
-项目仓库地址：https://github.com/publish-helper/publish-helper-gui
+项目仓库地址：https://github.com/publish-helper/publish-helper
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
 

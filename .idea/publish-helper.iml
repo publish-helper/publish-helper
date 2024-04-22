@@ -6,7 +6,7 @@
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.10 (publish-helper-gui)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.10 (publish-helper)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

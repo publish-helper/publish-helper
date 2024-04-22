@@ -18,7 +18,7 @@ Publish Helper v1.4.4
 12. 结合auto_feed脚本实现一键上传内容（新）
 13. 短剧一键生成简介（新）
 
-软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)。
+软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
 目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/)
 
@@ -26,13 +26,13 @@ Publish Helper v1.4.4
 
 图床的API地址和令牌请去图床主页获取，其他图床如需要单独适配请提Issues，前提是图床支持API上传！
 
-如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper-gui/wiki/Publish-Helper-Wiki)中的Q&A或查看**readme.txt**。
+如果您发现自动命名时视频、音频的编码格式没有正确识别，或者想要修改资源来源、小组名称或短剧来源默认值，请参考[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)中的Q&A或查看**readme.txt**。
 
 本软件已支持API功能，具体请见[【API文档】](https://apifox.com/apidoc/shared-6d670fb1-eb1f-4431-afdb-29b19fe1ffe1)。
 
 **软件获取地址：**
 
-[【GitHub仓库】](https://github.com/publish-helper/publish-helper-gui/releases) [【Gitee仓库】](https://gitee.com/publish-helper/publish-helper-gui/releases)
+[【GitHub仓库】](https://github.com/publish-helper/publish-helper/releases) [【Gitee仓库】](https://gitee.com/publish-helper/publish-helper/releases)
 
 更新时只需要保留static文件夹即可将配置完美迁移。
 
