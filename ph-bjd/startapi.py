@@ -15,7 +15,7 @@ from tool import check_path_and_find_video, get_settings, make_torrent, delete_s
 api = Flask(__name__)
 
 
-def run_api():
+def start_api():
     api.run(host='0.0.0.0', port=int(get_settings("api_port")), debug=True, use_reloader=False, threaded=True)
 
 

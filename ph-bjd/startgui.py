@@ -16,7 +16,7 @@ from picturebed import upload_picture
 from ptgen import get_pt_gen_description
 from rename import get_pt_gen_info, get_video_info, get_name_from_template
 from screenshot import get_screenshot, get_thumbnail
-from startapi import run_api
+from startapi import start_api
 from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
     get_folder_path, check_path_and_find_video, rename_directory, make_torrent, chinese_name_to_pinyin, \
     get_video_files, get_picture_file_path, is_filename_too_long, get_playlet_description, delete_season_number, \
@@ -1932,7 +1932,7 @@ class apiThread(QThread):
     def run(self):
         try:
             print("尝试启动API")
-            run_api()
+            start_api()
             print("API线程终止")
             self.result_signal.emit("API线程终止")
         except Exception as e:
