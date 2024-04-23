@@ -23,7 +23,7 @@ copy readme.txt dist\
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
 # GUI启动
-from gui.startgui import start_gui
+from src.gui.startgui import start_gui
 
 # 作者：bjdbjd ID：bjd
 # 贡献者：Pixel-LH、EasonWong0603、sertion1126
