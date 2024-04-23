@@ -156,7 +156,7 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
 def chevereto_piceure_bed(api_url, api_token, frame_path):
     print('接受到上传imgbb图床请求')
     url = api_url
-    data = {'expiration': 'PT5M', 'X-API-Key': api_token}
+    data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
     files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
     print('值已经获取')
     try:
