@@ -21,8 +21,8 @@ from src.core.tool import update_settings, get_settings, move_file_to_folder, \
     get_video_files,  is_filename_too_long, get_playlet_description, delete_season_number, \
     rename_file, get_combo_box_data
 from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
-from src.ui.mainwindow import Ui_Mainwindow
-from src.ui.settings import Ui_Settings
+from src.gui.ui.mainwindow import Ui_Mainwindow
+from src.gui.ui.settings import Ui_Settings
 
 
 def start_gui():

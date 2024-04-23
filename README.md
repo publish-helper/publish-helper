@@ -55,13 +55,15 @@ pip install -r requirements.txt
 
 ### 项目启动
 
+在项目根目录（README文件所在目录）下执行代码。
+
 * 1.gui启动
 ```shell
-python gui.py
+python src/main_gui.py
 ```
 * 2.api启动
 ```shell
-python main.py
+python src/main.py
 ```
 
 
