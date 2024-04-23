@@ -4,7 +4,7 @@ import os
 
 import requests
 
-from tool import get_picture_bed_type
+from src.core.tool import get_picture_bed_type
 
 
 def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):

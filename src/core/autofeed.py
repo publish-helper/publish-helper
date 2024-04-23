@@ -1,7 +1,7 @@
 # 感谢明日大佬、N佬做出的贡献！！！ID：tomorrow505、Exception
 import re
 
-from tool import get_settings
+from src.core.tool import get_settings
 
 
 def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source,

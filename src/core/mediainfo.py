@@ -4,7 +4,7 @@ import re
 
 from pymediainfo import MediaInfo
 
-from tool import get_settings
+from src.core.tool import get_settings
 
 
 def get_media_info(file_path):

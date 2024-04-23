@@ -1,5 +1,4 @@
 import os
-import os
 import re
 import sys
 import time
@@ -10,19 +9,20 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget, QLineEdit
 
-from autofeed import get_auto_feed_link
-from mediainfo import get_media_info
-from picturebed import upload_picture
-from ptgen import get_pt_gen_description
-from rename import get_pt_gen_info, get_video_info, get_name_from_template
-from screenshot import get_screenshot, get_thumbnail
-from startapi import start_api
-from tool import update_settings, get_settings, get_video_file_path, move_file_to_folder, \
-    get_folder_path, check_path_and_find_video, rename_directory, make_torrent, chinese_name_to_pinyin, \
-    get_video_files, get_picture_file_path, is_filename_too_long, get_playlet_description, delete_season_number, \
+from src.core.autofeed import get_auto_feed_link
+from src.core.mediainfo import get_media_info
+from src.core.picturebed import upload_picture
+from src.core.ptgen import get_pt_gen_description
+from src.core.rename import get_pt_gen_info, get_video_info, get_name_from_template
+from src.core.screenshot import get_screenshot, get_thumbnail
+from src.api.startapi import start_api
+from src.core.tool import update_settings, get_settings, move_file_to_folder, \
+    check_path_and_find_video, rename_directory, make_torrent, chinese_name_to_pinyin, \
+    get_video_files,  is_filename_too_long, get_playlet_description, delete_season_number, \
     rename_file, get_combo_box_data
-from ui.mainwindow import Ui_Mainwindow
-from ui.settings import Ui_Settings
+from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
+from src.ui.mainwindow import Ui_Mainwindow
+from src.ui.settings import Ui_Settings
 
 
 def start_gui():

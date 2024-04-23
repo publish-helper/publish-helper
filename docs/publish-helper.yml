@@ -1,0 +1,22 @@
+version: '3.2'
+
+services:
+  publish-helper:
+    image: publish-helper/publish-helper:1.0.0
+    hostname: publish-helper
+    container_name: publish-helper
+    restart: always
+    networks:
+      - publish-helper-network
+    environment:
+      - API_PORT=15372
+      - NGINX_PORT=15373
+    volumes:
+      - ./volume/static:/app/static
+      - ./volume/temp:/app/temp
+    ports:
+      - "15372:15372"
+
+networks:
+  publish-helper-network:
+    driver: bridge
