@@ -273,7 +273,7 @@ def get_picture_bed_type(picture_bed_api_url):
                 "https://picture.agsv.top/api/v1/upload",
                 "https://img.ptvicomo.net/api/v1/upload"
             ],
-            "agsv-official": [
+            "bohe": [
                 "https://img.agsv.top/api/upload"
             ],
             "freeimage": [

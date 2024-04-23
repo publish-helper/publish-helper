@@ -19,7 +19,7 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
             print(f"获取到图床的类型：{picture_bed_type}")
             if picture_bed_type == "lsky-pro":
                 return lsky_pro_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
-            elif picture_bed_type == "agsv-official":
+            elif picture_bed_type == "bohe":
                 return agsv_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "freeimage":
                 return freeimage_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
