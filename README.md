@@ -1,4 +1,4 @@
-Publish Helper v1.4.5
+Publish Helper v1.4.6
 
 **使用前务必请先看设置！！！**
 
@@ -58,14 +58,34 @@ pip install -r requirements.txt
 在项目根目录（README文件所在目录）下执行代码。
 
 * 1.gui启动
+
+Unix
+
 ```shell
-python src/main_gui.py
-```
-* 2.api启动
-```shell
-python src/main.py
+export PYTHONPATH=${PYTHONPATH}:. && python src/main_gui.py
 ```
 
+Windows
+
+```shell
+$env:PYTHONPATH = "$($env:PYTHONPATH);."
+python src\main_gui.py
+```
+
+* 2.api启动
+
+Unix
+
+```shell
+export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
+```
+
+Windows
+
+```shell
+$env:PYTHONPATH = "$($env:PYTHONPATH);."
+python src\main.py
+```
 
 ## 附件
 

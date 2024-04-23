@@ -7,14 +7,11 @@ under certain conditions; type `show c' for details.
 The licensing of this program is under the GNU General Public License version 3 (GPLv3) or later.
 For more information on this license, you can visit https://www.gnu.org/licenses/gpl-3.0.html
 """
-import os
-import sys
 
 """
 项目仓库地址：https://github.com/publish-helper/publish-helper
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 # API启动
 from src.api.startapi import start_api
 
