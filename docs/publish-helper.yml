@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   publish-helper:
-    image: publish-helper/publish-helper:1.0.0
+    image: publish-helper/publish-helper:1.4.5
     hostname: publish-helper
     container_name: publish-helper
     restart: always

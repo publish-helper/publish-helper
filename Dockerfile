@@ -17,4 +17,4 @@ COPY temp temp
 
 USER root
 EXPOSE 15372 15373
-CMD [ "python", "ph-bjd/main_api.py"]
+CMD [ "python", "src/main.py"]
