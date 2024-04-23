@@ -4,7 +4,7 @@ import re
 
 from pymediainfo import MediaInfo
 
-from tool import get_settings, get_abbreviation
+from src.core.tool import get_settings, get_abbreviation
 
 
 def get_pt_gen_info(description):

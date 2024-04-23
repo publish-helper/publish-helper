@@ -43,3 +43,28 @@ Publish Helper v1.4.5
 **Powered by Python 3.10**
 
 **Created by BJD**
+
+
+# 快速开始
+
+### 依赖安装
+
+```
+pip install -r requirements.txt
+```
+
+### 项目启动
+
+* 1.gui启动
+```shell
+python gui.py
+```
+* 2.api启动
+```shell
+python main.py
+```
+
+
+## 附件
+
+- [镜像发布](docs/docker_publish.md)

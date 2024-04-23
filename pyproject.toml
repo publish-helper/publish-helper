@@ -1,0 +1,57 @@
+[build-system]
+requires = ["flit_core==3.9.0"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "publish-helper"
+version = "1.4.5"
+description = "publish-helper"
+requires-python = ">=3.9, <3.12"
+dependencies = [
+]
+
+[tool.flit.module]
+name = "src"
+
+[project.optional-dependencies]
+lint = [
+    "flake8==5.0.4",
+    "pyproject-flake8==5.0.4",
+    "pre-commit==3.6.0",
+    "isort==5.13.1",
+    "black==23.12.0"
+]
+test = [
+    "httpx==0.24.1",
+    "pytest==7.4.3",
+    "coverage==7.2.7",
+    "pytest-cov==4.1.0",
+    "chromadb==0.4.24"
+]
+package = [
+    "flit==3.9.0"
+]
+
+[tool.flake8]
+max-line-length = 300
+ignore = ['E203', 'E231', 'E241', 'W291', 'W293', 'W503', 'E501']
+per-file-ignores = [
+    '__init__.py:F401',
+]
+count = true
+
+[tool.coverage.report]
+exclude_also = [
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
+    "except Exception as e:",
+]
+omit = ["src/main.py", "src/chat.py"]

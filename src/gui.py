@@ -22,11 +22,10 @@ copy readme.txt dist\
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
 
-from startgui import start_gui  # GUI启动（需要哪个就保留哪个，不要的就注释掉）
-# from startapi import start_api  # API启动（需要哪个就保留哪个，不要的就注释掉）
+# GUI启动
+from src.gui.startgui import start_gui
 
 # 作者：bjdbjd ID：bjd
 # 贡献者：Pixel-LH、EasonWong0603
 if __name__ == '__main__':
     start_gui()  # GUI启动
-    # start_api()  # API启动

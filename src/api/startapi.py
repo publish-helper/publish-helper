@@ -3,12 +3,12 @@ import re
 
 from flask import Flask, request, jsonify, send_file
 
-from mediainfo import get_media_info
-from picturebed import upload_picture
-from ptgen import get_pt_gen_description
-from rename import get_video_info, get_pt_gen_info, get_name_from_template
-from screenshot import get_screenshot, get_thumbnail
-from tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
+from src.core.mediainfo import get_media_info
+from src.core.picturebed import upload_picture
+from src.core.ptgen import get_pt_gen_description
+from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_template
+from src.core.screenshot import get_screenshot, get_thumbnail
+from src.core.tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
     move_file_to_folder, get_video_files, rename_directory, update_combo_box_data, update_settings, \
     get_playlet_description, get_combo_box_data
 
