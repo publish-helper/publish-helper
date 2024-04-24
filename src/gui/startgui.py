@@ -561,10 +561,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                         frame_rate, audio_codec, channels, audio_num, team,
                                                         other_titles, "",
                                                         "", "", category, actors, "main_title_movie")
-                    main_title = main_title.replace('_', ' ')
-                    main_title = re.sub(r'\s+', ' ', main_title)  # 将连续的空格变成一个
-                    main_title = re.sub(' -', '-', main_title)  # 将' -'变成'-'
-                    main_title = re.sub(' @', '@', main_title)  # 将' @'变成'@'
                     print(main_title)
                     second_title = get_name_from_template(english_title, original_title, "", "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
@@ -577,10 +573,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec, channels, audio_num, team, other_titles, "",
                                                        "", "", category, actors, "file_name_movie")
-                    file_name = re.sub(r'[<>:\"/\\|?*\s]', '.', file_name)
-                    file_name = re.sub(r'\.{2,}', '.', file_name)  # 将连续的'.'变成一个
-                    file_name = re.sub('.-', '-', file_name)  # 将'.-'变成'.'
-                    file_name = re.sub('.@', '@', file_name)  # 将'.@'变成'@'
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
                                                         QLineEdit.EchoMode.Normal, file_name)
