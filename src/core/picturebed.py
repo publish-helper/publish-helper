@@ -76,6 +76,7 @@ def freeimage_picture_bed(api_url, api_token, frame_path):
     data = {'key': api_token, 'format': 'txt'}
     files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
     print('值已经获取')
+
     try:
         # 发送POST请求
         print("开始发送上传图床的请求")
@@ -100,6 +101,7 @@ def imgbb_picture_bed(api_url, api_token, frame_path):
     data = {'expiration': '600', 'key': api_token}
     files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
     print('值已经获取')
+
     try:
         # 发送POST请求
         print("开始发送上传图床的请求")
@@ -130,6 +132,7 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
     headers = {'Authorization': api_token, 'Accept': 'json'}
     data = {}
     print('值已经获取')
+
     try:
         # 发送POST请求
         print("开始发送上传图床的请求")
@@ -159,6 +162,7 @@ def chevereto_picture_bed(api_url, api_token, frame_path):
     data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
     files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
     print('值已经获取')
+
     try:
         # 发送POST请求
         print("开始发送上传图床的请求")
