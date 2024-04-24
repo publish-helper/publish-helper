@@ -157,7 +157,7 @@ def chevereto_picture_bed(api_url, api_token, frame_path):
     print('接受到上传chevereto图床请求')
     url = api_url
     data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
-    files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
+    files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
     print('值已经获取')
     try:
         # 发送POST请求
@@ -169,6 +169,7 @@ def chevereto_picture_bed(api_url, api_token, frame_path):
         return False, "请求过程中出现错误：" + str(e)
 
     try:
+        print(res.text)
         data = json.loads(res.text)
         # 提取所需的URL
         image_url = data["image"]["url"]
