@@ -6,13 +6,13 @@
     "bohe": [
         "https://img.agsv.top/api/upload"
     ],
+    "chevereto": [
+        ""
+    ],
     "freeimage": [
         "https://freeimage.host/api/1/upload"
     ],
     "imgbb": [
         "https://api.imgbb.com/1/upload"
-    ],
-    "Chevereto": [
-        ""
     ]
 }

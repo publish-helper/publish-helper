@@ -21,12 +21,12 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
                 return lsky_pro_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "bohe":
                 return agsv_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+            elif picture_bed_type == "chevereto":
+                return chevereto_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "freeimage":
                 return freeimage_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "imgbb":
                 return imgbb_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
-            elif picture_bed_type == "Chevereto":
-                return chevereto_piceure_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             else:
                 return False, "你改了图床配置文件？冒号前面的类型是不能随便改的！如果需要支持更多新类型的图床请提Issues，前提是图床支持API上传！"
         else:
@@ -153,8 +153,8 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
         return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
-def chevereto_piceure_bed(api_url, api_token, frame_path):
-    print('接受到上传imgbb图床请求')
+def chevereto_picture_bed(api_url, api_token, frame_path):
+    print('接受到上传chevereto图床请求')
     url = api_url
     data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
     files = {'image': (frame_path, open(frame_path, 'rb'), "image/png")}
