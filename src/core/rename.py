@@ -236,7 +236,6 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     name = name.replace("{category}", category)
     name = name.replace("{actors}", actors)
     if "main_title" in template:
-        print(name)
         name = name.replace('_', ' ')
         name = re.sub(r'\s+', ' ', name)  # 将连续的空格变成一个
         name = re.sub(r' -', '-', name)  # 将' -'变成'-'
@@ -244,11 +243,8 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     if "second_title" in template:
         name = name.replace(' /  | ', ' | ')  # 避免单别名导致的错误
     if "file_name" in template:
-        print(name)
         name = re.sub(r'[<>:\"/\\|?*\s]', '.', name)  # 将Windows不允许出现的字符变成'.'
         name = re.sub(r'\.{2,}', '.', name)  # 将连续的'.'变成一个
-        print(name)
         name = re.sub(r'\.-', '-', name)  # 将'.-'变成'-'
         name = re.sub(r'\.@', '@', name)  # 将'.@'变成'@'
-        print(name)
     return name
