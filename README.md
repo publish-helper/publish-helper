@@ -24,7 +24,7 @@ Publish Helper v1.4.6
 
 目前支持的商业公共图床：[【薄荷图床(bohe)】](https://zixiaoyun.com/)
 
-目前支持的开源图床架构：[【兰空图床(lsky-pro)】](https://github.com/lsky-org/lsky-pro) 
+目前支持的开源图床架构：[【兰空图床(lsky-pro)】](https://github.com/lsky-org/lsky-pro)  [【chevereto】](https://github.com/rodber/chevereto-free)
 
 图床的API地址和令牌请去图床主页获取，其他图床如需要单独适配请提Issues，前提是图床支持API上传！
 
