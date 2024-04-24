@@ -20,7 +20,7 @@ Publish Helper v1.4.6
 
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
-目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/)
+目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/) [【imagehub】](https://www.imagehub.cc/)
 
 目前支持的商业公共图床：[【薄荷图床(bohe)】](https://zixiaoyun.com/)
 
