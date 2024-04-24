@@ -207,10 +207,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
             return
         if pt_gen_path == "":
-            self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
+            self.debugBrowserMovie.append("请在设置中输入PT-Gen链接")
             return
         print("尝试启动pt_gen_thread")
-        self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
+        self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的PT-Gen接口是：" + pt_gen_path)
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_movie_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
@@ -222,11 +222,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if response:
                 print(response)
                 self.descriptionBrowserMovie.setText(response)
-                self.debugBrowserMovie.append("成功获取Pt-Gen信息")
+                self.debugBrowserMovie.append("成功获取PT-Gen信息")
             else:
-                self.debugBrowserMovie.append("获取Pt-Gen信息失败")
+                self.debugBrowserMovie.append("获取PT-Gen信息失败")
         else:
-            self.debugBrowserMovie.append("未成功获取到任何Pt-Gen信息" + response)
+            self.debugBrowserMovie.append("未成功获取到任何PT-Gen信息" + response)
 
     def get_picture_button_movie_clicked(self):
         self.pictureUrlBrowserMovie.setText("")
@@ -416,10 +416,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserMovie.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
                 return
             if pt_gen_path == "":
-                self.debugBrowserMovie.append("请在设置中输入Pt-Gen链接")
+                self.debugBrowserMovie.append("请在设置中输入PT-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
-            self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
+            self.debugBrowserMovie.append("尝试启动pt_gen_thread，您选择的PT-Gen接口是：" + pt_gen_path)
             self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
@@ -434,12 +434,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if get_success:
                 self.descriptionBrowserMovie.setText(response)
                 if response:
-                    print("获得的Pt-Gen Api响应：" + response)
+                    print("获得的PT-Gen Api响应：" + response)
                     if response == "":
-                        self.debugBrowserMovie.append("获取Pt-Gen信息失败")
+                        self.debugBrowserMovie.append("获取PT-Gen信息失败")
                         return
                 else:
-                    self.debugBrowserMovie.append("获取Pt-Gen信息失败")
+                    self.debugBrowserMovie.append("获取PT-Gen信息失败")
                     return
                 video_format = ""
                 video_codec = ""
@@ -460,24 +460,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserMovie.append("重命名初始化完成")
                     if not response:
-                        print("Pt-Gen的响应为空")
-                        self.debugBrowserMovie.append("Pt-Gen的响应为空")
+                        print("PT-Gen的响应为空")
+                        self.debugBrowserMovie.append("PT-Gen的响应为空")
                         return
                     else:
-                        print("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
-                        self.debugBrowserMovie.append("获取到了Pt-Gen Api的响应，开始获取Pt-Gen关键信息")
+                        print("获取到了PT-Gen Api的响应，开始获取PT-Gen关键信息")
+                        self.debugBrowserMovie.append("获取到了PT-Gen Api的响应，开始获取PT-Gen关键信息")
                         try:
                             original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！")
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！")
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！"]
                         print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserMovie.append(
@@ -485,13 +485,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
-                            print("Pt-Gen分析结果不包含年份，存在错误")
-                            self.debugBrowserMovie.append("Pt-Gen分析结果不包含年份，存在错误")
+                            print("PT-Gen分析结果不包含年份，存在错误")
+                            self.debugBrowserMovie.append("PT-Gen分析结果不包含年份，存在错误")
                             return
                         else:
                             self.debugBrowserMovie.append('获取到发布年份：' + year)
-                        print("获取Pt-Gen关键信息成功")
-                        self.debugBrowserMovie.append("获取Pt-Gen关键信息成功")
+                        print("获取PT-Gen关键信息成功")
+                        self.debugBrowserMovie.append("获取PT-Gen关键信息成功")
                         is_first = True
                         for data in actors_list:  # 把演员名转化成str
                             if is_first:
@@ -509,7 +509,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     widget = QWidget(self)
                     if original_title != '':
                         if english_title == '':
-                            ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
+                            ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                          '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
                             print('你的选择是', ok)
@@ -520,7 +520,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 if ok == QMessageBox.StandardButton.Yes:
                                     QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
                                 text, ok = QInputDialog.getText(self, '输入资源的英文名称',
-                                                                'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                                                'PT-Gen未检测到英文名称，请注意使用英文标点符号')
                                 if ok:
                                     print(f'您输入的数据为: {text}')
                                     self.debugBrowserMovie.append(f'您输入的数据为: {text}')
@@ -639,7 +639,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 else:
                     self.debugBrowserMovie.append("您的视频文件路径有误")
             else:
-                self.debugBrowserMovie.append("未成功获取到任何Pt-Gen信息：" + response)
+                self.debugBrowserMovie.append("未成功获取到任何PT-Gen信息：" + response)
         except Exception as e:
             self.debugBrowserMovie.append(f"启动PtGen线程成功，但是重命名出错：{e}")
             print(f"启动PtGen线程成功，但是重命名出错：{e}")
@@ -712,10 +712,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
             return
         if pt_gen_path == "":
-            self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
+            self.debugBrowserTV.append("请在设置中输入PT-Gen链接")
             return
         print("尝试启动pt_gen_thread")
-        self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
+        self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的PT-Gen接口是：" + pt_gen_path)
         self.get_pt_gen_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
         self.get_pt_gen_thread.result_signal.connect(self.handle_get_pt_gen_tv_result)  # 连接信号
         self.get_pt_gen_thread.start()  # 启动线程
@@ -727,11 +727,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             if response:
                 print(response)
                 self.descriptionBrowserTV.setText(response)
-                self.debugBrowserTV.append("成功获取Pt-Gen信息")
+                self.debugBrowserTV.append("成功获取PT-Gen信息")
             else:
-                self.debugBrowserTV.append("获取Pt-Gen信息失败")
+                self.debugBrowserTV.append("获取PT-Gen信息失败")
         else:
-            self.debugBrowserTV.append("未成功获取到任何Pt-Gen信息" + response)
+            self.debugBrowserTV.append("未成功获取到任何PT-Gen信息" + response)
 
     def get_picture_button_tv_clicked(self):
         self.pictureUrlBrowserTV.setText("")
@@ -913,30 +913,30 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserTV.append("请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接")
                 return
             if pt_gen_path == "":
-                self.debugBrowserTV.append("请在设置中输入Pt-Gen链接")
+                self.debugBrowserTV.append("请在设置中输入PT-Gen链接")
                 return
             print("尝试启动pt_gen_thread")
-            self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的Pt-Gen接口是：" + pt_gen_path)
+            self.debugBrowserTV.append("尝试启动pt_gen_thread，您选择的PT-Gen接口是：" + pt_gen_path)
             self.get_pt_gen_for_name_thread = GetPtGenThread(pt_gen_path, pt_gen_url)
             self.get_pt_gen_for_name_thread.result_signal.connect(self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
             self.get_pt_gen_for_name_thread.start()  # 启动线程
             print("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
             self.debugBrowserTV.append("启动pt_gen_thread成功，请耐心等待Api返回结果并分析...")
         except Exception as e:
-            print(f"启动Pt-Gen线程出错：{e}")
-            return False, [f"启动Pt-Gen线程出错：{e}"]
+            print(f"启动PT-Gen线程出错：{e}")
+            return False, [f"启动PT-Gen线程出错：{e}"]
 
     def handle_get_pt_gen_for_name_tv_result(self, get_success, response):
         try:
             if get_success:
                 self.descriptionBrowserTV.setText(response)
                 if response:
-                    print("获得的Pt-Gen Api响应：" + response)
+                    print("获得的PT-Gen Api响应：" + response)
                     if response == "":
-                        self.debugBrowserTV.append("获取Pt-Gen信息失败")
+                        self.debugBrowserTV.append("获取PT-Gen信息失败")
                         return
                 else:
-                    self.debugBrowserTV.append("获取Pt-Gen信息失败")
+                    self.debugBrowserTV.append("获取PT-Gen信息失败")
                     return
                 season = self.seasonBoxTV.text()
                 total_episode = ""
@@ -980,24 +980,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
                     if not response:
-                        print("Pt-Gen响应为空")
-                        self.debugBrowserTV.append("Pt-Gen响应为空")
+                        print("PT-Gen响应为空")
+                        self.debugBrowserTV.append("PT-Gen响应为空")
                         return
                     else:
-                        print("开始获取Pt-Gen关键信息")
-                        self.debugBrowserTV.append("开始获取Pt-Gen关键信息")
+                        print("开始获取PT-Gen关键信息")
+                        self.debugBrowserTV.append("开始获取PT-Gen关键信息")
                         try:
                             original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserTV.append(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！")
                             print(
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！")
                             return False, [
-                                f"获取到了Pt-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
+                                f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！"]
                         print(original_title, english_title, year, other_names_sorted, category, actors_list)
                         self.debugBrowserTV.append(
@@ -1005,12 +1005,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 other_names_sorted) + category +
                             str(actors_list))
                         if year == "" or year is None:
-                            print("Pt-Gen分析结果不包含年份，存在错误")
-                            self.debugBrowserTV.append("Pt-Gen分析结果不包含年份，存在错误")
+                            print("PT-Gen分析结果不包含年份，存在错误")
+                            self.debugBrowserTV.append("PT-Gen分析结果不包含年份，存在错误")
                             return
                         if original_title != '':
                             if english_title == '':
-                                ok = QMessageBox.information(self, 'Pt-Gen未获取到英文名称',
+                                ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                              '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
                                 print('你的选择是', ok)
@@ -1021,7 +1021,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     if ok == QMessageBox.StandardButton.Yes:
                                         QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
                                     text, ok = QInputDialog.getText(self, '输入资源的英文名称',
-                                                                    'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                                                    'PT-Gen未检测到英文名称，请注意使用英文标点符号')
                                     if ok:
                                         print(f'您输入的数据为: {text}')
                                         self.debugBrowserTV.append(f'您输入的数据为: {text}')
@@ -1043,8 +1043,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                         english_title = ''
                         print(original_title, english_title, year, other_names_sorted, category,
                               actors_list)
-                        print("获取Pt-Gen关键信息成功")
-                        self.debugBrowserTV.append("获取Pt-Gen关键信息成功")
+                        print("获取PT-Gen关键信息成功")
+                        self.debugBrowserTV.append("获取PT-Gen关键信息成功")
                         is_first = True
                         for data in actors_list:  # 把演员名转化成str
                             if is_first:
@@ -1160,7 +1160,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 else:
                     self.debugBrowserTV.append("您的视频文件路径有误")
             else:
-                self.debugBrowserTV.append("未成功获取到任何Pt-Gen信息：" + response)
+                self.debugBrowserTV.append("未成功获取到任何PT-Gen信息：" + response)
         except Exception as e:
             print(f"启动PtGen线程成功，但是重命名出错：{e}")
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
@@ -1471,7 +1471,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         if ok == QMessageBox.StandardButton.Yes:
                             QMessageBox.warning(widget, '警告', '资源名称不是汉语，无法使用汉语拼音')
                         text, ok = QInputDialog.getText(self, '输入资源的英文名称',
-                                                        'Pt-Gen未检测到英文名称，请注意使用英文标点符号')
+                                                        'PT-Gen未检测到英文名称，请注意使用英文标点符号')
                         if ok:
                             print(f'您输入的数据为: {text}')
                             self.debugBrowserTV.append(f'您输入的数据为: {text}')
@@ -1851,7 +1851,7 @@ class GetPtGenThread(QThread):
             get_pt_gen_description_success, response = get_pt_gen_description(self.api_url, self.resource_url)
 
             # 发送信号，包括请求的结果
-            print("Pt-Gen请求成功，开始返回结果")
+            print("PT-Gen请求成功，开始返回结果")
             self.result_signal.emit(get_pt_gen_description_success, response)
             print("返回结果成功")
         except Exception as e:
