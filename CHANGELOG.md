@@ -11,3 +11,7 @@
 * 增加pyproject.toml文件，管理版本及依赖，*当前未启用*
 * 注释掉requirements.txt文件中，pyqt6-plugins与pyqt6-tools，在PyQt6新版本中已经集成，不注释依赖冲突
 * 增加.gitignore配置文件
+
+## v1.4.6
+
+* json

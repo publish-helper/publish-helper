@@ -20,7 +20,7 @@ def update_settings(settings_name, settings_data):
     parameter_name (str): 参数名称
     value: 要设置的值
     """
-    settings_file = 'static/settings.json'
+    settings_file = combine_directories('static/settings.json')
     os.makedirs(os.path.dirname(settings_file), exist_ok=True)
 
     # 读取现有的设置
@@ -39,6 +39,18 @@ def update_settings(settings_name, settings_data):
     print("写入数据" + f"{settings_name}: {settings_data}")
 
 
+### 写一个方法，取当前工程工作目录与传入的目录，组合成一个新的目录
+def combine_directories(path):
+    """
+    取当前工程工作目录与传入相对路径，生成新的路径
+
+    返回:
+    参数的值
+    """
+    project_dir = os.getcwd()
+    return os.path.join(project_dir, path)
+
+
 def get_settings(settings_name):
     """
     从 static/settings.json 文件中获取特定参数的值。
@@ -50,45 +62,45 @@ def get_settings(settings_name):
     返回:
     参数的值
     """
-    settings_file = 'static/settings.json'
+    settings_file = combine_directories('static/settings.json')
 
     if not os.path.exists(settings_file):
         # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
         with open(settings_file, 'w', encoding='utf-8') as file:
             default_settings = {
-                "screenshot_storage_path": "temp/pic",
-                "torrent_storage_path": "temp/torrent",
-                "pt_gen_api_url": "https://ptgen.agsvpt.work/",
-                "picture_bed_api_url": "https://freeimage.host/api/1/upload",
+                "api_port": "5372",
+                "auto_feed_link": "https://example.com/upload.php#seperator#name#linkstr#{\u4e3b\u6807\u9898}#linkstr#small_descr#linkstr#{\u526f\u6807\u9898}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{\u8c46\u74e3}#linkstr#descr#linkstr#{\u7b80\u4ecb}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{\u79cd\u5b50\u540d\u79f0}#linkstr#torrent_url#linkstr#{\u79cd\u5b50\u94fe\u63a5}#linkstr#type#linkstr#{\u7c7b\u578b}#linkstr#source_sel#linkstr#{\u5730\u533a}#linkstr#standard_sel#linkstr#{\u5206\u8fa8\u7387}#linkstr#audiocodec_sel#linkstr#{\u97f3\u9891\u7f16\u7801}#linkstr#codec_sel#linkstr#{\u89c6\u9891\u7f16\u7801}#linkstr#medium_sel#linkstr#{\u5a92\u4ecb}#linkstr#origin_site#linkstr#{\u5c0f\u7ec4}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0",
+                "auto_upload_screenshot": True,
+                "delete_screenshot": True,
+                "do_get_thumbnail": True,
+                "enable_api": True,
+                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
+                "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
+                "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
+                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
+                "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
+                "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
+                "make_dir": True,
+                "media_info_suffix": True,
+                "open_auto_feed_link": True,
+                "paste_screenshot_url": True,
                 "picture_bed_api_token": "6d207e02198a847aa98d0a2a901485a5",
-                "screenshot_number": "3",
-                "screenshot_threshold": "30.0",
-                "screenshot_start_percentage": "0.10",
+                "picture_bed_api_url": "https://freeimage.host/api/1/upload",
+                "pt_gen_api_url": "https://ptgen.agsvpt.work/",
+                "rename_file": True,
                 "screenshot_end_percentage": "0.90",
-                "do_get_thumbnail": "True",
-                "thumbnail_rows": "3",
+                "screenshot_number": "3",
+                "screenshot_start_percentage": "0.10",
+                "screenshot_storage_path": "temp/pic",
+                "screenshot_threshold": "30.00",
+                "second_confirm_file_name": True,
+                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+                "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{category}",
+                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
                 "thumbnail_cols": "3",
                 "thumbnail_delay": "2.0",
-                "auto_upload_screenshot": "True",
-                "paste_screenshot_url": "True",
-                "delete_screenshot": "True",
-                "media_info_suffix": "True",
-                "make_dir": "True",
-                "rename_file": "True",
-                "second_confirm_file_name": "True",
-                "enable_api": "True",
-                "api_port": "5372",
-                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
-                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
-                "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "second_title_playlet": "{original_title} | \u7b2c{season_number}\u5b63 | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{category}",
-                "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "auto_feed_link": "https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{种子名称}#linkstr#torrent_url#linkstr#{种子链接}#linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0",
-                "open_auto_feed_link": "True"
+                "thumbnail_rows": "3",
+                "torrent_storage_path": "temp/torrent"
             }
             json.dump(default_settings, file)
 
@@ -148,10 +160,28 @@ def get_settings(settings_name):
     return settings_data
 
 
+def get_settings_json():
+    """
+    获取整个json，由于项目启动时static/settings.json会被初始化，暂不考虑空指针
+    """
+    settings_file = combine_directories('static/settings.json')
+    with open(settings_file, 'r', encoding='utf-8') as file:
+        settings = json.load(file)
+    # 设置参数的标准值
+    return settings
+
+
+def update_settings_json(settings_json):
+    # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
+    settings_file = combine_directories('static/settings.json')
+    with open(settings_file, 'w', encoding='utf-8') as file:
+        json.dump(settings_json, file)
+
+
 def get_combo_box_data(data_name):
     try:
         # Define the file path
-        file_path = 'static/combo-box-data.json'
+        file_path = combine_directories('static/combo-box-data.json')
 
         default_content = {}
 
@@ -228,7 +258,7 @@ def update_combo_box_data(configuration_data, configuration_name):
     sources_list = configuration_data.split('\\n')
 
     # 文件路径
-    file_path = 'static/combo-box-data.json'
+    file_path = combine_directories('static/combo-box-data.json')
 
     try:
         # 尝试打开现有的 JSON 文件并加载其内容
@@ -265,7 +295,7 @@ def update_combo_box_data(configuration_data, configuration_name):
 def get_picture_bed_type(picture_bed_api_url):
     try:
         # Define the file path
-        file_path = 'static/picture-bed-data.json'
+        file_path = combine_directories('static/picture-bed-data.json')
 
         # Define default content if key is missing
         default_content = {
@@ -343,8 +373,8 @@ def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
 def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
     print("开始对参数名称进行转化")
     try:
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(json_file_path), exist_ok=True)
+
+        json_file_path = combine_directories('static/abbreviation.json')
 
         # Check if the file exists; if not, create it with default data
         if not os.path.exists(json_file_path):
@@ -524,6 +554,7 @@ def generate_image_filename(base_path):
     filename = f"{date_time}-{random_str}.png"
     path = base_path + '/' + filename
     return path
+
 
 def check_path_and_find_video(path):
     # 指定的视频文件类型列表

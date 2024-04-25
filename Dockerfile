@@ -10,6 +10,7 @@ WORKDIR "/app"
 COPY src src
 COPY static static
 COPY temp temp
+COPY media media
 COPY requirements.txt requirements.txt
 RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
     && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/

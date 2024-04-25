@@ -60,34 +60,31 @@ pip install -r requirements.txt
 在项目根目录（README文件所在目录）下执行代码。
 
 * 1.gui启动
-
-Unix
-
-```shell
-export PYTHONPATH=${PYTHONPATH}:. && python src/main_gui.py
-```
-
-Windows
-
-```shell
-$env:PYTHONPATH = "$($env:PYTHONPATH);."
-python src\main_gui.py
-```
+  * Unix
+    ```shell
+    export PYTHONPATH=${PYTHONPATH}:. && python src/main_gui.py
+    ```
+  * Windows
+    ```shell
+    $env:PYTHONPATH = "$($env:PYTHONPATH);."
+    python src\main_gui.py
+    ```
 
 * 2.api启动
+  * Unix
+    ```shell
+    export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
+    ```
+  * Windows
+    ```shell
+    $env:PYTHONPATH = "$($env:PYTHONPATH);."
+    python src\main.py
+    ```
 
-Unix
+* 3.pycharm下启动
 
-```shell
-export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
-```
-
-Windows
-
-```shell
-$env:PYTHONPATH = "$($env:PYTHONPATH);."
-python src\main.py
-```
+配置默认工作目录为项目根目录，随后运行对应按钮即可。
+![img.png](docs/img/img.png)
 
 ## 附件
 

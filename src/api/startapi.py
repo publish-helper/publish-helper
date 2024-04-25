@@ -2,6 +2,7 @@ import os
 import re
 
 from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS
 
 from src.core.mediainfo import get_media_info
 from src.core.picturebed import upload_picture
@@ -10,9 +11,10 @@ from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_templ
 from src.core.screenshot import get_screenshot, get_thumbnail
 from src.core.tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
     move_file_to_folder, get_video_files, rename_directory, update_combo_box_data, update_settings, \
-    get_playlet_description, get_combo_box_data
+    get_playlet_description, get_combo_box_data, get_settings_json, update_settings_json, combine_directories
 
 api = Flask(__name__)
+CORS(api)
 
 
 def start_api():
@@ -25,7 +27,15 @@ def api_get_screenshot():
     try:
         # 从请求URL中获取参数
         path = request.args.get('path', default='', type=str)  # 必须信息
-
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
+        # 确认绝对路径为temp目录即可
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
         if path == '':
             return jsonify({
                 "data": {
@@ -107,10 +117,14 @@ def api_get_screenshot():
                                                                           screenshot_min_interval_percentage)
 
                             if screenshot_success:
+
+
+                                [imagePath.replace(media_path, '')for imagePath in response]
+
                                 return jsonify({
                                     "data": {
                                         "screenshotNumber": str(len(response)),
-                                        "screenshotPath": '\n'.join(response),
+                                        "screenshotPath": [imagePath.replace(media_path, '')for imagePath in response],
                                         "videoPath": video_path
                                     },
                                     "message": "获取截图成功。",
@@ -393,6 +407,15 @@ def api_get_media_info():
     try:
         # 从请求URL中获取path
         path = request.args.get('path', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
+        # 确认绝对路径为temp目录即可
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
         if path == '':
             return jsonify({
                 "data": {
@@ -732,7 +755,15 @@ def api_make_torrent():
     try:
         # 从请求URL中获取参数
         path = request.args.get('path', default='', type=str)  # 必须信息
-
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
+        # 确认绝对路径为temp目录即可
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
         if path == '':
             return jsonify({
                 "data": {
@@ -1224,7 +1255,6 @@ def api_get_combo_box_data():
             }), 422
         else:
             get_combo_box_data_success, response = get_combo_box_data(configuration_name)
-            response = '\n'.join(response)
             if get_combo_box_data_success:
                 return jsonify({
                     "data": {
@@ -1388,19 +1418,11 @@ def api_get_file():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        # 确保路径安全
-        if not file_path.startswith("temp") or '..' in file_path or re.match(r'/\.\./', file_path):
-            return jsonify({
-                "data": {},
-                "message": "无权访问此文件。",
-                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
-            }), 401
-
-        # 构建绝对路径
+        # 先构建绝对路径，再进行校验防止越权
+        temp_path = combine_directories("temp")
         target_path = os.path.abspath(file_path)
-
-        # 再次检查绝对路径是否合法（防止绕过）
-        if not target_path.startswith(os.path.abspath("temp")):
+        # 确认绝对路径为temp目录即可
+        if not target_path.startswith(temp_path):
             return jsonify({
                 "data": {},
                 "message": "无权访问此文件。",
@@ -1424,3 +1446,201 @@ def api_get_file():
             "message": f"获取文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
         }), 400
+
+
+@api.route('/api/settings', methods=['GET'])
+# 用于获取settings.json的数据，返回所有参数
+def api_settings():
+    try:
+        # 从请求URL中获取参数
+        settings_json = get_settings_json()
+        return jsonify({
+            "data": {
+                "settings": settings_json
+            },
+            "message": "获取设置信息成功。",
+            "statusCode": "OK"
+        })
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "settings": ""
+            },
+            "message": f"获取设置信息失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+@api.route('/api/settings/update', methods=['POST'])
+# 更新所有参数
+def api_settings_update():
+    try:
+        # 从请求URL中获取参数
+        request_body = request.json
+        update_settings_json(request_body)
+        return jsonify({
+            "data": {},
+            "message": "更新设置信息成功。",
+            "statusCode": "OK"
+        })
+    except Exception as e:
+        return jsonify({
+            "data": {},
+            "message": f"更新设置信息失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+@api.route('/api/getPTGenInfoByResourceUrl', methods=['GET'])
+# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+def api_get_pt_gen_info_by_url():
+    try:
+        # 从请求URL中获取参数
+        resource_url = request.args.get('resourceUrl', default='', type=str)  # 必须信息
+        if resource_url == '':
+            return jsonify({
+                "data": {
+                    "description": ""
+                },
+                "message": "缺少资源链接。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        pt_gen_api_url = request.args.get('ptGenApiUrl', default=get_settings("pt_gen_api_url"), type=str)
+        if pt_gen_api_url == '':
+            pt_gen_api_url = get_settings("pt_gen_api_url")
+
+        get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
+        if get_pt_gen_description_success:
+            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+                response)
+            actors = ''
+            other_titles = ''
+            is_first = True
+
+            for data in actors_list:  # 把演员名转化成str
+                if is_first:
+                    actors += data
+                    is_first = False
+                else:
+                    actors += ' / '
+                    actors += data
+
+            for data in other_names_sorted:  # 把别名转化为str
+                other_titles += data
+                other_titles += ' / '
+
+            other_titles = other_titles[: -3]
+            return jsonify({
+                "data": {
+                    "originalTitle": original_title,
+                    "englishTitle": english_title,
+                    "year": year,
+                    "otherTitles": other_titles,
+                    "category": category,
+                    "actors": actors,
+                    "description": response
+                },
+                "message": "获取PT-Gen简介关键参数成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "description": ""
+                },
+                "message": f"获取PT-Gen简介失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "description": ""
+            },
+            "message": f"获取PT-Gen简介失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+@api.route('/api/media/file/list', methods=['GET'])
+# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+def api_medis_path():
+    try:
+        # 从请求URL中获取参数
+        path = request.args.get('path', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        target_path = os.path.abspath(os.path.join(media_path, path))
+        # 确认绝对路径为temp目录即可
+        if not target_path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+        # 获取当前目录下文件列表
+        contents = list_files_and_dirs(target_path)
+        return jsonify({
+            "data": {
+                "fileList": contents,
+            },
+            "message": "获取成功",
+            "statusCode": "OK"
+        })
+
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "description": ""
+            },
+            "message": f"获取路径失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+def list_files_and_dirs(target_path):
+    """
+    Lists files and directories in the given target path along with their sizes and types.
+
+    Args:
+    - target_path (str): The path to the directory to list contents from.
+
+    Returns:
+    - list: A list of dictionaries, each containing the name, size, and type ('file' or 'directory') of each item in the target directory.
+    """
+    file_list = []
+    try:
+        # List all entries in the directory given by "target_path"
+        for entry in os.listdir(target_path):
+            full_path = os.path.join(target_path, entry)
+            if os.path.isfile(full_path):
+                # It's a file, get its size using os.path.getsize()
+                size = os.path.getsize(full_path)
+                file_list.append({"name": entry, "size": convert_size(size), "type": "文件"})
+            elif os.path.isdir(full_path):
+                # It's a directory, size is not applicable
+                file_list.append({"name": entry, "size": "N/A", "type": "文件夹"})
+    except Exception as e:
+        raise RuntimeError(f"Error accessing {target_path}: {e}", e)
+    return file_list
+
+
+def convert_size(size_bytes):
+    """
+    Convert the given file size in bytes to a human-readable format.
+
+    Args:
+    - size_bytes (int): File size in bytes.
+
+    Returns:
+    - str: Human-readable file size.
+    """
+    if size_bytes == 0:
+        return "0B"
+
+    size_name = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+    i = 0
+    while size_bytes >= 1024 and i < len(size_name) - 1:
+        size_bytes /= 1024
+        i += 1
+
+    return "{:.2f} {}".format(size_bytes, size_name[i])
