@@ -485,7 +485,8 @@ def api_get_video_info():
     try:
         # 从请求URL中获取path
         path = request.args.get('path', default='', type=str)  # 必须信息
-
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
         if path == '':
             return jsonify({
                 "data": {
@@ -900,7 +901,8 @@ def api_rename_file():
     try:
         # 从请求URL中获取参数
         file_path = request.args.get('filePath', default='', type=str)  # 必须信息
-
+        media_path = combine_directories('media')
+        file_path = os.path.abspath(os.path.join(media_path, file_path))
         if file_path == '':
             return jsonify({
                 "data": {
@@ -1028,7 +1030,8 @@ def api_rename_episode():
     try:
         # 从请求URL中获取参数
         folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
-
+        media_path = combine_directories('media')
+        folder_path = os.path.abspath(os.path.join(media_path, folder_path))
         if folder_path == '':
             return jsonify({
                 "data": {
@@ -1097,9 +1100,12 @@ def api_rename_episode():
                                                                       replace('{集数}', ''))
 
                 if rename_directory_success:
+                    newFolderPathFinal = response.replace(media_path, "")
+                    if len(newFolderPathFinal) and newFolderPathFinal.startswith('/'):
+                        newFolderPathFinal = newFolderPathFinal[1:]
                     return jsonify({
                         "data": {
-                            "newFolderPath": response
+                            "newFolderPath": newFolderPathFinal
                         },
                         "message": "批量重命名成功。",
                         "statusCode": "OK"
@@ -1147,6 +1153,8 @@ def api_get_total_episode():
     try:
         # 从请求URL中获取参数
         folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        folder_path = os.path.abspath(os.path.join(media_path, folder_path))
 
         if folder_path == '':
             return jsonify({
