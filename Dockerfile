@@ -13,15 +13,18 @@ COPY temp temp
 COPY media media
 COPY requirements.txt requirements.txt
 COPY lib_deb lib_deb
-RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
-    && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
-RUN pip uninstall opencv-python -y
-RUN pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
 RUN cp -r lib_deb/sources.list /etc/apt/sources.list
 RUN apt-get update
 RUN dpkg -i lib_deb/*deb
+
+RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
+    && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
+RUN pip uninstall opencv-python -y
+RUN pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
+
+
 
 USER root
 EXPOSE 15372 15373
