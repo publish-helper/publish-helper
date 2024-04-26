@@ -20,6 +20,7 @@ RUN pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simp
 
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
 RUN cp -r lib_deb/sources.list /etc/apt/sources.list
+RUN apt-get update
 RUN dpkg -i lib_deb/*deb
 
 USER root

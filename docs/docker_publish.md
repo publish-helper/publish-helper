@@ -12,7 +12,7 @@
 ```shell
 # 此变量为版本，后续将此shell改为build.sh脚本，版本从项目配置文件获取
 git clone git@github.com:publish-helper/publish-helper.git
-PROJECT_VERSION=1.4.5
+PROJECT_VERSION=2.0.0
 cd publish-helper
 docker build --no-cache --progress=plain -t publish-helper/publish-helper:${PROJECT_VERSION} -f Dockerfile .
 ```
