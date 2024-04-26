@@ -18,7 +18,7 @@ Publish Helper v1.4.7
 12. 结合auto_feed脚本实现一键上传内容（新）
 13. 短剧一键生成简介（新）
 
-docker版正在测试中，未来将支持部署在自己nas上，欢迎测试使用：[【体验地址)】](https://zixiaoyun.com/)
+docker版正在测试中，将支持部署在自己nas上，欢迎测试使用：[【体验地址)】](https://zixiaoyun.com/)
 
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
