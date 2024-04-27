@@ -1,4 +1,4 @@
-Publish Helper v1.4.7
+Publish Helper v1.4.8
 
 **使用前务必请先看设置！！！**
 
@@ -22,7 +22,7 @@ docker版正在测试中，将支持部署在自己nas上，欢迎测试使用�
 
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
-目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/) [【imagehub】](https://www.imagehub.cc/)
+目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/) [【imagehub】](https://www.imagehub.cc/) [【pixhost】](https://pixhost.to/)
 
 目前支持的商业公共图床：[【薄荷图床(bohe)】](https://zixiaoyun.com/)
 
