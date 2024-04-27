@@ -20,20 +20,53 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
             if picture_bed_type == "lsky-pro":
                 return lsky_pro_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "bohe":
-                return agsv_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+                return bohe_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "chevereto":
                 return chevereto_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "freeimage":
                 return freeimage_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             elif picture_bed_type == "imgbb":
                 return imgbb_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
+            elif picture_bed_type == "pixhost":
+                return pixhost_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             else:
                 return False, "你改了图床配置文件？冒号前面的类型是不能随便改的！如果需要支持更多新类型的图床请提Issues，前提是图床支持API上传！"
         else:
             return False, picture_bed_type
 
 
-def agsv_picture_bed(api_url, api_token, frame_path):
+def lsky_pro_picture_bed(api_url, api_token, frame_path):
+    print('接受到上传ptvicomo图床请求')
+    url = api_url
+    files = {'file': (frame_path, open(frame_path, 'rb'), "image/png")}
+    headers = {'Authorization': api_token, 'Accept': 'json'}
+    data = {}
+    print('值已经获取')
+
+    try:
+        # 发送POST请求
+        print("开始发送上传图床的请求")
+        res = requests.post(url, headers=headers, data=data, files=files)
+        print("已成功发送上传图床的请求")
+    except requests.RequestException as e:
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
+
+    try:
+        data = json.loads(res.text)
+        # 提取所需的URL
+        image_url = data["data"]["links"]["bbcode"]
+        print(image_url)
+        return True, image_url
+    except KeyError as e:
+        print(False, "图床响应结果缺少所需的值：" + str(e))
+        return False, "图床响应结果缺少所需的值：" + str(e) + str(res)
+    except json.JSONDecodeError as e:
+        print(False, "处理返回的JSON过程中出现错误：" + str(e))
+        return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
+
+
+def bohe_picture_bed(api_url, api_token, frame_path):
     print("开始上传官方图床")
     url = api_url
     files = {'uploadedFile': (frame_path, open(frame_path, 'rb'), "image/png")}
@@ -68,6 +101,37 @@ def agsv_picture_bed(api_url, api_token, frame_path):
             return False, "未接受到响应"
         else:
             return False, str(api_response)
+
+
+def chevereto_picture_bed(api_url, api_token, frame_path):
+    print('接受到上传chevereto图床请求')
+    url = api_url
+    data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
+    files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
+    print('值已经获取')
+
+    try:
+        # 发送POST请求
+        print("开始发送上传图床的请求")
+        res = requests.post(url, data=data, files=files)
+        print("已成功发送上传图床的请求")
+    except requests.RequestException as e:
+        print("请求过程中出现错误：", e)
+        return False, "请求过程中出现错误：" + str(e)
+
+    try:
+        print(res.text)
+        data = json.loads(res.text)
+        # 提取所需的URL
+        image_url = data["image"]["url"]
+        print(image_url)
+        return True, '[img]' + image_url + '[/img]'
+    except KeyError as e:
+        print(False, "图床响应结果缺少所需的值：" + str(e))
+        return False, "图床响应结果缺少所需的值：" + str(e) + str(res)
+    except json.JSONDecodeError as e:
+        print(False, "处理返回的JSON过程中出现错误：" + str(e))
+        return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
 def freeimage_picture_bed(api_url, api_token, frame_path):
@@ -125,12 +189,12 @@ def imgbb_picture_bed(api_url, api_token, frame_path):
         return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
-def lsky_pro_picture_bed(api_url, api_token, frame_path):
-    print('接受到上传ptvicomo图床请求')
+def pixhost_picture_bed(api_url, api_token, frame_path):
+    print('接受到上传pixhost图床请求')
     url = api_url
-    files = {'file': (frame_path, open(frame_path, 'rb'), "image/png")}
-    headers = {'Authorization': api_token, 'Accept': 'json'}
-    data = {}
+    files = {'img': (frame_path, open(frame_path, 'rb'), "image/jpeg")}
+    data = {'content_type': 0, 'max_th_size': 420}
+    headers = {'Accept': 'application/json'}
     print('值已经获取')
 
     try:
@@ -145,38 +209,9 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
     try:
         data = json.loads(res.text)
         # 提取所需的URL
-        image_url = data["data"]["links"]["bbcode"]
-        print(image_url)
-        return True, image_url
-    except KeyError as e:
-        print(False, "图床响应结果缺少所需的值：" + str(e))
-        return False, "图床响应结果缺少所需的值：" + str(e) + str(res)
-    except json.JSONDecodeError as e:
-        print(False, "处理返回的JSON过程中出现错误：" + str(e))
-        return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
-
-
-def chevereto_picture_bed(api_url, api_token, frame_path):
-    print('接受到上传chevereto图床请求')
-    url = api_url
-    data = {'expiration': 'PT5M', 'X-API-Key': api_token, "key": api_token}
-    files = {'source': (frame_path, open(frame_path, 'rb'), "image/png")}
-    print('值已经获取')
-
-    try:
-        # 发送POST请求
-        print("开始发送上传图床的请求")
-        res = requests.post(url, data=data, files=files)
-        print("已成功发送上传图床的请求")
-    except requests.RequestException as e:
-        print("请求过程中出现错误：", e)
-        return False, "请求过程中出现错误：" + str(e)
-
-    try:
-        print(res.text)
-        data = json.loads(res.text)
-        # 提取所需的URL
-        image_url = data["image"]["url"]
+        image_url = data["th_url"]
+        image_url = image_url.replace("//t", "//img")
+        image_url = image_url.replace("/thumbs/", "/images/")
         print(image_url)
         return True, '[img]' + image_url + '[/img]'
     except KeyError as e:

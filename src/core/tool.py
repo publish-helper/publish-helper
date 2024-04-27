@@ -311,6 +311,9 @@ def get_picture_bed_type(picture_bed_api_url):
             ],
             "imgbb": [
                 "https://api.imgbb.com/1/upload"
+            ],
+            "pixhost": [
+                "https://api.pixhost.to/images"
             ]
         }
 
@@ -360,6 +363,10 @@ def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
     # 去除URL末尾的'/'
     if picture_bed_api_url.endswith('/'):
         picture_bed_api_url = picture_bed_api_url[:-1]
+
+    # 去除URL的' '和'　'
+    picture_bed_api_url = picture_bed_api_url.replace(' ', '')
+    picture_bed_api_url = picture_bed_api_url.replace('　', '')
 
     # 遍历JSON数据，查找对应的标识符
     for identifier, urls in picture_bed_api_data.items():
@@ -487,8 +494,8 @@ def rename_directory(current_dir, new_name):
         new_name = re.sub(r'[<>:\"/\\|?*]', '.', new_name)
         # 检查当前路径是否为一个存在的目录
         if not os.path.isdir(current_dir):
-            print("提供的路径不是一个目录或不存在。")
-            raise ValueError("提供的路径不是一个目录或不存在。")
+            print("提供的路径不是一个目录或不存在")
+            raise ValueError("提供的路径不是一个目录或不存在")
 
         # 获取当前目录的父目录
         parent_dir = os.path.dirname(current_dir)
@@ -521,8 +528,8 @@ def move_file_to_folder(file_path, folder_name):
 
     # 检查文件是否已在目标文件夹中
     if os.path.basename(file_dir) == folder_name:
-        print(f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动。")
-        return False, f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动。"
+        print(f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动")
+        return False, f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动"
 
     # 目标文件夹的完整路径
     target_folder = file_dir + '/' + folder_name

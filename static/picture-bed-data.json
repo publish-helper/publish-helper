@@ -14,5 +14,8 @@
     ],
     "imgbb": [
         "https://api.imgbb.com/1/upload"
+    ],
+    "pixhost": [
+        "https://api.pixhost.to/images"
     ]
 }
