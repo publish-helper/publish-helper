@@ -14,6 +14,10 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
         return False, "图片文件路径不存在"
     else:
         print("开始获取图床类型")
+        # 去除URL的' '、'　'和'\n'
+        picture_bed_api_url = picture_bed_api_url.replace(' ', '')
+        picture_bed_api_url = picture_bed_api_url.replace('　', '')
+        picture_bed_api_url = picture_bed_api_url.replace('\n', '')
         get_picture_bed_type_success, picture_bed_type = get_picture_bed_type(picture_bed_api_url)
         if get_picture_bed_type_success:
             print(f"获取到图床的类型：{picture_bed_type}")
