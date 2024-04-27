@@ -15,9 +15,7 @@ COPY requirements.txt requirements.txt
 COPY lib_deb lib_deb
 
 RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
-RUN cp -r lib_deb/sources.list /etc/apt/sources.list
-RUN apt-get update
-RUN cd lib_deb && apt-get -f install
+RUN apt-get update && apt-get -r install libmediainfo0v5 libzen0v5
 
 RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
     && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
