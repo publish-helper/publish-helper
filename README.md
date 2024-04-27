@@ -18,6 +18,8 @@ Publish Helper v1.4.7
 12. 结合auto_feed脚本实现一键上传内容（新）
 13. 短剧一键生成简介（新）
 
+docker版正在测试中，将支持部署在自己nas上，欢迎测试使用：[【体验地址)】](https://zixiaoyun.com/)
+
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
 目前支持的免费公共图床：[【freeimage】](https://freeimage.host/) [【imgbb】](https://imgbb.com/) [【imagehub】](https://www.imagehub.cc/)
@@ -60,34 +62,31 @@ pip install -r requirements.txt
 在项目根目录（README文件所在目录）下执行代码。
 
 * 1.gui启动
-
-Unix
-
-```shell
-export PYTHONPATH=${PYTHONPATH}:. && python src/main_gui.py
-```
-
-Windows
-
-```shell
-$env:PYTHONPATH = "$($env:PYTHONPATH);."
-python src\main_gui.py
-```
+  * Unix
+    ```shell
+    export PYTHONPATH=${PYTHONPATH}:. && python src/main_gui.py
+    ```
+  * Windows
+    ```shell
+    $env:PYTHONPATH = "$($env:PYTHONPATH);."
+    python src\main_gui.py
+    ```
 
 * 2.api启动
+  * Unix
+    ```shell
+    export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
+    ```
+  * Windows
+    ```shell
+    $env:PYTHONPATH = "$($env:PYTHONPATH);."
+    python src\main.py
+    ```
 
-Unix
+* 3.pycharm下启动
 
-```shell
-export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
-```
-
-Windows
-
-```shell
-$env:PYTHONPATH = "$($env:PYTHONPATH);."
-python src\main.py
-```
+配置默认工作目录为项目根目录，随后运行对应按钮即可。
+![img.png](docs/img/img.png)
 
 ## 附件
 

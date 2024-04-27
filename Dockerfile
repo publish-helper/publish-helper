@@ -10,11 +10,19 @@ WORKDIR "/app"
 COPY src src
 COPY static static
 COPY temp temp
+COPY media media
 COPY requirements.txt requirements.txt
+COPY lib_deb lib_deb
+
+RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
+RUN apt-get update && apt-get -r install libmediainfo0v5 libzen0v5
+
 RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
     && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
 RUN pip uninstall opencv-python -y
 RUN pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
+
+
 
 USER root
 EXPOSE 15372 15373
