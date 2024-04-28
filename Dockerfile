@@ -3,28 +3,14 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ENV API_PORT="15372" \
     NGINX_PORT="15373" \
     UMASK=000
-
-RUN groupadd app && useradd -g app app
-RUN usermod -d /app -m app
 WORKDIR "/app"
-COPY src src
-COPY static static
-COPY temp temp
-COPY media media
-COPY requirements.txt requirements.txt
-COPY lib_deb lib_deb
-
-RUN cp /etc/apt/sources.list /etc/apt/sources.list.backup
-RUN cp -r lib_deb/sources.list /etc/apt/sources.list
-RUN apt-get update -o Acquire::Check-Valid-Until=false && apt-get install -y libmediainfo0v5 libzen0v5
-
-RUN  pip install Cython --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/\
-    && pip install -r requirements.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
-RUN pip uninstall opencv-python -y
-RUN pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
-
-
-
+COPY . .
+RUN cp -r lib_deb/sources.list /etc/apt/sources.list \
+    && apt-get update -o Acquire::Check-Valid-Until=false  \
+    && apt-get install -y libmediainfo0v5 libzen0v5  \
+    && pip install -r requirements_api.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/  \
+    && pip uninstall opencv-python -y  \
+    && pip install opencv-python-headless -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
 USER root
 EXPOSE 15372 15373
 ENV PYTHONPATH=${PYTHONPATH}:.

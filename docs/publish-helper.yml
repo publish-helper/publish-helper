@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   publish-helper:
-    image: publish-helper/publish-helper:1.4.5
+    image: publish-helper/publish-helper:2.0.0
     hostname: publish-helper
     container_name: publish-helper
     restart: always
@@ -12,8 +12,12 @@ services:
       - API_PORT=15372
       - NGINX_PORT=15373
     volumes:
+      # 项目配置目录
       - ./volume/static:/app/static
+      # 运行临时目录
       - ./volume/temp:/app/temp
+      # 资源路径
+      - ./volume/media:/app/media
     ports:
       - "15372:15372"
 
