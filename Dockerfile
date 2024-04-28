@@ -11,14 +11,15 @@ COPY temp temp
 COPY dist dist
 COPY requirements_api.txt requirements_api.txt
 RUN mkdir media  \
-    && cp -r lib_deb/entrypoint entrypoint \
-    && cp -r dist /public \
-    && cp -r lib_deb/nginx.conf /etc/nginx/nginx.template.conf\
     && cp -r lib_deb/sources.list /etc/apt/sources.list \
     && apt-get update -o Acquire::Check-Valid-Until=false  \
     && apt-get install -y libmediainfo0v5 libzen0v5 nginx gettext-base  \
+    && cp -r lib_deb/entrypoint entrypoint \
+    && chmod +x entrypoint \
+    && cp -r dist /public \
+    && cp -r lib_deb/nginx.conf /etc/nginx/nginx.template.conf\
     && pip install -r requirements_api.txt --trusted-host mirrors.aliyun.com --default-timeout=600 -i https://mirrors.aliyun.com/pypi/simple/
 USER root
 EXPOSE 15372 15373
 ENV PYTHONPATH=${PYTHONPATH}:.
-CMD ["entrypoint"]
+CMD ["sh", "entrypoint"]
