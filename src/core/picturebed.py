@@ -40,7 +40,7 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
 
 
 def lsky_pro_picture_bed(api_url, api_token, frame_path):
-    print('接受到上传ptvicomo图床请求')
+    print('接受到上传兰空图床请求')
     url = api_url
     files = {'file': (frame_path, open(frame_path, 'rb'), "image/png")}
     headers = {'Authorization': api_token, 'Accept': 'json'}
@@ -71,7 +71,7 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
 
 
 def bohe_picture_bed(api_url, api_token, frame_path):
-    print("开始上传官方图床")
+    print("开始上传薄荷图床")
     url = api_url
     files = {'uploadedFile': (frame_path, open(frame_path, 'rb'), "image/png")}
     data = {'api_token': api_token, 'image_compress': 0, 'image_compress_level': 80}
@@ -89,22 +89,22 @@ def bohe_picture_bed(api_url, api_token, frame_path):
 
     # 将响应文本转换为字典
     try:
-        print(str(res.text))
         api_response = json.loads(res.text)
     except json.JSONDecodeError:
         print("响应不是有效的JSON格式")
         return False, "响应不是有效的JSON格式"
 
     # 打印提取的url
-    if api_response.get("statusCode", "") == "200":
-        print(api_response.get("bbsurl", ""))
-        if api_response.get("statusCode", "") == "200":
-            bbs_url = str(api_response.get("bbsurl", ""))
-            return True, bbs_url
-        if api_response.get("statusCode", "") == "":
-            return False, "未接受到响应"
-        else:
-            return False, str(api_response)
+    status_code = api_response.get("statusCode", "")
+    result_data = api_response.get("resultData", "")
+
+    if status_code == "200":
+        bbs_url = str(api_response.get("bbsurl", ""))
+        return True, bbs_url
+    elif status_code == "":
+        return False, "未接受到响应"
+    else:
+        return False, f"API响应出错了，错误码：{status_code}，错误提示：{result_data}"
 
 
 def chevereto_picture_bed(api_url, api_token, frame_path):
