@@ -20,7 +20,7 @@ Publish Helper v1.4.8
 
 docker版正在测试中，将支持部署在自己nas上，欢迎测试使用：[【体验地址】](http://47.94.40.202:18080/)。
 
-docker安装部署请见[【镜像仓库】](https://hub.docker.com/repository/docker/sertion1126/publish-helper/tags)。
+docker安装部署请见[【镜像仓库】](https://hub.docker.com/r/sertion1126/publish-helper)。
 
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
