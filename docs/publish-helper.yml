@@ -2,7 +2,7 @@ version: '3.2'
 
 services:
   publish-helper:
-    image: publish-helper/publish-helper:2.0.0
+    image: sertion1126/publish-helper:2.0.0
     hostname: publish-helper
     container_name: publish-helper
     restart: always
@@ -20,6 +20,7 @@ services:
       - ./volume/media:/app/media
     ports:
       - "15372:15372"
+      - "15373:15373"
 
 networks:
   publish-helper-network:
