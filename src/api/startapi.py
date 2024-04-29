@@ -869,15 +869,7 @@ def api_get_name_from_template():
                                       source, video_codec, bit_depth, hdr_format, frame_rate,
                                       audio_codec, channels, audio_num, team, other_titles, season_number,
                                       total_episode, playlet_source, category, actors, template)
-        if "main_title" in template:
-            name = re.sub(r'\s+', ' ', name)  # 将连续的空格变成一个
-            name = re.sub(' -', '-', name)  # 将' -'变成'-'
-            name = re.sub(' @', '@', name)  # 将' @'变成'@'
-        if "file_name" in template:
-            name = re.sub(r'[<>:\"/\\|?*\s]', '.', name)
-            name = re.sub(r'\.{2,}', '.', name)  # 将连续的'.'变成一个
-            name = re.sub('.-', '-', name)  # 将'.-'变成'.'
-            name = re.sub('.@', '@', name)  # 将'.@'变成'@'
+        print(f"获取到名称是{name}")
         return jsonify({
             "data": {
                 "name": name
@@ -1100,12 +1092,12 @@ def api_rename_episode():
                                                                       replace('{集数}', ''))
 
                 if rename_directory_success:
-                    newFolderPathFinal = response.replace(media_path, "")
-                    if len(newFolderPathFinal) and newFolderPathFinal.startswith('/'):
-                        newFolderPathFinal = newFolderPathFinal[1:]
+                    new_folder_path_final = response.replace(media_path, "")
+                    if len(new_folder_path_final) and new_folder_path_final.startswith('/'):
+                        new_folder_path_final = new_folder_path_final[1:]
                     return jsonify({
                         "data": {
-                            "newFolderPath": newFolderPathFinal
+                            "newFolderPath": new_folder_path_final
                         },
                         "message": "批量重命名成功。",
                         "statusCode": "OK"
