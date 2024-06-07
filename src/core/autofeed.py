@@ -187,7 +187,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     string_to_encode = auto_feed_link.split('#separator#')[1]
     string_encoded = base64encoding(string_to_encode)
     auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded
-    print("获取到auto_feed_link" + auto_feed_link)
+    print("获取到auto_feed_link：" + auto_feed_link)
     return auto_feed_link
 
 # "https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url

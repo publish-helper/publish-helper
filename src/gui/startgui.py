@@ -1225,7 +1225,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         pyperclip.copy(auto_feed_link)
         self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         if get_settings("open_auto_feed_link"):
-            webbrowser.open(auto_feed_link)
+            # webbrowser.open(auto_feed_link)
+            os.system(f'start {auto_feed_link}')
 
     def get_description_playlet_clicked(self):
         try:
