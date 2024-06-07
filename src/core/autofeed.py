@@ -1,7 +1,8 @@
 # 感谢明日大佬、N佬做出的贡献！！！ID：tomorrow505、Exception
 import re
 
-from src.core.tool import get_settings
+from src.core.tool import get_settings, base64encoding
+from urllib.parse import quote
 
 
 def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source,
@@ -144,26 +145,48 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
         medium_sel = "DVD"
     print("获取到媒介" + medium_sel)
 
-    auto_feed_link = auto_feed_link.replace('{主标题}', name)
-    auto_feed_link = auto_feed_link.replace('{副标题}', small_descr)
-    auto_feed_link = auto_feed_link.replace('{IMDB}', url)
-    auto_feed_link = auto_feed_link.replace('{豆瓣}', dburl)
-    auto_feed_link = auto_feed_link.replace('{简介}', descr)
-    auto_feed_link = auto_feed_link.replace('{MediaInfo}', media_info)
-    auto_feed_link = auto_feed_link.replace('{种子名称}', torrent_name)
-    auto_feed_link = auto_feed_link.replace('{类型}', category)
-    auto_feed_link = auto_feed_link.replace('{地区}', source_sel)
-    auto_feed_link = auto_feed_link.replace('{分辨率}', standard_sel)
-    auto_feed_link = auto_feed_link.replace('{音频编码}', audiocodec_sel)
-    auto_feed_link = auto_feed_link.replace('{视频编码}', codec_sel)
-    auto_feed_link = auto_feed_link.replace('{媒介}', medium_sel)
-    auto_feed_link = auto_feed_link.replace('{小组}', team)
-    auto_feed_link = auto_feed_link.replace('{种子链接}', torrent_url)
-    auto_feed_link = auto_feed_link.replace('%', '%25')
-    auto_feed_link = auto_feed_link.replace('　', '%E3%80%80')
-    auto_feed_link = auto_feed_link.replace(' ', '%20')
-    auto_feed_link = auto_feed_link.replace('\n', '%0A')
+    # auto_feed_link = auto_feed_link.replace('{主标题}', name)
+    # auto_feed_link = auto_feed_link.replace('{副标题}', small_descr)
+    # auto_feed_link = auto_feed_link.replace('{IMDB}', url)
+    # auto_feed_link = auto_feed_link.replace('{豆瓣}', dburl)
+    # auto_feed_link = auto_feed_link.replace('{简介}', descr)
+    # auto_feed_link = auto_feed_link.replace('{MediaInfo}', media_info)
+    # auto_feed_link = auto_feed_link.replace('{种子名称}', torrent_name)
+    # auto_feed_link = auto_feed_link.replace('{类型}', category)
+    # auto_feed_link = auto_feed_link.replace('{地区}', source_sel)
+    # auto_feed_link = auto_feed_link.replace('{分辨率}', standard_sel)
+    # auto_feed_link = auto_feed_link.replace('{音频编码}', audiocodec_sel)
+    # auto_feed_link = auto_feed_link.replace('{视频编码}', codec_sel)
+    # auto_feed_link = auto_feed_link.replace('{媒介}', medium_sel)
+    # auto_feed_link = auto_feed_link.replace('{小组}', team)
+    # auto_feed_link = auto_feed_link.replace('{种子链接}', torrent_url)
+    # auto_feed_link = auto_feed_link.replace('%', '%25')
+    # auto_feed_link = auto_feed_link.replace('　', '%E3%80%80')
+    # auto_feed_link = auto_feed_link.replace(' ', '%20')
+    # auto_feed_link = auto_feed_link.replace('\n', '%0A')
+    auto_feed_link = auto_feed_link.replace('{主标题}', quote(name))
+    auto_feed_link = auto_feed_link.replace('{副标题}', quote(small_descr))
+    auto_feed_link = auto_feed_link.replace('{IMDB}', quote(url))
+    auto_feed_link = auto_feed_link.replace('{豆瓣}', quote(dburl))
+    auto_feed_link = auto_feed_link.replace('{简介}', quote(descr))
+    auto_feed_link = auto_feed_link.replace('{MediaInfo}', quote(media_info))
+    auto_feed_link = auto_feed_link.replace('{种子名称}', quote(torrent_name))
+    auto_feed_link = auto_feed_link.replace('{类型}', quote(category))
+    auto_feed_link = auto_feed_link.replace('{地区}', quote(source_sel))
+    auto_feed_link = auto_feed_link.replace('{分辨率}', quote(standard_sel))
+    auto_feed_link = auto_feed_link.replace('{音频编码}', quote(audiocodec_sel))
+    auto_feed_link = auto_feed_link.replace('{视频编码}', quote(codec_sel))
+    auto_feed_link = auto_feed_link.replace('{媒介}', quote(medium_sel))
+    auto_feed_link = auto_feed_link.replace('{小组}', quote(team))
+    auto_feed_link = auto_feed_link.replace('{种子链接}', quote(torrent_url))
+    # auto_feed_link = auto_feed_link.replace('%', '%25')
+    # auto_feed_link = auto_feed_link.replace('　', '%E3%80%80')
+    # auto_feed_link = auto_feed_link.replace(' ', '%20')
+    # auto_feed_link = auto_feed_link.replace('\n', '%0A')
 
+    string_to_encode = auto_feed_link.split('#separator#')[1]
+    string_encoded = base64encoding(string_to_encode)
+    auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded
     print("获取到auto_feed_link" + auto_feed_link)
     return auto_feed_link
 
