@@ -195,8 +195,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        if get_settings("open_auto_feed_link"):
-            webbrowser.open(auto_feed_link)
+        try:
+            if get_settings("open_auto_feed_link"):
+                webbrowser.open(auto_feed_link)
+        except Exception as e:
+            self.debugBrowserMovie.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
 
     def get_pt_gen_button_movie_clicked(self):
         self.descriptionBrowserMovie.setText("")
@@ -671,7 +674,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以下是TV页面的代码
     def start_button_tv_clicked(self):
         if get_settings("second_confirm_file_name"):
-            self.debugBrowserMovie.append("如需一键启动，请到设置关闭二次确认文件名功能")
+            self.debugBrowserTV.append("如需一键启动，请到设置关闭二次确认文件名功能")
             return
         self.get_name_button_tv_clicked()
         QApplication.processEvents()  # 处理所有挂起的事件，更新页面
@@ -700,8 +703,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        if get_settings("open_auto_feed_link"):
-            webbrowser.open(auto_feed_link)
+        try:
+            if get_settings("open_auto_feed_link"):
+                webbrowser.open(auto_feed_link)
+        except Exception as e:
+            self.debugBrowserTV.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
 
     def get_pt_gen_button_tv_clicked(self):
         self.descriptionBrowserTV.setText("")
@@ -1224,9 +1230,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
         pyperclip.copy(auto_feed_link)
         self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        if get_settings("open_auto_feed_link"):
-            # webbrowser.open(auto_feed_link)
-            os.system(f'start {auto_feed_link}')
+        try:
+            if get_settings("open_auto_feed_link"):
+                webbrowser.open(auto_feed_link)
+        except Exception as e:
+            self.debugBrowserPlaylet.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
 
     def get_description_playlet_clicked(self):
         try:
@@ -1475,7 +1483,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                         'PT-Gen未检测到英文名称，请注意使用英文标点符号')
                         if ok:
                             print(f'您输入的数据为: {text}')
-                            self.debugBrowserTV.append(f'您输入的数据为: {text}')
+                            self.debugBrowserPlaylet.append(f'您输入的数据为: {text}')
                             english_title = text.replace('.', ' ')
                             invalid_characters = ''
                             for char in english_title:
@@ -1489,7 +1497,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 return
                         else:
                             print('未输入任何数据')
-                            self.debugBrowserTV.append('未输入任何数据')
+                            self.debugBrowserPlaylet.append('未输入任何数据')
                             english_title = ''
                 year = self.yearEditPlaylet.text()
                 season = self.seasonBoxPlaylet.text()
