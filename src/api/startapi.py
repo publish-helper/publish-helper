@@ -887,6 +887,71 @@ def api_get_name_from_template():
         }), 400
 
 
+@api.route('/api/renameFolder', methods=['POST'])
+# 用于重命名文件
+def api_rename_folder():
+    try:
+        # 从请求URL中获取参数
+        file_path = request.args.get('currentDir', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        file_path = os.path.abspath(os.path.join(media_path, file_path))
+        if file_path == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少文件路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(file_path):
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "您提供的文件路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+
+        if new_file_name == '':
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": "缺少需要重命名的名称信息。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        rename_success, response = rename_directory(file_path, new_file_name)
+        response = response.replace(media_path + "/", "")
+        if rename_success:
+            return jsonify({
+                "data": {
+                    "newFilePath": response
+                },
+                "message": "重命名文件成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "newFilePath": ""
+                },
+                "message": f"重命名文件失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "newFilePath": ""
+            },
+            "message": f"重命名文件失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
 @api.route('/api/renameFile', methods=['POST'])
 # 用于重命名文件
 def api_rename_file():
@@ -925,7 +990,7 @@ def api_rename_file():
             }), 422
 
         rename_success, response = rename_file(file_path, new_file_name)
-
+        response = response.replace(media_path + "/", "")
         if rename_success:
             return jsonify({
                 "data": {
