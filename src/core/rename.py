@@ -120,8 +120,10 @@ def get_video_info(file_path):
                         # ... 添加其他Video信息
             elif track.track_type == "Audio":
                 if audio_count == 0:
-                    audio_codec = track.commercial_name
-                    channels = track.channel_layout
+                    if track.commercial_name:
+                        audio_codec = track.commercial_name
+                    if track.channel_layout:
+                        channels = track.channel_layout
                 audio_count += 1
                 # ... 添加其他Audio信息
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
