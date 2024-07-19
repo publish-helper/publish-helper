@@ -94,4 +94,6 @@ pip install -r requirements.txt
 
 - [镜像发布](docs/docker_publish.md)
 
-[![Star History Chart](https://api.star-history.com/svg?repos=publish-helper/publish-helpertype=Date)](https://star-history.com/#publish-helper/publish-helper&Date)
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=publish-helper/publish-helper&type=Date)](https://star-history.com/#publish-helper/publish-helper&Date)
