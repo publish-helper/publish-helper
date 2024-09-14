@@ -9,12 +9,12 @@ from src.core.tool import get_picture_bed_type
 
 def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
     print(picture_bed_api_url, picture_bed_api_token, picture_path)
-    if not os.path.exists(picture_path):
+    if not os.path.exists(picture_path):  # 检测是否存在图片
         print("图片文件路径不存在")
         return False, "图片文件路径不存在"
     else:
         print("开始获取图床类型")
-        # 去除URL的' '、'　'和'\n'
+        # 去除URL的中的' '、'　'和'\n'，针对用户错误输入的优化
         picture_bed_api_url = picture_bed_api_url.replace(' ', '')
         picture_bed_api_url = picture_bed_api_url.replace('　', '')
         picture_bed_api_url = picture_bed_api_url.replace('\n', '')
@@ -34,11 +34,12 @@ def upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path):
             elif picture_bed_type == "pixhost":
                 return pixhost_picture_bed(picture_bed_api_url, picture_bed_api_token, picture_path)
             else:
-                return False, "你改了图床配置文件？冒号前面的类型是不能随便改的！如果需要支持更多新类型的图床请提Issues，前提是图床支持API上传！"
+                return False, "你错误更改了图床配置文件？冒号前面的类型是不能随便改的！如果需要支持更多新类型的图床请提Issues，前提是图床支持API上传！"
         else:
             return False, picture_bed_type
 
 
+# 兰空图床
 def lsky_pro_picture_bed(api_url, api_token, frame_path):
     print('接受到上传兰空图床请求')
     url = api_url
@@ -70,6 +71,7 @@ def lsky_pro_picture_bed(api_url, api_token, frame_path):
         return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
+# 薄荷图床
 def bohe_picture_bed(api_url, api_token, frame_path):
     print("开始上传薄荷图床")
     url = api_url
@@ -107,6 +109,7 @@ def bohe_picture_bed(api_url, api_token, frame_path):
         return False, f"API响应出错了，错误码：{status_code}，错误提示：{result_data}"
 
 
+# chevereto图床
 def chevereto_picture_bed(api_url, api_token, frame_path):
     print('接受到上传chevereto图床请求')
     url = api_url
@@ -138,6 +141,7 @@ def chevereto_picture_bed(api_url, api_token, frame_path):
         return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
+# freeimage图床
 def freeimage_picture_bed(api_url, api_token, frame_path):
     print('接受到上传freeimage图床请求')
     url = api_url
@@ -163,6 +167,7 @@ def freeimage_picture_bed(api_url, api_token, frame_path):
         return False, res.text
 
 
+# imgbb图床
 def imgbb_picture_bed(api_url, api_token, frame_path):
     print('接受到上传imgbb图床请求')
     url = api_url
@@ -193,6 +198,7 @@ def imgbb_picture_bed(api_url, api_token, frame_path):
         return False, "处理返回的JSON过程中出现错误：" + str(e) + str(res)
 
 
+# pixhost图床
 def pixhost_picture_bed(api_url, api_token, frame_path):
     print('接受到上传pixhost图床请求')
     url = api_url

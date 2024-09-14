@@ -7,6 +7,7 @@ from pymediainfo import MediaInfo
 from src.core.tool import get_settings, get_abbreviation
 
 
+# 从PT-Gen响应中读取关键数据
 def get_pt_gen_info(description):
     description = description.replace("\\n", "\n")
     description = description.replace("\\\n", "\\n")
@@ -84,6 +85,7 @@ def get_video_info(file_path):
         audio_count = 0
         media_info = MediaInfo.parse(file_path)
         print(media_info.to_json())
+        # 初始化数据，避免空数据报错
         video_format = ""
         video_codec = ""
         bit_depth = ""
@@ -97,6 +99,7 @@ def get_video_info(file_path):
             if track.track_type == "General":
                 if track.other_frame_rate:
                     frame_rate = track.other_frame_rate[0]
+
                 # ... 添加其他General信息
             elif track.track_type == "Video":
                 if track.other_width:
@@ -125,6 +128,7 @@ def get_video_info(file_path):
                     if track.channel_layout:
                         channels = track.channel_layout
                 audio_count += 1
+
                 # ... 添加其他Audio信息
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
             video_format += width
@@ -215,7 +219,8 @@ def extract_numbers(string):
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
                            bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, team, other_titles,
                            season_number, total_episode, playlet_source, category, actors, template):
-    name = get_settings(template)
+    name = get_settings(template)   # 获取模板
+    # 开始替换关键字
     name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)
     name = name.replace("{season}", season)

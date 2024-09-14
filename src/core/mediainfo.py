@@ -116,7 +116,7 @@ def get_media_info(file_path):
             elif track["track_type"] == "Audio":
                 # 处理 Audio 类型的 track
                 output += f"\nAudio #{audio_count}\n"
-                audio_count += 1
+                audio_count += 1    # 由于有多音频的资源，故计数器+1
                 for key, label in [
                     ("other_track_id", "ID"),
                     ("other_id_in_the_original_source_medium", "ID in the original source medium"),
@@ -157,7 +157,7 @@ def get_media_info(file_path):
             elif track["track_type"] == "Text":
                 # 处理 Text 类型的 track
                 output += f"\nText #{text_count}\n"
-                text_count += 1
+                text_count += 1    # 由于有多字幕的资源，故计数器+1
                 for key, label in [
                     ("other_track_id", "ID"),
                     ("other_id_in_the_original_source_medium", "ID in the original source medium"),
@@ -194,7 +194,7 @@ def get_media_info(file_path):
                         # 添加到输出字符串
                         output += f"{timestamp:36} : {value}\n"
 
-        if get_settings("media_info_suffix"):
+        if get_settings("media_info_suffix"):   # 用户可以选择是否需要增加工具水印（方便推广）
             output += "\nCreated by Publish Helper"
 
         return True, output

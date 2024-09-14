@@ -118,13 +118,12 @@ def api_get_screenshot():
 
                             if screenshot_success:
 
-
-                                [imagePath.replace(media_path, '')for imagePath in response]
+                                [imagePath.replace(media_path, '') for imagePath in response]
 
                                 return jsonify({
                                     "data": {
                                         "screenshotNumber": str(len(response)),
-                                        "screenshotPath": [imagePath.replace(media_path, '')for imagePath in response],
+                                        "screenshotPath": [imagePath.replace(media_path, '') for imagePath in response],
                                         "videoPath": video_path
                                     },
                                     "message": "获取截图成功。",

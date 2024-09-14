@@ -1,8 +1,8 @@
 # 感谢明日大佬、N佬做出的贡献！！！ID：tomorrow505、Exception
 import re
+from urllib.parse import quote
 
 from src.core.tool import get_settings, base64encoding
-from urllib.parse import quote
 
 
 def get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category, team, source,
@@ -145,7 +145,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
         medium_sel = "DVD"
     print("获取到媒介" + medium_sel)
 
-    # auto_feed_link = auto_feed_link.replace('{主标题}', name)
+    # auto_feed_link = auto_feed_link.replace('{主标题}', name)                # 旧版本的auto_feed可以直接使用原名称
     # auto_feed_link = auto_feed_link.replace('{副标题}', small_descr)
     # auto_feed_link = auto_feed_link.replace('{IMDB}', url)
     # auto_feed_link = auto_feed_link.replace('{豆瓣}', dburl)
@@ -164,7 +164,7 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     # auto_feed_link = auto_feed_link.replace('　', '%E3%80%80')
     # auto_feed_link = auto_feed_link.replace(' ', '%20')
     # auto_feed_link = auto_feed_link.replace('\n', '%0A')
-    auto_feed_link = auto_feed_link.replace('{主标题}', quote(name))
+    auto_feed_link = auto_feed_link.replace('{主标题}', quote(name))       # 新版本的auto_feed需要转为base64
     auto_feed_link = auto_feed_link.replace('{副标题}', quote(small_descr))
     auto_feed_link = auto_feed_link.replace('{IMDB}', quote(url))
     auto_feed_link = auto_feed_link.replace('{豆瓣}', quote(dburl))

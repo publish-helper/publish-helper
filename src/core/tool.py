@@ -866,6 +866,6 @@ def delete_season_number(title, season_number):
 
     return title.strip()
 
+
 def base64encoding(string):
     return base64.b64encode(string.encode('utf-8')).decode('utf-8')
-

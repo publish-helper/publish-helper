@@ -105,7 +105,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
 def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
                   screenshot_end_percentage):
     try:
-        if not os.path.exists(screenshot_storage_path):
+        if not os.path.exists(screenshot_storage_path):  # 输出路径不存在
             os.makedirs(screenshot_storage_path)
             print("已创建输出路径。")
     except PermissionError:
@@ -121,7 +121,7 @@ def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail
     try:
         video_capture = cv2.VideoCapture(video_path)
 
-        if not video_capture.isOpened():
+        if not video_capture.isOpened():  # 打不开文件
             raise Exception("Error: 无法打开视频文件")
 
         total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))

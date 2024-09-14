@@ -3,8 +3,8 @@ import requests
 
 def get_pt_gen_description(pt_gen_api_url, resource_url):
     try:
-        # 设置一个合理的超时时间，例如10秒
-        response = requests.get(f"{pt_gen_api_url}?url={resource_url}", timeout=30)
+        # 设置一个合理的超时时间，10s
+        response = requests.get(f"{pt_gen_api_url}?url={resource_url}", timeout=10)
 
         # 检查响应是否成功
         if response.status_code != 200:
