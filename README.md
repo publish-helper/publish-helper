@@ -53,6 +53,10 @@ docker安装部署请见[【镜像仓库】](https://hub.docker.com/r/sertion112
 
 # 快速开始
 
+### 环境安装
+
+访问[【Python 3.10】](https://www.python.org/downloads/release/python-31012/)，下载并安装，记得将Python路径添加到环境变量。
+
 ### 依赖安装
 
 ```
