@@ -33,7 +33,6 @@
   "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible": "HDR10+",
   "SMPTE ST 2086, HDR10 compatible": "HDR10",
   "HDR Vivid, Version 1": "HDR",
-  "60.000 FPS": "60FPS",
 
   "60.000 FPS": "60FPS",
   "50.000 FPS": "50FPS",
@@ -55,7 +54,6 @@
   "L R C LFE Ls Rs Lb Rb": "7.1",
   "L R C LFE Ls Rs": "5.1",
   "C L R Ls Rs LFE": "5.1",
-  "L R": "2.0",
+  "L R": "2.0"
 
-  "Audio": "Audio"
 }
