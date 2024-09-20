@@ -2,6 +2,8 @@ Publish Helper v1.5.0
 
 **使用前务必请先看设置！！！**
 
+![JXRij8g.png](https://iili.io/JXRij8g.png)
+
 目前的一些简单的功能有：
 
 1. 自动获取PT-Gen简介信息（需要PT-Gen API）
