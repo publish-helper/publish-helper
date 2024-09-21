@@ -192,7 +192,7 @@ def get_media_info(file_path):
                         seconds, millis = divmod(int(seconds_millis), 1000)
                         timestamp = f"{hours}:{minutes}:{seconds:02}.{millis:03}"
                         # 添加到输出字符串
-                        output += f"{timestamp:36} : {value}\n"
+                        output += f"{timestamp:36}: {value}\n"
 
         if get_settings("media_info_suffix"):   # 用户可以选择是否需要增加工具水印（方便推广）
             output += "\nCreated by Publish Helper"
