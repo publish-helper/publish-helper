@@ -5,7 +5,6 @@ import json
 import os
 import random
 import re
-import shutil
 
 from torf import Torrent
 from xpinyin import Pinyin
@@ -40,7 +39,7 @@ def update_settings(settings_name, settings_data):
     print("写入数据" + f"{settings_name}: {settings_data}")
 
 
-### 写一个方法，取当前工程工作目录与传入的目录，组合成一个新的目录
+# 写一个方法，取当前工程工作目录与传入的目录，组合成一个新的目录
 def combine_directories(path):
     """
     取当前工程工作目录与传入相对路径，生成新的路径
@@ -89,6 +88,7 @@ def get_settings(settings_name):
                 "picture_bed_api_url": "https://freeimage.host/api/1/upload",
                 "pt_gen_api_url": "https://ptgen.agsvpt.work/",
                 "rename_file": True,
+                "create_hard_link": True,
                 "screenshot_end_percentage": "0.90",
                 "screenshot_number": "3",
                 "screenshot_start_percentage": "0.10",
@@ -129,6 +129,7 @@ def get_settings(settings_name):
         "media_info_suffix": "True",
         "make_dir": "True",
         "rename_file": "True",
+        "create_hard_link": "True",
         "second_confirm_file_name": "True",
         "enable_api": "True",
         "api_port": "5372",
@@ -466,104 +467,6 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
     except json.JSONDecodeError:
         print(f"Error decoding JSON from file: {json_file_path}")
         return original_name
-
-
-def rename_file(file_path, new_file_name):
-    new_file_name = re.sub(r'[<>:\"/\\|?*]', '.', new_file_name)
-    # 分割原始文件名以获取扩展名和目录
-    file_dir, file_base = os.path.split(file_path)
-    file_name, file_extension = os.path.splitext(file_base)
-
-    # 构建新文件名，保留原扩展名
-    new_name = file_dir + '/' + new_file_name + file_extension
-
-    # 重命名文件
-    try:
-        os.rename(file_path, new_name)
-        print(file_path, "文件成功重命名为", new_name)
-        return True, new_name
-
-    except FileNotFoundError:
-        print(f"未找到文件: '{file_path}'")
-        return False, f"未找到文件: '{file_path}'"
-
-    except OSError as e:
-        print(f"重命名文件时出错: {e}")
-        return False, f"重命名文件时出错: {e}"
-
-
-def rename_directory(current_dir, new_name):
-    """
-    对目标文件夹进行重命名。
-
-    参数:
-    current_dir: str - 当前文件夹的完整路径。
-    new_name: str - 新的文件夹名称。
-
-    异常:
-    ValueError - 如果提供的路径不是一个目录或不存在。
-    OSError - 如果重命名操作失败。
-    """
-    try:
-        new_name = re.sub(r'[<>:\"/\\|?*]', '.', new_name)
-        # 检查当前路径是否为一个存在的目录
-        if not os.path.isdir(current_dir):
-            print("提供的路径不是一个目录或不存在")
-            raise ValueError("提供的路径不是一个目录或不存在")
-
-        # 获取当前目录的父目录
-        parent_dir = os.path.dirname(current_dir)
-        # 构造新的目录路径
-        new_dir = parent_dir + '/' + new_name
-
-        # 重命名目录
-        os.rename(current_dir, new_dir)
-        print(f"目录已重命名为: {new_dir}")
-        return True, new_dir
-
-    except OSError as e:
-        # 捕获并打印任何操作系统错误
-        print(f"重命名目录时发生错误: {e}")
-        return False, f"重命名目录时发生错误: {e}"
-
-
-def move_file_to_folder(file_path, folder_name):
-    """
-    将文件移动到同目录下的指定文件夹中，除非文件已在该文件夹中。
-
-    参数:
-    file_name (str): 要移动的文件名。
-    folder_name (str): 目标文件夹名称。
-    """
-    # 获取文件的目录和文件名
-    print("开始移动文件", file_path, folder_name)
-    file_dir, file_base = os.path.split(file_path)
-    print(file_base, file_dir)
-
-    # 检查文件是否已在目标文件夹中
-    if os.path.basename(file_dir) == folder_name:
-        print(f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动")
-        return False, f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动"
-
-    # 目标文件夹的完整路径
-    target_folder = file_dir + '/' + folder_name
-
-    # 如果目标文件夹不存在，创建它
-    if not os.path.exists(target_folder):
-        os.makedirs(target_folder)
-
-    # 构建目标文件路径
-    target_file = target_folder + '/' + file_base
-
-    # 移动文件
-    try:
-        shutil.move(file_path, target_file)
-        print(f"文件 '{file_path}' 已成功移动到 '{target_file}'")
-        return True, target_file
-
-    except Exception as e:
-        print(f"移动文件时出错: {e}")
-        return False, f"移动文件时出错: {e}"
 
 
 # 此方法用于自动生成一个不易重复的图片文件名称

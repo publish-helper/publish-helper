@@ -9,20 +9,21 @@ from PyQt6.QtCore import QThread, pyqtSignal
 from PyQt6.QtGui import QIcon
 from PyQt6.QtWidgets import QMainWindow, QApplication, QDialog, QInputDialog, QMessageBox, QWidget, QLineEdit
 
+from src.api.startapi import start_api
 from src.core.autofeed import get_auto_feed_link
 from src.core.mediainfo import get_media_info
 from src.core.picturebed import upload_picture
 from src.core.ptgen import get_pt_gen_description
-from src.core.rename import get_pt_gen_info, get_video_info, get_name_from_template
+from src.core.rename import get_pt_gen_info, get_video_info, get_name_from_template, rename_file, rename_directory, \
+    move_file_to_folder, create_hard_link
 from src.core.screenshot import get_screenshot, get_thumbnail
-from src.api.startapi import start_api
-from src.core.tool import update_settings, get_settings, move_file_to_folder, \
-    check_path_and_find_video, rename_directory, make_torrent, chinese_name_to_pinyin, \
-    get_video_files,  is_filename_too_long, get_playlet_description, delete_season_number, \
-    rename_file, get_combo_box_data
-from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
+from src.core.tool import update_settings, get_settings, check_path_and_find_video, make_torrent, \
+    chinese_name_to_pinyin, \
+    get_video_files, is_filename_too_long, get_playlet_description, delete_season_number, \
+    get_combo_box_data
 from src.gui.ui.mainwindow import Ui_Mainwindow
 from src.gui.ui.settings import Ui_Settings
+from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
 
 
 def start_gui():
@@ -455,8 +456,22 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 other_titles = ""
                 actors = ""
                 make_dir = get_settings("make_dir")
+                path = self.videoPathMovie.text().replace('file:///', '')
+
                 do_rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
+                do_create_hard_link = get_settings("create_hard_link")
+
+                if do_rename_file and do_create_hard_link:
+                    create_hard_link_success, response1 = create_hard_link(path)
+                    if create_hard_link_success:
+                        path = response1
+                        self.videoPathMovie.setText(path)
+                        self.debugBrowserMovie.append(f'创建硬链接成功：{response1}')
+                    else:
+                        self.debugBrowserMovie.append(f'您选择创建硬链接，但是创建失败了：{response1}')
+                        return
+
                 is_video_path, video_path = check_path_and_find_video(
                     self.videoPathMovie.text().replace('file:///', ''))
                 if is_video_path == 1 or is_video_path == 2:
@@ -961,14 +976,27 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 audio_num = ""
                 other_titles = ""
                 actors = ""
+                path = self.videoPathTV.text().replace('file:///', '')
+
                 do_rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
-                is_video_path, video_path = check_path_and_find_video(self.videoPathTV.text().replace('file:///', ''))
+                do_create_hard_link = get_settings("create_hard_link")
+
+                if do_rename_file and do_create_hard_link:
+                    create_hard_link_success, response1 = create_hard_link(path)
+                    if create_hard_link_success:
+                        path = response1
+                        self.videoPathTV.setText(path)
+                        self.debugBrowserTV.append(f'创建硬链接成功：{response1}')
+                    else:
+                        self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{response1}')
+                        return
+
+                is_video_path, video_path = check_path_and_find_video(path)
                 english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                 widget = QWidget(self)
                 if is_video_path == 2:  # 视频路径是文件夹
-                    get_video_files_success, video_files = get_video_files(
-                        self.videoPathTV.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
+                    get_video_files_success, video_files = get_video_files(path)  # 获取文件夹内部的所有文件
                     if get_video_files_success:
                         print('检测到以下文件：', video_files)
                         episode_num = len(video_files)  # 获取视频文件的总数
@@ -1516,15 +1544,27 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 channels = ""
                 audio_num = ""
                 playlet_source = ""
+                path = self.videoPathPlaylet.text().replace('file:///', '')
+
                 do_rename_file = get_settings("rename_file")
                 second_confirm_file_name = get_settings("second_confirm_file_name")
-                is_video_path, video_path = check_path_and_find_video(
-                    self.videoPathPlaylet.text().replace('file:///', ''))  # 获取视频的路径
+                do_create_hard_link = get_settings("create_hard_link")
+
+                if do_rename_file and do_create_hard_link:
+                    create_hard_link_success, response1 = create_hard_link(path)
+                    if create_hard_link_success:
+                        path = response1
+                        self.videoPathPlaylet.setText(path)
+                        self.debugBrowserPlaylet.append(f'创建硬链接成功：{response1}')
+                    else:
+                        self.debugBrowserPlaylet.append(f'您选择创建硬链接，但是创建失败了：{response1}')
+                        return
+
+                is_video_path, video_path = check_path_and_find_video(path)  # 获取视频的路径
                 get_video_info_success, response = get_video_info(video_path)  # 通过视频获取视频的MI参数
                 print(get_video_info_success, response)
                 if is_video_path == 2:  # 视频路径是文件夹
-                    get_video_files_success, video_files = get_video_files(
-                        self.videoPathPlaylet.text().replace('file:///', ''))  # 获取文件夹内部的所有文件
+                    get_video_files_success, video_files = get_video_files(path)  # 获取文件夹内部的所有文件
                     if get_video_files_success:
                         print('检测到以下文件：', video_files)
                         episode_num = len(video_files)  # 获取视频文件的总数
@@ -1761,6 +1801,7 @@ class settings(QDialog, Ui_Settings):
         self.mediaInfoSuffix.setChecked(bool(get_settings("media_info_suffix")))
         self.makeDir.setChecked(bool(get_settings("make_dir")))
         self.renameFile.setChecked(bool(get_settings("rename_file")))
+        self.createHardLink.setChecked(bool(get_settings("create_hard_link")))
         self.secondConfirmFileName.setChecked(bool(get_settings("second_confirm_file_name")))
         self.enableApi.setChecked(bool(get_settings("enable_api")))
         self.apiPort.setValue(int(get_settings("api_port")))
@@ -1817,6 +1858,10 @@ class settings(QDialog, Ui_Settings):
             update_settings("rename_file", "True")
         else:
             update_settings("rename_file", "")
+        if self.createHardLink.isChecked():
+            update_settings("create_hard_link", "True")
+        else:
+            update_settings("create_hard_link", "")
         if self.secondConfirmFileName.isChecked():
             update_settings("second_confirm_file_name", "True")
         else:

@@ -1,6 +1,8 @@
+import errno
 import json
 import os
 import re
+import shutil
 
 from pymediainfo import MediaInfo
 
@@ -219,7 +221,7 @@ def extract_numbers(string):
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
                            bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, team, other_titles,
                            season_number, total_episode, playlet_source, category, actors, template):
-    name = get_settings(template)   # 获取模板
+    name = get_settings(template)  # 获取模板
     # 开始替换关键字
     name = name.replace("{en_title}", english_title)
     name = name.replace("{original_title}", original_title)
@@ -255,3 +257,165 @@ def get_name_from_template(english_title, original_title, season, episode, year,
         name = re.sub(r'\.-', '-', name)  # 将'.-'变成'-'
         name = re.sub(r'\.@', '@', name)  # 将'.@'变成'@'
     return name
+
+
+def rename_file(file_path, new_file_name):
+    new_file_name = re.sub(r'[<>:\"/\\|?*]', '.', new_file_name)
+    # 分割原始文件名以获取扩展名和目录
+    file_dir, file_base = os.path.split(file_path)
+    file_name, file_extension = os.path.splitext(file_base)
+
+    # 构建新文件名，保留原扩展名
+    new_name = file_dir + '/' + new_file_name + file_extension
+
+    # 重命名文件
+    try:
+        os.rename(file_path, new_name)
+        print(file_path, "文件成功重命名为", new_name)
+        return True, new_name
+
+    except FileNotFoundError:
+        print(f"未找到文件: '{file_path}'")
+        return False, f"未找到文件: '{file_path}'"
+
+    except OSError as e:
+        print(f"重命名文件时出错: {e}")
+        return False, f"重命名文件时出错: {e}"
+
+
+def rename_directory(current_dir, new_name):
+    """
+    对目标文件夹进行重命名。
+
+    参数:
+    current_dir: str - 当前文件夹的完整路径。
+    new_name: str - 新的文件夹名称。
+
+    异常:
+    ValueError - 如果提供的路径不是一个目录或不存在。
+    OSError - 如果重命名操作失败。
+    """
+    try:
+        new_name = re.sub(r'[<>:\"/\\|?*]', '.', new_name)
+        # 检查当前路径是否为一个存在的目录
+        if not os.path.isdir(current_dir):
+            print("提供的路径不是一个目录或不存在")
+            raise ValueError("提供的路径不是一个目录或不存在")
+
+        # 获取当前目录的父目录
+        parent_dir = os.path.dirname(current_dir)
+        # 构造新的目录路径
+        new_dir = parent_dir + '/' + new_name
+
+        # 重命名目录
+        os.rename(current_dir, new_dir)
+        print(f"目录已重命名为: {new_dir}")
+        return True, new_dir
+
+    except OSError as e:
+        # 捕获并打印任何操作系统错误
+        print(f"重命名目录时发生错误: {e}")
+        return False, f"重命名目录时发生错误: {e}"
+
+
+def move_file_to_folder(file_path, folder_name):
+    """
+    将文件移动到同目录下的指定文件夹中，除非文件已在该文件夹中。
+
+    参数:
+    file_name (str): 要移动的文件名。
+    folder_name (str): 目标文件夹名称。
+    """
+    # 获取文件的目录和文件名
+    print("开始移动文件", file_path, folder_name)
+    file_dir, file_base = os.path.split(file_path)
+    print(file_base, file_dir)
+
+    # 检查文件是否已在目标文件夹中
+    if os.path.basename(file_dir) == folder_name:
+        print(f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动")
+        return False, f"文件 '{file_path}' 已在 '{folder_name}' 中，无需移动"
+
+    # 目标文件夹的完整路径
+    target_folder = file_dir + '/' + folder_name
+
+    # 如果目标文件夹不存在，创建它
+    if not os.path.exists(target_folder):
+        os.makedirs(target_folder)
+
+    # 构建目标文件路径
+    target_file = target_folder + '/' + file_base
+
+    # 移动文件
+    try:
+        shutil.move(file_path, target_file)
+        print(f"文件 '{file_path}' 已成功移动到 '{target_file}'")
+        return True, target_file
+
+    except Exception as e:
+        print(f"移动文件时出错: {e}")
+        return False, f"移动文件时出错: {e}"
+
+
+def create_hard_link(path):
+    try:
+        # 检查输入路径是否存在
+        if not os.path.exists(path):
+            return False, f"Path does not exist: {path}"
+
+        # 如果路径是文件
+        if os.path.isfile(path):
+            # 拆分文件名和扩展名
+            file_dir, file_name = os.path.split(path)
+            name, ext = os.path.splitext(file_name)
+
+            # 创建硬链接的新文件名（加上_hard_link）
+            link_path = os.path.join(file_dir, f"{name}-hardlink{ext}")
+
+            # 创建硬链接
+            os.link(path, link_path)
+            return True, link_path
+
+        # 如果路径是文件夹
+        elif os.path.isdir(path):
+            # 创建硬链接的新文件夹路径
+            link_path = path + "-hardlink"
+
+            if not os.path.exists(link_path):
+                os.makedirs(link_path)  # 创建新的文件夹
+
+            # 遍历源文件夹中的所有文件和子目录
+            for root, dirs, files in os.walk(path):
+                # 计算相对路径以保持文件夹结构
+                rel_dir = os.path.relpath(root, path)
+                new_dir = os.path.join(link_path, str(rel_dir))
+
+                # 在硬链接文件夹中创建相同的子目录
+                if not os.path.exists(new_dir):
+                    os.makedirs(new_dir)
+
+                # 遍历并为每个文件创建硬链接
+                for file in files:
+                    src_file = os.path.join(root, file)
+                    name, ext = os.path.splitext(file)  # 拆分文件名和后缀
+                    dest_file = os.path.join(str(new_dir), f"{name}-hardlink{ext}")
+                    os.link(src_file, dest_file)
+
+            # 返回成功创建文件夹硬链接
+            return True, link_path
+
+    except FileExistsError:
+        return False, "Hard link already exists"
+
+    except PermissionError:
+        return False, "Permission denied, unable to create the hard link"
+
+    except OSError as e:
+        # 捕捉其他操作系统错误
+        if e.errno == errno.EXDEV:
+            return False, "Hard link cannot be created across different file systems"
+        return False, f"OS error occurred: {str(e)}"
+
+    except Exception as e:
+        # 捕捉其他所有异常
+        return False, f"Unexpected error: {str(e)}"

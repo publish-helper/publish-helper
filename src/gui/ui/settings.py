@@ -12,7 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_Settings(object):
     def setupUi(self, Settings):
         Settings.setObjectName("Settings")
-        Settings.resize(646, 735)
+        Settings.resize(709, 735)
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(Settings)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.tabWidget = QtWidgets.QTabWidget(parent=Settings)
@@ -270,6 +270,10 @@ class Ui_Settings(object):
         self.makeDir.setChecked(False)
         self.makeDir.setObjectName("makeDir")
         self.horizontalLayout_10.addWidget(self.makeDir)
+        self.createHardLink = QtWidgets.QCheckBox(parent=self.tab)
+        self.createHardLink.setChecked(False)
+        self.createHardLink.setObjectName("createHardLink")
+        self.horizontalLayout_10.addWidget(self.createHardLink)
         self.secondConfirmFileName = QtWidgets.QCheckBox(parent=self.tab)
         self.secondConfirmFileName.setChecked(False)
         self.secondConfirmFileName.setObjectName("secondConfirmFileName")
@@ -1319,6 +1323,30 @@ class Ui_Settings(object):
 "}\n"
 ""))
         self.makeDir.setText(_translate("Settings", "将电影文件放入同名文件夹"))
+        self.createHardLink.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.createHardLink.setText(_translate("Settings", "创建硬链接"))
         self.secondConfirmFileName.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"

@@ -1,5 +1,4 @@
 import os
-import re
 
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
@@ -7,10 +6,11 @@ from flask_cors import CORS
 from src.core.mediainfo import get_media_info
 from src.core.picturebed import upload_picture
 from src.core.ptgen import get_pt_gen_description
-from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_template
+from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_template, rename_file, rename_directory, \
+    move_file_to_folder, create_hard_link
 from src.core.screenshot import get_screenshot, get_thumbnail
-from src.core.tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, rename_file, \
-    move_file_to_folder, get_video_files, rename_directory, update_combo_box_data, update_settings, \
+from src.core.tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, \
+    get_video_files, update_combo_box_data, update_settings, \
     get_playlet_description, get_combo_box_data, get_settings_json, update_settings_json, combine_directories
 
 api = Flask(__name__)
@@ -1012,6 +1012,60 @@ def api_rename_file():
                 "newFilePath": ""
             },
             "message": f"重命名文件失败：{e}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 400
+
+
+@api.route('/api/createHardLink', methods=['POST'])
+# 用于创建硬链接
+def api_create_hard_link():
+    try:
+        # 从请求URL中获取参数
+        path = request.args.get('path', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
+        if path == '':
+            return jsonify({
+                "data": {
+                    "hardLinkPath": ""
+                },
+                "message": "缺少路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if not os.path.exists(path):
+            return jsonify({
+                "data": {
+                    "hardLinkPath": ""
+                },
+                "message": "您提供的路径不存在。",
+                "statusCode": "FILE_PATH_ERROR"
+            }), 422
+
+        make_hard_link_success, response = create_hard_link(path)
+        response = response.replace(media_path + "/", "")
+        if make_hard_link_success:
+            return jsonify({
+                "data": {
+                    "hardLinkPath": response
+                },
+                "message": "创建硬链接成功。",
+                "statusCode": "OK"
+            })
+        else:
+            return jsonify({
+                "data": {
+                    "hardLinkPath": ""
+                },
+                "message": f"创建硬链接失败：{response}。",
+                "statusCode": "BACKEND_PROCESSING_ERROR"
+            }), 400
+    except Exception as e:
+        return jsonify({
+            "data": {
+                "hardLinkPath": ""
+            },
+            "message": f"创建硬链接失败：{e}。",
             "statusCode": "GENERAL_ERROR"
         }), 400
 

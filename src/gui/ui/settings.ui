@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>646</width>
+    <width>709</width>
     <height>735</height>
    </rect>
   </property>
@@ -1358,6 +1358,41 @@ QPushButton:pressed {
              </property>
              <property name="text">
               <string>将电影文件放入同名文件夹</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="createHardLink">
+             <property name="styleSheet">
+              <string>QPushButton {
+    display: inline-block;
+    padding: 5px 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color:#fff;
+    background-color: #559e24;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+QPushButton:hover {
+background-color: #4a8821;
+}
+
+QPushButton:pressed {
+    background-color: #3c6f1b;
+}
+</string>
+             </property>
+             <property name="text">
+              <string>创建硬链接</string>
              </property>
              <property name="checked">
               <bool>false</bool>
