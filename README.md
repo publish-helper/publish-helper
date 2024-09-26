@@ -92,9 +92,10 @@ pip install -r requirements.txt
     python src\main.py
     ```
 
-* 3.pycharm下启动
+* 3.PyCharm下启动
 
 配置默认工作目录为项目根目录，随后运行对应按钮即可。
+
 ![img.png](docs/img/img.png)
 
 ## 附件
