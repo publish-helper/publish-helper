@@ -16,6 +16,6 @@ For more information on this license, you can visit https://www.gnu.org/licenses
 from src.api.startapi import start_api
 
 # 作者：bjdbjd ID：bjd
-# 贡献者：Pixel-LH、EasonWong0603、sertion1126
+# 贡献者：Pixel-LH、EasonWong0603、sertion1126、TommyMerlin
 if __name__ == '__main__':
     start_api()  # API启动

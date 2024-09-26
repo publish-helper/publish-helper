@@ -26,6 +26,6 @@ copy readme.txt dist\
 from src.gui.startgui import start_gui
 
 # 作者：bjdbjd ID：bjd
-# 贡献者：Pixel-LH、EasonWong0603、sertion1126
+# 贡献者：Pixel-LH、EasonWong0603、sertion1126、TommyMerlin
 if __name__ == '__main__':
     start_gui()  # GUI启动
