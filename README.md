@@ -6,11 +6,11 @@ Publish Helper v1.5.2
 
 目前的一些简单的功能有：
 
-1. 自动获取PT-Gen简介信息（需要PT-Gen API）
+1. 自动获取PT-Gen简介信息（需要PT-Gen API接口）
 2. 自动获取MediaInfo信息
 3. 自动截图
 4. 自动获取缩略图
-5. 并上传图床（需要自行获取图床的API）
+5. 自动将图片上传图床（需要图床的API接口）
 6. 根据简介信息和MediaInfo信息自动分析生成主副标题和文件名
 7. 自动将资源塞入文件夹并重命名
 8. 自动将资源制作种子
@@ -21,9 +21,9 @@ Publish Helper v1.5.2
 13. 短剧一键生成简介（新）
 14. 重命名时制作硬链接（新）
 
-docker版正在测试中，将支持部署在自己nas上，欢迎测试使用：[【体验地址】](http://47.94.40.202:18080/)。
+Docker版正在测试中，将支持部署在自己nas上，欢迎测试使用：[【体验地址】](http://47.94.40.202:18080/)。
 
-docker安装部署请见[【镜像仓库】](https://hub.docker.com/r/sertion1126/publish-helper)。
+Docker安装部署请见[【镜像仓库】](https://hub.docker.com/r/sertion1126/publish-helper)。
 
 软件使用方法请见[【Wiki】](https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki)。
 
