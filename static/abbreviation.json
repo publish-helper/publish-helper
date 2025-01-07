@@ -34,6 +34,7 @@
   "SMPTE ST 2086, HDR10 compatible": "HDR10",
   "HDR Vivid, Version 1": "HDR",
 
+  "120.000 FPS": "120FPS",
   "60.000 FPS": "60FPS",
   "50.000 FPS": "50FPS",
   "48.000 FPS": "48FPS",
