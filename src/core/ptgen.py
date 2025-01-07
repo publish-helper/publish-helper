@@ -3,6 +3,13 @@ import requests
 
 def get_pt_gen_description(pt_gen_api_url, resource_url):
     try:
+        # 检查是否是tt开头后面跟数字的字符串
+        if resource_url.startswith('tt') and resource_url[2:].isdigit():
+            resource_url = f"https://www.imdb.com/title/{resource_url}/"
+        # 检查是否是纯数字的字符串
+        elif resource_url.isdigit():
+            resource_url = f"https://movie.douban.com/subject/{resource_url}/"
+
         # 设置一个合理的超时时间，10s
         response = requests.get(f"{pt_gen_api_url}?url={resource_url}", timeout=10)
 
