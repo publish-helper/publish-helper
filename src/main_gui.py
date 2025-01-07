@@ -9,7 +9,7 @@ For more information on this license, you can visit https://www.gnu.org/licenses
 """
 
 """
-打包编译方式(Windows)：安装Python 3.10，执行pip install pyinstaller，安装“requirements.txt”中的所有相关模块后，在项目根目录（README文件所在目录）下执行下面的代码：
+打包编译方式(Windows)：安装Python 3.10，执行pip install pyinstaller，安装“docs/requirements.txt”中的所有相关模块后，在项目根目录（README文件所在目录）下执行下面的代码：
 
 pyinstaller --paths="src;." -F -w -i static/ph-bjd.ico src/main_gui.py -n "Publish Helper.exe"
 xcopy static dist\static /E /I /Y
@@ -19,7 +19,7 @@ copy README.md dist\
 copy readme.txt dist\
 
 项目根目录下生成的dist文件夹就是打包好的软件。
-项目仓库地址：https://github.com/publish-helper/publish-helper
+项目仓库地址：https://github.com/bjdbjd/publish-helper
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
 # GUI启动

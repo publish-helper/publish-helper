@@ -9,7 +9,7 @@ For more information on this license, you can visit https://www.gnu.org/licenses
 """
 
 """
-项目仓库地址：https://github.com/publish-helper/publish-helper
+项目仓库地址：https://github.com/bjdbjd/publish-helper
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
 # API启动
