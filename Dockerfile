@@ -9,7 +9,7 @@ COPY src src
 COPY static static
 COPY temp temp
 COPY dist dist
-COPY requirements_api.txt requirements_api.txt
+COPY docs/requirements_api.txt requirements_api.txt
 RUN mkdir media  \
     && cp -r lib_deb/sources.list /etc/apt/sources.list \
     && apt-get update -o Acquire::Check-Valid-Until=false  \

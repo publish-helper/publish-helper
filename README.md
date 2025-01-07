@@ -63,7 +63,7 @@ Docker安装部署请见[【镜像仓库】](https://hub.docker.com/r/sertion112
 ### 依赖安装
 
 ```
-pip install -r requirements.txt
+pip install -r docs/requirements.txt
 ```
 
 ### 项目启动
