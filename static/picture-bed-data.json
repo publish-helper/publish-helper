@@ -1,7 +1,7 @@
 {
     "lsky-pro": [
-        "https://picture.agsv.top/api/v1/upload",
         "https://picture.agsvpt.cn/api/v1/upload",
+        "https://picture.agsv.top/api/v1/upload",
         "https://img.ptvicomo.net/api/v1/upload"
     ],
     "bohe": [
