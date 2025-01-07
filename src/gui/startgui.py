@@ -1,6 +1,7 @@
 import os
 import re
 import sys
+import tempfile
 import time
 import webbrowser
 
@@ -191,6 +192,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         category += "电影"
         team += self.teamMovie.currentText()
         source += self.sourceMovie.currentText()
+        print("获取到文本框的数据")
         auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
                                             team, source, self.torrent_url)
         self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
@@ -198,7 +200,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
         try:
             if get_settings("open_auto_feed_link"):
-                webbrowser.open(auto_feed_link)
+                # 创建临时HTML文件
+                with tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode='w') as temp:
+                    temp.write(
+                        f'<html><body><a href="{auto_feed_link}" id="link">Link</a><script>document.getElementById("link").click();</script></body></html>')
+                    temp_html_path = temp.name
+
+                # 打开临时HTML文件
+                webbrowser.open('file://' + temp_html_path)
         except Exception as e:
             self.debugBrowserMovie.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
 

@@ -184,6 +184,9 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     # auto_feed_link = auto_feed_link.replace(' ', '%20')
     # auto_feed_link = auto_feed_link.replace('\n', '%0A')
 
+    # 解决auto_feed的历史遗留问题
+    auto_feed_link.replace('#seperator#', '#separator#')
+
     string_to_encode = auto_feed_link.split('#separator#')[1]
     string_encoded = base64encoding(string_to_encode)
     auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded

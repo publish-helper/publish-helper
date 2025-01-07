@@ -1,8 +1,8 @@
-Publish Helper v1.5.2
+Publish Helper v1.5.3
 
 使用前务必请先看设置！！！
 
-具体的软件功能、界面和使用方法请见Wiki：https://github.com/publish-helper/publish-helper/wiki/Publish-Helper-Wiki
+具体的软件功能、界面和使用方法请见Wiki：https://github.com/bjdbjd/publish-helper/wiki/Publish-Helper-Wiki
 
 目前支持的免费公共图床：freeimage(https://freeimage.host/) imgbb(https://imgbb.com/) imagehub(https://www.imagehub.cc/) pixhost(https://pixhost.to/)
 
@@ -83,9 +83,9 @@ Publish Helper v1.5.2
 
 软件获取地址：
 
-https://github.com/publish-helper/publish-helper/releases
+https://github.com/bjdbjd/publish-helper/releases
 
-https://gitee.com/publish-helper/publish-helper/releases
+https://gitee.com/bjdbjd/publish-helper/releases
 
 更新时只需要保留static文件夹即可将配置完美迁移。
 
