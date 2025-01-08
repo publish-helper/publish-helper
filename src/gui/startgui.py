@@ -193,23 +193,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         team += self.teamMovie.currentText()
         source += self.sourceMovie.currentText()
         print("获取到文本框的数据")
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team, source, self.torrent_url)
-        self.debugBrowserMovie.append("auto_feed_link: " + auto_feed_link)
-        pyperclip.copy(auto_feed_link)
-        self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        try:
-            if get_settings("open_auto_feed_link"):
-                # 创建临时HTML文件
-                with tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode='w') as temp:
-                    temp.write(
-                        f'<html><body><a href="{auto_feed_link}" id="link">Link</a><script>document.getElementById("link").click();</script></body></html>')
-                    temp_html_path = temp.name
+        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
+                                                                  file_name, category, team, source, self.torrent_url)
+        if get_auto_feed_link_success:
+            self.debugBrowserMovie.append("auto_feed_link: " + response)
+            pyperclip.copy(response)
+            self.debugBrowserMovie.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
+            try:
+                if get_settings("open_auto_feed_link"):
+                    # 创建临时HTML文件
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode='w') as temp:
+                        temp.write(
+                            f'<html><body><a href="{response}" id="link">Link</a><script>document.getElementById("link").click();</script></body></html>')
+                        temp_html_path = temp.name
 
-                # 打开临时HTML文件
-                webbrowser.open('file://' + temp_html_path)
-        except Exception as e:
-            self.debugBrowserMovie.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+                    # 打开临时HTML文件
+                    webbrowser.open('file://' + temp_html_path)
+            except Exception as e:
+                self.debugBrowserMovie.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+        else:
+            self.debugBrowserMovie.append(f'创建auto_feed_link失败：{response}')
 
     def get_pt_gen_button_movie_clicked(self):
         self.descriptionBrowserMovie.setText("")
@@ -642,24 +645,32 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             self.debugBrowserMovie.append("视频成功移动到：" + video_path)
                         else:
                             self.debugBrowserMovie.append("创建文件夹失败：" + response)
-                    if do_rename_file and is_video_path == 1:
+
+                    if do_rename_file:
+                        if is_video_path == 2:
+                            print("对文件夹重新命名")
+                            self.debugBrowserMovie.append("开始对文件夹重新命名")
+                            rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name)
+                            if rename_directory_success:
+                                self.videoPathMovie.setText(response)
+                                video_path = response
+                                self.debugBrowserMovie.append("视频文件夹地址成功重新命名为：" + video_path)
+                                find_video_success, response = check_path_and_find_video(video_path)
+                                if find_video_success == 2:
+                                    video_path = response
+                                    self.debugBrowserMovie.append("成功读取到视频文件：" + video_path)
+                                else:
+                                    self.debugBrowserMovie.append("读取视频文件失败：" + response)
+                            else:
+                                if not rename_directory_success:
+                                    self.debugBrowserMovie.append("重命名失败：" + response)
+
                         print("开始对文件重新命名")
                         self.debugBrowserMovie.append("开始对文件重新命名")
                         rename_file_success, response = rename_file(video_path, file_name)
                         if rename_file_success:
-                            self.videoPathMovie.setText(response)
                             video_path = response
                             self.debugBrowserMovie.append("视频成功重新命名为：" + video_path)
-                        else:
-                            self.debugBrowserMovie.append("重命名失败：" + response)
-                    if do_rename_file and is_video_path == 2:
-                        print("对文件夹重新命名")
-                        self.debugBrowserMovie.append("开始对文件夹重新命名")
-                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name)
-                        if rename_directory_success:
-                            self.videoPathMovie.setText(response)
-                            video_path = response
-                            self.debugBrowserMovie.append("视频地址成功重新命名为：" + video_path)
                         else:
                             self.debugBrowserMovie.append("重命名失败：" + response)
 
@@ -722,16 +733,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         category += "剧集"
         team += self.teamTV.currentText()
         source += self.sourceTV.currentText()
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team, source, self.torrent_url)
-        self.debugBrowserTV.append("auto_feed_link: " + auto_feed_link)
-        pyperclip.copy(auto_feed_link)
-        self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        try:
-            if get_settings("open_auto_feed_link"):
-                webbrowser.open(auto_feed_link)
-        except Exception as e:
-            self.debugBrowserTV.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
+                                                                  file_name, category, team, source, self.torrent_url)
+        if get_auto_feed_link_success:
+            self.debugBrowserTV.append("auto_feed_link: " + response)
+            pyperclip.copy(response)
+            self.debugBrowserTV.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
+            try:
+                if get_settings("open_auto_feed_link"):
+                    # 创建临时HTML文件
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode='w') as temp:
+                        temp.write(
+                            f'<html><body><a href="{response}" id="link">Link</a><script>document.getElementById("link").click();</script></body></html>')
+                        temp_html_path = temp.name
+
+                    # 打开临时HTML文件
+                    webbrowser.open('file://' + temp_html_path)
+            except Exception as e:
+                self.debugBrowserTV.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+        else:
+            self.debugBrowserTV.append(f'创建auto_feed_link失败：{response}')
 
     def get_pt_gen_button_tv_clicked(self):
         self.descriptionBrowserTV.setText("")
@@ -1262,16 +1283,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         category += "短剧"
         team = self.teamPlaylet.currentText()
         source = self.sourcePlaylet.currentText()
-        auto_feed_link = get_auto_feed_link(mian_title, second_title, description, media_info, file_name, category,
-                                            team, source, self.torrent_url)
-        self.debugBrowserPlaylet.append("auto_feed_link: " + auto_feed_link)
-        pyperclip.copy(auto_feed_link)
-        self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
-        try:
-            if get_settings("open_auto_feed_link"):
-                webbrowser.open(auto_feed_link)
-        except Exception as e:
-            self.debugBrowserPlaylet.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
+                                                                  file_name, category, team, source, self.torrent_url)
+        if get_auto_feed_link_success:
+            self.debugBrowserPlaylet.append("auto_feed_link: " + response)
+            pyperclip.copy(response)
+            self.debugBrowserPlaylet.append("auto_feed链接已经复制到剪切板，请粘贴到浏览器访问")
+            try:
+                if get_settings("open_auto_feed_link"):
+                    # 创建临时HTML文件
+                    with tempfile.NamedTemporaryFile(delete=False, suffix=".html", mode='w') as temp:
+                        temp.write(
+                            f'<html><body><a href="{response}" id="link">Link</a><script>document.getElementById("link").click();</script></body></html>')
+                        temp_html_path = temp.name
+
+                    # 打开临时HTML文件
+                    webbrowser.open('file://' + temp_html_path)
+            except Exception as e:
+                self.debugBrowserPlaylet.append(f'自动打开链接失败，请手动粘贴到浏览器访问：{e}')
+        else:
+            self.debugBrowserPlaylet.append(f'创建auto_feed_link失败：{response}')
 
     def get_description_playlet_clicked(self):
         try:
