@@ -55,19 +55,35 @@ def get_pt_gen_info(description):
     # 类别
     category = category_match.group(1).strip() if category_match else None
 
-    # 正则表达式匹配“◎主　　演”行和接下来的四行
-    actor_pattern = r'◎主　　演\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n' or r'◎演　　员\s+(.*?)\n(.*?)\n(.*?)\n(.*?)\n(.*?)\n'
-    actor_match = re.search(actor_pattern, description, re.DOTALL)
+    # 匹配“◎主　　演”或“◎演　　员”及其后的多行内容
+    actor_pattern = re.compile(
+        r'(◎主　　演|◎演　　员)\s*((?:[\s　]*.*?(?:\n|$))*)',  # 注意这里的 [\s　] 用于匹配半角和全角空格
+        re.MULTILINE | re.DOTALL
+    )
+    # 搜索匹配
+    actor_match = actor_pattern.search(description)
 
     actors = []
     if actor_match:
-        for i in range(1, 6):
+        # 获取演员信息部分并按行分割
+        actors_info = actor_match.group(2).strip().split('\n')
+
+        for actor_line in actors_info:
+            # 清洗每行数据，去除多余的空白（包括全角空格）
+            cleaned_line = re.sub(r'[\s　]+', ' ', actor_line.strip())
+
+            if not cleaned_line:
+                continue
+
             # 提取并清洗演员名称，只保留中文部分
-            cleaned_actor = re.search(r"[\u4e00-\u9fa5·]+", actor_match.group(i))
+            cleaned_actor = re.search(r"([\u4e00-\u9fa5·]+)", cleaned_line)
             if cleaned_actor:
                 actors.append(cleaned_actor.group())
-                if len(actors) == 5:  # 提取前五个演员后停止
-                    break
+
+            # 如果已经有五个演员，则停止
+            if len(actors) == 5:
+                break
+
     if '◎语　　言' in category:
         category = "暂无分类"
     print("原始名称:", original_title)

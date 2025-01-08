@@ -187,11 +187,14 @@ def get_auto_feed_link(mian_title, second_title, description, media_info, file_n
     # 解决auto_feed的历史遗留问题
     auto_feed_link.replace('#seperator#', '#separator#')
 
-    string_to_encode = auto_feed_link.split('#separator#')[1]
-    string_encoded = base64encoding(string_to_encode)
-    auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded
-    print("获取到auto_feed_link：" + auto_feed_link)
-    return auto_feed_link
+    if '#separator#' in auto_feed_link:
+        string_to_encode = auto_feed_link.split('#separator#')[-1]
+        string_encoded = base64encoding(string_to_encode)
+        auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded
+        print("获取到auto_feed_link：" + auto_feed_link)
+        return True, auto_feed_link
+    else:
+        return False, "您设置的auto_feed_link不符合规则"
 
 # "https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url
 # #linkstr#{IMDB}#linkstr#dburl#linkstr{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info
