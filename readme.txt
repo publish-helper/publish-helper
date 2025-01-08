@@ -1,5 +1,3 @@
-Publish Helper v1.5.3
-
 使用前务必请先看设置！！！
 
 具体的软件功能、界面和使用方法请见Wiki：https://github.com/bjdbjd/publish-helper/wiki/Publish-Helper-Wiki

@@ -1,5 +1,3 @@
-Publish Helper v1.5.3
-
 **使用前务必请先看设置！！！**
 
 ![JXRij8g.png](https://iili.io/JXRij8g.png)
@@ -84,12 +82,12 @@ pip install -r docs/requirements.txt
 * 2.api启动
   * Unix
     ```shell
-    export PYTHONPATH=${PYTHONPATH}:. && python src/main.py
+    export PYTHONPATH=${PYTHONPATH}:. && python src/main_api.py
     ```
   * Windows
     ```shell
     $env:PYTHONPATH = "$($env:PYTHONPATH);."
-    python src\main.py
+    python src\main_api.py
     ```
 
 * 3.PyCharm下启动
