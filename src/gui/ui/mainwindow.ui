@@ -1192,7 +1192,7 @@ QPushButton:pressed {
                     <item>
                      <layout class="QHBoxLayout" name="horizontalLayout_44">
                       <item>
-                       <widget class="QSpinBox" name="episodeStartBoxTV">
+                       <widget class="QSpinBox" name="episodesStartBoxTV">
                         <property name="minimum">
                          <number>1</number>
                         </property>
@@ -2127,7 +2127,7 @@ QPushButton:pressed {
                    </widget>
                   </item>
                   <item>
-                   <widget class="QSpinBox" name="episodeStartBoxPlaylet">
+                   <widget class="QSpinBox" name="episodesStartBoxPlaylet">
                     <property name="minimum">
                      <number>1</number>
                     </property>

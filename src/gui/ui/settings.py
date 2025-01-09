@@ -1445,7 +1445,7 @@ class Ui_Settings(object):
         self.label_15.setText(_translate("Settings", "主标题:"))
         self.mainTitleMovie.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
         self.label_17.setText(_translate("Settings", "副标题:"))
-        self.secondTitleMovie.setText(_translate("Settings", "{original_title} / {other_title} | {category} | {actors}"))
+        self.secondTitleMovie.setText(_translate("Settings", "{original_title} / {other_title} | {categories} | {actors}"))
         self.label_16.setText(_translate("Settings", "文件名:"))
         self.fileNameMovie.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
         self.label_18.setText(_translate("Settings", "占位符:"))
@@ -1470,7 +1470,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#ff0000;\">{audio_num}：音轨数（单位默认Audio，数量为\'1\'时会自动省略）</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{team}：制作组</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{other_titles}：其他译名</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{categories}：影片类型</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{actors}：主要演员 </p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
@@ -1480,7 +1480,7 @@ class Ui_Settings(object):
         self.label_23.setText(_translate("Settings", "主标题:"))
         self.mainTitleTV.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
         self.label_24.setText(_translate("Settings", "副标题:"))
-        self.secondTitleTV.setText(_translate("Settings", "{original_title} / {other_title} | {category} | {actors}"))
+        self.secondTitleTV.setText(_translate("Settings", "{original_title} / {other_title} | {categories} | {actors}"))
         self.label_25.setText(_translate("Settings", "文件名:"))
         self.fileNameTV.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
         self.label_26.setText(_translate("Settings", "占位符:"))
@@ -1509,7 +1509,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{other_titles}：其他译名</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{season_number}：季数 （不补0，用于副标题：第{season_number}季）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{total_episode}：总集数（格式：全n集/第m-n集，取决于是否开始于第1集）</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型</p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{categories}：影片类型</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{actors}：主要演员 </p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
@@ -1519,7 +1519,7 @@ class Ui_Settings(object):
         self.label_19.setText(_translate("Settings", "主标题:"))
         self.mainTitlePlaylet.setText(_translate("Settings", "{en_title} {year} {video_format} {source} {video_codec} {hdr_format} {audio_codec} {channels}-{team}"))
         self.label_20.setText(_translate("Settings", "副标题:"))
-        self.secondTitlePlaylet.setText(_translate("Settings", "{original_title} | 第{season} | {total_episode} | {year}年 | {playlet_source} | 类型：{category}"))
+        self.secondTitlePlaylet.setText(_translate("Settings", "{original_title} | 第{season} | {total_episode} | {year}年 | {playlet_source} | 类型：{categories}"))
         self.label_21.setText(_translate("Settings", "文件名:"))
         self.fileNamePlaylet.setText(_translate("Settings", "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{hdr_format}.{audio_codec}.{channels}-{team}"))
         self.label_22.setText(_translate("Settings", "占位符:"))
@@ -1548,7 +1548,7 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{season_number}：季数 （不补0，用于副标题：第{season_number}季）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{total_episode}：总集数（全n集/第m-n集，取决于是否开始于第1集）</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" color:#0000ff;\">{playlet_source}：短剧来源类型（网络收费短剧、抖音短剧等）</span></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{category}：影片类型 </p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">{categories}：影片类型 </p>\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700;\">注意：</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-weight:700; color:#ff0000;\">红色选项</span>可通过修改<span style=\" font-weight:700; color:#ff0000;\">static/abbreviation.json</span>进行自定义</p>\n"

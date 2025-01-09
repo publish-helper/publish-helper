@@ -95,9 +95,9 @@ def get_settings(settings_name):
                 "screenshot_storage_path": "temp/pic",
                 "screenshot_threshold": "30.00",
                 "second_confirm_file_name": True,
-                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
-                "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{category}",
-                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
+                "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}",
+                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
                 "thumbnail_cols": "3",
                 "thumbnail_delay": "2.0",
                 "thumbnail_rows": "3",
@@ -134,13 +134,13 @@ def get_settings(settings_name):
         "enable_api": "True",
         "api_port": "5372",
         "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+        "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
         "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
         "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{category} | \u6f14\u5458\uff1a{actors}",
+        "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
         "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
         "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{category}",
+        "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}",
         "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
         "auto_feed_link": "https://example.com/upload.php#separator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{种子名称}#linkstr#torrent_url#linkstr#{种子链接}#linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0",
         "open_auto_feed_link": "True"
@@ -158,6 +158,14 @@ def get_settings(settings_name):
         str(settings_name).upper(), settings.get(settings_name, "")
     )
     print("读取数据" + f"{settings_name}: {settings_data}")
+
+    try:
+        # {category}更名为{categories}，暂时用于适配旧版本
+        if '{category}' in settings_data:
+            settings_data = settings_data.replace('{category}', '{categories}')
+            update_settings(settings_name, settings_data)
+    except Exception as e:
+        print()
 
     return settings_data
 
@@ -510,7 +518,7 @@ def check_path_and_find_video(path):
 
     else:
         print('您提供的路径既不是文件也不是文件夹')
-        return 0, '您提供的路径既不是文件也不是文件夹'  # 路径既不是文件也不是文件夹
+        return 0, f'您提供的路径{path}既不是文件也不是文件夹'  # 路径既不是文件也不是文件夹
 
 
 def get_playlet_description(original_title, year, area, category, language, season_number):
@@ -772,3 +780,149 @@ def delete_season_number(title, season_number):
 
 def base64encoding(string):
     return base64.b64encode(string.encode('utf-8')).decode('utf-8')
+
+
+def get_data_from_pt_gen_description(main_title, description, media_info, source, category):
+    imdb_url = ''  # IMDb链接
+    douban_url = ''  # 豆瓣链接
+    description = description  # 简介
+    area = ''  # 地区
+    video_format = ''  # 分辨率
+    audio_codec = ''  # 音频编码
+    video_codec = ''  # 视频编码
+    medium = ''  # 媒介
+
+    # 获取IMDb链接
+    imdb_pattern = r"https://www\.imdb\.com/title/tt\d+/"
+    match = re.search(imdb_pattern, description)
+    # If a match is found, return it as a string, otherwise return an empty string
+    imdb_url += match.group(0) if match else ""
+    print("获取到IMDb链接" + imdb_url)
+
+    # 获取豆瓣链接
+    douban_pattern = r"https://movie\.douban\.com/subject/\d+/"
+    match = re.search(douban_pattern, description)
+    # If a match is found, return it as a string, otherwise return an empty string
+    douban_url += match.group(0) if match else ""
+    print("获取到豆瓣链接" + douban_url)
+
+    # 获取其他类型 电影/纪录/体育/剧集/动画/综艺……
+    category_pattern = r"◎类　　别　([^\n]+)"
+    match = re.search(category_pattern, description)
+    # If a match is found, return it as a string, otherwise return an empty string
+    t = match.group(0) if match else ""
+    if "纪录" in t:
+        category = "纪录"
+    if "体育" in t:
+        category = "体育"
+    if "动画" in t:
+        category = "动画"
+    if "综艺" in t or "脱口秀" in t:
+        category = "综艺"
+    if "短片" in t:
+        category = "短剧"
+    print("获取到类型" + category)
+
+    # 获取产地 欧美/大陆/港台/日本/韩国/印度
+    area_pattern = r"◎产　　地　([^\n]+)"
+    match = re.search(area_pattern, description)
+    # If a match is found, return the matched location, otherwise return an empty string
+    s = match.group(1) if match else ""
+    if "美国" in s or "英国" in s or "德国" in s or "法国" in s:
+        area = "欧美"
+    if "大陆" in s:
+        area = "大陆"
+    if "香港" in s or "台湾" in s:
+        area = "港台"
+    if "日本" in s:
+        area = "日本"
+    if "韩国" in s:
+        area = "韩国"
+    if "印度" in s:
+        area = "印度"
+    print("获取到产地" + area)
+
+    # 获取分辨率 4K/1080p/1080i/720p/SD
+    if "3840p" in main_title or "3840P" in main_title or "3840i" in main_title:
+        video_format = "8K"
+    if "2160p" in main_title or "2160P" in main_title or "2160i" in main_title:
+        video_format = "4K"
+    if "1080p" in main_title or "1080P" in main_title:
+        video_format = "1080p"
+    if "1080i" in main_title:
+        video_format = "1080i"
+    if "720p" in main_title or "720P" in main_title:
+        video_format = "720p"
+    if "720i" in main_title:
+        video_format = "720i"
+    if "480p" in main_title or "480P" in main_title:
+        video_format = "480p"
+    if "720i" in main_title:
+        video_format = "480i"
+    print("获取到分辨率" + video_format)
+
+    # 获取音频编码 AAC/AC3/DTS…………
+    if "AAC" in main_title:
+        audio_codec = "AAC"
+    if "AC3" in main_title or "DD" in main_title:
+        audio_codec = "AC3"
+    if "EAC3" in main_title or "E-AC3" in main_title or "DDP" in main_title or "DD+" in main_title:
+        audio_codec = "EAC3"
+    if "DTS" in main_title:
+        if "HD" in main_title and "MA" in main_title:
+            audio_codec = "DTS-HDMA"
+        else:
+            audio_codec = "DTS"
+    if "Atmos" in main_title or "ATMOS" in main_title:
+        audio_codec = "Atmos"
+    if "TrueHD" in main_title or "TRUEHD" in main_title:
+        audio_codec = "TrueHD"
+    if "Flac" in main_title or "FLAC" in main_title:
+        audio_codec = "Flac"
+    print("获取到音频编码" + audio_codec)
+
+    # 获取视频编码 H264/H265……
+    if "H264" in main_title or "H.264" in main_title or "h264" in main_title or "h.264" in main_title or "AVC" in main_title or "avc" in main_title:
+        video_codec = "H264"
+    if "H265" in main_title or "H.265" in main_title or "h265" in main_title or "h.265" in main_title or "HEVC" in main_title or "hevc" in main_title:
+        video_codec = "H265"
+    if "H266" in main_title or "H.266" in main_title or "h266" in main_title or "h.266" in main_title or "VVC" in main_title or "vvc" in main_title:
+        video_codec = "H266"
+    if "X264" in main_title or "x264" in main_title:
+        video_codec = "X264"
+    if "X265" in main_title or "x265" in main_title:
+        video_codec = "X265"
+    if "X266" in main_title or "x266" in main_title:
+        video_codec = "X266"
+    if "AV1" in main_title or "av1" in main_title:
+        video_codec = "AV1"
+    print("获取到视频编码" + video_codec)
+
+    # 获取媒介 web-dl/remux/encode……
+    if source == "WEB-DL" or "WEB-DL" in main_title or source == "Web-DL" or "Web-DL" in main_title or source == "web-dl" or "web-dl" in main_title or source == "WEBDL" or "WEBDL" in main_title or source == "WebDL" or "WebDL" in main_title or source == "webdl" or "webdl" in main_title:
+        medium = "WEB-DL"
+    if source == "Blu-ray" or "Blu-ray" in main_title or source == "Blu-Ray" or "Blu-Ray" in main_title or source == "BluRay" or "BluRay" in main_title or source == "UHD Blu-ray" or source == "UHD Blu-Ray" or source == "UHD BluRay":
+        if "X26" in video_codec:
+            medium = "Encode"
+        else:
+            if "Remux" in main_title or "REMUX" in main_title or "remux" in main_title or "mkv" in media_info:
+                medium = "Remux"
+    if source == "HDTV" or "HDTV" in main_title:
+        medium = "HDTV"
+    if source == "DVD" or "DVD" in main_title:
+        medium = "DVD"
+    print("获取到媒介" + medium)
+
+    return imdb_url, douban_url, category, area, video_format, audio_codec, video_codec, medium
+
+
+def validate_and_convert_to_int(value, value_name):
+    if value is None or value == '':
+        raise ValueError(f'{value_name} 不能为 None 或空字符串')
+
+    try:
+        converted_value = int(value)
+    except ValueError as e:
+        raise ValueError(f'{value_name} 必须是数字，您提供的是：{value}') from e
+
+    return converted_value

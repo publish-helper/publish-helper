@@ -15,13 +15,13 @@ from src.core.autofeed import get_auto_feed_link
 from src.core.mediainfo import get_media_info
 from src.core.picturebed import upload_picture
 from src.core.ptgen import get_pt_gen_description
-from src.core.rename import get_pt_gen_info, get_video_info, get_name_from_template, rename_file, rename_directory, \
+from src.core.rename import get_pt_gen_info, get_video_info, get_name_from_template, rename_file, rename_folder, \
     move_file_to_folder, create_hard_link
 from src.core.screenshot import get_screenshot, get_thumbnail
 from src.core.tool import update_settings, get_settings, check_path_and_find_video, make_torrent, \
     chinese_name_to_pinyin, \
     get_video_files, is_filename_too_long, get_playlet_description, delete_season_number, \
-    get_combo_box_data
+    get_combo_box_data, validate_and_convert_to_int
 from src.gui.ui.mainwindow import Ui_Mainwindow
 from src.gui.ui.settings import Ui_Settings
 from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
@@ -183,18 +183,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_movie_clicked(self):
-        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
-        mian_title += self.mainTitleBrowserMovie.toPlainText()
+        main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
+        main_title += self.mainTitleBrowserMovie.toPlainText()
         second_title += self.secondTitleBrowserMovie.toPlainText()
         description += self.descriptionBrowserMovie.toPlainText()
         media_info += self.mediainfoBrowserMovie.toPlainText()
         file_name += self.fileNameBrowserMovie.toPlainText()
-        category += "电影"
         team += self.teamMovie.currentText()
         source += self.sourceMovie.currentText()
+        category = '电影'
         print("获取到文本框的数据")
-        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
-                                                                  file_name, category, team, source, self.torrent_url)
+        get_auto_feed_link_success, response = get_auto_feed_link(main_title, second_title, description, media_info, file_name, team, source, category, self.torrent_url)
         if get_auto_feed_link_success:
             self.debugBrowserMovie.append("auto_feed_link: " + response)
             pyperclip.copy(response)
@@ -281,7 +280,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 res = response + res
                 self.debugBrowserMovie.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
-                if auto_upload_screenshot:
+                if auto_upload_screenshot and len(res) > 0:
                     self.debugBrowserMovie.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserMovie.setText("")
                     if len(res) > 0:
@@ -497,7 +496,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("获取到了PT-Gen Api的响应，开始获取PT-Gen关键信息")
                         self.debugBrowserMovie.append("获取到了PT-Gen Api的响应，开始获取PT-Gen关键信息")
                         try:
-                            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
+                            original_title, english_title, year, other_names_sorted, categories, actors_list, episodes= get_pt_gen_info(
                                 response)
                         except Exception as e:
                             self.debugBrowserMovie.append(
@@ -509,10 +508,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return False, [
                                 f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
                                     response) + "\n请重试！"]
-                        print(original_title, english_title, year, other_names_sorted, category, actors_list)
+                        print(original_title, english_title, year, other_names_sorted, categories, actors_list)
                         self.debugBrowserMovie.append(
                             "分析后的结果为：" + original_title + english_title + year + str(
-                                other_names_sorted) + category +
+                                other_names_sorted) + categories +
                             str(actors_list))
                         if year == "" or year is None:
                             print("PT-Gen分析结果不包含年份，存在错误")
@@ -538,7 +537,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                     widget = QWidget(self)
                     if original_title != '':
-                        if english_title == '':
+                        if english_title == '' and second_confirm_file_name:
                             ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                          '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                          QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
@@ -570,6 +569,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     print('未输入任何数据')
                                     self.debugBrowserMovie.append('未输入任何数据')
                                     english_title = ''
+                        else:
+                            english_title = chinese_name_to_pinyin(original_title)
+                            if not re.match(english_pattern, english_title):
+                                self.debugBrowserMovie.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
+                                return
                     get_video_info_success, response = get_video_info(video_path)
                     if get_video_info_success:
                         print("获取到关键参数：" + str(response))
@@ -590,19 +594,19 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                         video_format, source, video_codec, bit_depth, hdr_format,
                                                         frame_rate, audio_codec, channels, audio_num, team,
                                                         other_titles, "",
-                                                        "", "", category, actors, "main_title_movie")
+                                                        "", "", categories, actors, "main_title_movie")
                     print(main_title)
                     second_title = get_name_from_template(english_title, original_title, "", "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
                                                           audio_codec, channels, audio_num, team, other_titles, "", "",
                                                           "",
-                                                          category, actors, "second_title_movie")
+                                                          categories, actors, "second_title_movie")
                     second_title = second_title.replace(' /  | ', ' | ')  # 避免单别名导致的错误
                     print("SecondTitle" + second_title)
                     file_name = get_name_from_template(english_title, original_title, "", "", year, video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec, channels, audio_num, team, other_titles, "",
-                                                       "", "", category, actors, "file_name_movie")
+                                                       "", "", categories, actors, "file_name_movie")
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
                                                         QLineEdit.EchoMode.Normal, file_name)
@@ -650,7 +654,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         if is_video_path == 2:
                             print("对文件夹重新命名")
                             self.debugBrowserMovie.append("开始对文件夹重新命名")
-                            rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name)
+                            rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name)
                             if rename_directory_success:
                                 self.videoPathMovie.setText(response)
                                 video_path = response
@@ -670,6 +674,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         rename_file_success, response = rename_file(video_path, file_name)
                         if rename_file_success:
                             video_path = response
+                            self.videoPathMovie.setText(video_path)
                             self.debugBrowserMovie.append("视频成功重新命名为：" + video_path)
                         else:
                             self.debugBrowserMovie.append("重命名失败：" + response)
@@ -724,17 +729,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_tv_clicked(self):
-        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
-        mian_title += self.mainTitleBrowserTV.toPlainText()
+        main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
+        main_title += self.mainTitleBrowserTV.toPlainText()
         second_title += self.secondTitleBrowserTV.toPlainText()
         description += self.descriptionBrowserTV.toPlainText()
         media_info += self.mediainfoBrowserTV.toPlainText()
         file_name += self.fileNameBrowserTV.toPlainText()
-        category += "剧集"
         team += self.teamTV.currentText()
         source += self.sourceTV.currentText()
-        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
-                                                                  file_name, category, team, source, self.torrent_url)
+        category = "剧集"
+        get_auto_feed_link_success, response = get_auto_feed_link(main_title, second_title, description, media_info,
+                                                                  file_name, team, source, category, self.torrent_url)
         if get_auto_feed_link_success:
             self.debugBrowserTV.append("auto_feed_link: " + response)
             pyperclip.copy(response)
@@ -822,7 +827,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 res = response + res
                 self.debugBrowserTV.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
-                if auto_upload_screenshot:
+                if auto_upload_screenshot and len(res) > 0:
                     self.debugBrowserTV.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserTV.setText("")
                     if len(res) > 0:
@@ -980,19 +985,19 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     def handle_get_pt_gen_for_name_tv_result(self, get_success, response):
         try:
             if get_success:
-                self.descriptionBrowserTV.setText(response)
-                if response:
-                    print("获得的PT-Gen Api响应：" + response)
-                    if response == "":
+                description = response
+                self.descriptionBrowserTV.setText(description)
+                if description:
+                    print("获得的PT-Gen Api响应：" + description)
+                    if description == "":
                         self.debugBrowserTV.append("获取PT-Gen信息失败")
                         return
                 else:
                     self.debugBrowserTV.append("获取PT-Gen信息失败")
                     return
                 season = self.seasonBoxTV.text()
-                total_episode = ""
-                episode_num = 0
-                episode_start_number = int(self.episodeStartBoxTV.text())
+                episodes_num = 0
+                episodes_start_number = validate_and_convert_to_int(self.episodesStartBoxTV.text(), 'episodes_start_number')
                 season_number = season
                 if len(season) < 2:
                     season = '0' + season
@@ -1013,37 +1018,31 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 do_create_hard_link = get_settings("create_hard_link")
 
                 if do_rename_file and do_create_hard_link:
-                    create_hard_link_success, response1 = create_hard_link(path)
+                    create_hard_link_success, response = create_hard_link(path)
                     if create_hard_link_success:
-                        path = response1
+                        path = response
                         self.videoPathTV.setText(path)
-                        self.debugBrowserTV.append(f'创建硬链接成功：{response1}')
+                        self.debugBrowserTV.append(f'创建硬链接成功：{path}')
                     else:
-                        self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{response1}')
+                        self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{path}')
                         return
 
                 is_video_path, video_path = check_path_and_find_video(path)
                 english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                 widget = QWidget(self)
+                video_files = []
                 if is_video_path == 2:  # 视频路径是文件夹
-                    get_video_files_success, video_files = get_video_files(path)  # 获取文件夹内部的所有文件
-                    if get_video_files_success:
-                        print('检测到以下文件：', video_files)
-                        episode_num = len(video_files)  # 获取视频文件的总数
-                        if episode_start_number == 1:
-                            total_episode = '全' + str(episode_num) + '集'
-                        else:
-                            if str(episode_start_number) == str(episode_start_number + episode_num - 1):
-                                total_episode = '第' + str(episode_start_number) + '集'
-                            else:
-                                total_episode = '第' + str(episode_start_number) + '-' + str(
-                                    episode_start_number + episode_num - 1) + '集'
-                        print(total_episode)
+                    get_video_files_success, response = get_video_files(path)  # 获取文件夹内部的所有文件
+                    if not get_video_files_success:
+                        print(f'获取文件失败：{response[0]}')
                     else:
-                        print("获取文件失败")
+                        video_files = response
+                        print('检测到以下文件：', video_files)
+                        episodes_num = len(video_files)  # 获取视频文件的总数
+
                     print("重命名初始化完成")
                     self.debugBrowserTV.append("重命名初始化完成")
-                    if not response:
+                    if not description:
                         print("PT-Gen响应为空")
                         self.debugBrowserTV.append("PT-Gen响应为空")
                         return
@@ -1051,29 +1050,38 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         print("开始获取PT-Gen关键信息")
                         self.debugBrowserTV.append("开始获取PT-Gen关键信息")
                         try:
-                            original_title, english_title, year, other_names_sorted, category, actors_list = get_pt_gen_info(
-                                response)
+                            original_title, english_title, year, other_names_sorted, categories, actors_list, episodes = get_pt_gen_info(description)
                         except Exception as e:
                             self.debugBrowserTV.append(
                                 f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response) + "\n请重试！")
+                                    description) + "\n请重试！")
                             print(
                                 f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response) + "\n请重试！")
+                                    description) + "\n请重试！")
                             return False, [
                                 f"获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}" + "\n获取到的响应是" + str(
-                                    response) + "\n请重试！"]
-                        print(original_title, english_title, year, other_names_sorted, category, actors_list)
+                                    description) + "\n请重试！"]
+                        print(original_title, english_title, year, other_names_sorted, categories, actors_list)
                         self.debugBrowserTV.append(
                             "分析后的结果为：" + original_title + english_title + year + str(
-                                other_names_sorted) + category +
-                            str(actors_list))
+                                other_names_sorted) + categories + str(actors_list) + str(episodes))
+
+                        if episodes_start_number == 1 and episodes == episodes_num:
+                            total_episodes = '全' + str(episodes_num) + '集'
+                        else:
+                            if episodes_num == 1:
+                                total_episodes = '第' + str(episodes_start_number) + '集'
+                            else:
+                                total_episodes = '第' + str(episodes_start_number) + '-' + str(
+                                    episodes_start_number + episodes_num - 1) + '集'
+                        print(total_episodes)
+
                         if year == "" or year is None:
                             print("PT-Gen分析结果不包含年份，存在错误")
                             self.debugBrowserTV.append("PT-Gen分析结果不包含年份，存在错误")
                             return
                         if original_title != '':
-                            if english_title == '':
+                            if english_title == '' and second_confirm_file_name:
                                 ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                              '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
@@ -1105,7 +1113,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                         print('未输入任何数据')
                                         self.debugBrowserTV.append('未输入任何数据')
                                         english_title = ''
-                        print(original_title, english_title, year, other_names_sorted, category,
+                            else:
+                                english_title = chinese_name_to_pinyin(original_title)
+                                if not re.match(english_pattern, english_title):
+                                    self.debugBrowserTV.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
+                                    return
+                        print(original_title, english_title, year, other_names_sorted, categories,
                               actors_list)
                         print("获取PT-Gen关键信息成功")
                         self.debugBrowserTV.append("获取PT-Gen关键信息成功")
@@ -1124,16 +1137,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         other_titles = other_titles[: -3]
                     get_video_info_success, response = get_video_info(video_path)
                     if get_video_info_success:
-                        print("获取到关键参数：" + str(response))
-                        self.debugBrowserTV.append("获取到关键参数：" + str(response))
-                        video_format += response[0]
-                        video_codec += response[1]
-                        bit_depth += response[2]
-                        hdr_format += response[3]
-                        frame_rate += response[4]
-                        audio_codec += response[5]
-                        channels += response[6]
-                        audio_num += response[7]
+                        video_info = response
+                        print("获取到关键参数：" + str(video_info))
+                        self.debugBrowserTV.append("获取到关键参数：" + str(video_info))
+                        video_format += video_info[0]
+                        video_codec += video_info[1]
+                        bit_depth += video_info[2]
+                        hdr_format += video_info[3]
+                        frame_rate += video_info[4]
+                        audio_codec += video_info[5]
+                        channels += video_info[6]
+                        audio_num += video_info[7]
                     source = self.sourceTV.currentText()
                     team = self.teamTV.currentText()
                     print("关键参数赋值成功")
@@ -1143,20 +1157,20 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
                                                         audio_codec, channels, audio_num, team, other_titles,
                                                         season_number,
-                                                        total_episode, "", category, actors, "main_title_tv")
+                                                        total_episodes, "", categories, actors, "main_title_tv")
                     print("mainTitle" + main_title)
                     second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
                                                           audio_codec, channels, audio_num, team, other_titles,
                                                           season_number,
-                                                          total_episode, "", category, actors, "second_title_tv")
+                                                          total_episodes, "", categories, actors, "second_title_tv")
                     print("secondTitle" + second_title)
                     file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
                                                        video_format,
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec, channels, audio_num, team, other_titles,
                                                        season_number,
-                                                       total_episode, "", category, actors, "file_name_tv")
+                                                       total_episodes, "", categories, actors, "file_name_tv")
                     print("fileName" + file_name)
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
@@ -1195,29 +1209,29 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if do_rename_file:
                         print("对文件重新命名")
                         self.debugBrowserTV.append("开始对文件重新命名")
-                        i = episode_start_number
+                        i = episodes_start_number
                         for video_file in video_files:
                             e = str(i)
-                            while len(e) < len(str(episode_start_number + episode_num - 1)):
+                            while len(e) < len(str(episodes_start_number + episodes_num - 1)):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
                             rename_file_success, response = rename_file(video_file, file_name.replace('{集数}', e))
                             if rename_file_success:
-                                self.videoPathTV.setText(response)
                                 video_path = response
+                                self.videoPathTV.setText(video_path)
                                 self.debugBrowserTV.append("视频成功重新命名为：" + video_path)
                             else:
                                 self.debugBrowserTV.append("重命名失败：" + response)
                             i += 1
                         print("对文件夹重新命名")
                         self.debugBrowserTV.append("开始对文件夹重新命名")
-                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
-                                                                              replace('E{集数}', '').
-                                                                              replace('{集数}', ''))
+                        rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name.
+                                                                           replace('E{集数}', '').
+                                                                           replace('{集数}', ''))
                         if rename_directory_success:
-                            self.videoPathTV.setText(response)
                             video_path = response
+                            self.videoPathTV.setText(video_path)
                             self.debugBrowserTV.append("视频地址成功重新命名为：" + video_path)
                         else:
                             self.debugBrowserTV.append("重命名失败：" + response)
@@ -1227,6 +1241,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 self.debugBrowserTV.append("未成功获取到任何PT-Gen信息：" + response)
         except Exception as e:
             print(f"启动PtGen线程成功，但是重命名出错：{e}")
+            self.debugBrowserTV.append(f"启动PtGen线程成功，但是重命名出错：{e}")
             return False, [f"启动PtGen线程成功，但是重命名出错：{e}"]
 
     def make_torrent_button_tv_clicked(self):
@@ -1274,17 +1289,17 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         QApplication.processEvents()  # 处理事件
 
     def auto_feed_button_playlet_clicked(self):
-        mian_title, second_title, description, media_info, file_name, category, team, source = '', '', '', '', '', '', '', ''
-        mian_title += self.mainTitleBrowserPlaylet.toPlainText()
+        main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
+        main_title += self.mainTitleBrowserPlaylet.toPlainText()
         second_title += self.secondTitleBrowserPlaylet.toPlainText()
         description += self.descriptionBrowserPlaylet.toPlainText()
         media_info += self.mediainfoBrowserPlaylet.toPlainText()
         file_name += self.fileNameBrowserPlaylet.toPlainText()
-        category += "短剧"
         team = self.teamPlaylet.currentText()
         source = self.sourcePlaylet.currentText()
-        get_auto_feed_link_success, response = get_auto_feed_link(mian_title, second_title, description, media_info,
-                                                                  file_name, category, team, source, self.torrent_url)
+        category = "短剧"
+        get_auto_feed_link_success, response = get_auto_feed_link(main_title, second_title, description, media_info,
+                                                                  file_name, team, source, category, self.torrent_url)
         if get_auto_feed_link_success:
             self.debugBrowserPlaylet.append("auto_feed_link: " + response)
             pyperclip.copy(response)
@@ -1309,14 +1324,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.descriptionBrowserPlaylet.setText('')
             original_title = self.originalNameEditPlaylet.text()
             if original_title:
-                year, area, category, language = '', '', '', ''
+                year, area, categories, language = '', '', '', ''
                 year += self.yearEditPlaylet.text()
                 area += self.areaPlaylet.currentText()
-                category = self.get_category()
+                categories = self.get_categories()
                 language += self.languagePlaylet.currentText()
                 season_number = self.seasonBoxPlaylet.text()
                 self.descriptionBrowserPlaylet.append(
-                    get_playlet_description(original_title, year, area, category, language, season_number))
+                    get_playlet_description(original_title, year, area, categories, language, season_number))
             else:
                 self.debugBrowserPlaylet.append('您没有填写资源名称！')
         except Exception as e:
@@ -1376,7 +1391,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 res = response + res
                 self.debugBrowserPlaylet.append("成功获取截图：" + str(res))
                 # 判断是否需要上传图床
-                if auto_upload_screenshot:
+                if auto_upload_screenshot and len(res) > 0:
                     print("开始自动上传截图到图床：" + picture_bed_path)
                     self.debugBrowserPlaylet.append("开始自动上传截图到图床：" + picture_bed_path)
                     self.pictureUrlBrowserPlaylet.setText("")
@@ -1530,13 +1545,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     def get_name_button_playlet_clicked(self):
         try:
+            do_rename_file = get_settings("rename_file")
+            second_confirm_file_name = get_settings("second_confirm_file_name")
+            do_create_hard_link = get_settings("create_hard_link")
             self.get_description_playlet_clicked()
             original_title = self.originalNameEditPlaylet.text()
             english_title = ''
             english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\"\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
             widget = QWidget(self)
             if original_title != '':
-                if not re.match(english_pattern, original_title):
+                if not re.match(english_pattern, original_title) and second_confirm_file_name:
                     ok = QMessageBox.information(self, '资源名称不是英文',
                                                  '资源的名称是：' + original_title + '\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                  QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
@@ -1567,11 +1585,16 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             print('未输入任何数据')
                             self.debugBrowserPlaylet.append('未输入任何数据')
                             english_title = ''
+                else:
+                    english_title = chinese_name_to_pinyin(original_title)
+                    if not re.match(english_pattern, english_title):
+                        self.debugBrowserPlaylet.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
+                        return
                 year = self.yearEditPlaylet.text()
                 season = self.seasonBoxPlaylet.text()
                 total_episode = ""
                 episode_num = 0
-                episode_start_number = int(self.episodeStartBoxPlaylet.text())
+                episodes_start_number = validate_and_convert_to_int(self.episodesStartBoxTV.text(), 'episodes_start_number')
                 season_number = season
                 if len(season) < 2:
                     season = '0' + season
@@ -1586,9 +1609,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 playlet_source = ""
                 path = self.videoPathPlaylet.text().replace('file:///', '')
 
-                do_rename_file = get_settings("rename_file")
-                second_confirm_file_name = get_settings("second_confirm_file_name")
-                do_create_hard_link = get_settings("create_hard_link")
 
                 if do_rename_file and do_create_hard_link:
                     create_hard_link_success, response1 = create_hard_link(path)
@@ -1608,14 +1628,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if get_video_files_success:
                         print('检测到以下文件：', video_files)
                         episode_num = len(video_files)  # 获取视频文件的总数
-                        if episode_start_number == 1:
+                        if episodes_start_number == 1:
                             total_episode = '全' + str(episode_num) + '集'
                         else:
-                            if str(episode_start_number) == str(episode_start_number + episode_num - 1):
-                                total_episode = '第' + str(episode_start_number) + '集'
+                            if str(episodes_start_number) == str(episodes_start_number + episode_num - 1):
+                                total_episode = '第' + str(episodes_start_number) + '集'
                             else:
-                                total_episode = '第' + str(episode_start_number) + '-' + str(
-                                    episode_start_number + episode_num - 1) + '集'
+                                total_episode = '第' + str(episodes_start_number) + '-' + str(
+                                    episodes_start_number + episode_num - 1) + '集'
                     if get_video_info_success:
                         self.debugBrowserPlaylet.append("获取到关键参数：" + str(response))
                         video_format += response[0]
@@ -1631,20 +1651,20 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     playlet_source += self.playletSource.currentText()
                     print("收费类型、来源和小组参数获取成功")
                     self.debugBrowserPlaylet.append("收费类型、来源和小组参数获取成功")
-                    category = self.get_category()
-                    print('类型为：' + category)
-                    self.debugBrowserPlaylet.append('类型为：' + category)
+                    categories = self.get_categories()
+                    print('类型为：' + categories)
+                    self.debugBrowserPlaylet.append('类型为：' + categories)
                     main_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                         source, video_codec, bit_depth, hdr_format, frame_rate,
                                                         audio_codec, channels, audio_num, team, "", season_number,
-                                                        total_episode, playlet_source, category,
+                                                        total_episode, playlet_source, categories,
                                                         "", "main_title_playlet")
                     print("mainTitle" + main_title)
                     second_title = get_name_from_template(english_title, original_title, season, "", year, video_format,
                                                           source, video_codec, bit_depth, hdr_format, frame_rate,
                                                           audio_codec, channels, audio_num, team, "", season_number,
                                                           total_episode, playlet_source,
-                                                          category, "", "second_title_playlet")
+                                                          categories, "", "second_title_playlet")
                     print("secondTitle" + second_title)
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
                     file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
@@ -1652,7 +1672,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
                                                        audio_codec, channels, audio_num, team, "", season_number,
                                                        total_episode, playlet_source,
-                                                       category, "", "file_name_playlet")
+                                                       categories, "", "file_name_playlet")
                     print("fileName" + file_name)
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
@@ -1691,10 +1711,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if do_rename_file:
                         print("对文件重新命名")
                         self.debugBrowserPlaylet.append("开始对文件重新命名")
-                        i = episode_start_number
+                        i = episodes_start_number
                         for video_file in video_files:
                             e = str(i)
-                            while len(e) < len(str(episode_start_number + episode_num - 1)):
+                            while len(e) < len(str(episodes_start_number + episode_num - 1)):
                                 e = '0' + e
                             if len(e) == 1:
                                 e = '0' + e
@@ -1711,9 +1731,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
                         print("对文件夹重新命名")
                         self.debugBrowserPlaylet.append("开始对文件夹重新命名")
-                        rename_directory_success, response = rename_directory(os.path.dirname(video_path), file_name.
-                                                                              replace('E{集数}', '').
-                                                                              replace('{集数}', ''))
+                        rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name.
+                                                                           replace('E{集数}', '').
+                                                                           replace('{集数}', ''))
                         if rename_directory_success:
                             self.videoPathPlaylet.setText(response)
                             video_path = response
@@ -1750,44 +1770,44 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         else:
             self.debugBrowserPlaylet.append("制作种子失败：" + response)
 
-    def get_category(self):
-        category = ''
+    def get_categories(self):
+        categories = ''
         if self.checkBox_0.isChecked():
-            category += '剧情 '
+            categories += '剧情 '
         if self.checkBox_1.isChecked():
-            category += '爱情 '
+            categories += '爱情 '
         if self.checkBox_2.isChecked():
-            category += '喜剧 '
+            categories += '喜剧 '
         if self.checkBox_3.isChecked():
-            category += '甜虐 '
+            categories += '甜虐 '
         if self.checkBox_4.isChecked():
-            category += '甜宠 '
+            categories += '甜宠 '
         if self.checkBox_5.isChecked():
-            category += '恐怖 '
+            categories += '恐怖 '
         if self.checkBox_6.isChecked():
-            category += '动作 '
+            categories += '动作 '
         if self.checkBox_7.isChecked():
-            category += '穿越 '
+            categories += '穿越 '
         if self.checkBox_8.isChecked():
-            category += '重生 '
+            categories += '重生 '
         if self.checkBox_9.isChecked():
-            category += '逆袭 '
+            categories += '逆袭 '
         if self.checkBox_10.isChecked():
-            category += '科幻 '
+            categories += '科幻 '
         if self.checkBox_11.isChecked():
-            category += '武侠 '
+            categories += '武侠 '
         if self.checkBox_12.isChecked():
-            category += '都市 '
+            categories += '都市 '
         if self.checkBox_13.isChecked():
-            category += '古装 '
+            categories += '古装 '
         if self.checkBox_14.isChecked():
-            category += '神豪 '
+            categories += '神豪 '
         if self.checkBox_15.isChecked():
-            category += '霸总 '
-        if category != "":
-            category = category[: -1]
-            category = category.replace(' ', ' / ')
-        return category
+            categories += '霸总 '
+        if categories != "":
+            categories = categories[: -1]
+            categories = categories.replace(' ', ' / ')
+        return categories
 
     # 以上是Playlet页面的代码
     # 以下是Settings页面的代码

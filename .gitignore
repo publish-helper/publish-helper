@@ -104,3 +104,4 @@ data/modules/**
 *.bak
 release/
 huggingface_cache
+/media/

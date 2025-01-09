@@ -11,12 +11,14 @@ from src.core.tool import get_settings, get_abbreviation
 
 # 从PT-Gen响应中读取关键数据
 def get_pt_gen_info(description):
+    print(f'获取到简介：{description}')
     description = description.replace("\\n", "\n")
     description = description.replace("\\\n", "\\n")
     print(description)
     # 正则表达式
     year_match = re.search(r"◎年　　代\s*(\d{4})", description)
     category_match = re.search(r"◎类　　别\s*([^\n]*)", description)
+    episodes_match = re.search(r"◎集　　数\s*(\d+)", description)  # 匹配集数
 
     # 正则表达式获取名称
     pattern = r"◎片　　名　(.*?)\n|◎译　　名　(.*?)\n"
@@ -86,13 +88,17 @@ def get_pt_gen_info(description):
 
     if '◎语　　言' in category:
         category = "暂无分类"
+
+    # 提取集数
+    episodes = int(episodes_match.group(1)) if episodes_match else None
+
     print("原始名称:", original_title)
     print("英文名称:", english_title)
     print("年份:", year_match.group(1) if year_match else None)
     print("其他名称:", other_titles)
     print("类别:", category)
     print("演员:", str(actors))
-    return original_title, english_title, year_match.group(1) if year_match else None, other_titles, category, actors
+    return original_title, english_title, year_match.group(1) if year_match else None, other_titles, category, actors, episodes
 
 
 def get_video_info(file_path):
@@ -113,12 +119,14 @@ def get_video_info(file_path):
         channels = ""
         width = ""
         height = ""
+        tags = []
         for track in media_info.tracks:
+            # 添加General信息
             if track.track_type == "General":
                 if track.other_frame_rate:
                     frame_rate = track.other_frame_rate[0]
 
-                # ... 添加其他General信息
+            # 添加Video信息
             elif track.track_type == "Video":
                 if track.other_width:
                     width += track.other_width[0]
@@ -138,16 +146,26 @@ def get_video_info(file_path):
                     if "x266" in track.writing_library:
                         video_codec = "x266"
 
-                        # ... 添加其他Video信息
+            # 添加Audio信息
             elif track.track_type == "Audio":
                 if audio_count == 0:
                     if track.commercial_name:
                         audio_codec = track.commercial_name
                     if track.channel_layout:
                         channels = track.channel_layout
+                if track.other_language == 'Chinese' and '国语' not in tags:
+                    tags.append('国语')
+                if track.other_language == 'English' and '英语' not in tags:
+                    tags.append('英语')
                 audio_count += 1
 
-                # ... 添加其他Audio信息
+            # 添加Text信息
+            elif track.track_type == "Text":
+                if track.other_language == 'Chinese' and '中字' not in tags:
+                    tags.append('中字')
+                if track.other_language == 'English' and '英字' not in tags:
+                    tags.append('英字')
+
         if extract_numbers(width) > extract_numbers(height):  # 获取较长边的分辨率
             video_format += width
         else:
@@ -165,7 +183,7 @@ def get_video_info(file_path):
             audio_num = str(audio_count) + get_abbreviation("Audio")
         return True, [video_format, get_abbreviation(video_codec), get_abbreviation(bit_depth),
                       get_abbreviation(hdr_format), get_abbreviation(frame_rate), get_abbreviation(audio_codec),
-                      get_abbreviation(channels), audio_num]
+                      get_abbreviation(channels), audio_num, tags]
     except OSError as e:
         # 文件路径相关的错误
         print(f"文件路径错误: {e}。")
@@ -236,7 +254,7 @@ def extract_numbers(string):
 
 def get_name_from_template(english_title, original_title, season, episode, year, video_format, source, video_codec,
                            bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, team, other_titles,
-                           season_number, total_episode, playlet_source, category, actors, template):
+                           season_number, total_episode, playlet_source, categories, actors, template):
     name = get_settings(template)  # 获取模板
     # 开始替换关键字
     name = name.replace("{en_title}", english_title)
@@ -258,7 +276,7 @@ def get_name_from_template(english_title, original_title, season, episode, year,
     name = name.replace("{season_number}", season_number)
     name = name.replace("{total_episode}", total_episode)
     name = name.replace("{playlet_source}", playlet_source)
-    name = name.replace("{category}", category)
+    name = name.replace("{categories}", categories)
     name = name.replace("{actors}", actors)
     if "main_title" in template:
         name = name.replace('_', ' ')
@@ -299,7 +317,7 @@ def rename_file(file_path, new_file_name):
         return False, f"重命名文件时出错: {e}"
 
 
-def rename_directory(current_dir, new_name):
+def rename_folder(current_folder_path, new_name):
     """
     对目标文件夹进行重命名。
 
@@ -314,17 +332,17 @@ def rename_directory(current_dir, new_name):
     try:
         new_name = re.sub(r'[<>:\"/\\|?*]', '.', new_name)
         # 检查当前路径是否为一个存在的目录
-        if not os.path.isdir(current_dir):
+        if not os.path.isdir(current_folder_path):
             print("提供的路径不是一个目录或不存在")
             raise ValueError("提供的路径不是一个目录或不存在")
 
         # 获取当前目录的父目录
-        parent_dir = os.path.dirname(current_dir)
+        parent_dir = os.path.dirname(current_folder_path)
         # 构造新的目录路径
         new_dir = parent_dir + '/' + new_name
 
         # 重命名目录
-        os.rename(current_dir, new_dir)
+        os.rename(current_folder_path, new_dir)
         print(f"目录已重命名为: {new_dir}")
         return True, new_dir
 

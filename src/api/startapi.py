@@ -1,4 +1,7 @@
+import io
 import os
+from dataclasses import dataclass, asdict
+from pathlib import Path
 
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
@@ -6,12 +9,13 @@ from flask_cors import CORS
 from src.core.mediainfo import get_media_info
 from src.core.picturebed import upload_picture
 from src.core.ptgen import get_pt_gen_description
-from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_template, rename_file, rename_directory, \
+from src.core.rename import get_video_info, get_pt_gen_info, get_name_from_template, rename_file, rename_folder, \
     move_file_to_folder, create_hard_link
 from src.core.screenshot import get_screenshot, get_thumbnail
 from src.core.tool import check_path_and_find_video, get_settings, make_torrent, delete_season_number, \
     get_video_files, update_combo_box_data, update_settings, \
-    get_playlet_description, get_combo_box_data, get_settings_json, update_settings_json, combine_directories
+    get_playlet_description, get_combo_box_data, get_settings_json, update_settings_json, combine_directories, \
+    get_data_from_pt_gen_description, validate_and_convert_to_int
 
 api = Flask(__name__)
 CORS(api)
@@ -19,6 +23,19 @@ CORS(api)
 
 def start_api():
     api.run(host='0.0.0.0', port=int(get_settings("api_port")), debug=True, use_reloader=False, threaded=True)
+
+
+def to_camel_case(snake_str):
+    """Convert snake_case string to camelCase."""
+    components = snake_str.split('_')
+    # We capitalize the first letter of each component except the first one
+    # with the 'title' method and join them together.
+    return components[0] + ''.join(x.title() or '_' for x in components[1:])
+
+
+def convert_to_camel_case(data_class_instance):
+    original_dict = asdict(data_class_instance)
+    return {to_camel_case(key): value for key, value in original_dict.items()}
 
 
 @api.route('/api/getScreenshot', methods=['GET'])
@@ -29,13 +46,15 @@ def api_get_screenshot():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
-        # 确认绝对路径为temp目录即可
+
+        # 为了保证安全，确认绝对路径为media目录
         if not path.startswith(media_path):
             return jsonify({
                 "data": {},
-                "message": "无权访问此文件。",
+                "message": "无权访问此路径下的视频文件，请把视频文件储存在media目录下。",
                 "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
             }), 401
+
         if path == '':
             return jsonify({
                 "data": {
@@ -107,8 +126,9 @@ def api_get_screenshot():
             if screenshot_number < 6:
                 if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
                     if screenshot_start_percentage < screenshot_end_percentage:
-                        is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+                        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
                         if is_video_path == 1 or is_video_path == 2:
+                            video_path = response
                             screenshot_success, response = get_screenshot(video_path, screenshot_storage_path,
                                                                           screenshot_number,
                                                                           screenshot_threshold,
@@ -146,7 +166,7 @@ def api_get_screenshot():
                                     "screenshotPath": "",
                                     "videoPath": ""
                                 },
-                                "message": f"获取视频路径失败：{video_path}",
+                                "message": f"获取视频路径失败：{response}",
                                 "statusCode": "BACKEND_PROCESSING_ERROR"
                             }), 400
                     else:
@@ -198,7 +218,7 @@ def api_get_screenshot():
             },
             "message": f"获取截图失败：{e}",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getThumbnail', methods=['GET'])
@@ -209,6 +229,14 @@ def api_get_thumbnail():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
+
+        # 为了保证安全，确认绝对路径为media目录
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此路径下的视频文件，请把视频文件储存在media目录下。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
 
         if path == '':
             return jsonify({
@@ -265,17 +293,19 @@ def api_get_thumbnail():
         if thumbnail_rows > 0 and thumbnail_cols > 0:
             if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
                 if screenshot_start_percentage < screenshot_end_percentage:
-                    is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+                    is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
                     if is_video_path == 1 or is_video_path == 2:
+                        video_path = response
                         get_thumbnail_success, response = get_thumbnail(video_path, screenshot_storage_path,
                                                                         thumbnail_rows,
                                                                         thumbnail_cols, screenshot_start_percentage,
                                                                         screenshot_end_percentage)
 
                         if get_thumbnail_success:
+                            thumbnail_path = response
                             return jsonify({
                                 "data": {
-                                    "thumbnailPath": response,
+                                    "thumbnailPath": thumbnail_path,
                                     "videoPath": video_path
                                 },
                                 "message": "获取截图成功。",
@@ -296,7 +326,7 @@ def api_get_thumbnail():
                                 "thumbnailPath": "",
                                 "videoPath": ""
                             },
-                            "message": f"获取视频路径失败：{video_path}",
+                            "message": f"获取视频路径失败：{response}",
                             "statusCode": "BACKEND_PROCESSING_ERROR"
                         }), 400
                 else:
@@ -334,7 +364,7 @@ def api_get_thumbnail():
             },
             "message": f"获取截图失败：{e}",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/uploadPicture', methods=['POST'])
@@ -374,10 +404,11 @@ def api_upload_picture():
 
         upload_picture_success, response = upload_picture(picture_bed_api_url, picture_bed_api_token, picture_path)
         if upload_picture_success:
+            picture_bbs_url = response
             return jsonify({
                 "data": {
-                    "pictureBbCode": response,  # 注意是[img]1.png[/img]的bbsCode格式
-                    "pictureUrl": response[5:-6]
+                    "pictureBbCode": picture_bbs_url,  # 注意是[img]1.png[/img]的bbsCode格式
+                    "pictureUrl": picture_bbs_url[5:-6]
                 },
                 "message": "上传图片成功。",
                 "statusCode": "OK"
@@ -399,7 +430,7 @@ def api_upload_picture():
             },
             "message": f"上传图片失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getMediaInfo', methods=['GET'])
@@ -410,7 +441,7 @@ def api_get_media_info():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
-        # 确认绝对路径为temp目录即可
+        # 为了安全，确认绝对路径media目录
         if not path.startswith(media_path):
             return jsonify({
                 "data": {},
@@ -433,17 +464,19 @@ def api_get_media_info():
                     "mediaInfo": "",
                     "videoPath": ""
                 },
-                "message": "您提供的图片路径不存在。",
+                "message": "您提供的资源路径不存在。",
                 "statusCode": "FILE_PATH_ERROR"
             }), 422
 
-        is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
+        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
+            video_path = response
             get_media_info_success, response = get_media_info(video_path)
             if get_media_info_success:
+                media_info = response
                 return jsonify({
                     "data": {
-                        "mediaInfo": response,
+                        "mediaInfo": media_info,
                         "videoPath": video_path
                     },
                     "message": "获取MediaInfo成功。",
@@ -464,7 +497,7 @@ def api_get_media_info():
                     "mediaInfo": "",
                     "videoPath": ""
                 },
-                "message": f"获取视频路径失败：{video_path}。",
+                "message": f"获取视频路径失败：{response}。",
                 "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
@@ -475,7 +508,7 @@ def api_get_media_info():
             },
             "message": f"获取MediaInfo失败，错误：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getVideoInfo', methods=['GET'])
@@ -486,6 +519,13 @@ def api_get_video_info():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
+        # 为了安全，确认绝对路径media目录
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
         if path == '':
             return jsonify({
                 "data": {
@@ -520,9 +560,9 @@ def api_get_video_info():
                 "statusCode": "FILE_PATH_ERROR"
             }), 422
 
-        is_video_path, video_path = check_path_and_find_video(path)  # 视频资源的路径
-
+        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
+            video_path = response
             get_video_info_success, response = get_video_info(video_path)
             if get_video_info_success:
                 print("获取到关键参数：" + str(response))
@@ -578,7 +618,7 @@ def api_get_video_info():
                     "channels": "",
                     "audioNum": ""
                 },
-                "message": f"获取视频路径失败：{video_path}。",
+                "message": f"获取视频路径失败：{response}。",
                 "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
@@ -596,7 +636,7 @@ def api_get_video_info():
             },
             "message": f"获取视频关键参数失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getPtGenDescription', methods=['GET'])
@@ -643,7 +683,7 @@ def api_get_pt_gen_description():
             },
             "message": f"获取PT-Gen简介失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getPlayletDescription', methods=['GET'])
@@ -681,7 +721,7 @@ def api_get_playlet_description():
             },
             "message": f"获取短剧简介失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getPtGenInfo', methods=['GET'])
@@ -748,7 +788,7 @@ def api_get_pt_gen_info():
             },
             "message": f"对于简介的分析有错误：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/makeTorrent', methods=['POST'])
@@ -759,13 +799,15 @@ def api_make_torrent():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
-        # 确认绝对路径为temp目录即可
+
+        # 为保证安全，确认绝对路径为media目录
         if not path.startswith(media_path):
             return jsonify({
                 "data": {},
                 "message": "无权访问此文件。",
                 "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
             }), 401
+
         if path == '':
             return jsonify({
                 "data": {
@@ -813,7 +855,7 @@ def api_make_torrent():
             },
             "message": f"制作种子失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 422
+        }), 500
 
 
 @api.route('/api/getNameFromTemplate', methods=['GET'])
@@ -883,72 +925,69 @@ def api_get_name_from_template():
             },
             "message": f"获取名称失败：{e}",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/renameFolder', methods=['POST'])
-# 用于重命名文件
+# 用于重命名文件夹
 def api_rename_folder():
     try:
         # 从请求URL中获取参数
-        file_path = request.args.get('currentDir', default='', type=str)  # 必须信息
+        folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
-        file_path = os.path.abspath(os.path.join(media_path, file_path))
-        if file_path == '':
+        folder_path = os.path.abspath(os.path.join(media_path, folder_path))
+        # 为保证安全，确认绝对路径为media目录
+        if not folder_path.startswith(media_path):
             return jsonify({
-                "data": {
-                    "newFilePath": ""
-                },
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+        if folder_path == '':
+            return jsonify({
+                "data": {},
                 "message": "缺少文件路径。",
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        if not os.path.exists(file_path):
+        if not os.path.exists(folder_path):
             return jsonify({
-                "data": {
-                    "newFilePath": ""
-                },
+                "data": {},
                 "message": "您提供的文件路径不存在。",
                 "statusCode": "FILE_PATH_ERROR"
             }), 422
 
-        new_file_name = request.args.get('newFileName', default='', type=str)  # 必须信息
+        new_folder_name = request.args.get('newFolderName', default='', type=str)  # 必须信息
 
-        if new_file_name == '':
+        if new_folder_name == '':
             return jsonify({
-                "data": {
-                    "newFilePath": ""
-                },
+                "data": {},
                 "message": "缺少需要重命名的名称信息。",
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        rename_success, response = rename_directory(file_path, new_file_name)
-        response = response.replace(media_path + "/", "")
+        rename_success, response = rename_folder(folder_path, new_folder_name)
         if rename_success:
+            new_folder_path = response.replace(media_path + "/", "")
             return jsonify({
                 "data": {
-                    "newFilePath": response
+                    "newFolderPath": new_folder_path
                 },
                 "message": "重命名文件成功。",
                 "statusCode": "OK"
             })
         else:
             return jsonify({
-                "data": {
-                    "newFilePath": ""
-                },
+                "data": {},
                 "message": f"重命名文件失败：{response}。",
                 "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
         return jsonify({
-            "data": {
-                "newFilePath": ""
-            },
+            "data": {},
             "message": f"重命名文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/renameFile', methods=['POST'])
@@ -959,6 +998,15 @@ def api_rename_file():
         file_path = request.args.get('filePath', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         file_path = os.path.abspath(os.path.join(media_path, file_path))
+
+        # 为保证安全，确认绝对路径为media目录
+        if not file_path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
         if file_path == '':
             return jsonify({
                 "data": {
@@ -988,12 +1036,12 @@ def api_rename_file():
                 "statusCode": "MISSING_REQUIRED_PARAMETER"
             }), 422
 
-        rename_success, response = rename_file(file_path, new_file_name)
-        response = response.replace(media_path + "/", "")
+        rename_success, new_file_path = rename_file(file_path, new_file_name)
         if rename_success:
+            new_file_path = new_file_path.replace(media_path + "/", "")
             return jsonify({
                 "data": {
-                    "newFilePath": response
+                    "newFilePath": new_file_path
                 },
                 "message": "重命名文件成功。",
                 "statusCode": "OK"
@@ -1003,7 +1051,7 @@ def api_rename_file():
                 "data": {
                     "newFilePath": ""
                 },
-                "message": f"重命名文件失败：{response}。",
+                "message": f"重命名文件失败：{new_file_path}。",
                 "statusCode": "BACKEND_PROCESSING_ERROR"
             }), 400
     except Exception as e:
@@ -1013,7 +1061,7 @@ def api_rename_file():
             },
             "message": f"重命名文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/createHardLink', methods=['POST'])
@@ -1024,6 +1072,15 @@ def api_create_hard_link():
         path = request.args.get('path', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         path = os.path.abspath(os.path.join(media_path, path))
+
+        # 为保证安全，确认绝对路径为media目录
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
         if path == '':
             return jsonify({
                 "data": {
@@ -1067,7 +1124,7 @@ def api_create_hard_link():
             },
             "message": f"创建硬链接失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/moveFileToFolder', methods=['POST'])
@@ -1075,7 +1132,17 @@ def api_create_hard_link():
 def api_move_file_to_folder():
     try:
         # 从请求URL中获取参数
-        file_path = request.args.get('filePath', default='', type=str)  # 必须信息
+        path = request.args.get('filePath', default='', type=str)  # 必须信息
+        media_path = combine_directories('media')
+        file_path = os.path.abspath(os.path.join(media_path, path))
+
+        # 为保证安全，确认绝对路径为media目录
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
 
         if file_path == '':
             return jsonify({
@@ -1131,7 +1198,7 @@ def api_move_file_to_folder():
             },
             "message": f"移动文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/renameEpisode', methods=['POST'])
@@ -1142,6 +1209,15 @@ def api_rename_episode():
         folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         folder_path = os.path.abspath(os.path.join(media_path, folder_path))
+
+        # 为保证安全，确认绝对路径为media目录
+        if not folder_path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
         if folder_path == '':
             return jsonify({
                 "data": {
@@ -1176,9 +1252,10 @@ def api_rename_episode():
         if episode_start_number == '' or episode_start_number == '':
             episode_start_number = '1'
 
-        is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+        is_video_path, response = check_path_and_find_video(folder_path)  # 获取视频的路径
 
         if is_video_path == 2:  # 视频路径是文件夹
+            video_path = response
             get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
 
             if get_video_files_success:
@@ -1205,9 +1282,9 @@ def api_rename_episode():
                         raise OSError("重命名文件失败：" + response)
 
                 print("开始对文件夹重新命名")
-                rename_directory_success, response = rename_directory(os.path.dirname(video_path), new_file_name.
-                                                                      replace('E{集数}', '').
-                                                                      replace('{集数}', ''))
+                rename_directory_success, response = rename_folder(os.path.dirname(video_path), new_file_name.
+                                                                   replace('E{集数}', '').
+                                                                   replace('{集数}', ''))
 
                 if rename_directory_success:
                     new_folder_path_final = response.replace(media_path, "")
@@ -1236,7 +1313,7 @@ def api_rename_episode():
                     "data": {
                         "newFolderPath": ""
                     },
-                    "message": f"不支持文件路径：{video_path}。",
+                    "message": f"不支持文件路径：{response}。",
                     "statusCode": "BACKEND_PROCESSING_ERROR"
                 }), 400
             else:
@@ -1244,7 +1321,7 @@ def api_rename_episode():
                     "data": {
                         "newFolderPath": ""
                     },
-                    "message": f"资源路径错误：{video_path}。",
+                    "message": f"资源路径错误：{response}。",
                     "statusCode": "BACKEND_PROCESSING_ERROR"
                 }), 400
     except Exception as e:
@@ -1254,7 +1331,7 @@ def api_rename_episode():
             },
             "message": f"批量重命名失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getTotalEpisode', methods=['GET'])
@@ -1265,6 +1342,14 @@ def api_get_total_episode():
         folder_path = request.args.get('folderPath', default='', type=str)  # 必须信息
         media_path = combine_directories('media')
         folder_path = os.path.abspath(os.path.join(media_path, folder_path))
+
+        # 为保证安全，确认绝对路径为media目录
+        if not folder_path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此文件。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
 
         if folder_path == '':
             return jsonify({
@@ -1289,7 +1374,7 @@ def api_get_total_episode():
         if episode_start_number == '' or episode_start_number == '':
             episode_start_number = '1'
 
-        is_video_path, video_path = check_path_and_find_video(folder_path)  # 获取视频的路径
+        is_video_path, response = check_path_and_find_video(folder_path)  # 获取视频的路径
 
         if is_video_path == 2:  # 视频路径是文件夹
             get_video_files_success, video_files = get_video_files(folder_path)  # 获取文件夹内部的所有文件
@@ -1328,7 +1413,7 @@ def api_get_total_episode():
                     "data": {
                         "totalEpisode": ""
                     },
-                    "message": f"不支持文件路径：{video_path}。",
+                    "message": f"不支持文件路径：{response}。",
                     "statusCode": "BACKEND_PROCESSING_ERROR"
                 }), 400
             else:
@@ -1336,7 +1421,7 @@ def api_get_total_episode():
                     "data": {
                         "totalEpisode": ""
                     },
-                    "message": f"资源路径错误：{video_path}。",
+                    "message": f"资源路径错误：{response}。",
                     "statusCode": "BACKEND_PROCESSING_ERROR"
                 }), 400
     except Exception as e:
@@ -1346,7 +1431,7 @@ def api_get_total_episode():
             },
             "message": f"批量重命名失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getComboBoxData', methods=['GET'])
@@ -1398,7 +1483,7 @@ def api_get_combo_box_data():
             },
             "message": f"获取数据失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/updateComboBoxData', methods=['POST'])
@@ -1449,7 +1534,7 @@ def api_update_combo_box_data():
             "data": {},
             "message": f"更新数据失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getSettings', methods=['GET'])
@@ -1483,7 +1568,7 @@ def api_get_settings():
             },
             "message": f"获取设置信息失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/updateSettings', methods=['POST'])
@@ -1520,7 +1605,7 @@ def api_update_settings():
             "data": {},
             "message": f"更新设置信息失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getFile', methods=['GET'])
@@ -1541,6 +1626,7 @@ def api_get_file():
         # 先构建绝对路径，再进行校验防止越权
         temp_path = combine_directories("temp")
         target_path = os.path.abspath(file_path)
+
         # 确认绝对路径为temp目录即可
         if not target_path.startswith(temp_path):
             return jsonify({
@@ -1565,7 +1651,7 @@ def api_get_file():
             "data": {},
             "message": f"获取文件失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/settings', methods=['GET'])
@@ -1588,7 +1674,7 @@ def api_settings():
             },
             "message": f"获取设置信息失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/settings/update', methods=['POST'])
@@ -1608,7 +1694,7 @@ def api_settings_update():
             "data": {},
             "message": f"更新设置信息失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/getPTGenInfoByResourceUrl', methods=['GET'])
@@ -1679,11 +1765,11 @@ def api_get_pt_gen_info_by_url():
             },
             "message": f"获取PT-Gen简介失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 @api.route('/api/media/file/list', methods=['GET'])
-# 用于获取PT-Gen简介，传入一个豆瓣链接，返回PT-Gen简介
+# 用于获取文件
 def api_medis_path():
     try:
         # 从请求URL中获取参数
@@ -1705,7 +1791,7 @@ def api_medis_path():
             },
             "message": "获取成功",
             "statusCode": "OK"
-        })
+        }), 200
 
     except Exception as e:
         return jsonify({
@@ -1714,7 +1800,7 @@ def api_medis_path():
             },
             "message": f"获取路径失败：{e}。",
             "statusCode": "GENERAL_ERROR"
-        }), 400
+        }), 500
 
 
 def list_files_and_dirs(target_path):
@@ -1764,3 +1850,535 @@ def convert_size(size_bytes):
         i += 1
 
     return "{:.2f} {}".format(size_bytes, size_name[i])
+
+
+@api.route('/api/autoHandleVideo', methods=['GET'])
+# 用于获取MediaInfo，传入一个文件地址或者一个文件夹地址，返回视频文件路径和MediaInfo
+def api_auto_handle_movie():
+    try:
+        resource_url = request.args.get("resourceUrl", default='', type=str)  # 必须信息
+        path = request.args.get('path', default='', type=str)  # 必须信息
+        source = request.args.get('source', default='', type=str)  # 必须信息
+        team = request.args.get('team', default='', type=str)  # 必须信息
+        category = request.args.get('category', default='', type=str)  # 必须信息
+        season = request.args.get('season', default='1', type=str)
+        episodes_start_number = request.args.get('episodesStartNumber', default='1', type=str)
+
+        if season == '':
+            season = '1'
+        if episodes_start_number == '':
+            episodes_start_number = 1
+        else:
+            episodes_start_number = validate_and_convert_to_int(episodes_start_number, 'episodes_start_number')
+
+        # 为了保证安全，只能访问media目录下的资源
+        media_path = combine_directories('media')
+        path = os.path.abspath(os.path.join(media_path, path))
+        if not path.startswith(media_path):
+            return jsonify({
+                "data": {},
+                "message": "无权访问此路径下的视频文件，请把视频文件储存在media目录下。",
+                "statusCode": "UNAUTHORIZED_ACCESS_ERROR"
+            }), 401
+
+        if resource_url == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少资源链接。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if path == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少资源文件路径。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if source == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少资源来源信息。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if team == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少制作组信息。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        if category == '':
+            return jsonify({
+                "data": {},
+                "message": "缺少资源类型信息。",
+                "statusCode": "MISSING_REQUIRED_PARAMETER"
+            }), 422
+
+        @dataclass
+        class Data:
+            """数据，包含返回数据"""
+            """地区"""
+            area: str
+            """音频编码"""
+            audio_codec: str
+            """音轨数"""
+            audio_num: str
+            """色深"""
+            bit_depth: str
+            """类型"""
+            category: str
+            """声道数"""
+            channels: str
+            """简介"""
+            description: str
+            """豆瓣链接"""
+            douban_url: str
+            """文件名"""
+            file_name: str
+            """帧率"""
+            frame_rate: str
+            """HDR格式"""
+            hdr_format: str
+            """IMDb链接"""
+            imdb_url: str
+            """MI"""
+            media_info: str
+            """媒介"""
+            medium: str
+            """主标题"""
+            main_title: str
+            """副标题"""
+            second_title: str
+            """来源"""
+            source: str
+            """标签，部分可识别的标签"""
+            tags: []
+            """小组"""
+            team: str
+            """种子文件"""
+            torrent_file_url: str
+            """视频编码"""
+            video_codec: str
+            """分辨率"""
+            video_format: str
+
+            def to_dict(self):
+                return asdict(self)
+
+        data_instance = Data(
+            area='',
+            audio_codec='',
+            audio_num='',
+            bit_depth='',
+            category='',
+            channels='',
+            description='',
+            douban_url='',
+            file_name='',
+            frame_rate='',
+            hdr_format='',
+            imdb_url='',
+            media_info='',
+            medium='',
+            main_title='',
+            second_title='',
+            source='',
+            tags=[],
+            team='',
+            torrent_file_url='/api/getFile?filePath=',
+            video_codec='',
+            video_format='', )
+        data_instance.source = source
+        data_instance.team = team
+        if category == 'Movie':
+            data_instance.category = '电影'
+        if category == 'TV':
+            data_instance.category = '剧集'
+        if 'AGSV' in team:
+            data_instance.tags.extend(['官方', '冰种'])
+
+        # 从后台读取参数
+        pt_gen_api_url = get_settings("pt_gen_api_url")
+        screenshot_storage_path = "temp/pic"  # 默认储存位置，防止无法访问
+        screenshot_number = int(get_settings("screenshot_number"))
+        screenshot_threshold = float(get_settings("screenshot_threshold"))
+        screenshot_start_percentage = float(get_settings("screenshot_start_percentage"))
+        screenshot_end_percentage = float(get_settings("screenshot_end_percentage"))
+        screenshot_min_interval_percentage = 0.01
+        picture_bed_api_url = get_settings("picture_bed_api_url")
+        picture_bed_api_token = get_settings("picture_bed_api_token")
+        thumbnail_rows = int(get_settings("thumbnail_rows"))
+        thumbnail_cols = int(get_settings("thumbnail_cols"))
+        do_get_thumbnail = bool(get_settings("do_get_thumbnail"))
+        delete_screenshot = bool(get_settings("delete_screenshot"))
+
+        # 获取pt_gen简介
+        get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
+        if not get_pt_gen_description_success:
+            # 一次不成功，再试一次
+            get_pt_gen_description_success, response = get_pt_gen_description(pt_gen_api_url, resource_url)
+            if not get_pt_gen_description_success:
+                raise RuntimeError(f'获取PT-Gen简介失败：{response}')
+
+        # print(f'获取到pt_gen响应：{response}')
+        data_instance.description = response
+
+        # 获取截图
+        if screenshot_number >= 0:
+            if screenshot_number < 6:
+                if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
+                    if screenshot_start_percentage < screenshot_end_percentage:
+                        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+                        if is_video_path == 1 or is_video_path == 2:
+                            video_path = response
+                            screenshot_success, response = get_screenshot(video_path, screenshot_storage_path,
+                                                                          screenshot_number,
+                                                                          screenshot_threshold,
+                                                                          screenshot_start_percentage,
+                                                                          screenshot_end_percentage,
+                                                                          screenshot_min_interval_percentage)
+
+                            if screenshot_success:
+                                # 获取截图成功了
+                                picture_paths = response
+                                for picture_path in picture_paths:
+                                    # 开始逐个上传截图
+                                    upload_picture_success, response = upload_picture(picture_bed_api_url,
+                                                                                      picture_bed_api_token,
+                                                                                      picture_path)
+                                    if not upload_picture_success:
+                                        # 一次不成功，再试一次
+                                        upload_picture_success, response = upload_picture(picture_bed_api_url,
+                                                                                          picture_bed_api_token,
+                                                                                          picture_path)
+                                        if not upload_picture_success:
+                                            raise RuntimeError(f'上传图片到图床失败：{response}')
+                                    # 上传截图成功，把截图bbs_url粘贴到简介后面
+                                    picture_bbs_url = response
+                                    data_instance.description += "\n" + picture_bbs_url
+                                    # 是否删除截图
+                                    if delete_screenshot:
+                                        if os.path.exists(picture_path):
+                                            # 删除文件
+                                            os.remove(picture_path)
+                                            print(f"文件 {picture_path} 已被删除。")
+                                        else:
+                                            print(f"文件 {picture_path} 不存在。")
+                            else:
+                                raise RuntimeError(f'截图失败：{response[0]}')
+                        else:
+                            raise ValueError(f'资源的路径不正确：{response}')
+                    else:
+                        raise ValueError(
+                            f"截图起始点不可以大于终止点，您设置的起始点为{screenshot_start_percentage}，终止点为{screenshot_end_percentage}")
+                else:
+                    raise ValueError(
+                        f"截图起始点和终止点均需要在0-1之间，您设置的起始点为{screenshot_start_percentage}，终止点为{screenshot_end_percentage}")
+            else:
+                raise ValueError(f"截图最多5张，您选择了{screenshot_number}张")
+        else:
+            raise ValueError(f"截图最少0张，您选择了{screenshot_number}张")
+
+        if do_get_thumbnail:
+            # 获取缩略图
+            if thumbnail_rows > 0 and thumbnail_cols > 0:
+                if 0 < screenshot_start_percentage < 1 and 0 < screenshot_end_percentage < 1:
+                    if screenshot_start_percentage < screenshot_end_percentage:
+                        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+                        if is_video_path == 1 or is_video_path == 2:
+                            video_path = response
+                            get_thumbnail_success, response = get_thumbnail(video_path, screenshot_storage_path,
+                                                                            thumbnail_rows,
+                                                                            thumbnail_cols, screenshot_start_percentage,
+                                                                            screenshot_end_percentage)
+                            if get_thumbnail_success:
+                                thumbnail_path = response
+                                upload_picture_success, response = upload_picture(picture_bed_api_url,
+                                                                                  picture_bed_api_token,
+                                                                                  thumbnail_path)
+                                if not upload_picture_success:
+                                    # 一次不成功，再试一次
+                                    upload_picture_success, response = upload_picture(picture_bed_api_url,
+                                                                                      picture_bed_api_token,
+                                                                                      thumbnail_path)
+                                    if not upload_picture_success:
+                                        raise RuntimeError(f'上传图片到图床失败：{response}')
+                                # 上传截图成功，把缩略图bbs_url粘贴到简介后面
+                                thumbnail_bbs_url = response
+                                data_instance.description += "\n" + thumbnail_bbs_url
+                                # 是否删除截图
+                                if delete_screenshot:
+                                    if os.path.exists(thumbnail_path):
+                                        # 删除文件
+                                        os.remove(thumbnail_path)
+                                        print(f"文件 {thumbnail_path} 已被删除。")
+                                    else:
+                                        print(f"文件 {thumbnail_path} 不存在。")
+                            else:
+                                raise RuntimeError(f'生成缩略图失败：{response}')
+                        else:
+                            raise ValueError(f'资源的路径不正确：{response}')
+                    else:
+                        raise ValueError(
+                            f"截图起始点不可以大于终止点，您设置的起始点为{screenshot_start_percentage}，终止点为{screenshot_end_percentage}")
+                else:
+                    raise ValueError(
+                        f"截图起始点和终止点均需要在0-1之间，您设置的起始点为{screenshot_start_percentage}，终止点为{screenshot_end_percentage}")
+            else:
+                raise ValueError(f"缩略图的行列数均需要大于0，您设置的行数为{thumbnail_rows}，列数为{thumbnail_cols}")
+
+        # 获取VideoInfo
+        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+        if is_video_path == 1 or is_video_path == 2:
+            video_path = response
+            get_video_info_success, response = get_video_info(video_path)
+            if get_video_info_success:
+                print("获取到VideoInfo：" + str(response))
+                data_instance.video_format = response[0]
+                data_instance.video_codec = response[1]
+                data_instance.bit_depth = response[2]
+                data_instance.hdr_format = response[3]
+                data_instance.frame_rate = response[4]
+                data_instance.audio_codec = response[5]
+                data_instance.channels = response[6]
+                data_instance.audio_num = response[7]
+                data_instance.tags.extend(response[8])
+            else:
+                raise RuntimeError(f'获取VideoInfo失败：{response[0]}')
+        else:
+            raise ValueError(f'资源的路径不正确：{response}')
+
+        # 获取PT-GenInfo
+        print(f'获取PT-GenInfo，从{data_instance.description}')
+        original_title, english_title, year, other_names_sorted, categories, actors_list, episodes = get_pt_gen_info(
+            data_instance.description)
+        print(original_title, english_title, year, other_names_sorted, categories, actors_list)
+        actors = ''
+        other_titles = ''
+        is_first = True
+
+        for data in actors_list:  # 把演员名转化成str
+            if is_first:
+                actors += data
+                is_first = False
+            else:
+                actors += ' / '
+                actors += data
+
+        for data in other_names_sorted:  # 把别名转化为str
+            other_titles += data
+            other_titles += ' / '
+
+        other_titles = other_titles[: -3]
+
+        # 给个位数的季数前面补0
+        season_number = season
+        if len(season) < 2:
+            season = '0' + season
+
+        # 获取total_episode
+        total_episode = ''
+        episodes_num = 0
+        if category == "TV":
+            is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+            if is_video_path == 2:  # 视频路径是文件夹
+                get_video_files_success, video_files = get_video_files(path)  # 获取文件夹内部的所有文件
+                if get_video_files_success:
+                    episodes_start_number = 1  # 默认从第一集开始
+                    print('检测到以下文件：', video_files)
+                    episodes_num = len(video_files)  # 获取视频文件的总数
+                    if episodes_start_number == 1 and episodes == episodes_num:
+                        total_episode = '全' + str(episodes_num) + '集'
+                        data_instance.tags.append('合集')
+                    else:
+                        if episodes_num == 1:
+                            total_episode = '第' + str(episodes_start_number) + '集'
+                        else:
+                            total_episode = '第' + str(episodes_start_number) + '-' + str(
+                                episodes_start_number + episodes_num - 1) + '集'
+                        data_instance.tags.append('分集')
+                    print(total_episode)
+                else:
+                    raise RuntimeError(f'获取文件夹内部的所有文件失败：{response[0]}')
+            else:
+                raise ValueError(f'资源的路径不正确，必须是文件夹：{response}')
+
+        # 获取主标题
+        template = 'main_title_' + category.lower()
+        data_instance.main_title = get_name_from_template(english_title, original_title, season, '{集数}', year,
+                                                          data_instance.video_format,
+                                                          data_instance.source, data_instance.video_codec,
+                                                          data_instance.bit_depth, data_instance.hdr_format,
+                                                          data_instance.frame_rate,
+                                                          data_instance.audio_codec, data_instance.channels,
+                                                          data_instance.audio_num, data_instance.team, other_titles,
+                                                          season_number,
+                                                          total_episode, '', categories, actors, template)
+        print(f"获取到主标题是{data_instance.main_title}")
+
+        # 获取副标题
+        template = 'second_title_' + category.lower()
+        data_instance.second_title = get_name_from_template(english_title, original_title, season, '{集数}', year,
+                                                            data_instance.video_format,
+                                                            data_instance.source, data_instance.video_codec,
+                                                            data_instance.bit_depth, data_instance.hdr_format,
+                                                            data_instance.frame_rate,
+                                                            data_instance.audio_codec, data_instance.channels,
+                                                            data_instance.audio_num, data_instance.team, other_titles,
+                                                            season_number,
+                                                            total_episode, '', categories, actors, template)
+        print(f"获取到副标题是{data_instance.second_title}")
+
+        # 获取文件名
+        template = 'file_name_' + category.lower()
+        data_instance.file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
+                                                         data_instance.video_format,
+                                                         data_instance.source, data_instance.video_codec,
+                                                         data_instance.bit_depth, data_instance.hdr_format,
+                                                         data_instance.frame_rate,
+                                                         data_instance.audio_codec, data_instance.channels,
+                                                         data_instance.audio_num, data_instance.team, other_titles,
+                                                         season_number,
+                                                         total_episode, '', categories, actors, template)
+        print(f"获取到文件名是{data_instance.file_name}")
+
+        if category == 'Movie':
+            # 给文件或者文件夹重命名
+            is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+            if is_video_path == 1 or is_video_path == 2:
+                file_path = response
+                if is_video_path == 1:
+                    print('开始把影片资源视频塞进文件夹')
+                    move_file_to_folder_success, response = move_file_to_folder(file_path, data_instance.file_name)
+                    if move_file_to_folder_success:
+                        file_path = response
+                    else:
+                        raise RuntimeError(f'把影片资源视频塞进文件夹失败：{response}')
+                if is_video_path == 2:
+                    folder_path = path
+                    # 开始对目录重命名
+                    print('开始对影片资源目录重命名')
+                    rename_success, response = rename_folder(folder_path, data_instance.file_name)
+                    if rename_success:
+                        new_folder_path = response
+                        print(f'新的文件夹路径：{new_folder_path}')
+                        is_video_path, response = check_path_and_find_video(new_folder_path)  # 视频资源的路径
+                        if is_video_path == 2:
+                            file_path = response
+                    else:
+                        raise RuntimeError(f'对影片资源目录重命名失败：{response}')
+
+                # 开始对文件重命名
+                print('开始对影片资源视频重命名')
+                rename_success, response = rename_file(file_path, data_instance.file_name)
+                if rename_success:
+                    new_file_path = response
+                    if is_video_path == 1:
+                        path = new_file_path
+                        print(f'重命名后的新文件路径：{path}')
+                    if is_video_path == 2:
+                        path = os.path.dirname(new_file_path)
+                        print(f'重命名后的新文件夹路径：{path}')
+                else:
+                    raise RuntimeError(f'对影片资源视频重命名失败：{response}')
+            else:
+                raise ValueError(f'影片资源的路径不正确：{response}')
+        if category == "TV":
+            # 给剧集重命名
+            is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
+            if is_video_path == 2:  # 视频路径是文件夹
+                get_video_files_success, video_files = get_video_files(path)  # 获取文件夹内部的所有文件
+                i = episodes_start_number
+                print("开始对剧集资源文件夹里的视频重新命名")
+                for video_file in video_files:
+                    e = str(i)
+                    while len(e) < len(str(episodes_start_number + episodes_num - 1)):
+                        e = '0' + e
+                    if len(e) == 1:
+                        e = '0' + e
+                    rename_file_success, response = rename_file(video_file,
+                                                                data_instance.file_name.replace('{集数}', e))
+                    if rename_file_success:
+                        video_path = response
+                        print("剧集资源视频成功重新命名为：" + video_path)
+                    else:
+                        print("重命名失败：" + response)
+                        raise RuntimeError("剧集资源视频重命名失败：" + response)
+                    i += 1
+                print("对剧集资源文件夹重新命名")
+                rename_directory_success, response = rename_folder(os.path.dirname(video_path), data_instance.file_name.
+                                                                   replace('E{集数}', '').
+                                                                   replace('{集数}', ''))
+                if rename_directory_success:
+                    path = response
+                    print("剧集资源文件夹成功重新命名为：" + path)
+                else:
+                    raise RuntimeError("剧集资源文件夹重命名失败：" + response)
+            else:
+                raise ValueError(f'剧集资源的路径不正确，必须是文件夹：{response}')
+
+        # 获取MediaInfo
+        is_video_path, response = check_path_and_find_video(path)  # 资源的路径
+        if is_video_path == 1 or is_video_path == 2:
+            video_path = response
+            get_media_info_success, response = get_media_info(video_path)
+            if get_media_info_success:
+                data_instance.media_info = response
+                # print(f'成功获取MediaInfo：\n{data_instance.media_info}')
+            else:
+                raise RuntimeError("获取MediaInfo失败：" + response)
+        else:
+            raise ValueError(f'资源的路径不正确：{response}')
+
+        print('开始分析其他关键参数')
+        (data_instance.imdb_url, data_instance.douban_url, data_instance.category, data_instance.area,
+         data_instance.video_format,
+         data_instance.audio_codec, data_instance.video_codec, data_instance.medium) \
+            = get_data_from_pt_gen_description(data_instance.main_title, data_instance.description,
+                                               data_instance.media_info, data_instance.source, data_instance.category)
+        # print('获得的参数：', data_instance.main_title, data_instance.second_title, data_instance.imdb_url,
+        #       data_instance.douban_url, data_instance.description, data_instance.media_info, data_instance.category,
+        #       data_instance.area, data_instance.video_format, data_instance.audio_codec, data_instance.video_codec,
+        #       data_instance.medium, data_instance.team)
+
+        # 开始制作种子
+        torrent_storage_path = get_settings("torrent_storage_path")
+
+        make_torrent_success, response = make_torrent(path, torrent_storage_path)
+        if make_torrent_success:
+            torrent_path = response
+            # 动态生成文件下载链接
+            base_url = request.base_url.rsplit('/', 1)[0]  # 获取当前API的基础URL
+            data_instance.torrent_file_url = f"{base_url}/getFile?filePath={torrent_path}"
+
+        else:
+            raise RuntimeError(f'制作种子失败：{response}')
+
+        return jsonify({
+            "data": convert_to_camel_case(data_instance),
+            "message": "获取成功。",
+            "statusCode": "OK"
+        }), 200
+
+    except ValueError as e:
+        return jsonify({
+            "data": {},
+            "message": f"您提供的参数有误：{str(e)}。",
+            "statusCode": "RUNTIME_ERROR"
+        }), 422
+
+    except RuntimeError as e:
+        return jsonify({
+            "data": {},
+            "message": f"自动处理视频资源失败：{str(e)}。",
+            "statusCode": "RUNTIME_ERROR"
+        }), 500
+
+    except Exception as e:
+        return jsonify({
+            "data": {},
+            "message": f"自动处理视频文件时发生了意外错误：{str(e)}。",
+            "statusCode": "GENERAL_ERROR"
+        }), 500

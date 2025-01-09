@@ -46,3 +46,5 @@ def get_pt_gen_description(pt_gen_api_url, resource_url):
         # 处理请求过程中的其他异常
         print(f"请求发生错误: {e}")
         return False, f"PT-Gen接口请求发生错误: {e}"
+
+
