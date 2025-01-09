@@ -13,7 +13,9 @@ For more information on this license, you can visit https://www.gnu.org/licenses
 
 pyinstaller --paths="src;." -F -w -i static/ph-bjd.ico src/main_gui.py -n "Publish Helper.exe"
 xcopy static dist\static /E /I /Y
-if not exist "dist\media" mkdir dist\media\
+xcopy temp dist\\temp /E /I /Y
+mkdir dist\media
+copy media\视频资源存放目录.txt dist\media\视频资源存放目录.txt
 copy Mandarin.dat dist\
 copy LICENSE dist\
 copy README.md dist\
