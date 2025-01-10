@@ -19,35 +19,34 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
     try:
         if not os.path.exists(screenshot_path):
             os.makedirs(screenshot_path)
-            print("已创建输出路径")
+            print('已创建输出路径')
     except PermissionError:
-        print("权限不足，无法创建目录")
-        return False, ["权限不足，无法创建目录"]
+        print('权限不足，无法创建目录')
+        return False, ['权限不足，无法创建目录']
     except FileExistsError:
-        print("路径已存在，且不是目录")
-        return False, ["路径已存在，且不是目录"]
+        print('路径已存在，且不是目录')
+        return False, ['路径已存在，且不是目录']
     except Exception as e:
-        print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}"]
+        print(f'创建目录时出错：{e}')
+        return False, [f'创建目录时出错：{e}']
 
     try:
         # 加载视频
         cap = cv2.VideoCapture(video_path)
         if not cap.isOpened():
-            print("无法加载视频")
-            return False, ["无法加载视频"]
+            print('无法加载视频')
+            return False, ['无法加载视频']
         else:
             total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             fps = cap.get(cv2.CAP_PROP_FPS)
             duration = total_frames / fps
-            print("加载视频成功")
+            print('加载视频成功')
 
             # 计算起止时间帧编号
             start_frame = int(total_frames * screenshot_start)
             end_frame = int(total_frames * screenshot_end)
             screenshot_min_interval = duration * screenshot_min_interval
-            print("起止帧：" + str(start_frame) + " 终止帧：" + str(end_frame) + " 最小帧间隔" + str(
-                screenshot_min_interval))
+            print(f'起止帧：{str(start_frame)} 终止帧：{str(end_frame)} 最小帧间隔：{str(screenshot_min_interval)}')
 
             # 初始化变量
             extracted_images = []
@@ -66,7 +65,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
                 current_time = timestamp / fps
                 if current_time >= last_keyframe_time + screenshot_min_interval:
                     std_dev = np.std(frame)
-                    print(f"Frame ID: {timestamp}, Timestamp: {current_time}, Std Dev: {std_dev}")  # 调试信息
+                    print(f'Frame ID: {timestamp}, Timestamp: {current_time}, Std Dev: {std_dev}')  # 调试信息
 
                     if std_dev > screenshot_threshold:
                         frame_path = generate_image_filename(screenshot_path)
@@ -75,7 +74,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
                         extracted_images.append(frame_path)
                         last_keyframe_time = current_time
                     else:
-                        print("当前帧不满足复杂度要求，获取随机帧代替")  # 调试信息
+                        print('当前帧不满足复杂度要求，获取随机帧代替')  # 调试信息
                         timestamp = random.sample(range(start_frame, end_frame), 1)[0]
                         cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                         ret, frame = cap.read()
@@ -84,7 +83,7 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
                         im_pil.save(Path(frame_path))
                         extracted_images.append(frame_path)
                 else:
-                    print("当前帧不满足时间间隔要求，获取随机帧代替")  # 调试信息
+                    print('当前帧不满足时间间隔要求，获取随机帧代替')  # 调试信息
                     timestamp = random.sample(range(start_frame, end_frame), 1)[0]
                     cap.set(cv2.CAP_PROP_POS_FRAMES, timestamp)
                     ret, frame = cap.read()
@@ -98,8 +97,8 @@ def get_screenshot(video_path, screenshot_path, screenshot_number, screenshot_th
             print(extracted_images)
             return True, extracted_images
     except Exception as e:
-        print(f"截图出错：{e}")
-        return False, [f"截图出错：{e}"]
+        print(f'截图出错：{e}')
+        return False, [f'截图出错：{e}']
 
 
 def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail_cols, screenshot_start_percentage,
@@ -107,22 +106,22 @@ def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail
     try:
         if not os.path.exists(screenshot_storage_path):  # 输出路径不存在
             os.makedirs(screenshot_storage_path)
-            print("已创建输出路径。")
+            print('已创建输出路径。')
     except PermissionError:
-        print("权限不足，无法创建目录。")
-        return False, ["权限不足，无法创建目录"]
+        print('权限不足，无法创建目录。')
+        return False, ['权限不足，无法创建目录']
     except FileExistsError:
-        print("路径已存在，且不是目录。")
-        return False, ["路径已存在，且不是目录"]
+        print('路径已存在，且不是目录。')
+        return False, ['路径已存在，且不是目录']
     except Exception as e:
-        print(f"创建目录时出错：{e}")
-        return False, [f"创建目录时出错：{e}"]
+        print(f'创建目录时出错：{e}')
+        return False, [f'创建目录时出错：{e}']
     video_capture = None
     try:
         video_capture = cv2.VideoCapture(video_path)
 
         if not video_capture.isOpened():  # 打不开文件
-            raise Exception("Error: 无法打开视频文件")
+            raise Exception('Error: 无法打开视频文件')
 
         total_frames = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
 
@@ -144,13 +143,13 @@ def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail
             ret, frame = video_capture.read()
 
             if not ret:
-                raise Exception(f"Error: 无法读取第 {i + 1} 张图像")
+                raise Exception(f'Error: 无法读取第 {i + 1} 张图像')
 
             images.append(frame)
 
         # 处理图像数量小于预期的情况
         if len(images) < (thumbnail_cols * thumbnail_rows):
-            print(f"Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_cols * thumbnail_rows} 张")
+            print(f'Warning: 只能获取 {len(images)} 张图像，小于预期的 {thumbnail_cols * thumbnail_rows} 张')
 
         resized_images = [cv2.resize(image, (0, 0), fx=1.0 / thumbnail_rows, fy=1.0 / thumbnail_rows) for image in
                           images]
@@ -173,11 +172,11 @@ def get_thumbnail(video_path, screenshot_storage_path, thumbnail_rows, thumbnail
         im_pil.save(Path(thumbnail_path))
 
     except Exception as e:
-        print(f"发生异常: {e}")
+        print(f'发生异常：{e}')
         return False, str(e)
 
     finally:
         video_capture.release()
 
-    print(f"拼接后的图像已保存到{thumbnail_path}")
+    print(f'拼接后的图像已保存到{thumbnail_path}')
     return True, thumbnail_path

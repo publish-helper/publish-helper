@@ -36,7 +36,7 @@ def update_settings(settings_name, settings_data):
     # 写回文件
     with open(settings_file, 'w') as file:
         json.dump(settings, file, indent=4)
-    print("写入数据" + f"{settings_name}: {settings_data}")
+    print('写入数据' + f'{settings_name}: {settings_data}')
 
 
 # 写一个方法，取当前工程工作目录与传入的目录，组合成一个新的目录
@@ -68,40 +68,40 @@ def get_settings(settings_name):
         # 如果文件不存在，创建一个空的 JSON 文件并设置默认值
         with open(settings_file, 'w', encoding='utf-8') as file:
             default_settings = {
-                "api_port": "5372",
-                "auto_feed_link": "https://example.com/upload.php#separator#name#linkstr#{\u4e3b\u6807\u9898}#linkstr#small_descr#linkstr#{\u526f\u6807\u9898}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{\u8c46\u74e3}#linkstr#descr#linkstr#{\u7b80\u4ecb}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{\u79cd\u5b50\u540d\u79f0}#linkstr#torrent_url#linkstr#{\u79cd\u5b50\u94fe\u63a5}#linkstr#type#linkstr#{\u7c7b\u578b}#linkstr#source_sel#linkstr#{\u5730\u533a}#linkstr#standard_sel#linkstr#{\u5206\u8fa8\u7387}#linkstr#audiocodec_sel#linkstr#{\u97f3\u9891\u7f16\u7801}#linkstr#codec_sel#linkstr#{\u89c6\u9891\u7f16\u7801}#linkstr#medium_sel#linkstr#{\u5a92\u4ecb}#linkstr#origin_site#linkstr#{\u5c0f\u7ec4}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0",
-                "auto_upload_screenshot": True,
-                "delete_screenshot": True,
-                "do_get_thumbnail": True,
-                "enable_api": True,
-                "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-                "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-                "make_dir": True,
-                "media_info_suffix": True,
-                "open_auto_feed_link": True,
-                "paste_screenshot_url": True,
-                "picture_bed_api_token": "6d207e02198a847aa98d0a2a901485a5",
-                "picture_bed_api_url": "https://freeimage.host/api/1/upload",
-                "pt_gen_api_url": "https://ptgen.agsvpt.work/",
-                "rename_file": True,
-                "create_hard_link": True,
-                "screenshot_end_percentage": "0.90",
-                "screenshot_number": "3",
-                "screenshot_start_percentage": "0.10",
-                "screenshot_storage_path": "temp/pic",
-                "screenshot_threshold": "30.00",
-                "second_confirm_file_name": True,
-                "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
-                "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}",
-                "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
-                "thumbnail_cols": "3",
-                "thumbnail_delay": "2.0",
-                "thumbnail_rows": "3",
-                "torrent_storage_path": "temp/torrent"
+                'api_port': '5372',
+                'auto_feed_link': 'https://example.com/upload.php#separator#name#linkstr#{\u4e3b\u6807\u9898}#linkstr#small_descr#linkstr#{\u526f\u6807\u9898}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{\u8c46\u74e3}#linkstr#descr#linkstr#{\u7b80\u4ecb}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{\u79cd\u5b50\u540d\u79f0}#linkstr#torrent_url#linkstr#{\u79cd\u5b50\u94fe\u63a5}#linkstr#type#linkstr#{\u7c7b\u578b}#linkstr#source_sel#linkstr#{\u5730\u533a}#linkstr#standard_sel#linkstr#{\u5206\u8fa8\u7387}#linkstr#audiocodec_sel#linkstr#{\u97f3\u9891\u7f16\u7801}#linkstr#codec_sel#linkstr#{\u89c6\u9891\u7f16\u7801}#linkstr#medium_sel#linkstr#{\u5a92\u4ecb}#linkstr#origin_site#linkstr#{\u5c0f\u7ec4}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0',
+                'auto_upload_screenshot': True,
+                'delete_screenshot': True,
+                'do_get_thumbnail': True,
+                'enable_api': True,
+                'file_name_movie': '{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+                'file_name_playlet': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+                'file_name_tv': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+                'main_title_movie': '{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+                'main_title_playlet': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+                'main_title_tv': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+                'make_dir': True,
+                'media_info_suffix': True,
+                'open_auto_feed_link': True,
+                'paste_screenshot_url': True,
+                'picture_bed_api_token': '6d207e02198a847aa98d0a2a901485a5',
+                'picture_bed_api_url': 'https://freeimage.host/api/1/upload',
+                'pt_gen_api_url': 'https://ptgen.agsvpt.work/',
+                'rename_file': True,
+                'create_hard_link': True,
+                'screenshot_end_percentage': '0.90',
+                'screenshot_number': '3',
+                'screenshot_start_percentage': '0.10',
+                'screenshot_storage_path': 'temp/pic',
+                'screenshot_threshold': '30.00',
+                'second_confirm_file_name': True,
+                'second_title_movie': '{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}',
+                'second_title_playlet': '{original_title} | {total_episodes} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}',
+                'second_title_tv': '{original_title} / {other_titles} | {total_episodes} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}',
+                'thumbnail_cols': '3',
+                'thumbnail_delay': '2.0',
+                'thumbnail_rows': '3',
+                'torrent_storage_path': 'temp/torrent'
             }
             json.dump(default_settings, file)
 
@@ -110,40 +110,40 @@ def get_settings(settings_name):
 
     # 设置参数的标准值
     standard_values = {
-        "screenshot_storage_path": "temp/pic",
-        "torrent_storage_path": "temp/torrent",
-        "pt_gen_api_url": "https://ptgen.agsvpt.work/",
-        "picture_bed_api_url": "https://freeimage.host/api/1/upload",
-        "picture_bed_api_token": "6d207e02198a847aa98d0a2a901485a5",
-        "screenshot_number": "3",
-        "screenshot_threshold": "30.0",
-        "screenshot_start_percentage": "0.10",
-        "screenshot_end_percentage": "0.90",
-        "do_get_thumbnail": "True",
-        "thumbnail_rows": "3",
-        "thumbnail_cols": "3",
-        "thumbnail_delay": "2.0",
-        "auto_upload_screenshot": "True",
-        "paste_screenshot_url": "True",
-        "delete_screenshot": "True",
-        "media_info_suffix": "True",
-        "make_dir": "True",
-        "rename_file": "True",
-        "create_hard_link": "True",
-        "second_confirm_file_name": "True",
-        "enable_api": "True",
-        "api_port": "5372",
-        "main_title_movie": "{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
-        "file_name_movie": "{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-        "main_title_tv": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_tv": "{original_title} / {other_titles} | {total_episode} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
-        "file_name_tv": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-        "main_title_playlet": "{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}",
-        "second_title_playlet": "{original_title} | {total_episode} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}",
-        "file_name_playlet": "{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}",
-        "auto_feed_link": "https://example.com/upload.php#separator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{种子名称}#linkstr#torrent_url#linkstr#{种子链接}#linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0",
-        "open_auto_feed_link": "True"
+        'screenshot_storage_path': 'temp/pic',
+        'torrent_storage_path': 'temp/torrent',
+        'pt_gen_api_url': 'https://ptgen.agsvpt.work/',
+        'picture_bed_api_url': 'https://freeimage.host/api/1/upload',
+        'picture_bed_api_token': '6d207e02198a847aa98d0a2a901485a5',
+        'screenshot_number': '3',
+        'screenshot_threshold': '30.0',
+        'screenshot_start_percentage': '0.10',
+        'screenshot_end_percentage': '0.90',
+        'do_get_thumbnail': 'True',
+        'thumbnail_rows': '3',
+        'thumbnail_cols': '3',
+        'thumbnail_delay': '2.0',
+        'auto_upload_screenshot': 'True',
+        'paste_screenshot_url': 'True',
+        'delete_screenshot': 'True',
+        'media_info_suffix': 'True',
+        'make_dir': 'True',
+        'rename_file': 'True',
+        'create_hard_link': 'True',
+        'second_confirm_file_name': 'True',
+        'enable_api': 'True',
+        'api_port': '5372',
+        'main_title_movie': '{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+        'second_title_movie': '{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}',
+        'file_name_movie': '{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+        'main_title_tv': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+        'second_title_tv': '{original_title} / {other_titles} | {total_episodes} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}',
+        'file_name_tv': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+        'main_title_playlet': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
+        'second_title_playlet': '{original_title} | {total_episodes} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}',
+        'file_name_playlet': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
+        'auto_feed_link': 'https://example.com/upload.php#separator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{种子名称}#linkstr#torrent_url#linkstr#{种子链接}#linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0',
+        'open_auto_feed_link': 'True'
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
@@ -155,17 +155,22 @@ def get_settings(settings_name):
     # 环境变量覆盖配置，优先级最高，环境变量名称必须是变量的大写
     # docker环境变量配置过的参数，将来不支持修改
     settings_data = os.environ.get(
-        str(settings_name).upper(), settings.get(settings_name, "")
+        str(settings_name).upper(), settings.get(settings_name, '')
     )
-    print("读取数据" + f"{settings_name}: {settings_data}")
+    print('读取数据' + f'{settings_name}: {settings_data}')
 
     try:
         # {category}更名为{categories}，暂时用于适配旧版本
         if '{category}' in settings_data:
             settings_data = settings_data.replace('{category}', '{categories}')
             update_settings(settings_name, settings_data)
+        # {total_episode}更名为{total_episodes}，暂时用于适配旧版本
+        if '{total_episode}' in settings_data:
+            settings_data = settings_data.replace('{total_episode}', '{total_episodes}')
+            update_settings(settings_name, settings_data)
+
     except Exception as e:
-        print()
+        print(e)
 
     return settings_data
 
@@ -198,41 +203,41 @@ def get_combo_box_data(data_name):
         # Define default content if key is missing
         if data_name == 'playlet-source':
             default_content = {
-                "playlet-source": [
-                    "网络收费短剧",
-                    "网络免费短剧",
-                    "抖音短剧",
-                    "快手短剧",
-                    "腾讯短剧",
-                    ""
+                'playlet-source': [
+                    '网络收费短剧',
+                    '网络免费短剧',
+                    '抖音短剧',
+                    '快手短剧',
+                    '腾讯短剧',
+                    ''
                 ]
             }
 
         elif data_name == 'source':
             default_content = {
-                "source": [
-                    "WEB-DL",
-                    "Remux",
-                    "Blu-ray",
-                    "UHD Blu-ray",
-                    "Blu-ray Remux",
-                    "UHD Blu-ray Remux",
-                    "HDTV",
-                    "DVD",
-                    ""
+                'source': [
+                    'WEB-DL',
+                    'Remux',
+                    'Blu-ray',
+                    'UHD Blu-ray',
+                    'Blu-ray Remux',
+                    'UHD Blu-ray Remux',
+                    'HDTV',
+                    'DVD',
+                    ''
                 ]
             }
 
         elif data_name == 'team':
             default_content = {
-                "team": [
-                    "AGSVWEB",
-                    "AGSVMUS",
-                    "AGSVPT",
-                    "GodDramas",
-                    "CatEDU",
-                    "Pack",
-                    ""
+                'team': [
+                    'AGSVWEB',
+                    'AGSVMUS',
+                    'AGSVPT',
+                    'GodDramas',
+                    'CatEDU',
+                    'Pack',
+                    ''
                 ]
             }
 
@@ -286,20 +291,20 @@ def update_combo_box_data(configuration_data, configuration_name):
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
-        return True, "更新成功"
+        return True, '更新成功'
 
     except FileNotFoundError:
         # 文件不存在时，创建新文件并写入数据
         with open(file_path, 'w', encoding='utf-8') as file:
             json.dump({configuration_name: sources_list}, file, ensure_ascii=False, indent=4)
-        return True, "文件不存在，已创建新文件并更新"
+        return True, '文件不存在，已创建新文件并更新'
 
     except json.JSONDecodeError:
-        return False, "JSON解码错误，文件内容可能损坏"
+        return False, 'JSON解码错误，文件内容可能损坏'
 
     except Exception as e:
         # 处理可能发生的其他异常
-        return False, f"更新失败，错误：{str(e)}"
+        return False, f'更新失败，错误：{str(e)}'
 
 
 def get_picture_bed_type(picture_bed_api_url):
@@ -309,21 +314,21 @@ def get_picture_bed_type(picture_bed_api_url):
 
         # Define default content if key is missing
         default_content = {
-            "lsky-pro": [
-                "https://picture.agsv.top/api/v1/upload",
-                "https://img.ptvicomo.net/api/v1/upload"
+            'lsky-pro': [
+                'https://picture.agsv.top/api/v1/upload',
+                'https://img.ptvicomo.net/api/v1/upload'
             ],
-            "bohe": [
-                "https://img.agsv.top/api/upload"
+            'bohe': [
+                'https://img.agsv.top/api/upload'
             ],
-            "freeimage": [
-                "https://freeimage.host/api/1/upload"
+            'freeimage': [
+                'https://freeimage.host/api/1/upload'
             ],
-            "imgbb": [
-                "https://api.imgbb.com/1/upload"
+            'imgbb': [
+                'https://api.imgbb.com/1/upload'
             ],
-            "pixhost": [
-                "https://api.pixhost.to/images"
+            'pixhost': [
+                'https://api.pixhost.to/images'
             ]
         }
 
@@ -374,18 +379,18 @@ def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
     根据给定的URL和JSON数据，寻找URL对应的标识符。
     如果URL以http开头，自动替换为https。
     如果URL最后一位是'/'，则去除这个'/'。
-    如果找不到URL对应的标识符，返回"没找到"。
+    如果找不到URL对应的标识符，返回'没找到'。
 
     参数:
     url (str): 需要查找的网址
     json_data (dict): 包含网址和对应标识符的JSON字典
 
     返回:
-    str: URL对应的标识符或者"没找到"
+    str: URL对应的标识符或者'没找到'
     """
     # 替换http为https
-    if picture_bed_api_url.startswith("http://"):
-        picture_bed_api_url = "https://" + picture_bed_api_url[7:]
+    if picture_bed_api_url.startswith('http://'):
+        picture_bed_api_url = 'https://' + picture_bed_api_url[7:]
 
     # 去除URL末尾的'/'
     if picture_bed_api_url.endswith('/'):
@@ -396,12 +401,12 @@ def find_picture_bed_type(picture_bed_api_url, picture_bed_api_data):
         if picture_bed_api_url in urls:
             return True, identifier
 
-    # 如果找不到对应的标识符，返回"没找到"
-    return False, f"您使用的图床上传接口{picture_bed_api_url}暂未配置，请检查static/picture-bed-data.json文件，如果您的图床符合其中的配置，可将上传接口URL按照格式添加到对应类型下"
+    # 如果找不到对应的标识符，返回'没找到'
+    return False, f'您使用的图床上传接口{picture_bed_api_url}暂未配置，请检查static/picture-bed-data.json文件，如果您的图床符合其中的配置，可将上传接口URL按照格式添加到对应类型下'
 
 
-def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
-    print("开始对参数名称进行转化")
+def get_abbreviation(original_name, json_file_path='static/abbreviation.json'):
+    print('开始对参数名称进行转化')
     try:
 
         json_file_path = combine_directories('static/abbreviation.json')
@@ -409,56 +414,56 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
         # Check if the file exists; if not, create it with default data
         if not os.path.exists(json_file_path):
             default_data = {
-                "min_widths": {
-                    "9600": "8640p",
-                    "4608": "4320p",
-                    "3200": "2160p",
-                    "2240": "1440p",
-                    "1600": "1080p",
-                    "900": "720p",
-                    "533": "480p"
+                'min_widths': {
+                    '9600': '8640p',
+                    '4608': '4320p',
+                    '3200': '2160p',
+                    '2240': '1440p',
+                    '1600': '1080p',
+                    '900': '720p',
+                    '533': '480p'
                 },
-                "7 680 pixels": "4320p",
-                "3 840 pixels": "2160p",
-                "2 560 pixels": "1440p",
-                "1 920 pixels": "1080p",
-                "1 440 pixels": "720p",
-                "1 280 pixels": "720p",
-                "720 pixels": "480p",
-                "640 pixels": "480p",
-                "HEVC": "HEVC",
-                "AVC": "AVC",
-                "AV1": "AV1",
-                "x264": "x264",
-                "x265": "x265",
-                "x266": "x266",
-                "12 bits": "12bit",
-                "10 bits": "10bit",
-                "8 bits": "",
-                "Dolby Vision, Version 1.0, dvhe.05.06, BL+RPU": "DV",
-                "SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible": "HDR10+",
-                "SMPTE ST 2086, HDR10 compatible": "HDR10",
-                "HDR Vivid, Version 1": "HDR",
-                "60.000 FPS": "60FPS",
-                "50.000 FPS": "50FPS",
-                "48.000 FPS": "48FPS",
-                "30.000 FPS": "",
-                "29.970 FPS": "",
-                "25.000 FPS": "",
-                "24.037 FPS": "",
-                "24.000 FPS": "",
-                "23.976 FPS": "",
-                "Dolby Digital Plus with Dolby Atmos": "Atmos DDP",
-                "Dolby TrueHD with Dolby Atmos": "Atmos TrueHD",
-                "DTS-HD Master Audio": "DTS-HD MA",
-                "Dolby Digital Plus": "DDP",
-                "Dolby Digital": "DD",
-                "HE-AAC": "AAC",
-                "L R C LFE Ls Rs Lb Rb": "7.1",
-                "L R C LFE Ls Rs": "5.1",
-                "C L R Ls Rs LFE": "5.1",
-                "L R": "2.0",
-                "Audio": "Audio"
+                '7 680 pixels': '4320p',
+                '3 840 pixels': '2160p',
+                '2 560 pixels': '1440p',
+                '1 920 pixels': '1080p',
+                '1 440 pixels': '720p',
+                '1 280 pixels': '720p',
+                '720 pixels': '480p',
+                '640 pixels': '480p',
+                'HEVC': 'HEVC',
+                'AVC': 'AVC',
+                'AV1': 'AV1',
+                'x264': 'x264',
+                'x265': 'x265',
+                'x266': 'x266',
+                '12 bits': '12bit',
+                '10 bits': '10bit',
+                '8 bits': '',
+                'Dolby Vision, Version 1.0, dvhe.05.06, BL+RPU': 'DV',
+                'SMPTE ST 2094 App 4, Version 1, HDR10+ Profile B compatible': 'HDR10+',
+                'SMPTE ST 2086, HDR10 compatible': 'HDR10',
+                'HDR Vivid, Version 1': 'HDR',
+                '60.000 FPS': '60FPS',
+                '50.000 FPS': '50FPS',
+                '48.000 FPS': '48FPS',
+                '30.000 FPS': '',
+                '29.970 FPS': '',
+                '25.000 FPS': '',
+                '24.037 FPS': '',
+                '24.000 FPS': '',
+                '23.976 FPS': '',
+                'Dolby Digital Plus with Dolby Atmos': 'Atmos DDP',
+                'Dolby TrueHD with Dolby Atmos': 'Atmos TrueHD',
+                'DTS-HD Master Audio': 'DTS-HD MA',
+                'Dolby Digital Plus': 'DDP',
+                'Dolby Digital': 'DD',
+                'HE-AAC': 'AAC',
+                'L R C LFE Ls Rs Lb Rb': '7.1',
+                'L R C LFE Ls Rs': '5.1',
+                'C L R Ls Rs LFE': '5.1',
+                'L R': '2.0',
+                'Audio': 'Audio'
             }
             with open(json_file_path, 'w', encoding='utf-8') as file:
                 json.dump(default_data, file, ensure_ascii=False, indent=4)
@@ -470,27 +475,27 @@ def get_abbreviation(original_name, json_file_path="static/abbreviation.json"):
         # Return the abbreviation if found, else return the original name
         return abbreviation_map.get(original_name, original_name)
     except FileNotFoundError:
-        print(f"File not found: {json_file_path}")
+        print(f'File not found: {json_file_path}')
         return original_name
     except json.JSONDecodeError:
-        print(f"Error decoding JSON from file: {json_file_path}")
+        print(f'Error decoding JSON from file: {json_file_path}')
         return original_name
 
 
 # 此方法用于自动生成一个不易重复的图片文件名称
 def generate_image_filename(base_path):
     now = datetime.datetime.now()
-    date_time = now.strftime("%Y%m%d-%H%M%S")
+    date_time = now.strftime('%Y%m%d-%H%M%S')
     letters = random.sample('0123456789', 6)
     random_str = ''.join(letters)
-    filename = f"{date_time}-{random_str}.png"
+    filename = f'{date_time}-{random_str}.png'
     path = base_path + '/' + filename
     return path
 
 
 def check_path_and_find_video(path):
     # 指定的视频文件类型列表
-    video_extensions = [".mp4", ".m4v", ".avi", ".flv", ".mkv", ".mpeg", ".mpg", ".rm", ".rmvb", ".ts", ".m2ts"]
+    video_extensions = ['.mp4', '.m4v', '.avi', '.flv', '.mkv', '.mpeg', '.mpg', '.rm', '.rmvb', '.ts', '.m2ts']
 
     # 如果最后一位加了'/'则默认去除
     if path.endswith('/'):
@@ -533,7 +538,7 @@ def make_torrent(path, torrent_storage_path):
     try:
         # 检查路径是否存在
         if not os.path.exists(path):
-            raise ValueError("提供的路径不存在")
+            raise ValueError('提供的路径不存在')
 
         # 检查路径是否指向一个文件
         if os.path.isfile(path):
@@ -542,10 +547,10 @@ def make_torrent(path, torrent_storage_path):
 
         # 然后检查这个路径是否是一个非空目录
         if os.path.isdir(path) and not os.listdir(path):
-            raise ValueError("路径指向一个空目录")
+            raise ValueError('路径指向一个空目录')
 
         # 构造完整的torrent文件路径
-        torrent_file_name = os.path.basename(path.rstrip("/\\")) + '.torrent'
+        torrent_file_name = os.path.basename(path.rstrip('/\\')) + '.torrent'
         torrent_file_path = torrent_storage_path + '/' + torrent_file_name
 
         # 确保torrent文件的目录存在
@@ -566,17 +571,17 @@ def make_torrent(path, torrent_storage_path):
         t.generate()
         t.write(torrent_file_path)
 
-        print(f"Torrent created: {torrent_file_path}")
+        print(f'Torrent created: {torrent_file_path}')
         return True, torrent_file_path
 
     except (OSError, IOError, ValueError) as e:
         # 捕获并处理文件操作相关的异常和值错误
-        print(f"Error occurred: {e}")
+        print(f'Error occurred: {e}')
         return False, str(e)
 
     except Exception as e:
         # 捕获所有其他异常
-        print(f"An unexpected error occurred: {e}")
+        print(f'An unexpected error occurred: {e}')
         return False, str(e)
 
 
@@ -616,25 +621,25 @@ def chinese_name_to_pinyin(chinese_name):
 def convert_chinese_punctuation_to_english(text):
     # Mapping of Chinese punctuation to English punctuation
     punctuation_map = {
-        "，": ", ",  # Comma
-        "。": ". ",  # Period
-        "！": "! ",  # Exclamation mark
-        "？": "? ",  # Question mark
-        "：": ": ",  # Colon
-        "；": "; ",  # Semicolon
-        "“": "\"",  # Double quotation mark (opening)
-        "”": "\"",  # Double quotation mark (closing)
-        "‘": "'",  # Single quotation mark (opening)
-        "’": "'",  # Single quotation mark (closing)
-        "（": " (",  # Left parenthesis
-        "）": ") ",  # Right parenthesis
-        "【": " [",  # Left square bracket
-        "】": "] ",  # Right square bracket
-        "《": " <",  # Less than sign
-        "》": "> ",  # Greater than sign
-        "、": ", ",  # Enumeration comma
-        "——": "--",  # Dash
-        "…": "..."  # Ellipsis
+        '，': ', ',  # Comma
+        '。': '. ',  # Period
+        '！': '! ',  # Exclamation mark
+        '？': '? ',  # Question mark
+        '：': ': ',  # Colon
+        '；': '; ',  # Semicolon
+        '“': '\'',  # Double quotation mark (opening)
+        '”': '\'',  # Double quotation mark (closing)
+        '‘': ''',  # Single quotation mark (opening)
+        '’': ''',  # Single quotation mark (closing)
+        '（': ' (',  # Left parenthesis
+        '）': ') ',  # Right parenthesis
+        '【': ' [',  # Left square bracket
+        '】': '] ',  # Right square bracket
+        '《': ' <',  # Less than sign
+        '》': '> ',  # Greater than sign
+        '、': ', ',  # Enumeration comma
+        '——': '--',  # Dash
+        '…': '...'  # Ellipsis
         # Add more mappings if necessary
     }
 
@@ -655,11 +660,11 @@ def natural_keys(text):
 def get_video_files(folder_path):
     try:
         # 要查找的视频文件扩展名列表
-        video_extensions = [".mp4", ".m4v", ".avi", ".flv", ".mkv", ".mpeg", ".mpg", ".rm", ".rmvb", ".ts", ".m2ts"]
+        video_extensions = ['.mp4', '.m4v', '.avi', '.flv', '.mkv', '.mpeg', '.mpg', '.rm', '.rmvb', '.ts', '.m2ts']
 
         # 检查文件夹路径是否有效和可访问
         if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
-            raise ValueError(f"您提供的路径 '{folder_path}' 不是一个有效的目录。")
+            raise ValueError(f'您提供的路径"{folder_path}"不是一个有效的目录。')
 
         # 初始化一个空列表来存储文件路径
         video_files = []
@@ -678,7 +683,7 @@ def get_video_files(folder_path):
 
     except Exception as e:
         # 返回错误信息
-        return False, [f"错误：{e}"]
+        return False, [f'错误：{e}']
 
 
 def int_to_roman(num):
@@ -689,10 +694,10 @@ def int_to_roman(num):
         1
     ]
     syms = [
-        "M", "CM", "D", "CD",
-        "C", "XC", "L", "XL",
-        "X", "IX", "V", "IV",
-        "I"
+        'M', 'CM', 'D', 'CD',
+        'C', 'XC', 'L', 'XL',
+        'X', 'IX', 'V', 'IV',
+        'I'
     ]
     roman_num = ''
     i = 0
@@ -725,10 +730,10 @@ def int_to_special_roman(num):
 
 def num_to_chinese(num):
     if num < 0 or num > 9999:
-        return "数字超出范围"
+        return '数字超出范围'
 
-    digits = ["零", "一", "二", "三", "四", "五", "六", "七", "八", "九"]
-    units = ["", "十", "百", "千"]
+    digits = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九']
+    units = ['', '十', '百', '千']
     parts = []
 
     if num == 0:
@@ -793,125 +798,125 @@ def get_data_from_pt_gen_description(main_title, description, media_info, source
     medium = ''  # 媒介
 
     # 获取IMDb链接
-    imdb_pattern = r"https://www\.imdb\.com/title/tt\d+/"
+    imdb_pattern = r'https://www\.imdb\.com/title/tt\d+/'
     match = re.search(imdb_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
-    imdb_url += match.group(0) if match else ""
-    print("获取到IMDb链接" + imdb_url)
+    imdb_url += match.group(0) if match else ''
+    print('获取到IMDb链接' + imdb_url)
 
     # 获取豆瓣链接
-    douban_pattern = r"https://movie\.douban\.com/subject/\d+/"
+    douban_pattern = r'https://movie\.douban\.com/subject/\d+/'
     match = re.search(douban_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
-    douban_url += match.group(0) if match else ""
-    print("获取到豆瓣链接" + douban_url)
+    douban_url += match.group(0) if match else ''
+    print('获取到豆瓣链接' + douban_url)
 
     # 获取其他类型 电影/纪录/体育/剧集/动画/综艺……
-    category_pattern = r"◎类　　别　([^\n]+)"
+    category_pattern = r'◎类　　别　([^\n]+)'
     match = re.search(category_pattern, description)
     # If a match is found, return it as a string, otherwise return an empty string
-    t = match.group(0) if match else ""
-    if "纪录" in t:
-        category = "纪录"
-    if "体育" in t:
-        category = "体育"
-    if "动画" in t:
-        category = "动画"
-    if "综艺" in t or "脱口秀" in t:
-        category = "综艺"
-    if "短片" in t:
-        category = "短剧"
-    print("获取到类型" + category)
+    t = match.group(0) if match else ''
+    if '纪录' in t:
+        category = '纪录'
+    if '体育' in t:
+        category = '体育'
+    if '动画' in t:
+        category = '动画'
+    if '综艺' in t or '脱口秀' in t:
+        category = '综艺'
+    if '短片' in t:
+        category = '短剧'
+    print('获取到类型' + category)
 
     # 获取产地 欧美/大陆/港台/日本/韩国/印度
-    area_pattern = r"◎产　　地　([^\n]+)"
+    area_pattern = r'◎产　　地　([^\n]+)'
     match = re.search(area_pattern, description)
     # If a match is found, return the matched location, otherwise return an empty string
-    s = match.group(1) if match else ""
-    if "美国" in s or "英国" in s or "德国" in s or "法国" in s:
-        area = "欧美"
-    if "大陆" in s:
-        area = "大陆"
-    if "香港" in s or "台湾" in s:
-        area = "港台"
-    if "日本" in s:
-        area = "日本"
-    if "韩国" in s:
-        area = "韩国"
-    if "印度" in s:
-        area = "印度"
-    print("获取到产地" + area)
+    s = match.group(1) if match else ''
+    if '美国' in s or '英国' in s or '德国' in s or '法国' in s:
+        area = '欧美'
+    if '大陆' in s:
+        area = '大陆'
+    if '香港' in s or '台湾' in s:
+        area = '港台'
+    if '日本' in s:
+        area = '日本'
+    if '韩国' in s:
+        area = '韩国'
+    if '印度' in s:
+        area = '印度'
+    print('获取到产地' + area)
 
     # 获取分辨率 4K/1080p/1080i/720p/SD
-    if "3840p" in main_title or "3840P" in main_title or "3840i" in main_title:
-        video_format = "8K"
-    if "2160p" in main_title or "2160P" in main_title or "2160i" in main_title:
-        video_format = "4K"
-    if "1080p" in main_title or "1080P" in main_title:
-        video_format = "1080p"
-    if "1080i" in main_title:
-        video_format = "1080i"
-    if "720p" in main_title or "720P" in main_title:
-        video_format = "720p"
-    if "720i" in main_title:
-        video_format = "720i"
-    if "480p" in main_title or "480P" in main_title:
-        video_format = "480p"
-    if "720i" in main_title:
-        video_format = "480i"
-    print("获取到分辨率" + video_format)
+    if '3840p' in main_title or '3840P' in main_title or '3840i' in main_title:
+        video_format = '8K'
+    if '2160p' in main_title or '2160P' in main_title or '2160i' in main_title:
+        video_format = '4K'
+    if '1080p' in main_title or '1080P' in main_title:
+        video_format = '1080p'
+    if '1080i' in main_title:
+        video_format = '1080i'
+    if '720p' in main_title or '720P' in main_title:
+        video_format = '720p'
+    if '720i' in main_title:
+        video_format = '720i'
+    if '480p' in main_title or '480P' in main_title:
+        video_format = '480p'
+    if '720i' in main_title:
+        video_format = '480i'
+    print('获取到分辨率' + video_format)
 
     # 获取音频编码 AAC/AC3/DTS…………
-    if "AAC" in main_title:
-        audio_codec = "AAC"
-    if "AC3" in main_title or "DD" in main_title:
-        audio_codec = "AC3"
-    if "EAC3" in main_title or "E-AC3" in main_title or "DDP" in main_title or "DD+" in main_title:
-        audio_codec = "EAC3"
-    if "DTS" in main_title:
-        if "HD" in main_title and "MA" in main_title:
-            audio_codec = "DTS-HDMA"
+    if 'AAC' in main_title:
+        audio_codec = 'AAC'
+    if 'AC3' in main_title or 'DD' in main_title:
+        audio_codec = 'AC3'
+    if 'EAC3' in main_title or 'E-AC3' in main_title or 'DDP' in main_title or 'DD+' in main_title:
+        audio_codec = 'EAC3'
+    if 'DTS' in main_title:
+        if 'HD' in main_title and 'MA' in main_title:
+            audio_codec = 'DTS-HDMA'
         else:
-            audio_codec = "DTS"
-    if "Atmos" in main_title or "ATMOS" in main_title:
-        audio_codec = "Atmos"
-    if "TrueHD" in main_title or "TRUEHD" in main_title:
-        audio_codec = "TrueHD"
-    if "Flac" in main_title or "FLAC" in main_title:
-        audio_codec = "Flac"
-    print("获取到音频编码" + audio_codec)
+            audio_codec = 'DTS'
+    if 'Atmos' in main_title or 'ATMOS' in main_title:
+        audio_codec = 'Atmos'
+    if 'TrueHD' in main_title or 'TRUEHD' in main_title:
+        audio_codec = 'TrueHD'
+    if 'Flac' in main_title or 'FLAC' in main_title:
+        audio_codec = 'Flac'
+    print('获取到音频编码' + audio_codec)
 
     # 获取视频编码 H264/H265……
-    if "H264" in main_title or "H.264" in main_title or "h264" in main_title or "h.264" in main_title or "AVC" in main_title or "avc" in main_title:
-        video_codec = "H264"
-    if "H265" in main_title or "H.265" in main_title or "h265" in main_title or "h.265" in main_title or "HEVC" in main_title or "hevc" in main_title:
-        video_codec = "H265"
-    if "H266" in main_title or "H.266" in main_title or "h266" in main_title or "h.266" in main_title or "VVC" in main_title or "vvc" in main_title:
-        video_codec = "H266"
-    if "X264" in main_title or "x264" in main_title:
-        video_codec = "X264"
-    if "X265" in main_title or "x265" in main_title:
-        video_codec = "X265"
-    if "X266" in main_title or "x266" in main_title:
-        video_codec = "X266"
-    if "AV1" in main_title or "av1" in main_title:
-        video_codec = "AV1"
-    print("获取到视频编码" + video_codec)
+    if 'H264' in main_title or 'H.264' in main_title or 'h264' in main_title or 'h.264' in main_title or 'AVC' in main_title or 'avc' in main_title:
+        video_codec = 'H264'
+    if 'H265' in main_title or 'H.265' in main_title or 'h265' in main_title or 'h.265' in main_title or 'HEVC' in main_title or 'hevc' in main_title:
+        video_codec = 'H265'
+    if 'H266' in main_title or 'H.266' in main_title or 'h266' in main_title or 'h.266' in main_title or 'VVC' in main_title or 'vvc' in main_title:
+        video_codec = 'H266'
+    if 'X264' in main_title or 'x264' in main_title:
+        video_codec = 'X264'
+    if 'X265' in main_title or 'x265' in main_title:
+        video_codec = 'X265'
+    if 'X266' in main_title or 'x266' in main_title:
+        video_codec = 'X266'
+    if 'AV1' in main_title or 'av1' in main_title:
+        video_codec = 'AV1'
+    print('获取到视频编码' + video_codec)
 
     # 获取媒介 web-dl/remux/encode……
-    if source == "WEB-DL" or "WEB-DL" in main_title or source == "Web-DL" or "Web-DL" in main_title or source == "web-dl" or "web-dl" in main_title or source == "WEBDL" or "WEBDL" in main_title or source == "WebDL" or "WebDL" in main_title or source == "webdl" or "webdl" in main_title:
-        medium = "WEB-DL"
-    if source == "Blu-ray" or "Blu-ray" in main_title or source == "Blu-Ray" or "Blu-Ray" in main_title or source == "BluRay" or "BluRay" in main_title or source == "UHD Blu-ray" or source == "UHD Blu-Ray" or source == "UHD BluRay":
-        if "X26" in video_codec:
-            medium = "Encode"
+    if source == 'WEB-DL' or 'WEB-DL' in main_title or source == 'Web-DL' or 'Web-DL' in main_title or source == 'web-dl' or 'web-dl' in main_title or source == 'WEBDL' or 'WEBDL' in main_title or source == 'WebDL' or 'WebDL' in main_title or source == 'webdl' or 'webdl' in main_title:
+        medium = 'WEB-DL'
+    if source == 'Blu-ray' or 'Blu-ray' in main_title or source == 'Blu-Ray' or 'Blu-Ray' in main_title or source == 'BluRay' or 'BluRay' in main_title or source == 'UHD Blu-ray' or source == 'UHD Blu-Ray' or source == 'UHD BluRay':
+        if 'X26' in video_codec:
+            medium = 'Encode'
         else:
-            if "Remux" in main_title or "REMUX" in main_title or "remux" in main_title or "mkv" in media_info:
-                medium = "Remux"
-    if source == "HDTV" or "HDTV" in main_title:
-        medium = "HDTV"
-    if source == "DVD" or "DVD" in main_title:
-        medium = "DVD"
-    print("获取到媒介" + medium)
+            if 'Remux' in main_title or 'REMUX' in main_title or 'remux' in main_title or 'mkv' in media_info:
+                medium = 'Remux'
+    if source == 'HDTV' or 'HDTV' in main_title:
+        medium = 'HDTV'
+    if source == 'DVD' or 'DVD' in main_title:
+        medium = 'DVD'
+    print('获取到媒介' + medium)
 
     return imdb_url, douban_url, category, area, video_format, audio_codec, video_codec, medium
 

@@ -6,9 +6,9 @@ from src.core.tool import get_settings, base64encoding, get_data_from_pt_gen_des
 
 def get_auto_feed_link(main_title, second_title, description, media_info, file_name, team, source, category,
                        torrent_url):
-    auto_feed_link = str(get_settings("auto_feed_link"))
-    torrent_name = file_name + '.torrent'  # 种子名称
-    print("变量初始化完成")
+    auto_feed_link = str(get_settings('auto_feed_link'))
+    torrent_name = f'{file_name}.torrent'  # 种子名称
+    print('变量初始化完成')
     name = main_title
     small_descr = second_title
     descr = description
@@ -60,13 +60,13 @@ def get_auto_feed_link(main_title, second_title, description, media_info, file_n
     if '#separator#' in auto_feed_link:
         string_to_encode = auto_feed_link.split('#separator#')[-1]
         string_encoded = base64encoding(string_to_encode)
-        auto_feed_link = auto_feed_link.replace(string_to_encode, "") + string_encoded
-        print("获取到auto_feed_link：" + auto_feed_link)
+        auto_feed_link = auto_feed_link.replace(string_to_encode, '') + string_encoded
+        print('获取到auto_feed_link：' + auto_feed_link)
         return True, auto_feed_link
     else:
-        return False, "您设置的auto_feed_link不符合规则"
+        return False, '您设置的auto_feed_link不符合规则'
 
-# "https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url
+# 'https://example.com/upload.php#seperator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url
 # #linkstr#{IMDB}#linkstr#dburl#linkstr{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info
 # #linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info
 # #linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb
@@ -76,4 +76,4 @@ def get_auto_feed_link(main_title, second_title, description, media_info, file_n
 # #origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr#
 # #linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr#
 # #linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo
-# #linkstr##linkstr#labels#linkstr#100"
+# #linkstr##linkstr#labels#linkstr#100'

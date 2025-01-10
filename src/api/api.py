@@ -11,19 +11,19 @@
 #         # 从请求URL中获取参数
 #         settings_json = get_settings_json()
 #         return jsonify({
-#             "data": {
-#                 "settings": settings_json
+#             'data': {
+#                 'settings': settings_json
 #             },
-#             "message": "获取设置信息成功。",
-#             "statusCode": "OK"
+#             'message': '获取设置信息成功。',
+#             'statusCode': 'OK'
 #         })
 #     except Exception as e:
 #         return jsonify({
-#             "data": {
-#                 "settings": ""
+#             'data': {
+#                 'settings': ''
 #             },
-#             "message": f"获取设置信息失败：{e}。",
-#             "statusCode": "GENERAL_ERROR"
+#             'message': f'获取设置信息失败：{e}。',
+#             'statusCode': 'GENERAL_ERROR'
 #         }), 400
 #
 #
@@ -35,15 +35,15 @@
 #         request_body = request.json
 #         update_settings_json(request_body)
 #         return jsonify({
-#             "data": {},
-#             "message": "更新设置信息成功。",
-#             "statusCode": "OK"
+#             'data': {},
+#             'message': '更新设置信息成功。',
+#             'statusCode': 'OK'
 #         })
 #     except Exception as e:
 #         return jsonify({
-#             "data": {},
-#             "message": f"更新设置信息失败：{e}。",
-#             "statusCode": "GENERAL_ERROR"
+#             'data': {},
+#             'message': f'更新设置信息失败：{e}。',
+#             'statusCode': 'GENERAL_ERROR'
 #         }), 400
 #
 #

@@ -164,7 +164,7 @@
                      </widget>
                     </item>
                     <item>
-                     <widget class="QLineEdit" name="ptGenUrlMovie">
+                     <widget class="QLineEdit" name="resourceUrlMovie">
                       <property name="text">
                        <string/>
                       </property>
@@ -1101,7 +1101,7 @@ QPushButton:pressed {
                        </layout>
                       </item>
                       <item>
-                       <widget class="QLineEdit" name="ptGenUrlTV">
+                       <widget class="QLineEdit" name="resourceUrlTV">
                         <property name="text">
                          <string/>
                         </property>

@@ -7,7 +7,7 @@ def get_picture_file_path():
                   ('All files', '*.*')]
 
     # 打开文件选择对话框
-    file_path = filedialog.askopenfilename(title="Select a file", filetypes=file_types)
+    file_path = filedialog.askopenfilename(title='Select a file', filetypes=file_types)
 
     # 返回选择的文件路径
     return file_path
@@ -19,7 +19,7 @@ def get_video_file_path():
                   ('All files', '*.*')]
 
     # 打开文件选择对话框
-    file_path = filedialog.askopenfilename(title="Select a file", filetypes=file_types)
+    file_path = filedialog.askopenfilename(title='Select a file', filetypes=file_types)
 
     # 返回选择的文件路径
     return file_path
@@ -31,12 +31,10 @@ def get_folder_path():
     root.withdraw()
 
     # 打开文件夹选择对话框
-    folder_path = filedialog.askdirectory(title="Select a folder")
+    folder_path = filedialog.askdirectory(title='Select a folder')
 
     # 关闭根窗口
     root.destroy()
 
     # 返回选择的文件夹路径
     return folder_path
-
-
