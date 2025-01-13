@@ -7,15 +7,18 @@ under certain conditions; type `show c' for details.
 The licensing of this program is under the GNU General Public License version 3 (GPLv3) or later.
 For more information on this license, you can visit https://www.gnu.org/licenses/gpl-3.0.html
 """
-
+from src.gui.startgui import start_gui
 """
 打包编译方式(Windows)：安装Python 3.10，执行pip install pyinstaller，安装“docs/requirements.txt”中的所有相关模块后，在项目根目录（README文件所在目录）下执行下面的代码：
 
 pyinstaller --paths="src;." -F -w -i static/ph-bjd.ico src/main_gui.py -n "Publish Helper.exe"
-xcopy static dist\static /E /I /Y
-xcopy temp dist\\temp /E /I /Y
-mkdir dist\media
-copy media\视频资源存放目录.txt dist\media\视频资源存放目录.txt
+xcopy static dist\\static /E /I /Y
+mkdir dist\\media
+mkdir dist\\temp\\pic
+mkdir dist\\temp\\torrent
+copy media\\视频资源存放目录.txt dist\\media\\视频资源存放目录.txt
+copy temp\\pic\\默认图片目录.txt dist\\temp\\pic\\默认图片目录.txt
+copy temp\\torrent\\默认种子目录.txt dist\\temp\\torrent\\默认种子目录.txt
 copy Mandarin.dat dist\
 copy LICENSE dist\
 copy README.md dist\
@@ -25,8 +28,6 @@ copy readme.txt dist\
 项目仓库地址：https://github.com/bjdbjd/publish-helper
 如果有帮助到您，请帮忙给仓库点亮Star，万分感谢！！！
 """
-# GUI启动
-from src.gui.startgui import start_gui
 
 # 作者：bjdbjd ID：bjd
 # 贡献者：Pixel-LH、EasonWong0603、sertion1126、TommyMerlin
