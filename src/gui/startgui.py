@@ -463,18 +463,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 second_confirm_file_name = get_settings('second_confirm_file_name')
                 do_create_hard_link = get_settings('create_hard_link')
 
-                if do_rename_file and do_create_hard_link:
-                    create_hard_link_success, response = create_hard_link(path)
-                    if create_hard_link_success:
-                        path = response
-                        self.videoPathMovie.setText(path)
-                        self.debugBrowserMovie.append(f'创建硬链接成功：{path}')
-                    else:
-                        self.debugBrowserMovie.append(f'您选择创建硬链接，但是创建失败了：{response}')
-                        return
-
-                is_video_path, response = check_path_and_find_video(
-                    self.videoPathMovie.text().replace('file:///', ''))
+                is_video_path, response = check_path_and_find_video(path)
                 if is_video_path == 1 or is_video_path == 2:
                     video_path = response
                     print('重命名初始化完成')
@@ -562,6 +551,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 if not re.match(english_pattern, english_title):
                                     self.debugBrowserMovie.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
                                 return
+
                     get_video_info_success, response = get_video_info(video_path)
                     if get_video_info_success:
                         video_info = response
@@ -627,45 +617,68 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.mainTitleBrowserMovie.setText(main_title)
                     self.secondTitleBrowserMovie.setText(second_title)
                     self.fileNameBrowserMovie.setText(file_name)
+
+                    if do_create_hard_link:
+                        print('开始创建硬链接')
+                        create_hard_link_success, response = create_hard_link(path)
+                        if create_hard_link_success:
+                            path = response
+                            self.videoPathMovie.setText(path)
+                            self.debugBrowserMovie.append(f'创建硬链接成功：{path}')
+                            is_video_path, response = check_path_and_find_video(path)
+                            if is_video_path == 1:
+                                video_path = response
+                        else:
+                            self.debugBrowserMovie.append(f'您选择创建硬链接，但是创建失败了：{response}')
+                            return
+
                     if make_dir and is_video_path == 1:
                         print('开始创建文件夹并移动视频')
                         self.debugBrowserMovie.append('开始创建文件夹并移动视频')
-                        move_file_to_folder_success, response = move_file_to_folder(video_path, file_name)
+                        move_file_to_folder_success, response = move_file_to_folder(path, file_name)
                         if move_file_to_folder_success:
+                            path = response
                             video_path = response
-                            self.videoPathMovie.setText(video_path)
-                            self.debugBrowserMovie.append(f'视频成功移动到：{video_path}')
+                            self.videoPathMovie.setText(path)
+                            self.debugBrowserMovie.append(f'视频文件成功移动到：{path}')
                         else:
                             self.debugBrowserMovie.append(f'创建文件夹失败：{response}')
+                            return
 
                     if do_rename_file:
                         if is_video_path == 2:
                             print('对文件夹重新命名')
                             self.debugBrowserMovie.append('开始对文件夹重新命名')
-                            rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name)
+                            rename_directory_success, response = rename_folder(path, file_name)
                             if rename_directory_success:
-                                self.videoPathMovie.setText(response)
-                                video_path = response
-                                self.debugBrowserMovie.append(f'视频文件夹成功重新命名为：{video_path}')
-                                find_video_success, response = check_path_and_find_video(video_path)
-                                if find_video_success == 2:
+                                path = response
+                                self.videoPathMovie.setText(path)
+                                self.debugBrowserMovie.append(f'视频文件夹成功重新命名为：{path}')
+                                is_video_path, response = check_path_and_find_video(path)
+                                if is_video_path == 2:
                                     video_path = response
                                     self.debugBrowserMovie.append(f'成功读取到视频文件：{video_path}')
                                 else:
                                     self.debugBrowserMovie.append(f'读取视频文件失败：{response}')
+                                    return
                             else:
-                                if not rename_directory_success:
-                                    self.debugBrowserMovie.append(f'重命名失败：{response}')
+                                self.debugBrowserMovie.append(f'重命名失败：{response}')
+                                return
 
                         print('开始对文件重新命名')
                         self.debugBrowserMovie.append('开始对文件重新命名')
                         rename_file_success, response = rename_file(video_path, file_name)
                         if rename_file_success:
                             video_path = response
-                            self.videoPathMovie.setText(video_path)
-                            self.debugBrowserMovie.append(f'视频成功重新命名为：{video_path}')
+                            if is_video_path == 1:
+                                self.videoPathMovie.setText(video_path)
+                                self.debugBrowserMovie.append(f'视频资源路径更新为：{video_path}')
+                            if is_video_path == 2:
+                                self.videoPathMovie.setText(path)
+                                self.debugBrowserMovie.append(f'视视频资源路径更新为：{path}')
                         else:
                             self.debugBrowserMovie.append(f'重命名失败：{response}')
+                            return
 
                 else:
                     self.debugBrowserMovie.append(f'您的视频文件路径有误{response}')
@@ -992,16 +1005,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 second_confirm_file_name = get_settings('second_confirm_file_name')
                 do_create_hard_link = get_settings('create_hard_link')
 
-                if do_rename_file and do_create_hard_link:
-                    create_hard_link_success, response = create_hard_link(path)
-                    if create_hard_link_success:
-                        path = response
-                        self.videoPathTV.setText(path)
-                        self.debugBrowserTV.append(f'创建硬链接成功：{path}')
-                    else:
-                        self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{path}')
-                        return
-
                 is_video_path, response = check_path_and_find_video(path)
                 english_pattern = r'^[A-Za-z\-\—\:\s\(\)\'\'\@\#\$\%\^\&\*\!\?\,\.\;\[\]\{\}\|\<\>\`\~\d\u2160-\u2188]+$'
                 widget = QWidget(self)
@@ -1181,6 +1184,29 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.mainTitleBrowserTV.setText(main_title)
                     self.secondTitleBrowserTV.setText(second_title)
                     self.fileNameBrowserTV.setText(file_name)
+
+                    if do_create_hard_link:
+                        print('开始创建硬链接')
+                        create_hard_link_success, response = create_hard_link(path)
+                        if create_hard_link_success:
+                            path = response
+                            self.videoPathTV.setText(path)
+                            self.debugBrowserTV.append(f'创建硬链接成功：{path}')
+                            is_video_path, response = check_path_and_find_video(path)
+                            if is_video_path == 2:
+                                get_video_files_success, response = get_video_files(path)  # 获取文件夹内部的所有文件
+                                if get_video_files_success:
+                                    video_files = response
+                                    print(f'文件夹内检测到以下文件：{str(video_files)}')
+                                    self.debugBrowserTV.append(f'文件夹内检测到以下文件：{str(video_files)}')
+                                else:
+                                    print(f'文件夹内获取视频文件失败：{response}')
+                                    self.debugBrowserTV.append(f'文件夹内获取视频文件失败：{response}')
+                                    return
+                        else:
+                            self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{path}')
+                            return
+
                     if do_rename_file:
                         print('对文件重新命名')
                         self.debugBrowserTV.append('开始对文件重新命名')
@@ -1193,21 +1219,21 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 e = f'0{e}'
                             rename_file_success, response = rename_file(video_file, file_name.replace('{集数}', e))
                             if rename_file_success:
-                                video_path = response
-                                self.videoPathTV.setText(video_path)
-                                self.debugBrowserTV.append(f'视频成功重新命名为：{video_path}')
+                                video_file = response
+                                self.debugBrowserTV.append(f'视频成功重新命名为：{video_file}')
                             else:
                                 self.debugBrowserTV.append(f'重命名失败：{response}')
+                                return
                             i += 1
                         print('对文件夹重新命名')
                         self.debugBrowserTV.append('开始对文件夹重新命名')
-                        rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name.
+                        rename_directory_success, response = rename_folder(path, file_name.
                                                                            replace('E{集数}', '').
                                                                            replace('{集数}', ''))
                         if rename_directory_success:
-                            video_path = response
-                            self.videoPathTV.setText(video_path)
-                            self.debugBrowserTV.append(f'视频地址成功重新命名为：{video_path}')
+                            path = response
+                            self.videoPathTV.setText(path)
+                            self.debugBrowserTV.append(f'视频地址成功重新命名为：{path}')
                         else:
                             self.debugBrowserTV.append(f'重命名失败：{response}')
                 else:
@@ -1573,16 +1599,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, playlet_source = '', '', '', '', '', '', '', '', ''
                 path = self.videoPathPlaylet.text().replace('file:///', '')
 
-                if do_rename_file and do_create_hard_link:
-                    create_hard_link_success, response = create_hard_link(path)
-                    if create_hard_link_success:
-                        path = response
-                        self.videoPathPlaylet.setText(path)
-                        self.debugBrowserPlaylet.append(f'创建硬链接成功：{response}')
-                    else:
-                        self.debugBrowserPlaylet.append(f'您选择创建硬链接，但是创建失败了：{response}')
-                        return
-
                 is_video_path, response = check_path_and_find_video(path)  # 获取视频的路径
                 if is_video_path == 2:  # 视频路径是文件夹
                     video_path = response
@@ -1590,11 +1606,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if get_video_files_success:
                         video_files = response
                         print(f'文件夹内检测到以下文件：{str(video_files)}')
-                        self.debugBrowserTV.append(f'文件夹内检测到以下文件：{str(video_files)}')
+                        self.debugBrowserPlaylet.append(f'文件夹内检测到以下文件：{str(video_files)}')
                         episodes_num = len(video_files)  # 获取视频文件的总数
                     else:
                         print(f'文件夹内获取视频文件失败：{response}')
-                        self.debugBrowserTV.append(f'文件夹内获取视频文件失败：{response}')
+                        self.debugBrowserPlaylet.append(f'文件夹内获取视频文件失败：{response}')
                         return
 
                     # 生成总集数信息
@@ -1681,6 +1697,29 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.mainTitleBrowserPlaylet.setText(main_title)
                     self.secondTitleBrowserPlaylet.setText(second_title)
                     self.fileNameBrowserPlaylet.setText(file_name)
+
+                    if do_create_hard_link:
+                        print('开始创建硬链接')
+                        create_hard_link_success, response = create_hard_link(path)
+                        if create_hard_link_success:
+                            path = response
+                            self.videoPathPlaylet.setText(path)
+                            self.debugBrowserPlaylet.append(f'创建硬链接成功：{path}')
+                            is_video_path, response = check_path_and_find_video(path)
+                            if is_video_path == 2:
+                                get_video_files_success, response = get_video_files(path)  # 获取文件夹内部的所有文件
+                                if get_video_files_success:
+                                    video_files = response
+                                    print(f'文件夹内检测到以下文件：{str(video_files)}')
+                                    self.debugBrowserPlaylet.append(f'文件夹内检测到以下文件：{str(video_files)}')
+                                else:
+                                    print(f'文件夹内获取视频文件失败：{response}')
+                                    self.debugBrowserPlaylet.append(f'文件夹内获取视频文件失败：{response}')
+                                    return
+                        else:
+                            self.debugBrowserPlaylet.append(f'您选择创建硬链接，但是创建失败了：{response}')
+                            return
+
                     if do_rename_file:
                         print('对文件重新命名')
                         self.debugBrowserPlaylet.append('开始对文件重新命名')
@@ -1694,22 +1733,21 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             rename_file_success, response = rename_file(video_file, file_name.replace('{集数}', e))
 
                             if rename_file_success:
-                                video_path = response
-                                self.videoPathPlaylet.setText(video_path)
-                                self.debugBrowserPlaylet.append(f'视频成功重新命名为：{video_path}')
+                                video_file = response
+                                self.debugBrowserPlaylet.append(f'视频成功重新命名为：{video_file}')
                             else:
                                 self.debugBrowserPlaylet.append(f'重命名失败：{response}')
                             i += 1
 
                         print('对文件夹重新命名')
                         self.debugBrowserPlaylet.append('开始对文件夹重新命名')
-                        rename_directory_success, response = rename_folder(os.path.dirname(video_path), file_name.
+                        rename_directory_success, response = rename_folder(path, file_name.
                                                                            replace('E{集数}', '').
                                                                            replace('{集数}', ''))
                         if rename_directory_success:
-                            self.videoPathPlaylet.setText(response)
-                            video_path = response
-                            self.debugBrowserPlaylet.append(f'视频地址成功重新命名为：{video_path}')
+                            path = response
+                            self.videoPathPlaylet.setText(path)
+                            self.debugBrowserPlaylet.append(f'视频地址成功重新命名为：{path}')
                         else:
                             self.debugBrowserPlaylet.append(f'重命名失败：{response}')
                 else:
