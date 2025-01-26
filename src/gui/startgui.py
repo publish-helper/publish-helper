@@ -455,7 +455,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 else:
                     self.debugBrowserMovie.append('获取PT-Gen信息失败，响应为空')
                     return
-                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors = '', '', '', '', '', '', '', '', '', ''
+                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors = (
+                    '', '', '', '', '', '', '', '', '', '')
                 make_dir = get_settings('make_dir')
                 path = self.videoPathMovie.text().replace('file:///', '')
 
@@ -572,19 +573,20 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     main_title = get_name_from_template(english_title, original_title, '', '', year,
                                                         video_format, source, video_codec, bit_depth, hdr_format,
                                                         frame_rate, audio_codec, channels, audio_num, team,
-                                                        other_titles, '',
-                                                        '', '', categories, actors, 'main_title_movie')
+                                                        other_titles, '', '', '',
+                                                        categories, actors, 'main_title_movie')
                     print(f'main_title: {main_title}')
-                    second_title = get_name_from_template(english_title, original_title, '', '', year, video_format,
-                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, audio_num, team, other_titles, '', '',
-                                                          '',
+                    second_title = get_name_from_template(english_title, original_title, '', '', year,
+                                                          video_format, source, video_codec, bit_depth, hdr_format,
+                                                          frame_rate, audio_codec, channels, audio_num, team,
+                                                          other_titles, '', '', '',
                                                           categories, actors, 'second_title_movie')
                     print(f'second_title: {second_title}')
-                    file_name = get_name_from_template(english_title, original_title, '', '', year, video_format,
-                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, audio_num, team, other_titles, '',
-                                                       '', '', categories, actors, 'file_name_movie')
+                    file_name = get_name_from_template(english_title, original_title, '', '', year,
+                                                       video_format, source, video_codec, bit_depth, hdr_format,
+                                                       frame_rate, audio_codec, channels, audio_num, team, other_titles,
+                                                       '', '', '', categories,
+                                                       actors, 'file_name_movie')
                     print(f'file_name: {file_name}')
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认', '请确认文件名称，如有问题请修改',
@@ -998,7 +1000,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                 if len(season) < 2:
                     season = f'0{season}'
 
-                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors = '', '', '', '', '', '', '', '', '', ''
+                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors  = (
+                    '', '', '', '', '', '', '', '', '', '')
                 path = self.videoPathTV.text().replace('file:///', '')
 
                 do_rename_file = get_settings('rename_file')
@@ -1134,24 +1137,23 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print('关键参数赋值成功，开始获取标准命名')
                     self.debugBrowserTV.append('关键参数赋值成功，开始获取标准命名')
                     english_title = delete_season_number(english_title, season_number)
-                    main_title = get_name_from_template(english_title, original_title, season, '', year, video_format,
-                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                        audio_codec, channels, audio_num, team, other_titles,
-                                                        season_number,
-                                                        total_episodes, '', categories, actors, 'main_title_tv')
+                    main_title = get_name_from_template(english_title, original_title, season, '', year,
+                                                        video_format, source, video_codec, bit_depth, hdr_format,
+                                                        frame_rate, audio_codec, channels, audio_num, team,
+                                                        other_titles, season_number, total_episodes, '',
+                                                        categories, actors, 'main_title_tv')
                     print(f'main_title: {main_title}')
-                    second_title = get_name_from_template(english_title, original_title, season, '', year, video_format,
-                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, audio_num, team, other_titles,
-                                                          season_number,
-                                                          total_episodes, '', categories, actors, 'second_title_tv')
+                    second_title = get_name_from_template(english_title, original_title, season, '', year,
+                                                          video_format, source, video_codec, bit_depth, hdr_format,
+                                                          frame_rate, audio_codec, channels, audio_num, team,
+                                                          other_titles, season_number, total_episodes, '',
+                                                          categories, actors, 'second_title_tv')
                     print(f'second_title: {second_title}')
                     file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
-                                                       video_format,
-                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, audio_num, team, other_titles,
-                                                       season_number,
-                                                       total_episodes, '', categories, actors, 'file_name_tv')
+                                                       video_format, source, video_codec, bit_depth, hdr_format,
+                                                       frame_rate, audio_codec, channels, audio_num, team, other_titles,
+                                                       season_number, total_episodes, '', categories,
+                                                       actors, 'file_name_tv')
                     print(f'file_name: {file_name}')
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
@@ -1589,14 +1591,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             return
                 year = self.yearEditPlaylet.text()
                 season = self.seasonBoxPlaylet.text()
-                total_episode = ''
                 episodes_start_number = validate_and_convert_to_int(self.episodesStartBoxTV.text(),
                                                                     'episodes_start_number')
                 season_number = season
                 if len(season) < 2:
                     season = f'0{season}'
 
-                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, playlet_source = '', '', '', '', '', '', '', '', ''
+                video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, playlet_source = (
+                    '', '', '', '', '', '', '', '', '')
                 path = self.videoPathPlaylet.text().replace('file:///', '')
 
                 is_video_path, response = check_path_and_find_video(path)  # 获取视频的路径
@@ -1645,25 +1647,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     self.debugBrowserPlaylet.append(f'类型为：{categories}')
                     print('关键参数赋值成功，开始获取标准命名')
                     self.debugBrowserPlaylet.append('关键参数赋值成功，开始获取标准命名')
-                    main_title = get_name_from_template(english_title, original_title, season, '', year, video_format,
-                                                        source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                        audio_codec, channels, audio_num, team, '', season_number,
-                                                        total_episode, playlet_source, categories,
+                    main_title = get_name_from_template(english_title, original_title, season, '', year,
+                                                        video_format, source, video_codec, bit_depth, hdr_format,
+                                                        frame_rate, audio_codec, channels, audio_num, team,'',
+                                                        season_number, total_episodes, playlet_source, categories,
                                                         '', 'main_title_playlet')
                     print(f'main_title: {main_title}')
-                    second_title = get_name_from_template(english_title, original_title, season, '', year, video_format,
-                                                          source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                          audio_codec, channels, audio_num, team, '', season_number,
-                                                          total_episode, playlet_source,
+                    second_title = get_name_from_template(english_title, original_title, season, '', year,
+                                                          video_format, source, video_codec, bit_depth, hdr_format,
+                                                          frame_rate, audio_codec, channels, audio_num, team,
+                                                          '', season_number, total_episodes, playlet_source,
                                                           categories, '', 'second_title_playlet')
                     print(f'second_title: {second_title}')
                     # NPC我要跟你谈恋爱 | 全95集 | 2023年 | 网络收费短剧 | 类型：剧集 爱情
                     file_name = get_name_from_template(english_title, original_title, season, '{集数}', year,
-                                                       video_format,
-                                                       source, video_codec, bit_depth, hdr_format, frame_rate,
-                                                       audio_codec, channels, audio_num, team, '', season_number,
-                                                       total_episode, playlet_source,
-                                                       categories, '', 'file_name_playlet')
+                                                       video_format, source, video_codec, bit_depth, hdr_format,
+                                                       frame_rate, audio_codec, channels, audio_num, team, '',
+                                                       season_number, total_episodes, playlet_source, categories,
+                                                       '', 'file_name_playlet')
                     print(f'file_name: {file_name}')
                     if second_confirm_file_name:
                         text, ok = QInputDialog.getText(self, '确认',
