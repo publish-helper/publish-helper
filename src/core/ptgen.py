@@ -14,6 +14,9 @@ def get_pt_gen_description(pt_gen_api_url, resource_url):
         elif resource_url.isdigit():
             resource_url = f'https://movie.douban.com/subject/{resource_url}/'
 
+        # 去除后缀
+        resource_url = resource_url.split('?')[0]
+
         # 设置一个合理的超时时间，10s
         response = requests.get(f'{pt_gen_api_url}?url={resource_url}', timeout=10)
 
