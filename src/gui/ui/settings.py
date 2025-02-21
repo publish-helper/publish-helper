@@ -1558,8 +1558,6 @@ class Ui_Settings(object):
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">截图终止点一定要比起始点大，否则无法截图，间隔如果太小也会导致截图数量不足。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">如果发现生成的缩略图上传后生成的URL位置不在最后，请适当增大上传延迟。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">对文件夹处理时仅获取其中第一个视频的参数信息，对剧集批量重命名请按文件名排好序。</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">制作种子时，如果选中的资源是文件夹，则直接制作；如果是文件，则对上级文件夹制作。</p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">使用“一键启动”请取消勾选”二次确认文件名“，耐心等待勿反复点击，PT-Gen连接性不好时不建议使用。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">文件越大制作种子越慢，可查看任务管理器获取运行情况，资源路径可以直接复制文件粘贴到文本框。</p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">支持免费公共图床：<span style=\" font-weight:700; color:#0000ff;\">freeimage imgbb imagehub pixhost</span></p>\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">支持商业公共图床：<span style=\" font-weight:700; color:#0000ff;\">薄荷图床(bohe)</span></p>\n"

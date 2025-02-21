@@ -39,6 +39,7 @@ def get_pt_gen_description(pt_gen_api_url, resource_url):
 
         # 返回处理后的format字段
         if format_data != '' and format_data is not None:
+            format_data = format_data.replace('&#39;', '\'')
             personalized_signature = get_settings("personalized_signature")
             # 处理简介
             if personalized_signature != '' and format_data is not None:

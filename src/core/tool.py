@@ -77,8 +77,6 @@ def get_settings(settings_name):
                 'file_name_movie': '{original_title}.{en_title}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
                 'file_name_playlet': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
                 'file_name_tv': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
-                'get_name_movie_success': '',
-                'get_name_movie_failure': '',
                 'main_title_movie': '{en_title} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
                 'main_title_playlet': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
                 'main_title_tv': '{en_title} S{season} {year} {video_format} {source} {video_codec} {bit_depth} {hdr_format} {frame_rate} {audio_codec} {channels} {audio_num}-{team}',
@@ -149,9 +147,7 @@ def get_settings(settings_name):
         'second_title_playlet': '{original_title} | {total_episodes} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}',
         'file_name_playlet': '{original_title}.{en_title}.S{season}E{episode}.{year}.{video_format}.{source}.{video_codec}.{bit_depth}.{hdr_format}.{frame_rate}.{audio_codec}.{channels}.{audio_num}-{team}',
         'auto_feed_link': 'https://example.com/upload.php#separator#name#linkstr#{主标题}#linkstr#small_descr#linkstr#{副标题}#linkstr#url#linkstr#{IMDB}#linkstr#dburl#linkstr#{豆瓣}#linkstr#descr#linkstr#{简介}[quote]{MediaInfo}[/quote]#linkstr#log_info#linkstr##linkstr#tracklist#linkstr##linkstr#music_type#linkstr##linkstr#music_media#linkstr##linkstr#edition_info#linkstr##linkstr#music_name#linkstr##linkstr#music_author#linkstr##linkstr#animate_info#linkstr##linkstr#anidb#linkstr##linkstr#torrentName#linkstr##linkstr#images#linkstr##linkstr#torrent_name#linkstr#{种子名称}#linkstr#torrent_url#linkstr#{种子链接}#linkstr#type#linkstr#{类型}#linkstr#source_sel#linkstr#{地区}#linkstr#standard_sel#linkstr#{分辨率}#linkstr#audiocodec_sel#linkstr#{音频编码}#linkstr#codec_sel#linkstr#{视频编码}#linkstr#medium_sel#linkstr#{媒介}#linkstr#origin_site#linkstr#{小组}#linkstr#origin_url#linkstr##linkstr#golden_torrent#linkstr#false#linkstr#mediainfo_cmct#linkstr##linkstr#imgs_cmct#linkstr##linkstr#full_mediainfo#linkstr##linkstr#subtitles#linkstr##linkstr#youtube_url#linkstr##linkstr#ptp_poster#linkstr##linkstr#comparisons#linkstr##linkstr#version_info#linkstr##linkstr#multi_mediainfo#linkstr##linkstr#labels#linkstr#0',
-        'open_auto_feed_link': 'True',
-        'get_name_movie_success': '',
-        'get_name_movie_failure': ''
+        'open_auto_feed_link': 'True'
     }
 
     # 如果参数名在标准值中，但不存在于当前设置中，将其添加到当前设置中
@@ -540,7 +536,6 @@ def get_playlet_description(original_title, year, area, category, language, seas
     return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
 
 
-# 为了防止出现意外，此方法默认只对文件夹做种子，如果传入的path是一个文件，那么会自动读取其上级文件夹
 def make_torrent(path, torrent_storage_path):
     print(path + '  ' + torrent_storage_path)
     try:
@@ -548,12 +543,7 @@ def make_torrent(path, torrent_storage_path):
         if not os.path.exists(path):
             raise ValueError('提供的路径不存在')
 
-        # 检查路径是否指向一个文件
-        if os.path.isfile(path):
-            # 如果是，获取文件的上级目录
-            path = os.path.dirname(path)
-
-        # 然后检查这个路径是否是一个非空目录
+        # 检查这个路径是否是一个非空目录
         if os.path.isdir(path) and not os.listdir(path):
             raise ValueError('路径指向一个空目录')
 

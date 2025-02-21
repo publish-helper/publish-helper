@@ -26,6 +26,11 @@ from src.gui.ui.mainwindow import Ui_Mainwindow
 from src.gui.ui.settings import Ui_Settings
 from src.gui.ui_tools import get_video_file_path, get_folder_path, get_picture_file_path
 
+get_name_movie_success = False
+get_name_movie_failure_number = 0
+get_name_tv_success = False
+get_name_tv_failure_number = 0
+
 
 def start_gui():
     gui = QApplication(sys.argv)
@@ -49,16 +54,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         # 全局变量
         self.get_pt_gen_success = False
-        self.get_name_movie_success = False
-        self.get_name_movie_fail = False
-        self.get_picture_movie_success = False
-        self.get_media_info_movie_success = False
-        self.make_torrent_movie_success = False
-        self.get_name_tv_success = False
-        self.get_name_tv_fail = False
-        self.get_picture_tv_success = False
-        self.get_media_info_tv_success = False
-        self.make_torrent_tv_success = False
+        self.path_movie = ""
+        self.path_tv = ""
 
         # 初始化线程
         self.get_pt_gen_thread = None
@@ -74,6 +71,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
         self.upload_cover_thread = None
         self.make_torrent_thread = None
         self.api_thread = None
+        self.wait_for_rename_thread = None
 
         # 初始化
         self.videoPathMovie.setDragEnabled(True)
@@ -187,19 +185,31 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以下是Movie页面的代码
 
     def start_button_movie_clicked(self):
-        if get_settings('second_confirm_file_name'):
-            self.debugBrowserMovie.append('如需一键启动，请到设置关闭二次确认文件名功能')
-            return
         self.get_name_button_movie_clicked()
-        QApplication.processEvents()  # 处理所有挂起的事件，更新页面
-        self.get_picture_button_movie_clicked()
-        QApplication.processEvents()  # 再次处理事件
-        time.sleep(0)  # 等待 2000 毫秒
-        self.get_media_info_button_movie_clicked()
-        QApplication.processEvents()  # 处理事件
-        time.sleep(0)  # 等待 2000 毫秒
-        self.make_torrent_button_movie_clicked()
-        QApplication.processEvents()  # 处理事件
+
+        print(f'重命名启动成功')
+        self.wait_for_rename_thread = WaitForRenameThread(True)
+        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename)  # 连接信号
+        self.wait_for_rename_thread.start()  # 启动线程
+        print('重命名启动成功，等待重命名完成后将自动进行其他操作...')
+        self.debugBrowserMovie.append('重命名启动成功，等待重命名完成后将自动进行其他操作...')
+
+    def handle_process_after_rename(self, rename_success):
+        if rename_success:
+            print('重命名成功，开始进行后续操作')
+            self.debugBrowserMovie.append('重命名成功，开始进行后续操作')
+
+            self.videoPathMovie.setText(self.path_movie)
+            QApplication.processEvents()  # 处理所有挂起的事件，更新页面
+            self.get_media_info_button_movie_clicked()
+            QApplication.processEvents()  # 处理事件
+            self.get_picture_button_movie_clicked()
+            QApplication.processEvents()  # 处理事件
+            self.make_torrent_button_movie_clicked()
+            QApplication.processEvents()  # 处理事件
+        else:
+            print('重命名失败，一键启动已终止')
+            self.debugBrowserMovie.append('重命名失败，一键启动已终止')
 
     def auto_feed_button_movie_clicked(self):
         main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
@@ -453,8 +463,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserMovie.append(f'您的视频文件路径有误：{response}')
 
     def get_name_button_movie_clicked(self):
-        self.get_name_movie_success = False
-        self.get_name_movie_fail = False
+        global get_name_movie_success, get_name_movie_failure_number  # 声明全局变量
+        get_name_movie_success = False
+        get_name_movie_failure_number = 0
+        self.path_movie = ''
         self.get_pt_gen_success = False
         try:
             self.descriptionBrowserMovie.setText('')
@@ -463,11 +475,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             resource_url = self.resourceUrlMovie.text()
             if resource_url == '':
                 self.debugBrowserMovie.append('请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接')
-                self.get_name_movie_fail = True
+                get_name_movie_failure_number += 1
                 return
             if pt_gen_api_url == '':
                 self.debugBrowserMovie.append('请在设置中输入PT-Gen链接')
-                self.get_name_movie_fail = True
+                get_name_movie_failure_number += 1
                 return
             print(f'尝试启动pt_gen_thread，您选择的PT-Gen接口是：{pt_gen_api_url}')
             self.debugBrowserMovie.append(f'尝试启动pt_gen_thread，您选择的PT-Gen接口是：{pt_gen_api_url}')
@@ -480,33 +492,36 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print(f'尝试启动备用pt_gen_thread，您选择的备用PT-Gen接口是：{pt_gen_api_url_backup}')
             self.debugBrowserMovie.append(f'尝试启动备用pt_gen_thread，您选择的备用PT-Gen接口是：{pt_gen_api_url_backup}')
             self.get_pt_gen_for_name_backup_thread = GetPtGenThread(pt_gen_api_url_backup, resource_url)
-            self.get_pt_gen_for_name_backup_thread.result_signal.connect(self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
+            self.get_pt_gen_for_name_backup_thread.result_signal.connect(
+                self.handle_get_pt_gen_for_name_movie_result)  # 连接信号
             self.get_pt_gen_for_name_backup_thread.start()  # 启动线程
             print('启动备用pt_gen_thread成功，请耐心等待Api返回结果并分析...')
             self.debugBrowserMovie.append('启动备用pt_gen_thread成功，请耐心等待Api返回结果并分析...')
         except Exception as e:
             print(f'启动PtGen线程出错：{e}')
-            self.get_name_movie_fail = True
+            get_name_movie_failure_number += 1
             return False, [f'启动PtGen线程出错：{e}']
 
     def handle_get_pt_gen_for_name_movie_result(self, get_success, response):
+        global get_name_movie_success, get_name_movie_failure_number  # 声明全局变量
         try:
             if self.get_pt_gen_success:
                 print("主线程已经成功获取到简介，备用线程关闭")
+                get_name_movie_failure_number += 1
                 return
             if get_success:
                 description = response
                 if description:
                     if description == '':
                         self.debugBrowserMovie.append('获取PT-Gen信息失败，响应为空')
-                        self.get_name_movie_fail = True
+                        get_name_movie_failure_number += 1
                         return
                     else:
                         print(f'获得的PT-Gen Api响应：{description}')
                         self.descriptionBrowserMovie.setText(description)
                 else:
                     self.debugBrowserMovie.append('获取PT-Gen信息失败，响应为空')
-                    self.get_name_movie_fail = True
+                    get_name_movie_failure_number += 1
                     return
                 self.get_pt_gen_success = True
                 video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors = (
@@ -533,7 +548,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             f'获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}\n获取到的响应是{str(description)}\n请重试！')
                         print(
                             f'获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}\n获取到的响应是{str(description)}\n请重试！')
-                        self.get_name_movie_fail = True
+                        get_name_movie_failure_number += 1
                         return
                     print(f'分析后的结果为：original_title: {original_title} english_title: {english_title} '
                           f'year: {year} other_names_sorted: {str(other_names_sorted)} categories: {categories} '
@@ -546,7 +561,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if year == '' or year is None:
                         print('PT-Gen分析结果不包含年份，存在错误')
                         self.debugBrowserMovie.append('PT-Gen分析结果不包含年份，存在错误')
-                        self.get_name_movie_fail = True
+                        get_name_movie_failure_number += 1
                         return
                     print('获取PT-Gen关键信息成功')
                     self.debugBrowserMovie.append('获取PT-Gen关键信息成功')
@@ -595,7 +610,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             QMessageBox.warning(widget, '警告',
                                                                 f'您输入的英文名称包含非英文字符或符号\n有以下这些：'
                                                                 f'{"|".join(invalid_characters)}\n请重新核对后再生成标准命名')
-                                            self.get_name_movie_fail = True
+                                            get_name_movie_failure_number += 1
                                             return
 
                                     else:
@@ -607,7 +622,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 english_title = chinese_name_to_pinyin(original_title)
                                 if not re.match(english_pattern, english_title):
                                     self.debugBrowserMovie.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
-                                    self.get_name_movie_fail = True
+                                    get_name_movie_failure_number += 1
                                     return
 
                     get_video_info_success, response = get_video_info(video_path)
@@ -655,7 +670,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         else:
                             print('您点了取消确认，重命名已取消')
                             self.debugBrowserMovie.append('您点了取消确认，重命名已取消')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
                     if is_filename_too_long(file_name):
                         text, ok = QInputDialog.getText(self, '警告', '文件名过长，请修改文件名称！',
@@ -667,13 +682,13 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         else:
                             print('您点了取消确认，重命名已取消')
                             self.debugBrowserMovie.append('您点了取消确认，重命名已取消')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
                         if is_filename_too_long(file_name):
                             QMessageBox.warning(widget, '警告',
                                                 '您输入的文件名过长，请重新核对后再生成标准命名！')
                             self.debugBrowserMovie.append('您输入的文件名过长，请重新核对后再生成标准命名！')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
                     print(f'最终确认文件名是：{file_name}')
                     self.mainTitleBrowserMovie.setText(main_title)
@@ -685,6 +700,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         create_hard_link_success, response = create_hard_link(path)
                         if create_hard_link_success:
                             path = response
+                            self.path_movie = path  # 更新全局变量
                             self.videoPathMovie.setText(path)
                             self.debugBrowserMovie.append(f'创建硬链接成功：{path}')
                             is_video_path, response = check_path_and_find_video(path)
@@ -692,7 +708,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 video_path = response
                         else:
                             self.debugBrowserMovie.append(f'您选择创建硬链接，但是创建失败了：{response}')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
 
                     if make_dir and is_video_path == 1:
@@ -700,13 +716,14 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         self.debugBrowserMovie.append('开始创建文件夹并移动视频')
                         move_file_to_folder_success, response = move_file_to_folder(path, file_name)
                         if move_file_to_folder_success:
-                            path = response
+                            path = os.path.dirname(response)
                             video_path = response
+                            self.path_movie = path  # 更新全局变量
                             self.videoPathMovie.setText(path)
                             self.debugBrowserMovie.append(f'视频文件成功移动到：{path}')
                         else:
                             self.debugBrowserMovie.append(f'创建文件夹失败：{response}')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
 
                     if do_rename_file:
@@ -716,6 +733,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             rename_directory_success, response = rename_folder(path, file_name)
                             if rename_directory_success:
                                 path = response
+                                self.path_movie = path  # 更新全局变量
                                 self.videoPathMovie.setText(path)
                                 self.debugBrowserMovie.append(f'视频文件夹成功重新命名为：{path}')
                                 is_video_path, response = check_path_and_find_video(path)
@@ -724,11 +742,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                     self.debugBrowserMovie.append(f'成功读取到视频文件：{video_path}')
                                 else:
                                     self.debugBrowserMovie.append(f'读取视频文件失败：{response}')
-                                    self.get_name_movie_fail = True
+                                    get_name_movie_failure_number += 1
                                     return
                             else:
                                 self.debugBrowserMovie.append(f'重命名失败：{response}')
-                                self.get_name_movie_fail = True
+                                get_name_movie_failure_number += 1
                                 return
 
                         print('开始对文件重新命名')
@@ -737,42 +755,42 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         if rename_file_success:
                             video_path = response
                             if is_video_path == 1:
+                                self.path_movie = path  # 更新全局变量
                                 self.videoPathMovie.setText(video_path)
                                 self.debugBrowserMovie.append(f'视频资源路径更新为：{video_path}')
                             if is_video_path == 2:
+                                self.path_movie = path  # 更新全局变量
                                 self.videoPathMovie.setText(path)
                                 self.debugBrowserMovie.append(f'视视频资源路径更新为：{path}')
                         else:
                             self.debugBrowserMovie.append(f'重命名失败：{response}')
-                            self.get_name_movie_fail = True
+                            get_name_movie_failure_number += 1
                             return
 
                 else:
                     self.debugBrowserMovie.append(f'您的视频文件路径有误{response}')
-                    self.get_name_movie_fail = True
+                    get_name_movie_failure_number += 1
                     return
             else:
                 self.debugBrowserMovie.append(f'未成功获取到任何PT-Gen信息：{response}')
-                self.get_name_movie_fail = True
+                get_name_movie_failure_number += 1
                 return
             print("重命名全部成功")
-            self.get_name_movie_success = True
+            get_name_movie_success = True
         except Exception as e:
             self.debugBrowserMovie.append(f'启动PtGen线程成功，但是重命名出错：{e}')
             print(f'启动PtGen线程成功，但是重命名出错：{e}')
-            self.get_name_movie_fail = True
+            get_name_movie_failure_number += 1
             return False, [f'启动PtGen线程成功，但是重命名出错：{e}']
 
     def make_torrent_button_movie_clicked(self):
         self.torrent_url = ''
-        is_video_path, response = check_path_and_find_video(
-            self.videoPathMovie.text().replace('file:///', ''))  # 视频资源的路径
+        path = self.videoPathMovie.text().replace('file:///', '')
+        is_video_path, response = check_path_and_find_video(path)  # 视频资源的路径
         if is_video_path == 1 or is_video_path == 2:
-            video_path = response
             torrent_storage_path = str(get_settings('torrent_storage_path'))
-            folder_path = os.path.dirname(video_path)
-            self.debugBrowserMovie.append(f'开始将"{folder_path}"制作种子，储存在"{torrent_storage_path}"')
-            self.make_torrent_thread = MakeTorrentThread(folder_path, torrent_storage_path)
+            self.debugBrowserMovie.append(f'开始将"{path}"制作种子，储存在"{torrent_storage_path}"')
+            self.make_torrent_thread = MakeTorrentThread(path, torrent_storage_path)
             self.make_torrent_thread.result_signal.connect(self.handle_make_torrent_movie_result)  # 连接信号
             self.make_torrent_thread.start()  # 启动线程
             self.debugBrowserMovie.append('制作种子线程启动成功，正在后台制作种子，请耐心等待种子制作完毕...')
@@ -791,20 +809,31 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
     # 以下是TV页面的代码
     def start_button_tv_clicked(self):
-        if get_settings('second_confirm_file_name'):
-            self.debugBrowserTV.append('如需一键启动，请到设置关闭二次确认文件名功能')
-            return
         self.get_name_button_tv_clicked()
-        QApplication.processEvents()  # 处理所有挂起的事件，更新页面
-        time.sleep(0)  # 等待 0 毫秒
-        self.get_picture_button_tv_clicked()
-        QApplication.processEvents()  # 再次处理事件
-        time.sleep(2)  # 等待 2000 毫秒
-        self.get_media_info_button_tv_clicked()
-        QApplication.processEvents()  # 处理事件
-        time.sleep(2)  # 等待 2000 毫秒
-        self.make_torrent_button_tv_clicked()
-        QApplication.processEvents()  # 处理事件
+
+        print(f'重命名启动成功')
+        self.wait_for_rename_thread = WaitForRenameThread(False)
+        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename)  # 连接信号
+        self.wait_for_rename_thread.start()  # 启动线程
+        print('重命名启动成功，等待重命名完成后将自动进行其他操作...')
+        self.debugBrowserTV.append('重命名启动成功，等待重命名完成后将自动进行其他操作...')
+
+    def handle_process_after_rename_tv(self, rename_success):
+        if rename_success:
+            print('重命名成功，开始进行后续操作')
+            self.debugBrowserTV.append('重命名成功，开始进行后续操作')
+
+            self.videoPathTV.setText(self.path_tv)
+            QApplication.processEvents()  # 处理所有挂起的事件，更新页面
+            self.get_media_info_button_tv_clicked()
+            QApplication.processEvents()  # 处理事件
+            self.get_picture_button_tv_clicked()
+            QApplication.processEvents()  # 处理事件
+            self.make_torrent_button_tv_clicked()
+            QApplication.processEvents()  # 处理事件
+        else:
+            print('重命名失败，一键启动已终止')
+            self.debugBrowserMovie.append('重命名失败，一键启动已终止')
 
     def auto_feed_button_tv_clicked(self):
         main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
@@ -1044,8 +1073,10 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append(f'您的视频文件路径有误：{response}')
 
     def get_name_button_tv_clicked(self):
-        self.get_name_tv_success = False
-        self.get_name_tv_fail = False
+        global get_name_tv_success, get_name_tv_failure_number
+        get_name_tv_success = False
+        get_name_tv_failure_number = 0
+        self.path_tv = ''
         self.get_pt_gen_success = False
         try:
             self.descriptionBrowserTV.setText('')
@@ -1055,11 +1086,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
             if resource_url == '':
                 self.debugBrowserTV.append('请输入输入豆瓣号、Imdb号、豆瓣、IMDb等资源链接')
-                self.get_name_tv_fail = True
+                get_name_tv_failure_number += 1
                 return
             if pt_gen_api_url == '':
                 self.debugBrowserTV.append('请在设置中输入PT-Gen链接')
-                self.get_name_tv_fail = True
+                get_name_tv_failure_number += 1
                 return
             print('尝试启动pt_gen_thread')
             self.debugBrowserTV.append(f'尝试启动pt_gen_thread，您选择的PT-Gen接口是：{pt_gen_api_url}')
@@ -1072,19 +1103,22 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             print('尝试启动备用pt_gen_thread')
             self.debugBrowserTV.append(f'尝试启动pt_gen_thread，您选择的备用PT-Gen接口是：{pt_gen_api_url_backup}')
             self.get_pt_gen_for_name_backup_thread = GetPtGenThread(pt_gen_api_url_backup, resource_url)
-            self.get_pt_gen_for_name_backup_thread.result_signal.connect(self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
+            self.get_pt_gen_for_name_backup_thread.result_signal.connect(
+                self.handle_get_pt_gen_for_name_tv_result)  # 连接信号
             self.get_pt_gen_for_name_backup_thread.start()  # 启动线程
             print('启动备用pt_gen_thread成功，请耐心等待Api返回结果并分析...')
             self.debugBrowserTV.append('启动备用pt_gen_thread成功，请耐心等待Api返回结果并分析...')
         except Exception as e:
             print(f'启动PT-Gen线程出错：{e}')
-            self.get_name_tv_fail = True
+            get_name_tv_failure_number += 1
             return False, [f'启动PT-Gen线程出错：{e}']
 
     def handle_get_pt_gen_for_name_tv_result(self, get_success, response):
+        global get_name_tv_success, get_name_tv_failure_number
         try:
             if self.get_pt_gen_success:
                 print("主线程已经成功获取到简介，备用线程关闭")
+                get_name_tv_failure_number += 1
                 return
             if get_success:
                 description = response
@@ -1093,11 +1127,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print(f'获得的PT-Gen Api响应：{description}')
                     if description == '':
                         self.debugBrowserTV.append('获取PT-Gen信息失败，响应为空')
-                        self.get_name_tv_fail = True
+                        get_name_tv_failure_number += 1
                         return
                 else:
                     self.debugBrowserTV.append('获取PT-Gen信息失败，响应为空')
-                    self.get_name_tv_fail = True
+                    get_name_tv_failure_number += 1
                     return
                 self.get_pt_gen_success = True
                 season = self.seasonBoxTV.text()
@@ -1129,7 +1163,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     else:
                         print(f'文件夹内获取视频文件失败：{response}')
                         self.debugBrowserTV.append(f'文件夹内获取视频文件失败：{response}')
-                        self.get_name_tv_fail = True
+                        get_name_tv_failure_number += 1
                         return
 
                     print('重命名初始化完成')
@@ -1144,7 +1178,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                             f'获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}\n获取到的响应是{str(description)}\n请重试！')
                         print(
                             f'获取到了PT-Gen Api的响应，但是对于响应的分析有错误：{e}\n获取到的响应是{str(description)}\n请重试！')
-                        self.get_name_tv_fail = True
+                        get_name_tv_failure_number += 1
                         return
                     print(original_title, english_title, year, other_names_sorted, categories, actors_list)
                     self.debugBrowserTV.append(
@@ -1165,7 +1199,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     if year == '' or year is None:
                         print('PT-Gen分析结果不包含年份，存在错误')
                         self.debugBrowserTV.append('PT-Gen分析结果不包含年份，存在错误')
-                        self.get_name_tv_fail = True
+                        get_name_tv_failure_number += 1
                         return
                     if original_title != '':
                         if second_confirm_file_name:
@@ -1195,7 +1229,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                             QMessageBox.warning(widget, '警告',
                                                                 f'您输入的英文名称包含非英文字符或符号\n有以下这些：'
                                                                 f'{"|".join(invalid_characters)}\n请重新核对后再生成标准命名')
-                                            self.get_name_tv_fail = True
+                                            get_name_tv_failure_number += 1
                                             return
 
                                     else:
@@ -1207,7 +1241,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 english_title = chinese_name_to_pinyin(original_title)
                                 if not re.match(english_pattern, english_title):
                                     self.debugBrowserTV.append('缺少英文名称，并且无法生成汉语拼音，请手动获取名称')
-                                    self.get_name_tv_fail = True
+                                    get_name_tv_failure_number += 1
                                     return
                     print(f'分析后的结果为：original_title: {original_title} english_title: {english_title} '
                           f'year: {year} other_names_sorted: {str(other_names_sorted)} categories: {categories} '
@@ -1277,7 +1311,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         else:
                             print('您点了取消确认，重命名已取消')
                             self.debugBrowserTV.append('您点了取消确认，重命名已取消')
-                            self.get_name_tv_fail = True
+                            get_name_tv_failure_number += 1
                             return
                     if is_filename_too_long(file_name):
                         text, ok = QInputDialog.getText(self, '警告', '文件名过长，请修改文件名称！',
@@ -1289,12 +1323,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         else:
                             print('您点了取消确认，重命名已取消')
                             self.debugBrowserTV.append('您点了取消确认，重命名已取消')
-                            self.get_name_tv_fail = True
+                            get_name_tv_failure_number += 1
                             return
                         if is_filename_too_long(file_name):
                             QMessageBox.warning(widget, '警告', '您输入的文件名过长，请重新核对后再生成标准命名！')
                             self.debugBrowserTV.append('您输入的文件名过长，请重新核对后再生成标准命名！')
-                            self.get_name_tv_fail = True
+                            get_name_tv_failure_number += 1
                             return
                     print(f'最终确认文件名是：{file_name}')
                     self.mainTitleBrowserTV.setText(main_title)
@@ -1306,6 +1340,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         create_hard_link_success, response = create_hard_link(path)
                         if create_hard_link_success:
                             path = response
+                            self.path_tv = path
                             self.videoPathTV.setText(path)
                             self.debugBrowserTV.append(f'创建硬链接成功：{path}')
                             is_video_path, response = check_path_and_find_video(path)
@@ -1318,11 +1353,11 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 else:
                                     print(f'文件夹内获取视频文件失败：{response}')
                                     self.debugBrowserTV.append(f'文件夹内获取视频文件失败：{response}')
-                                    self.get_name_tv_fail = True
+                                    get_name_tv_failure_number += 1
                                     return
                         else:
                             self.debugBrowserTV.append(f'您选择创建硬链接，但是创建失败了：{path}')
-                            self.get_name_tv_fail = True
+                            get_name_tv_failure_number += 1
                             return
 
                     if do_rename_file:
@@ -1341,7 +1376,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 self.debugBrowserTV.append(f'视频成功重新命名为：{video_file}')
                             else:
                                 self.debugBrowserTV.append(f'重命名失败：{response}')
-                                self.get_name_tv_fail = True
+                                get_name_tv_failure_number += 1
                                 return
                             i += 1
                         print('对文件夹重新命名')
@@ -1351,25 +1386,26 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                                                            replace('{集数}', ''))
                         if rename_directory_success:
                             path = response
+                            self.path_tv = path
                             self.videoPathTV.setText(path)
                             self.debugBrowserTV.append(f'视频地址成功重新命名为：{path}')
                         else:
                             self.debugBrowserTV.append(f'重命名失败：{response}')
-                            self.get_name_tv_fail = True
+                            get_name_tv_failure_number += 1
                             return
                 else:
                     self.debugBrowserTV.append(f'您的视频文件路径有误：{response}')
-                    self.get_name_tv_fail = True
+                    get_name_tv_failure_number += 1
                     return
             else:
                 self.debugBrowserTV.append(f'未成功获取到任何PT-Gen信息：{response}')
-                self.get_name_tv_fail = True
+                get_name_tv_failure_number += 1
                 return
-            self.get_name_tv_success = True
+            get_name_tv_success = True
         except Exception as e:
             print(f'启动PtGen线程成功，但是重命名出错：{e}')
             self.debugBrowserTV.append(f'启动PtGen线程成功，但是重命名出错：{e}')
-            self.get_name_tv_fail = True
+            get_name_tv_failure_number += 1
             return False, [f'启动PtGen线程成功，但是重命名出错：{e}']
 
     def make_torrent_button_tv_clicked(self):
@@ -1950,6 +1986,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
     # 以上是Playlet页面的代码
     # 以下是Settings页面的代码
 
+
 class settings(QDialog, Ui_Settings):
     def __init__(self):
         super().__init__()
@@ -2164,6 +2201,48 @@ class MakeTorrentThread(QThread):
             print('Torrent请求成功，开始等待返回结果')
             self.result_signal.emit(make_torrent_success, response)
             print('返回结果成功')
+        except Exception as e:
+            print(f'异常发生：{e}')
+            # 这里可以发射一个包含错误信息的信号
+
+
+class WaitForRenameThread(QThread):
+    # 创建一个信号，用于在数据处理完毕后与主线程通信
+    result_signal = pyqtSignal(bool)
+
+    def __init__(self, is_movie):
+        super().__init__()
+        self.is_movie = is_movie
+
+    def run(self):
+        try:
+            if self.is_movie:
+                # 这里放置耗时的等待操作
+                global get_name_movie_success, get_name_movie_failure_number
+                wait_time = 0  # 已经等待的时间
+                while get_name_movie_success is False and get_name_movie_failure_number <= 1 and wait_time <= 60:
+                    print('重命名尚未完成，等待0.5s')
+                    time.sleep(0.5)
+                    wait_time += 0.5
+
+                # 发送信号
+                print('等待重命名结束，开始返回结果')
+                self.result_signal.emit(get_name_movie_success)
+                print('返回结果成功')
+            else:
+                # 这里放置耗时的等待操作
+                global get_name_tv_success, get_name_tv_failure_number
+                wait_time = 0  # 已经等待的时间
+                while get_name_tv_success is False and get_name_tv_failure_number <= 1 and wait_time <= 60:
+                    print('重命名尚未完成，等待0.5s')
+                    time.sleep(0.5)
+                    wait_time += 0.5
+
+                # 发送信号
+                print('等待重命名结束，开始返回结果')
+                self.result_signal.emit(get_name_tv_success)
+                print('返回结果成功')
+
         except Exception as e:
             print(f'异常发生：{e}')
             # 这里可以发射一个包含错误信息的信号
