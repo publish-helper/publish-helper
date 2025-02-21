@@ -6,7 +6,7 @@ import shutil
 
 from pymediainfo import MediaInfo
 
-from src.core.tool import get_settings, get_abbreviation
+from src.core.tool import get_settings, get_abbreviation, chinese_to_int
 
 
 # 从PT-Gen响应中读取关键数据
@@ -96,6 +96,27 @@ def get_pt_gen_info(description):
     # 提取集数
     episodes = int(episodes_match.group(1)) if episodes_match else None
 
+    # 提取季数
+    season = None
+    season_match = re.search(r'Season (\d+)|season (\d+)| (\d+)st|第(\d+)季|第([零一二三四五六七八九十百千万]+)季', description)
+    if season_match:
+        if season_match.group(1):  # 数字形式
+            season = int(season_match.group(1))
+        elif season_match.group(2):  # 数字形式
+            season = int(season_match.group(2))
+        elif season_match.group(3):  # 数字形式
+            season = int(season_match.group(3))
+        elif season_match.group(4):  # 数字形式
+            season = int(season_match.group(4))
+        elif season_match.group(5):  # 汉字形式
+            try:
+                season = chinese_to_int(season_match.group(5))
+            except ValueError as e:
+                print(e)
+                season = None
+    else:
+        season = None
+
     print('原始名称：', original_title)
     print('英文名称：', english_title)
     print('年份：', year_match.group(1) if year_match else '')
@@ -103,7 +124,7 @@ def get_pt_gen_info(description):
     print('类别：', categories)
     print('演员：', str(actors))
     return original_title, english_title, year_match.group(
-        1) if year_match else '', other_titles, categories, actors, episodes
+        1) if year_match else '', other_titles, categories, actors, episodes, season
 
 
 def get_video_info(file_path):

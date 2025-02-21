@@ -532,7 +532,7 @@ def check_path_and_find_video(path):
 
 def get_playlet_description(original_title, year, area, category, language, season_number):
     if season_number != '1':
-        original_title += ' 第' + num_to_chinese(int(season_number)) + '季'
+        original_title += ' 第' + int_to_chinese(int(season_number)) + '季'
     return f'\n◎片　　名　{original_title}\n◎年　　代　{year}\n◎产　　地　{area}\n◎类　　别　{category}\n◎语　　言　{language}\n◎简　　介　\n'
 
 
@@ -726,7 +726,7 @@ def int_to_special_roman(num):
         return str(num)
 
 
-def num_to_chinese(num):
+def int_to_chinese(num):
     if num < 0 or num > 9999:
         return '数字超出范围'
 
@@ -750,6 +750,51 @@ def num_to_chinese(num):
 
     # 处理完毕后，parts 数组是倒序的，需要反转回来
     return ''.join(parts[::-1])
+
+
+def chinese_to_int(chinese_num):
+    try:
+        # 定义中文数字到阿拉伯数字的映射
+        num_map = {
+            '零': 0,
+            '一': 1,
+            '二': 2,
+            '三': 3,
+            '四': 4,
+            '五': 5,
+            '六': 6,
+            '七': 7,
+            '八': 8,
+            '九': 9,
+        }
+
+        unit = 1
+        total = 0
+
+        for char in reversed(chinese_num):
+            if char in num_map:
+                value = num_map[char]
+                if value >= unit:
+                    unit = value
+                else:
+                    total += unit * value
+            elif char == '十':
+                unit *= 10
+            elif char == '百':
+                unit *= 100
+            elif char == '千':
+                unit *= 1000
+            elif char == '万':
+                unit *= 10000
+            else:
+                raise ValueError(f"无法识别的字符: {char}")
+
+        if unit >= 1:
+            total += unit
+
+        return total
+    except ValueError:
+        return None
 
 
 def is_filename_too_long(filename):

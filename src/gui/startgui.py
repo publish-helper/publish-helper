@@ -189,12 +189,12 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         print(f'重命名启动成功')
         self.wait_for_rename_thread = WaitForRenameThread(True)
-        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename)  # 连接信号
+        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename_movie)  # 连接信号
         self.wait_for_rename_thread.start()  # 启动线程
         print('重命名启动成功，等待重命名完成后将自动进行其他操作...')
         self.debugBrowserMovie.append('重命名启动成功，等待重命名完成后将自动进行其他操作...')
 
-    def handle_process_after_rename(self, rename_success):
+    def handle_process_after_rename_movie(self, rename_success):
         if rename_success:
             print('重命名成功，开始进行后续操作')
             self.debugBrowserMovie.append('重命名成功，开始进行后续操作')
@@ -541,7 +541,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print('开始获取PT-Gen关键信息')
                     self.debugBrowserMovie.append('开始获取PT-Gen关键信息')
                     try:
-                        original_title, english_title, year, other_names_sorted, categories, actors_list, episodes = get_pt_gen_info(
+                        original_title, english_title, year, other_names_sorted, categories, actors_list, episodes, season = get_pt_gen_info(
                             description)
                     except Exception as e:
                         self.debugBrowserMovie.append(
@@ -588,7 +588,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                              f'资源的名称是：{original_title}\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-                                print(f'你的选择是：{ok}')
                                 if ok == QMessageBox.StandardButton.Yes:
                                     english_title = chinese_name_to_pinyin(original_title)
                                 if not re.match(english_pattern, english_title):
@@ -813,9 +812,8 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
 
         print(f'重命名启动成功')
         self.wait_for_rename_thread = WaitForRenameThread(False)
-        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename)  # 连接信号
+        self.wait_for_rename_thread.result_signal.connect(self.handle_process_after_rename_tv)  # 连接信号
         self.wait_for_rename_thread.start()  # 启动线程
-        print('重命名启动成功，等待重命名完成后将自动进行其他操作...')
         self.debugBrowserTV.append('重命名启动成功，等待重命名完成后将自动进行其他操作...')
 
     def handle_process_after_rename_tv(self, rename_success):
@@ -824,6 +822,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             self.debugBrowserTV.append('重命名成功，开始进行后续操作')
 
             self.videoPathTV.setText(self.path_tv)
+            print('当前的视频地址' + self.path_tv)
             QApplication.processEvents()  # 处理所有挂起的事件，更新页面
             self.get_media_info_button_tv_clicked()
             QApplication.processEvents()  # 处理事件
@@ -833,7 +832,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
             QApplication.processEvents()  # 处理事件
         else:
             print('重命名失败，一键启动已终止')
-            self.debugBrowserMovie.append('重命名失败，一键启动已终止')
+            self.debugBrowserTV.append('重命名失败，一键启动已终止')
 
     def auto_feed_button_tv_clicked(self):
         main_title, second_title, description, media_info, file_name, team, source = '', '', '', '', '', '', ''
@@ -1134,12 +1133,9 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     get_name_tv_failure_number += 1
                     return
                 self.get_pt_gen_success = True
-                season = self.seasonBoxTV.text()
+                season_box = self.seasonBoxTV.text()
                 episodes_start_number = validate_and_convert_to_int(self.episodesStartBoxTV.text(),
                                                                     'episodes_start_number')
-                season_number = season
-                if len(season) < 2:
-                    season = f'0{season}'
 
                 video_format, video_codec, bit_depth, hdr_format, frame_rate, audio_codec, channels, audio_num, other_titles, actors = (
                     '', '', '', '', '', '', '', '', '', '')
@@ -1171,7 +1167,7 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                     print('开始获取PT-Gen关键信息')
                     self.debugBrowserTV.append('开始获取PT-Gen关键信息')
                     try:
-                        original_title, english_title, year, other_names_sorted, categories, actors_list, episodes = get_pt_gen_info(
+                        original_title, english_title, year, other_names_sorted, categories, actors_list, episodes, season = get_pt_gen_info(
                             description)
                     except Exception as e:
                         self.debugBrowserTV.append(
@@ -1185,6 +1181,24 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                         f'分析后的结果为：original_title: {original_title} english_title: {english_title} '
                         f'year: {year} other_names_sorted: {str(other_names_sorted)} categories: {categories} '
                         f'actors_list: {str(actors_list)}')
+
+                    if season is not None and season_box != str(season):
+                        season = str(season)
+                        ok = QMessageBox.information(self, '您选择的季数信息与PT-Gen获取的不符',
+                                                     f'您选择的季数：{season_box}，PT-Gen获取的季数：{season}\n是否坚持使用您选择的季数？',
+                                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No | QMessageBox.StandardButton.Cancel)
+                        if ok == QMessageBox.StandardButton.Yes:
+                            season = season_box
+                        elif ok == QMessageBox.StandardButton.Cancel:
+                            print('您点了取消，重命名已取消')
+                            self.debugBrowserTV.append('您点了取消，重命名已取消')
+                            get_name_tv_failure_number += 1
+                            return
+                    else:
+                        season = season_box
+                    season_number = season
+                    if len(season) < 2:
+                        season = f'0{season}'
 
                     # 生成总集数信息
                     if episodes_start_number == 1 and episodes == episodes_num:
@@ -1207,7 +1221,6 @@ class mainwindow(QMainWindow, Ui_Mainwindow):
                                 ok = QMessageBox.information(self, 'PT-Gen未获取到英文名称',
                                                              f'资源的名称是：{original_title}\n是否使用汉语拼音作为英文名称？（仅限中文）',
                                                              QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
-                                print(f'你的选择是：{ok}')
                                 if ok == QMessageBox.StandardButton.Yes:
                                     english_title = chinese_name_to_pinyin(original_title)
                                 if not re.match(english_pattern, english_title):
