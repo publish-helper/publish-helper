@@ -1150,7 +1150,7 @@ QPushButton:pressed {
                       <item>
                        <widget class="QSpinBox" name="seasonBoxTV">
                         <property name="minimum">
-                         <number>1</number>
+                         <number>0</number>
                         </property>
                        </widget>
                       </item>
@@ -2109,7 +2109,7 @@ QPushButton:pressed {
                   <item>
                    <widget class="QSpinBox" name="seasonBoxPlaylet">
                     <property name="minimum">
-                     <number>1</number>
+                     <number>0</number>
                     </property>
                    </widget>
                   </item>

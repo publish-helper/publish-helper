@@ -19,18 +19,20 @@
     "picture_bed_api_url": "https://freeimage.host/api/1/upload",
     "pt_gen_api_url": "https://api.iyuu.cn/App.Movie.Ptgen",
     "rename_file": "True",
-    "create_hard_link": "True",
+    "create_hard_link": "",
     "screenshot_end_percentage": "0.90",
     "screenshot_number": "3",
     "screenshot_start_percentage": "0.10",
     "screenshot_storage_path": "temp/pic",
     "screenshot_threshold": "30.00",
-    "second_confirm_file_name": "True",
+    "second_confirm_file_name": "",
     "second_title_movie": "{original_title} / {other_titles} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
     "second_title_playlet": "{original_title} | {total_episodes} | {year}\u5e74 | {playlet_source} | \u7c7b\u578b\uff1a{categories}",
     "second_title_tv": "{original_title} / {other_titles} | {total_episodes} | \u7c7b\u578b\uff1a{categories} | \u6f14\u5458\uff1a{actors}",
     "thumbnail_cols": "3",
     "thumbnail_delay": "2.0",
     "thumbnail_rows": "3",
-    "torrent_storage_path": "temp/torrent"
+    "torrent_storage_path": "temp/torrent",
+    "pt_gen_api_url_backup": "https://ptgen.agsvpt.work/",
+    "personalized_signature": ""
 }

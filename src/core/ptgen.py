@@ -1,5 +1,7 @@
 import requests
 
+from src.core.tool import get_settings
+
 
 def get_pt_gen_description(pt_gen_api_url, resource_url):
     try:
@@ -36,9 +38,12 @@ def get_pt_gen_description(pt_gen_api_url, resource_url):
         format_data = data.get('format') if 'format' in data else data.get('data', {}).get('format', '')
 
         # 返回处理后的format字段
-        # print(format_data)
-        format_data += '\n'
-        if format_data != '\n':
+        if format_data != '' and format_data is not None:
+            personalized_signature = get_settings("personalized_signature")
+            # 处理简介
+            if personalized_signature != '' and format_data is not None:
+                format_data = personalized_signature + '\n' + format_data
+            format_data += '\n'
             format_data = format_data.replace('img1', 'img2')
             return True, format_data
         else:

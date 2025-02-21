@@ -28,6 +28,7 @@ class Ui_Settings(object):
         self.horizontalLayout_6.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_6.setObjectName("horizontalLayout_6")
         self.label_8 = QtWidgets.QLabel(parent=self.tab)
+        self.label_8.setMinimumSize(QtCore.QSize(75, 0))
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_6.addWidget(self.label_8)
         self.ptGenApiUrl = QtWidgets.QLineEdit(parent=self.tab)
@@ -36,10 +37,37 @@ class Ui_Settings(object):
         self.ptGenApiUrl.setObjectName("ptGenApiUrl")
         self.horizontalLayout_6.addWidget(self.ptGenApiUrl)
         self.verticalLayout.addLayout(self.horizontalLayout_6)
+        self.horizontalLayout_28 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_28.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_28.setObjectName("horizontalLayout_28")
+        self.label_11 = QtWidgets.QLabel(parent=self.tab)
+        self.label_11.setMinimumSize(QtCore.QSize(75, 0))
+        self.label_11.setObjectName("label_11")
+        self.horizontalLayout_28.addWidget(self.label_11)
+        self.ptGenApiUrlBackup = QtWidgets.QLineEdit(parent=self.tab)
+        self.ptGenApiUrlBackup.setText("")
+        self.ptGenApiUrlBackup.setClearButtonEnabled(True)
+        self.ptGenApiUrlBackup.setObjectName("ptGenApiUrlBackup")
+        self.horizontalLayout_28.addWidget(self.ptGenApiUrlBackup)
+        self.verticalLayout.addLayout(self.horizontalLayout_28)
+        self.horizontalLayout_29 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_29.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_29.setObjectName("horizontalLayout_29")
+        self.label_33 = QtWidgets.QLabel(parent=self.tab)
+        self.label_33.setMinimumSize(QtCore.QSize(75, 0))
+        self.label_33.setObjectName("label_33")
+        self.horizontalLayout_29.addWidget(self.label_33)
+        self.personalizedSignature = QtWidgets.QLineEdit(parent=self.tab)
+        self.personalizedSignature.setText("")
+        self.personalizedSignature.setClearButtonEnabled(True)
+        self.personalizedSignature.setObjectName("personalizedSignature")
+        self.horizontalLayout_29.addWidget(self.personalizedSignature)
+        self.verticalLayout.addLayout(self.horizontalLayout_29)
         self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_4.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_6 = QtWidgets.QLabel(parent=self.tab)
+        self.label_6.setMinimumSize(QtCore.QSize(75, 0))
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_4.addWidget(self.label_6)
         self.pictureBedApiUrl = QtWidgets.QLineEdit(parent=self.tab)
@@ -52,6 +80,7 @@ class Ui_Settings(object):
         self.horizontalLayout_5.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_5.setObjectName("horizontalLayout_5")
         self.label_7 = QtWidgets.QLabel(parent=self.tab)
+        self.label_7.setMinimumSize(QtCore.QSize(75, 0))
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7)
         self.pictureBedApiToken = QtWidgets.QLineEdit(parent=self.tab)
@@ -65,6 +94,7 @@ class Ui_Settings(object):
         self.horizontalLayout_2.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.label_3 = QtWidgets.QLabel(parent=self.tab)
+        self.label_3.setMinimumSize(QtCore.QSize(75, 0))
         self.label_3.setObjectName("label_3")
         self.horizontalLayout_2.addWidget(self.label_3)
         self.screenshotStoragePath = QtWidgets.QLineEdit(parent=self.tab)
@@ -112,6 +142,7 @@ class Ui_Settings(object):
         self.horizontalLayout_3.setContentsMargins(5, 5, 5, 5)
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.label_12 = QtWidgets.QLabel(parent=self.tab)
+        self.label_12.setMinimumSize(QtCore.QSize(75, 0))
         self.label_12.setObjectName("label_12")
         self.horizontalLayout_3.addWidget(self.label_12)
         self.torrentStoragePath = QtWidgets.QLineEdit(parent=self.tab)
@@ -611,8 +642,102 @@ class Ui_Settings(object):
 "    background-color: #3c6f1b;\n"
 "}\n"
 ""))
-        self.label_8.setText(_translate("Settings", "PT Gen地址:"))
+        self.label_8.setText(_translate("Settings", "首选PT Gen:"))
         self.ptGenApiUrl.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_11.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_11.setText(_translate("Settings", "备选PT Gen:"))
+        self.ptGenApiUrlBackup.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_33.setStyleSheet(_translate("Settings", "QPushButton {\n"
+"    display: inline-block;\n"
+"    padding: 5px 5px;\n"
+"    font-size: 16px;\n"
+"    cursor: pointer;\n"
+"    text-align: center;\n"
+"    text-decoration: none;\n"
+"    outline: none;\n"
+"    color:#fff;\n"
+"    background-color: #559e24;\n"
+"    border: none;\n"
+"    border-radius: 15px;\n"
+"    box-shadow: 0 9px #999;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"background-color: #4a8821;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #3c6f1b;\n"
+"}\n"
+""))
+        self.label_33.setText(_translate("Settings", "简介个性签名:"))
+        self.personalizedSignature.setStyleSheet(_translate("Settings", "QPushButton {\n"
 "    display: inline-block;\n"
 "    padding: 5px 5px;\n"
 "    font-size: 16px;\n"
